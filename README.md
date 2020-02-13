@@ -16,7 +16,7 @@ The existing [etriks - elixir IMI data catalogue](https://datacatalog.elixir-lux
    
   - [ ] Lack of data standards used for cataloguing (DCAT,...)
     
-  - [ ] Lack of semantic markup (all free text) for key classifiers (identified by EFPIA partners) see issue #2
+  - [ ] Lack of semantic markup (all free text) for key classifiers (identified by EFPIA partners) see [issue #2](https://github.com/FAIRplus/imi-data-catalogue/issues/2)
 
 
     * Scope clarity: 
@@ -27,3 +27,12 @@ The existing [etriks - elixir IMI data catalogue](https://datacatalog.elixir-lux
       
             Note: for many finished projects, this is irrelevant (the retrospective use case
 
+
+
+**Relation to FAIRplus Use cases**
+
+use case #9: findability - setting up a data catalogue
+
+**Relation to FAIRplus Cookbook**
+
+[recipe documenting best practice and exemplar for - setting up a data catalogue ](https://github.com/FAIRplus/the-fair-cookbook/issues/11)
