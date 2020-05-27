@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{ title | default('Error') }}{% endblock %}
+
+
+{% block content %}
+    <div class="well">
+
+        <h1><i style="font-size: 200px;vertical-align: middle;" class="red material-icons">error</i>
+            {{ message }}
+        </h1>
+        {% if explanation %}
+            <p>{{ explanation }}</p>
+        {% endif %}
+        {% if show_home_link %}
+            <p class="text-center"><a href="/">Go to home page</a></p>
+        {% endif %}
+        {% if redirect_to_login and not(current_user.is_authenticated) %}
+            <p class="text-center">Redirecting to login page</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block meta %}
+    {{ super() }}
+    {% if redirect_to_login and not(current_user.is_authenticated) %}
+        <meta http-equiv="refresh" content="2;url={{ url_for('login', next=request.path) }}"/>
+    {% endif %}
+{% endblock %}

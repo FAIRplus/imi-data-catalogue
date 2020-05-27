@@ -1,0 +1,89 @@
+{% extends 'base_search.html' %}
+{% set entity_controller = "dataset_details" %}
+{% set entity_name = "dataset" %}
+{% set search_controller = "search" %}
+{% set entities = results.entities %}
+{% block description %}Datasets{% endblock %}
+
+{% block search_results %}
+    {% set start_rank = (pagination.page - 1) * pagination.per_page %}
+    {% for dataset in entities %}
+
+        <div class="panel panel-default panel-flat panel-dataset">
+
+            <div class="panel-body" style="position:relative">
+                <h3>
+                    <a href="{{ url_for('entity_details', entity_name=entity_name, entity_id=dataset.id) }}">{{ dataset.title| truncate(55, True) }}</a>
+                    {% if dataset.open_access_link %}
+                        <a href={{ dataset.open_access_link }}
+                                   class="btn" role="button" style="width:1px;padding:5px;font-size: 18px"><span
+                                class="glyphicon glyphicon-download"
+                                data-toggle="tooltip" title="download"></span></a>
+                    {% else %}
+                        <a href="{{ url_for('request_access', entity_name=entity_name, entity_id=dataset.id) }}"
+                           class="btn " role="button" style="width:1px;padding:5px;"><span
+                                class="glyphicon glyphicon-share"
+                                data-toggle="tooltip" title="request access"></span></a>
+                    {% endif %}
+                </h3>
+                <p>{{ dataset.notes | default("", True)|truncate(500, True) }}</p>
+                {% if fair_values_show %}
+                    <p class="FAIR_rank" style="position:absolute;top:0;right:0;padding:15px;">
+                    <span data-toggle="tooltip" {% if fair_values[dataset.findable] %}
+                          class="{{ fair_values[dataset.findable]['class'] }}"
+                          title="{{ fair_values[dataset.findable]['text'] }}" {% else %} class="default"
+                          title="to be evaluated"{% endif %}>F</span>
+                        <span data-toggle="tooltip" {% if fair_values[dataset.accessible] %}
+                              class="{{ fair_values[dataset.accessible]['class'] }}"
+                              title="{{ fair_values[dataset.accessible]['text'] }}" {% else %} class="default"
+                              title="to be evaluated"{% endif %}>A</span>
+                        <span data-toggle="tooltip" {% if fair_values[dataset.interoperable] %}
+                              class="{{ fair_values[dataset.interoperable]['class'] }}"
+                              title="{{ fair_values[dataset.interoperable]['text'] }}" {% else %} class="default"
+                              title="to be evaluated"{% endif %}>I</span>
+                        <span data-toggle="tooltip" {% if fair_values[dataset.reusable] %}
+                              class="{{ fair_values[dataset.reusable]['class'] }}"
+                              title="{{ fair_values[dataset.reusable]['text'] }}" {% else %} class="default"
+                              title="to be evaluated"{% endif %}>R</span>
+                    </p>
+                {% endif %}
+                {% if fair_evaluations_show and dataset.is_fairplus_evaluated %}
+                    <a href="{{ url_for('entity_details', entity_name=entity_name, entity_id=dataset.id) }}#fairplus-evaluation-fields"
+                       class="fairResultsStamp"><img alt='fairplus stamp'
+                                                     src="/static/public/images/fairplus-stamp.png"/></a>
+                {% endif %}
+                <p style="position:absolute;top:0;right:0;padding:2px;"><span>{{ loop.index + start_rank }}</span></p>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="dataset-card">
+                            {% if dataset.groups %}
+                                <li><span class="dataset-field-label">Groups:</span>
+                                    {% for group in dataset.groups %}
+                                        <span class="label label-default">{{ group }}</span>
+                                    {% endfor %}
+                                </li>
+                            {% endif %}
+                            {% if dataset.dataset_created %}
+                                <li><span
+                                        class="dataset-field-label">Created:</span> {{ dataset.dataset_created | date }}
+                                </li>
+                            {% endif %}
+                            {% if dataset.tags %}
+                                <li><span class="dataset-field-label">Tags:</span>
+                                    {% for tag in dataset.tags %}
+                                        <span class="label label-default">{{ tag }}</span>
+                                    {% endfor %}
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+
+{% endblock %}
+

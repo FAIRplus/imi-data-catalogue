@@ -1,0 +1,117 @@
+#  DataCatalog
+#  Copyright (C) 2020  University of Luxembourg
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU Affero General Public License as
+#  published by the Free Software Foundation, either version 3 of the
+#  License, or (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU Affero General Public License for more details.
+#
+#  You should have received a copy of the GNU Affero General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+import os
+
+dirname = os.path.dirname(__file__)
+
+
+class Config(object):
+    SECRET_KEY = b''
+    TITLE = 'Data Catalog'
+    ENTITIES = {'dataset': 'datacatalog.models.dataset.Dataset'}
+    # CUSTOM FOLDER TO ALLOW OVERRIDING THE  DEFAULT TEMPLATES
+    # TEMPLATES_EXTRA_FOLDER = ""
+    # TO GIVE MORE WEIGHT TO CERTAIN FIELDS FOR THE SEARCH RESULTS
+    SOLR_BOOST = 'dataset_title^5 dataset_notes^2 dataset_text_^1'
+    # DEFAULT SORT FIELD
+    SOLR_DEFAULT_SORT = 'dataset_created'
+    # THE FACETS THAT WILL SHOW UP ON THE LEFT SIDE MENU
+    FACETS_ORDER = {'dataset': [
+        ("groups", "Groups"),
+        ("therapeutic_area_standards_disease", "Therapeutic area or disease"),
+        ("organism", "Organism"),
+        ("tags", "Tags"),
+        ("secondary_analysis", "Secondary Analysis"),
+    ]}
+    # NUMBER OF SEARCH RESULTS DISPLAYED PER PAGE
+    RESULTS_PER_PAGE = 8
+    # SOLR URL
+    SOLR_ENDPOINT = 'http://localhost:8983/solr'
+    # SOLR CORE
+    SOLR_COLLECTION = 'datacatalog'
+    # FOR ENTITIES IMPORT FROM JSON FILES
+    JSON_FILE_PATH = {'dataset': 'tests/data/records.json'}
+    # EMAIL ADDRESS TO SEND ACCESS REQUEST TO
+    EMAIL_RECIPIENT = ['study-request@elixir-luxembourg.org']
+    # FLASK-MAIL CONFIGURATION
+    MAIL_SERVER = 'localhost'
+    MAIL_PORT = 25
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = False
+    # RECAPTCHA KEYS TO PROTECT THE REQUEST ACCESS FEATURE FROM BOTS
+    RECAPTCHA_PUBLIC_KEY = ''
+    RECAPTCHA_PRIVATE_KEY = ''
+    # FAIR INDICATORS ARE DISPLAYED ONLY IF FAIR_VALUES_SHOW IS TRUE
+    FAIR_VALUES_SHOW = False
+    # FAIR EVALUATION IS DISPLAYED ONLY IF FAIR_EVALUATIONS_SHOW IS TRUE
+    FAIR_EVALUATIONS_SHOW = True
+    FAIR_VALUES = {1: {'class': 'good', 'text': 'good'},
+                   2: {'class': 'medium', 'text': 'moderate'},
+                   3: {'class': 'bad', 'text': 'bad'}}
+
+    # WHICH FIELDS ARE USED FOR DEFAULT SEARCH
+    SOLR_QUERY_TEXT_FIELD = {'dataset': ["title", "groups", "funding", "organism",
+                                         "project_name", "study_type", "therapeutic_area_standards_disease"
+                                                                       "treatment_category"]}
+
+    # GEO IMPORTER
+    # THIS FOLDER SHOULD CONTAIN '.TXT' FILES WITH 'DISEASE' AS NAME OF FILE CONTAINING GEO SERIES. FOR EX: ASTHMA.TXT
+    GEO_FILE_PATH = 'tests/data/geo_studies/'
+    GEO_TEMP_FOLDER = 'tests/data/geo_studies/temp_files/'
+    # LDAP configuration
+    LDAP_HOST = 'ldaps://xxxxxxxxxx'
+    LDAP_USERNAME = 'xxxxx'
+    LDAP_PASSWORD = '12345'
+    LDAP_BASE_DN = 'xxxxxxxx'
+    LDAP_USER_GROUPS_FIELD = 'xxxxxxxxxxxx'
+    AUTHENTICATION_DICT = {LDAP_USERNAME: LDAP_PASSWORD}
+    # DISPLAY THE 'LOGIN' LINK IN NAVBAR
+    SHOW_LOGIN = False
+
+
+class DockerConfig(Config):
+    SOLR_ENDPOINT = "http://solr:8983/solr"
+    CACHE_CONFIG = {'CACHE_TYPE': 'null', 'CACHE_DIR': "cache",
+                    'CACHE_THRESHOLD': 10000, 'CACHE_TIMEOUT': 0}
+
+
+class ProdConfig(Config):
+    # Cache configuration, see Flask-Cache documentation for syntax,
+    # for filesystem cache, set CACHE_DIR with a writable folder path.
+    CACHE_CONFIG = {'CACHE_TYPE': 'filesystem', 'CACHE_DIR': "cache",
+                    'CACHE_THRESHOLD': 10000, 'CACHE_TIMEOUT': 0}
+    SECRET_KEY = b''
+
+
+class DevConfig(Config):
+    DEBUG = True
+    # cache is disabled for dev environment
+    CACHE_CONFIG = {'CACHE_TYPE': 'null', 'CACHE_DIR': "cache",
+                    'CACHE_THRESHOLD': 10000, 'CACHE_TIMEOUT': 0}
+    SECRET_KEY = b''
+
+
+class TestConfig(Config):
+    DEBUG = True
+    SQLALCHEMY_ECHO = True
+    ASSETS_DEBUG = True
+    TESTING = True
+    CACHE_CONFIG = {'CACHE_TYPE': 'null'}
+    WTF_CSRF_ENABLED = False
+    SOLR_ENDPOINT = 'http://localhost:8983/solr'
+    SOLR_COLLECTION = 'datacatalog_test'
+    TEST_GEO_STUDY_LIST_PATH = "tests/geo_studies_test/test.txt"

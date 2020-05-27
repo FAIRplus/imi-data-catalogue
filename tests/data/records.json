@@ -1,0 +1,2672 @@
+{
+  "docs": [
+    {
+      "contact_email": "chris.chamberlain@ucb.com",
+      "modified": "2017-09-05T11:53:57.436Z",
+      "tags": [
+        "IMI",
+        "Translational Medicine"
+      ],
+      "age_range_lower_limit": 18,
+      "groups": [
+        "IMI Projects"
+      ],
+      "dataset_created": "2017-01-19T00:00:00Z",
+      "study_phase": "n.a.",
+      "id": "d6ab9395-1ae3-453b-aa0e-c1de613905d8",
+      "total_number_subjects": 2866,
+      "name": "imi_imi_precisesads",
+      "study_protocol_description": "The goal of this project is to use the power of OMICs, and bioinformatics to identify new classifications for diseases known to share common pathophysiological mechanisms. Such knowledge has not been applied to individual patients, depriving them of potential benefits in terms of the use of new therapeutic agents that are being developed for one disease but cannot be applied in another, due to current clinical classifications. We will investigate individuals with systemic lupus erythematosus (SLE), systemic sclerosis (SSc), Sj\u00f6gren\u2019s syndrome (Sjs), rheumatoid arthritis (RA), primary antiphospholipid syndrome (PAPS) and mixed connective tissue disease (MCTD), jointly as systemic autoimmune diseases (SADs). We believe that there will be overlapping clusters of individuals across diseases that will share molecular features. To determine these clusters we will, study 2000 cases of SADs, and 600 healthy controls to identify molecular clusters and their cellular and clinical correlates. In addition, we will study kidney and skin biopsies to define the development of molecular markers with severe kidney disease or with skin fibrosis. In this way we will define systemic and tissue taxonomies. We will study whole blood, as well as isolated peripheral blood mononuclear cells and subpopulations, and biopsies, assessing gene expression and epigenetic marks with a combination of array and next generation sequencing (NGS) strategies. These studies will define cellular counts and proportions and changes in gene expression elated to specific cellular populations. We will also use NGS strategies to define the presence of risk alleles (HLA and non-HLA) in all individuals. The data will be complemented with the study of the presence of autoantibodies in serum (analyzed in a reference lab), and we will use metabolomics mass spectrometry and NMR approaches to analyze plasma and urine metabolites. We will also study exosomes in plasma and urine and identify their molecular profiles. Samples will be collected following strict protocols and appropriate patient selection. The bioinformatics and biostatistics approaches will be aimed at the analysis of clusters with unsupervised clustering algorithms and tools and cross-validation. We will also perform analyses to determine risk and predictive models analyzing the genetic and molecular data at different levels, leading to a highly productive study with two arms, one for basic research and one with clinical applications. Among the clinical applications we will have a new classification for groups of patients sharing molecular mechanisms of disease, biomarkers for disease progression and organ damage prediction, and we will develop assays that can be easily applied in the clinic. The resultant clinically applicable clusters will be then validated in a longitudinal, inception trial where newly recruited patients will be analyzed at baseline and at two different time points, to define their clustering status or their evolution towards specific clusters.",
+      "contact_first_name": "Chris",
+      "project_website": "http://www.precisesads.org",
+      "title": "PRECISESADS",
+      "affiliation": "UCB",
+      "organism": "Homo sapiens",
+      "age_unit": "Year",
+      "multi_center_study": true,
+      "project_name": "IMI PRECISESADS",
+      "contact_last_name": "Chamberlain",
+      "samples_type": [
+        "Blood",
+        "Serum",
+        "Plasma",
+        "Urine"
+      ],
+      "notes": "Molecular reclassification to find clinically useful biomarkers for systemic autoimmune diseases",
+      "indication": "Systemic Autoimmune Diseases",
+      "created": "2017-01-19T14:32:13.884Z",
+      "dataset_modified": "2017-01-19T00:00:00Z",
+      "secondary_analysis": "Genomics variant array, Transcriptome array, Methylation array, RNASeq, Metabolomics, Proteomics",
+      "primary_purpose": "Molecular Reclassification to Find Clinically Useful Biomarkers for Systemic Autoimmune Diseases Mechanisms for the Improvement of Drug Development and Therapy",
+      "study_type": "OBSERVATIONAL",
+      "informed_consent": true,
+      "funding": "IMI",
+      "_version_": 1579521151223201792,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "contact_email": "Andreas.Tielmann@merckgroup.com",
+      "modified": "2017-09-05T11:52:00.136Z",
+      "tags": [
+        "IMI",
+        "Translational Medicine"
+      ],
+      "groups": [
+        "IMI Projects"
+      ],
+      "therapeutic_area_standards_disease": "Osteoarthritis",
+      "dataset_created": "2017-01-25T00:00:00Z",
+      "study_phase": "selection criteria",
+      "id": "7b271c1f-d8b5-4aad-8b8c-e3edec227727",
+      "reference_publications": [
+        "http://approachproject.eu/news-events/approach-project-receives-15-million-euro-research-funding"
+      ],
+      "total_number_subjects": 1000,
+      "version": "V0",
+      "name": "imi_approach",
+      "study_protocol_description": "All baseline cohort parameters, clinical, conventional (knee x-ray and MRI and the robust biochemical markers), and novel markers (T2 relaxation MRI for cartilage collagen distribution, gagCEST MRIcartilage for proteoglycan content, knee CT/x-ray for bone shape and trabecular architecture, knee motion, and novel biochemical markers describing turnover of specific tissue component, as well as involvement of hand, hip and spine joint damage, hand joint inflammation, hip motion and shape and bone architecture) will be used to identify (a set of) predictors that can discriminate between the knee OA progressors and (paired) non-progressors within a specific phenotype.",
+      "contact_first_name": "Andreas",
+      "project_website": "http://www.approachproject.eu/",
+      "title": "APPROACH Cohort",
+      "affiliation": "Merck KGaA",
+      "study_classification": "Biomarker Validation and Qualification",
+      "data_standards": "CDISK",
+      "organism": "Homo sapiens",
+      "multi_center_study": true,
+      "project_name": "IMI APPROACH",
+      "contact_last_name": "Tielmann",
+      "samples_type": [
+        "Blood",
+        "Serum"
+      ],
+      "business_phone_number": "6151722909",
+      "notes": "Applied Public-Private Research enabling OsteoArthritis Clinical Headway",
+      "indication": "knee osteoarthritis",
+      "created": "2017-02-13T14:48:35.874Z",
+      "dataset_modified": "2021-12-01T00:00:00Z",
+      "secondary_analysis": "Genomics variant array, Transcriptome array, Clinical imaging, Proteomics",
+      "planned_arm": "cohort will also include age-matched healthy controls as well as end-stage established OA patients assigned to \u2018dominant\u2019 progressive subclasses of clinically defined knee osteoarthritis with potential involvement of hip and/or hand OA with each a paired non-progressive knee OA phenotype",
+      "primary_purpose": "Define subsets of (phenotypically) different patients in both the existing cohorts as well as (later) in the new longitudinal extension cohorts and subsequently identify the \u201cright patient\u201d to treat for each subset/phenotype via innovative stratification techniques.",
+      "study_type": "OBSERVATIONAL",
+      "informed_consent": true,
+      "business_address": "Merck KGaA | Frankfurter Str. 250 | 64293 Darmstadt | Germany",
+      "funding": "IMI",
+      "_version_": 1579521150994612224,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "samples_details": "Number = total subject numbers (multiple samples per subject)\n\n532 Adult Blood plasma\n543 Adult Urine\n24 Serum for protemomics\n24 Nasal Lavage Supernatant\n\nPaediatric\n \t        A\t B\t C\t D\t Total\nBlood\t85\t43\t72\t45\t245\nSputum\t14\t6\t0\t0\t20\nUrine\t92\t43\t64\t45\t244\nEnose\t50\t56\t106\nGWAS\t93\t43\t70\t45\t251",
+      "contact_email": "neilfitch@biosciconsulting.com",
+      "modified": "2017-09-25T16:12:33.331Z",
+      "age_range_lower_limit": 1,
+      "dataset_created": "2017-09-25T00:00:00Z",
+      "study_phase": "Yes",
+      "total_number_human_subjects": 1025,
+      "bmi_range_lower_limit": 17.77,
+      "id": "limesurvey_59",
+      "reference_publications": [
+        "https://www.ncbi.nlm.nih.gov/pubmed/26357963\nhttps://www.ncbi.nlm.nih.gov/pubmed/26405287\nhttps://www.ncbi.nlm.nih.gov/pubmed/28842514\nhttps://www.ncbi.nlm.nih.gov/pubmed/28528200\nhttps://www.ncbi.nlm.nih.gov/pubmed/28259448"
+      ],
+      "version": "1",
+      "body_system_or_organ_class": "lung",
+      "study_protocol_description": "A observational study of people with mild, moderate and severe asthma including both smokers and non-smokers and a control group of healthy volunteers. \nAn extensive range of clinical parameters and omics from blood, urine, sputum and bronchial brushings and biopsy and nasal brushings.",
+      "contact_first_name": "Neil",
+      "project_website": "www.ubiopred.eu",
+      "title": "U-BIOPRED clinical",
+      "bmi_range_upper_limit": 53.63,
+      "affiliation": "BioSci Consulting",
+      "organism": "Yes",
+      "age_range_upper_limit": 79,
+      "age_unit": "Year",
+      "multi_center_study": true,
+      "contact_last_name": "Fitch",
+      "samples_type": [
+        "No"
+      ],
+      "business_phone_number": "+3289254009",
+      "cohorts_description": "Cohort A adult: Severe asthma non-smoking (under 5 pack years)\nCohort B Adult: Severe asthma smoking (5+ pack years)\nCohort C Adult: Mild-moderate asthma\nCohort D adult: Healthy volunteers\n\nCohort A Paediatric: Severe school aged asthma\nCohort B Paediatric: Mild-moderate school aged asthma\nCohort C Paediatric: Severe pre-school aged asthma/wheeze\nCohort D Paediatric: Mild-moderate pre-school aged asthma/wheeze",
+      "subjects_number_per_cohort": "Adult:\nCohort A: 367\nCohort B: 121\nCohort C: 130\nCohort D: 112\n\nPaediatric\nCohort A: 102\nCohort B: 58\nCohort C: 83\nCohort D: 56",
+      "created": "2017-09-25T16:12:33.331Z",
+      "dataset_modified": "2017-09-25T00:00:00Z",
+      "secondary_analysis": "No",
+      "primary_purpose": "Phenotype severe asthma",
+      "samples_number": "~20,000",
+      "informed_consent": true,
+      "_version_": 1579521150523801600,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "contact_email": "jean-christophe.corvol@psl.aphp.fr",
+      "modified": "2017-09-05T11:53:30.337Z",
+      "tags": [
+        "IMI",
+        "Translational Medicine"
+      ],
+      "groups": [
+        "IMI Projects"
+      ],
+      "dataset_created": "2017-01-19T00:00:00Z",
+      "study_phase": "Recruitment",
+      "id": "12006641-5597-470f-a3e2-0ba6ab97d6a3",
+      "total_number_subjects": 655,
+      "body_system_or_organ_class": "Brain (For the imaging data)",
+      "name": "imi_aetionomy",
+      "study_protocol_description": "http://www.aetionomy.eu/content/dam/scai/AETIONOMY/Dokumente/Aetionomy_Newsletter4_web.pdf",
+      "contact_first_name": "Jean-Christophe",
+      "project_website": "http://www.aetionomy.eu",
+      "title": "AETIONOMY prospective study",
+      "affiliation": "ICM Paris",
+      "data_standards": "CDISC",
+      "organism": "Homo sapiens",
+      "age_unit": "Year",
+      "multi_center_study": true,
+      "project_name": "IMI AETIONOMY",
+      "contact_last_name": "Corvol",
+      "samples_type": [
+        "Blood",
+        "CSF",
+        "Fibroblasts"
+      ],
+      "cohorts_description": "http://www.aetionomy.eu/content/dam/scai/AETIONOMY/Dokumente/Aetionomy_Newsletter4_web.pdf",
+      "notes": "Organising mechanistic knowledge about neurodegenerative diseases for the improvement of drug development and therapy",
+      "created": "2017-01-19T15:01:51.658Z",
+      "dataset_modified": "2017-01-19T00:00:00Z",
+      "secondary_analysis": "Transcriptome array",
+      "planned_arm": "A) PD groups (n=325): Idiopathic PD (n=240), Genetic PD with mutation in Parkin, LRRK2 or GBA (n=40), Subject at risk of PD: first degree relatives or iRBD (n=45). B) AD groups (n=150): MCI/Prodromal AD (n=90), preclinical AD (n=60), Healthy C) Controls (n=180): 90 matching PD, 90 matching AD.",
+      "primary_purpose": "To validate the disease taxonomies proposed by  the AETIONOMY project",
+      "study_type": "OBSERVATIONAL",
+      "informed_consent": true,
+      "funding": "IMI",
+      "_version_": 1579521150901288960,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "contact_email": "svdgeyte@its.jnj.com",
+      "modified": "2017-09-05T11:54:11.401Z",
+      "tags": [
+        "IMI",
+        "Translational Medicine"
+      ],
+      "age_range_lower_limit": 50,
+      "groups": [
+        "IMI Projects"
+      ],
+      "dataset_created": "2016-12-15T00:00:00Z",
+      "study_phase": "0 (observational study)",
+      "id": "12fe461f-dd11-4a6c-8e3d-0871c6b7872b",
+      "reference_publications": [
+        "DOI: 10.1016/S2215-0366(15)00454-X DOI: 10.1016/j.jalz.2016.06.2365 DOI: 10.1016/j.jalz.2016.07.154 DOI: 10.1186/s13195-016-0212-z"
+      ],
+      "total_number_subjects": 6000,
+      "version": "v1.0",
+      "body_system_or_organ_class": "brain",
+      "name": "imi_european_prevention_for_alzheimer_dementia_epad",
+      "study_protocol_description": "Available at http://datacat.uni.lu/additional_files/EPAD_Study_Protocol_Description.htm",
+      "contact_first_name": "Serge",
+      "project_website": "http://ep-ad.org/",
+      "title": "EPAD",
+      "affiliation": "Janssen Research and Development; Janssen Pharmaceutica NV",
+      "data_standards": "CDISC",
+      "organism": "Homo sapiens",
+      "age_unit": "Year",
+      "multi_center_study": true,
+      "project_name": "IMI European Prevention for Alzheimer Dementia (EPAD)",
+      "contact_last_name": "Van der Geyten",
+      "samples_type": [
+        "Blood",
+        "Serum",
+        "Urine",
+        "CSF",
+        "Sputum"
+      ],
+      "business_phone_number": "3214608551",
+      "notes": "European prevention of Alzheimer\u2019s dementia consortium",
+      "indication": "Alzheimer's Disease",
+      "created": "2016-12-19T12:51:03.784Z",
+      "dataset_modified": "2016-12-15T00:00:00Z",
+      "secondary_analysis": "Clinical imaging",
+      "primary_purpose": "To provide a well-phenotyped population (readiness population) for the EPAD PoC trial to minimize trial screening failures",
+      "study_type": "OBSERVATIONAL",
+      "informed_consent": true,
+      "business_address": "Turnhoutseweg 30, B-2340 Beerse, Belgium",
+      "funding": "IMI",
+      "_version_": 1579521151145607168,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "contact_email": "hartmut.ruetten@sanofi.com",
+      "modified": "2017-09-05T11:51:29.326Z",
+      "tags": [
+        "IMI",
+        "Translational Medicine"
+      ],
+      "age_range_lower_limit": 35,
+      "groups": [
+        "IMI Projects"
+      ],
+      "therapeutic_area_standards_disease": "Diabetes",
+      "dataset_created": "2012-05-01T00:00:00Z",
+      "study_phase": "Interim analysis",
+      "id": "cbde7608-371b-4f9c-af76-af48ed803d65",
+      "reference_publications": [
+        "Diabetologia. 2014 Jun;57(6):1132-42; Diabetes Care. 2014;37(3):718-24;"
+      ],
+      "total_number_subjects": 3050,
+      "version": "ongoing",
+      "name": "imi_direct",
+      "study_protocol_description": "Study outline is available in Diabetologia (2014) 57:1132\u20131142.",
+      "contact_first_name": "Hartmut",
+      "project_website": "http://www.direct-diabetes.org",
+      "title": "DIRECT",
+      "affiliation": "Sanofi",
+      "organism": "Homo sapiens",
+      "age_range_upper_limit": 75,
+      "age_unit": "Year",
+      "multi_center_study": true,
+      "project_name": "IMI DIRECT",
+      "contact_last_name": "Ruetten",
+      "samples_type": [
+        "Serum",
+        "Plasma",
+        "Urine",
+        "faeces"
+      ],
+      "business_phone_number": "496930513547",
+      "cohorts_description": "Diabetologia (2014) 57:1132\u20131142",
+      "notes": "Diabetes research on patient stratification",
+      "subjects_number_per_cohort": "2300 pre-diabetics; 850 type 2 Diabetes oatients",
+      "created": "2016-12-09T14:15:25.871Z",
+      "dataset_modified": "2016-09-01T00:00:00Z",
+      "bmi_range": "20-50",
+      "secondary_analysis": "Whole genome sequencing;RNASeq;Clinical imaging;Metabolomics;Proteomics",
+      "primary_purpose": "Identification of risk prediction marker(s) for progression from pre-diabetes to diabetes or diabetes progression",
+      "samples_number": "from all 3.050 subjects",
+      "study_type": "OBSERVATIONAL",
+      "informed_consent": true,
+      "business_address": "Sanofi-Aventis Deutschland GmbH, Industriepark Hoechst, Geb. H823, 65926 Frankfurt a.M.",
+      "funding": "IMI",
+      "_version_": 1579521151072206848,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "contact_email": "pierre@scicross.com",
+      "modified": "2017-09-05T11:54:51.412Z",
+      "tags": [
+        "IMI",
+        "Translational Medicine"
+      ],
+      "groups": [
+        "IMI Projects"
+      ],
+      "therapeutic_area_standards_disease": "MS",
+      "dataset_created": "2016-01-01T00:00:00Z",
+      "study_phase": "On market",
+      "id": "6bd9243b-0368-4cc9-bc92-d00ba1d40b75",
+      "reference_publications": [
+        "http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0162752"
+      ],
+      "total_number_subjects": 20465,
+      "version": "1",
+      "name": "imi_abirisk",
+      "study_protocol_description": "Clinical and anti-drug antibody data from 4 european countries",
+      "contact_first_name": "Pierre",
+      "project_website": "http://www.abirisk.eu",
+      "title": "ABIRISK_MS_Retrospective",
+      "affiliation": "SciCross AB",
+      "organism": "Homo sapiens",
+      "multi_center_study": true,
+      "project_name": "IMI ABIRISK",
+      "contact_last_name": "D\u00f6nnes",
+      "samples_type": [
+        "Serum"
+      ],
+      "business_phone_number": "46703919310",
+      "cohorts_description": "Data collected in Sweden, Austria, Germany and Denmark",
+      "notes": "Anti-Biopharmaceutical Immunization: Prediction and Analysis of Clinical Relevance to Minimize the Risk",
+      "created": "2016-12-09T14:18:49.692Z",
+      "dataset_modified": "2016-07-01T00:00:00Z",
+      "secondary_analysis": "Antidrug antibody assessment",
+      "primary_purpose": "Association of ADA to clinical variables.",
+      "study_type": "OBSERVATIONAL",
+      "informed_consent": true,
+      "funding": "IMI",
+      "_version_": 1579521150772314112,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:20.689Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "dca5daff-ed07-4586-bded-4fba3934e9f5",
+      "platform": "GPL8300",
+      "name": "pubmed_14695408",
+      "title": "pubmed_14695408",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_14695408",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "MRI lytic and no lytic lesions",
+      "created": "2016-04-15T07:58:20.680Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/14695408",
+      "samples_number": "173",
+      "business_address": "Division of Basic Sciences, Myeloma Institute for Research and Therapy, USA",
+      "_version_": 1579521151392022528,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:19.558Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "01639db0-390b-40cd-820f-92dd70a6f837",
+      "platform": "GPL85",
+      "name": "pubmed_15060018",
+      "title": "pubmed_15060018",
+      "organism": "Rattus norvegicus",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_15060018",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Transcriptome analysis in rat",
+      "created": "2016-04-15T07:58:19.548Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/15060018",
+      "samples_number": "122",
+      "business_address": "Genomics Institute of the Novartis Research Foundation, USA",
+      "_version_": 1579521151459131392,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:16.214Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "e731e4f4-539f-47ce-9408-68ffa988c5fb",
+      "platform": "GPL341",
+      "name": "pubmed_15651846",
+      "title": "pubmed_15651846",
+      "organism": "Rattus norvegicus",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_15651846",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Bis-(2-chloroethyl) sulfide exposure time course and dose response in the rat lung",
+      "created": "2016-04-15T07:58:16.204Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/15651846",
+      "samples_number": "154",
+      "business_address": "Cell and Molecular Biology Branch, U.S. Army Medical Research Institute of Chemical Defense, USA",
+      "_version_": 1579521151919456256,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:07.327Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "c7855302-d50b-4634-a97f-9ae37e285f6e",
+      "platform": "GPL201",
+      "name": "pubmed_16251966",
+      "title": "pubmed_16251966",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_16251966",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Mapping Determinants of Human Gene Expression by Regional and Whole Genome Association",
+      "created": "2016-04-15T07:58:07.318Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/16251966",
+      "samples_number": "100",
+      "business_address": "Penn Cardiovascular Institute, Perelman School of Medicine at the University of Pennsylvania, USA",
+      "_version_": 1579521152166920192,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:17.137Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "ef6a37b1-fd05-4287-a40f-cfb41f96cc7e",
+      "platform": "GPL8300",
+      "name": "pubmed_15096622",
+      "title": "pubmed_15096622",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_15096622",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Toxicity from radiation therapy associated with abnormal transcriptional responses to DNA damage",
+      "created": "2016-04-15T07:58:17.128Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/15096622",
+      "samples_number": "171",
+      "business_address": "Medicine/Biochemistry, Stanford University School of Medicine, USA",
+      "_version_": 1579521151766364160,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:13.042Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "fa6a2bfd-bea3-4efb-86f2-d19ed562d83e",
+      "platform": "GPL339",
+      "name": "pubmed_16300373",
+      "title": "pubmed_16300373",
+      "organism": "Mus musculus",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_16300373",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Phosgene exposure in the mouse lung",
+      "created": "2016-04-15T07:58:13.032Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/16300373",
+      "samples_number": "104",
+      "business_address": "Cell and Molecular Biology Branch, U.S. Army Medical Research Institute of Chemical Defense, USA",
+      "_version_": 1579521152236126208,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:12.183Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "bc54a59d-eefd-4d3f-a8f2-a2d984b86ca9",
+      "platform": "GPL200",
+      "name": "pubmed_15772128",
+      "title": "pubmed_15772128",
+      "organism": "Caenorhabditis elegans",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_15772128",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "C. elegans embryonic timecourse in wt and mutant embryos",
+      "created": "2016-04-15T07:58:12.173Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/15772128",
+      "samples_number": "123",
+      "business_address": "Research Business Technology, Pfizer, USA",
+      "_version_": 1579521151978176512,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:14.387Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "c057335e-4536-43ea-a157-46a1776c136e",
+      "platform": "GPL118",
+      "name": "pubmed_16035920",
+      "title": "pubmed_16035920",
+      "organism": "Saccharomyces cerevisiae",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_16035920",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Genetic complexity in yeast transcripts",
+      "created": "2016-04-15T07:58:14.378Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/16035920",
+      "samples_number": "131",
+      "business_address": "Human Biology, Fred Hutchinson Cancer Research Institute, USA",
+      "_version_": 1579521152104005632,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:18.017Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "a2aaeef7-e4a3-4b59-a8b5-7d5d90240126",
+      "platform": "GPL96",
+      "name": "pubmed_15075390",
+      "title": "pubmed_15075390",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_15075390",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "tissue-specific pattern of mRNA expression",
+      "created": "2016-04-15T07:58:18.008Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/15075390",
+      "samples_number": "158",
+      "business_address": "Genomics Institute of the Novartis Research Foundation, USA",
+      "_version_": 1579521151621660672,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:15.358Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "52ec433c-e54e-48b4-bc53-a63b716ebbc8",
+      "platform": "GPL564",
+      "name": "pubmed_15514893",
+      "title": "pubmed_15514893",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_15514893",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Rosetta_Merck_CEPH_Study",
+      "created": "2016-04-15T07:58:15.348Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/15514893",
+      "samples_number": "167",
+      "business_address": "Mathematical and Statistical Sciences, University of Colorado Denver, USA",
+      "_version_": 1579521151856541696,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:11.365Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "0944f81d-29e1-4187-b6f0-8ee10af653eb",
+      "platform": "GPL81",
+      "name": "pubmed_16002470",
+      "title": "pubmed_16002470",
+      "organism": "Mus musculus",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_16002470",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Adult Mouse Brain Gene Expression",
+      "created": "2016-04-15T07:58:11.356Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/16002470",
+      "samples_number": "150",
+      "business_address": "Genetics, Salk Intitute for Biological Sciences, USA",
+      "_version_": 1579521152036896768,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:01.571Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "2f3abc73-de1b-41d4-8dec-811a3da1742a",
+      "platform": "GPL96",
+      "name": "pubmed_17334370",
+      "title": "Lung Cancer_pubmed_17334370",
+      "disease": "Lung Cancer",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Lung Cancer_pubmed_17334370",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Airway Epithelial Gene Expression Diagnostic for the Evaluation of Smokers with Suspect Lung Cancer",
+      "created": "2016-04-15T07:58:01.562Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/17334370",
+      "samples_number": "192",
+      "business_address": "Pulmonary and Critical Care Medicine, Boston University Medical Center, USA",
+      "_version_": 1579521152858980352,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:05.669Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "ae4459d9-de25-4463-b02a-599eb030505b",
+      "platform": "GPL96",
+      "name": "pubmed_17215369",
+      "title": "Parkinson's disease_pubmed_17215369",
+      "disease": "Parkinson's disease",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Parkinson's disease_pubmed_17215369",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Parkinson's disease vs. controls, whole blood",
+      "created": "2016-04-15T07:58:05.660Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/17215369",
+      "samples_number": "105",
+      "business_address": "Center for Biological Sequence Analysis, Technical University of Denmark, Denmark",
+      "_version_": 1579521152796065792,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:06.448Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "37c3414b-9ef1-4154-b098-d56cb7e0a63b",
+      "platform": "GPL96",
+      "name": "pubmed_16885343",
+      "title": "Lung Carcinomas_pubmed_16885343",
+      "disease": "Lung Carcinomas",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Lung Carcinomas_pubmed_16885343",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Gene expression signatures for predicting prognosis of squamous cell lung carcinomas",
+      "created": "2016-04-15T07:58:06.439Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/16885343",
+      "samples_number": "130",
+      "business_address": "Veridex, LLC, USA",
+      "_version_": 1579521152609419264,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:54.909Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "0bca8145-c8b0-4f25-8be1-3c1d4f346cd8",
+      "platform": "GPL2013",
+      "name": "pubmed_17173048",
+      "title": "Prostate Cancer_pubmed_17173048",
+      "disease": "Prostate Cancer",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Prostate Cancer_pubmed_17173048",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Integrative Molecular Concepts Modeling of Prostate Cancer Progression",
+      "created": "2016-04-15T07:57:54.900Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/17173048",
+      "samples_number": "104",
+      "business_address": "Pathology, University of Michigan, USA",
+      "_version_": 1579521152736296960,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:10.585Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "747579ef-634b-4926-ac00-438ffee5cec3",
+      "platform": "GPL96",
+      "name": "pubmed_16436634",
+      "title": "Inflammatory Bowel Disease_pubmed_16436634",
+      "disease": "Inflammatory Bowel Disease",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Inflammatory Bowel Disease_pubmed_16436634",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Comparison of PBMCs in Inflammatory Bowel Disease",
+      "created": "2016-04-15T07:58:10.576Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/16436634",
+      "samples_number": "127",
+      "business_address": "Pharmacogenomic Biomarkers, Wyeth, USA",
+      "_version_": 1579521152314769408,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:09.730Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "cfd42486-ff17-4dbc-ba9c-6cb6489ee37c",
+      "platform": "GPL97",
+      "name": "pubmed_16530701",
+      "title": "Glioma_pubmed_16530701",
+      "disease": "Glioma",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Glioma_pubmed_16530701",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Molecular subclasses of high-grade glioma: prognosis, disease progression, and neurogenesis",
+      "created": "2016-04-15T07:58:09.721Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/16530701",
+      "samples_number": "100",
+      "business_address": "Genentech, Inc., USA",
+      "_version_": 1579521152493027328,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:08.407Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "459c295f-3ed3-44c6-a1d6-194ab1a235c5",
+      "platform": "GPL570",
+      "name": "pubmed_16616334",
+      "title": "pubmed_16616334",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_16616334",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Expression data of glioma samples from Henry Ford Hospital",
+      "created": "2016-04-15T07:58:08.398Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/16616334",
+      "samples_number": "180",
+      "business_address": "Neurological Disorders and Stroke, National Cancer Institute, USA",
+      "_version_": 1579521152554893312,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:00.511Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "9b2b63bf-90fb-433c-971d-a7e1af8b962c",
+      "platform": "GPL97",
+      "name": "pubmed_16478798",
+      "title": "pubmed_16478798",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_16478798",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Comparative profiling in 13 muscle disease groups",
+      "created": "2016-04-15T07:58:00.501Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/16478798",
+      "samples_number": "119",
+      "business_address": "Children's Research Institute, Children's National Medical Center, USA",
+      "_version_": 1579521152422772736,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:02.365Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "eb9236c3-ffda-465a-a71a-9aae8c3e301b",
+      "platform": "GPL96",
+      "name": "pubmed_17010189",
+      "title": "pubmed_17010189",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_17010189",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Influence of beverages on blood gene expression",
+      "created": "2016-04-15T07:58:02.354Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/17010189",
+      "samples_number": "108",
+      "business_address": "Pneumology, Universit\ufffd\ufffdtsspital Basel, Switzerland",
+      "_version_": 1579521152675479552,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:03.202Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "7d4c90e8-5244-4cc9-a706-8bc317600a2b",
+      "platform": "GPL96",
+      "name": "pubmed_17464315",
+      "title": "Malignant Fibrous Histiocytoma_pubmed_17464315",
+      "disease": "Malignant Fibrous Histiocytoma",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Malignant Fibrous Histiocytoma_pubmed_17464315",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Gene Expression Analysis of Soft Tissue Sarcomas: Characterization & Reclassification of Malignant Fibrous Histiocytoma",
+      "created": "2016-04-15T07:58:03.192Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/17464315",
+      "samples_number": "105",
+      "business_address": "National Cancer Center Research Institute, Japan",
+      "_version_": 1579521153049821184,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:55.834Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "632cb670-8ca4-4968-b8e6-ebb1229a49f9",
+      "platform": "GPL96",
+      "name": "pubmed_18297132",
+      "title": "Lung Aenocarcinoma_pubmed_18297132",
+      "disease": "Lung Aenocarcinoma",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Lung Aenocarcinoma_pubmed_18297132",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Gene expression signature of cigarette smoking and its role in lung adenocarcinoma development and survival",
+      "created": "2016-04-15T07:57:55.825Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/18297132",
+      "samples_number": "107",
+      "business_address": "CCR, National Cancer Institute, NIH, USA",
+      "_version_": 1579521153396899840,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:56.631Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "901dc375-41e2-4cbb-9ae3-ce3abbef27c1",
+      "platform": "GPL96",
+      "name": "pubmed_17885619",
+      "title": "Breast Cancer_pubmed_17885619",
+      "disease": "Breast Cancer",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Breast Cancer_pubmed_17885619",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Letrozole (Femara) early response to treatment",
+      "created": "2016-04-15T07:57:56.619Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/17885619",
+      "samples_number": "116",
+      "business_address": "Genomics Institute of the Novartis Research Foundation, USA",
+      "_version_": 1579521153336082432,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:58:04.763Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "e0265425-3060-49a3-9a76-f701bf5a7d4a",
+      "platform": "GPL93",
+      "name": "pubmed_17430594",
+      "title": "Prostate Cancer_pubmed_17430594",
+      "disease": "Prostate Cancer",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Prostate Cancer_pubmed_17430594",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Expression Data from Normal and Prostate Tumor Tissues",
+      "created": "2016-04-15T07:58:04.753Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/17430594",
+      "samples_number": "164",
+      "business_address": "Pathology, The Methodist Hospital, USA",
+      "_version_": 1579521152937623552,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:54.008Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "9704d67f-f120-4d42-bdc2-bb23df72e4dc",
+      "platform": "GPL96",
+      "name": "pubmed_18716133",
+      "title": "AML_pubmed_18716133",
+      "disease": "AML",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "AML_pubmed_18716133",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Prognostic gene signature for normal karyotype AML",
+      "created": "2016-04-15T07:57:53.997Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/18716133",
+      "samples_number": "163",
+      "business_address": "Department of Internal Medicine III, University of Munich, Germany",
+      "_version_": 1579521153460862976,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:45.252Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "e6d69cc0-46c0-4576-b993-fbd1a88d3e03",
+      "platform": "GPL97",
+      "name": "pubmed_17595242",
+      "title": "Diabetes_pubmed_17595242",
+      "disease": "Diabetes",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Diabetes_pubmed_17595242",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Gene expression in PBMCs from children with diabetes",
+      "created": "2016-04-15T07:57:45.241Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/17595242",
+      "samples_number": "117",
+      "business_address": "UTSW Medical Center, USA",
+      "_version_": 1579521153168310272,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:59.550Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "ab40b273-ec06-4e75-af52-5c3fb11fd406",
+      "platform": "GPL538",
+      "name": "pubmed_17850668",
+      "title": "pubmed_17850668",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_17850668",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "A Marfan syndrome gene expression phenotype in cultured skin fibroblasts",
+      "created": "2016-04-15T07:57:59.541Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/17850668",
+      "samples_number": "101",
+      "business_address": "CSE, University of Washington, USA",
+      "_version_": 1579521153278410752,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:58.149Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "43caf437-35b6-48c5-8c67-02c72a34cf6f",
+      "platform": "GPL2895",
+      "name": "pubmed_17582213",
+      "title": "pubmed_17582213",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_17582213",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Activated Cell Death Pathway",
+      "created": "2016-04-15T07:57:58.140Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/17582213",
+      "samples_number": "156",
+      "business_address": "Frontier research center, National institute of radiological sciences, Japan",
+      "_version_": 1579521153119027200,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:47.913Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "e4dee893-c368-4ade-9438-0dbdf00294fb",
+      "platform": "GPL91",
+      "name": "pubmed_17709892",
+      "title": "pubmed_17709892",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_17709892",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Expression data from human skeletal muscle",
+      "created": "2016-04-15T07:57:47.903Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/17709892",
+      "samples_number": "110",
+      "business_address": "Biostatistics, University of Alabama at Birmingham, USA",
+      "_version_": 1579521153222836224,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:50.413Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "15e08158-07f0-447d-af69-fe3a07e4e3a9",
+      "platform": "GPL6255",
+      "name": "pubmed_19059264",
+      "title": "Atherosclerotic Coronary Artery Disease_pubmed_19059264",
+      "disease": "Atherosclerotic Coronary Artery Disease",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Atherosclerotic Coronary Artery Disease_pubmed_19059264",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Circulating Mononuclear Cell Transcriptomes in Patients with Atherosclerotic Coronary Artery Disease",
+      "created": "2016-04-15T07:57:50.403Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/19059264",
+      "samples_number": "153",
+      "business_address": "Cardiology, Academic Medical Center, Netherlands",
+      "_version_": 1579521153525874688,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:34.537Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "dccd908b-dc5d-416b-8dbb-fd0ebe91aca8",
+      "platform": "GPL97",
+      "name": "pubmed_20136355",
+      "title": "Multiple Sclerosis_pubmed_20136355",
+      "disease": "Multiple Sclerosis",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Multiple Sclerosis_pubmed_20136355",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Expression data of multiple sclerosis patients receiving subcutaneous Interferon-beta-1b therapy [U133 A and B]",
+      "created": "2016-04-15T07:57:34.528Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/20136355",
+      "samples_number": "125",
+      "business_address": "Neurology, University, Germany",
+      "_version_": 1579521153974665216,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:30.545Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "22168ea7-f110-4137-a0c2-e5ff21d76078",
+      "platform": "GPL3921",
+      "name": "pubmed_20064372",
+      "title": "Influenza_pubmed_20064372",
+      "disease": "Influenza",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Influenza_pubmed_20064372",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Dynamic responses of primary human bronchial epithelial cells to influenza virus, viral RNA and interferon-beta",
+      "created": "2016-04-15T07:57:30.535Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/20064372",
+      "samples_number": "169",
+      "business_address": "Broad Institute, USA",
+      "_version_": 1579521153848836096,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:51.765Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "f16962c3-d8dc-415d-a626-b46a969623ce",
+      "platform": "GPL6104",
+      "name": "pubmed_19128478",
+      "title": "Celiac Disease_pubmed_19128478",
+      "disease": "Celiac Disease",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Celiac Disease_pubmed_19128478",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Primary human leucocyte RNA expression of unrelated celiac disease cases and unrelated healthy controls.",
+      "created": "2016-04-15T07:57:51.754Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/19128478",
+      "samples_number": "132",
+      "business_address": "QMUL, United Kingdom",
+      "_version_": 1579521153591934976,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:24.691Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "e7a8d2d3-8e3a-4580-b782-9f43bb9384d2",
+      "platform": "GPL570",
+      "name": "pubmed_19584232",
+      "title": "Cancer_pubmed_19584232",
+      "disease": "Cancer",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Cancer_pubmed_19584232",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Comparison between cell lines from 9 different cancer tissue (NCI-60) (Affymetrix U133 Plus 2.0)",
+      "created": "2016-04-15T07:57:24.681Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/19584232",
+      "samples_number": "174",
+      "business_address": "National Institutes of Health, USA",
+      "_version_": 1579521153711472640,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:32.385Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "5af61dad-fb04-4239-a574-6c06edf4b813",
+      "platform": "GPL570",
+      "name": "pubmed_20220182",
+      "title": "Hodgkin Lymphoma_pubmed_20220182",
+      "disease": "Hodgkin Lymphoma",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Hodgkin Lymphoma_pubmed_20220182",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Expression data of diagnostic biopsy samples from Hodgkin lymphoma patients",
+      "created": "2016-04-15T07:57:32.376Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/20220182",
+      "samples_number": "130",
+      "business_address": "Pathology, BC Cancer Agency, Canada",
+      "_version_": 1579521154044919808,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:34:02.875Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "ee1f5917-e44c-4306-8e1e-84b7f2c31da9",
+      "platform": "GPL570",
+      "name": "pubmed_19169254",
+      "title": "Psoriatic_pubmed_19169254",
+      "disease": "Psoriatic",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Psoriatic_pubmed_19169254",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Gene expression data of skin from psoriatic patients and normal controls",
+      "created": "2016-04-15T07:34:02.866Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/19169254",
+      "samples_number": "180",
+      "business_address": "Biostatistics, University of Michigan, USA",
+      "_version_": 1579521153655898112,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:25.583Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "adc304aa-8a9f-445d-80ef-4f80a6064257",
+      "platform": "GPL570",
+      "name": "pubmed_19624809",
+      "title": "Septic Shock_pubmed_19624809",
+      "disease": "Septic Shock",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Septic Shock_pubmed_19624809",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Expression data for derivation of septic shock subgroups",
+      "created": "2016-04-15T07:57:25.573Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/19624809",
+      "samples_number": "130",
+      "business_address": "Pediatrics, Cincinnati Children's Hospital Medical Center, USA",
+      "_version_": 1579521153791164416,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:52.748Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "e9c5323b-b108-4330-804a-68793999b123",
+      "platform": "GPL1261",
+      "name": "pubmed_20133372",
+      "title": "pubmed_20133372",
+      "organism": "Mus musculus",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_20133372",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "The Transcriptome of Nrf2-Deficient Mice in Cigarette Smoke-Induced Emphysematous Changes",
+      "created": "2016-04-15T07:57:52.739Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/20133372",
+      "samples_number": "110",
+      "business_address": "Philip Morris Research Laboratories, Germany",
+      "_version_": 1579521153907556352,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:27.469Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "43fcee76-6cda-407b-89fb-957364ec12c1",
+      "platform": "GPL570",
+      "name": "pubmed_20576155",
+      "title": "Systemic Juvenile Idiopathic Arthritis_pubmed_20576155",
+      "disease": "Systemic Juvenile Idiopathic Arthritis",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Systemic Juvenile Idiopathic Arthritis_pubmed_20576155",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Immature cell populations and an erythropoiesis gene expression signature in systemic juvenile idiopathic arthritis: Implications for pathogenesis",
+      "created": "2016-04-15T07:57:27.460Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/20576155",
+      "samples_number": "154",
+      "business_address": "Rheumatology, Cincinnati Childrens Hospital Medical Center, USA",
+      "_version_": 1579521154314403840,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:46.060Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "4493e018-f217-4d60-84a4-2ecfd8523ebd",
+      "platform": "GPL570",
+      "name": "pubmed_20802022",
+      "title": "Lung Cancer_pubmed_20802022",
+      "disease": "Lung Cancer",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Lung Cancer_pubmed_20802022",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Genome-wide screening of transcriptional modulation in non-smoking female lung cancer in Taiwan",
+      "created": "2016-04-15T07:57:46.050Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/20802022",
+      "samples_number": "120",
+      "business_address": "Department of Public Health, Institute of Epidemiology and Preventive Medicine, National Taiwan University, Taiwan, Taiwan",
+      "_version_": 1579521154376269824,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:21.023Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "11fd564e-7b4b-48e9-be6f-5cf0c515aa3f",
+      "platform": "GPL570",
+      "name": "pubmed_21270110",
+      "title": "Colorectal Cancer_pubmed_21270110",
+      "disease": "Colorectal Cancer",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Colorectal Cancer_pubmed_21270110",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Clinical Significance of Osteoprotegerin Expression in Human Colorectal Cancer",
+      "created": "2016-04-15T07:57:21.014Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/21270110",
+      "samples_number": "104",
+      "business_address": "Department of Bioinformatics, Medical Research Institute, Tokyo Medical and Dental University, Japan",
+      "_version_": 1579521154635268096,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:35.453Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "72698a9a-54eb-4838-ba58-9c1494df0e31",
+      "platform": "GPL570",
+      "name": "pubmed_21177436",
+      "title": "Cancer_pubmed_21177436",
+      "disease": "Cancer",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Cancer_pubmed_21177436",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Gene expression profiling of CEBPA double-, single-mutant and CEBPA wild type AML",
+      "created": "2016-04-15T07:57:35.444Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/21177436",
+      "samples_number": "154",
+      "business_address": "Erasmus University Medical Center (EMC), Netherlands",
+      "_version_": 1579521154438135808,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:47.027Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "e14dfc53-ee2d-42a3-a0e0-d69aaca1a0ba",
+      "platform": "GPL570",
+      "name": "pubmed_20220779",
+      "title": "MDS_pubmed_20220779",
+      "disease": "MDS",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "MDS_pubmed_20220779",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Expression data from bone marrow CD34+ cells of MDS patients and healthy controls",
+      "created": "2016-04-15T07:57:47.018Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/20220779",
+      "samples_number": "200",
+      "business_address": "NDCLS, RDM, University of Oxford, United Kingdom",
+      "_version_": 1579521154124611584,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:37.197Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "5c0f2d36-f697-4c13-bcc6-0db397b251d5",
+      "platform": "GPL96",
+      "name": "pubmed_21191116",
+      "title": "Breast Cancer_pubmed_21191116",
+      "disease": "Breast Cancer",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Breast Cancer_pubmed_21191116",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Expression data from breast cancer FNA biopsies from patients",
+      "created": "2016-04-15T07:57:37.188Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/21191116",
+      "samples_number": "103",
+      "business_address": "Breast medical Oncology, UT MD Anderson, USA",
+      "_version_": 1579521154497904640,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:41.498Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "aece7cb5-b5aa-4e7d-84b9-845591bbc6d0",
+      "platform": "GPL6104",
+      "name": "pubmed_21205870",
+      "title": "pubmed_21205870",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_21205870",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Gene Expression in the Human Mammary Epithelium during Lactation: the Milk Fat Globule Transcriptome through 4 Days",
+      "created": "2016-04-15T07:57:41.489Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/21205870",
+      "samples_number": "139",
+      "business_address": "CNRC, Baylor College of Medicine, USA",
+      "_version_": 1579521154572353536,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:36.240Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "4c9cd1de-71ae-49bf-a249-d28da7b196f2",
+      "platform": "GPL570",
+      "name": "pubmed_20398888",
+      "title": "pubmed_20398888",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_20398888",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Expression levels in immortalized B cells from unrelated individuals and twins undergoing ER stress",
+      "created": "2016-04-15T07:57:36.231Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/20398888",
+      "samples_number": "104",
+      "business_address": "HHMI, University of Pennsylvania, USA",
+      "_version_": 1579521154207449088,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:49.462Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "3df36694-7a70-4bea-a1ab-45d5ff68a7b5",
+      "platform": "GPL6105",
+      "name": "pubmed_20459597",
+      "title": "pubmed_20459597",
+      "organism": "Mus musculus",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_20459597",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Transcriptional networks regulated by drugs of abuse in mouse striatum",
+      "created": "2016-04-15T07:57:49.453Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/20459597",
+      "samples_number": "108",
+      "business_address": "Molecular Neuropharmacology, Institute of Pharmacology PAS, Poland",
+      "_version_": 1579521154261975040,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:33.223Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "0eb13ad2-0fea-418d-9aa0-0730065d2162",
+      "platform": "GPL570",
+      "name": "pubmed_21295523",
+      "title": "Leukemia_pubmed_21295523",
+      "disease": "Leukemia",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Leukemia_pubmed_21295523",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Early Relapse in ALL is identified by Time To Leukemia in NOD/SCID mice and is characterized by a gene signature involving survival pathways",
+      "created": "2016-04-15T07:57:33.214Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/21295523",
+      "samples_number": "197",
+      "business_address": "Woman and Child's Health, University of Padova, Italy",
+      "_version_": 1579521154700279808,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:42.414Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "591fddd7-bc61-47a9-a203-e4a697635285",
+      "platform": "GPL6885",
+      "name": "pubmed_21410935",
+      "title": "Conditional Fear_pubmed_21410935",
+      "disease": "Conditional Fear",
+      "organism": "Mus musculus",
+      "data_type": "Expression profiling by array",
+      "project_name": "Conditional Fear_pubmed_21410935",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Gene networks associated with conditional fear in mice identified using a systems genetics approach",
+      "created": "2016-04-15T07:57:42.405Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/21410935",
+      "samples_number": "198",
+      "business_address": "Molecular and Medical Pharmacology, UCLA, USA",
+      "_version_": 1579521154965569536,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:29.622Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "be4f2069-02cd-4efb-bd79-b8735dead077",
+      "platform": "GPL1321",
+      "name": "pubmed_21715657",
+      "title": "Malaria_pubmed_21715657",
+      "disease": "Malaria",
+      "organism": "Plasmodium falciparum",
+      "data_type": "Expression profiling by array",
+      "project_name": "Malaria_pubmed_21715657",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Genome-wide profiling of diel and circadian gene expression in the malaria vector Anopheles gambiae",
+      "created": "2016-04-15T07:57:29.612Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/21715657",
+      "samples_number": "104",
+      "business_address": "Biological Science, University of Notre Dame, USA",
+      "_version_": 1579521155156410368,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:21.937Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "246e1352-3df6-4d22-b3d3-38bdbbef7ae0",
+      "platform": "GPL570",
+      "name": "pubmed_21379579",
+      "title": "Autism_pubmed_21379579",
+      "disease": "Autism",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Autism_pubmed_21379579",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Autism and increased paternal age related changes in global levels of gene expression regulation",
+      "created": "2016-04-15T07:57:21.927Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/21379579",
+      "samples_number": "146",
+      "business_address": "Center for Neurobiology and Behvior, University of Pennsylvania, USA",
+      "_version_": 1579521154776825856,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:28.396Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "fdb8e97c-7275-4d6c-b12f-45d1fbe6c0d8",
+      "platform": "GPL570",
+      "name": "pubmed_21441172",
+      "title": "COPD_pubmed_21441172",
+      "disease": "COPD",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "COPD_pubmed_21441172",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Induced Sputum Genes Associated With Spirometroc and Radiological Disease Severity in COPD Ex-smokers",
+      "created": "2016-04-15T07:57:28.386Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/21441172",
+      "samples_number": "143",
+      "business_address": "Statistics, GlaxoSmithKline, United Kingdom",
+      "_version_": 1579521155021144064,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:26.440Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "ce927ff3-317f-4074-ab1a-c50775f65be6",
+      "platform": "GPL570",
+      "name": "pubmed_21738952",
+      "title": "Septic Shock_pubmed_21738952",
+      "disease": "Septic Shock",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Septic Shock_pubmed_21738952",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Expression data from validation cohort of children with septic shock",
+      "created": "2016-04-15T07:57:26.431Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/21738952",
+      "samples_number": "103",
+      "business_address": "Pediatrics, Cincinnati Children's Hospital Medical Center, USA",
+      "_version_": 1579521155219324928,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:34:04.577Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "00cf49d4-beb9-40af-bdf0-c77d758de02d",
+      "platform": "GPL570",
+      "name": "pubmed_21619611",
+      "title": "Endometrial Cancers_pubmed_21619611",
+      "disease": "Endometrial Cancers",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Endometrial Cancers_pubmed_21619611",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Gene Expression Analysis of Stage I Endometrial Cancers",
+      "created": "2016-04-15T07:34:04.567Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/21619611",
+      "samples_number": "103",
+      "business_address": "BioMedical Informatics, University of Pittsburgh, USA",
+      "_version_": 1579521155097690112,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:43.410Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "ba325faa-592f-4f3a-bfff-18fb706aacfe",
+      "platform": "GPL1261",
+      "name": "pubmed_21383504",
+      "title": "Glaucoma_pubmed_21383504",
+      "disease": "Glaucoma",
+      "organism": "Mus musculus",
+      "data_type": "Expression profiling by array",
+      "project_name": "Glaucoma_pubmed_21383504",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Gene expression profiling in DBA/2J glaucoma",
+      "created": "2016-04-15T07:57:43.400Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/21383504",
+      "samples_number": "108",
+      "business_address": "The Jackson Laboratory, USA",
+      "_version_": 1579521154846031872,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:44.392Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "0776028a-c0c9-4f7d-be9b-7d50c9eadac9",
+      "platform": "GPL11012",
+      "name": "pubmed_21393243",
+      "title": "pubmed_21393243",
+      "organism": "Mus musculus",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_21393243",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Interorgan coordination of the murine adaptive response to fasting",
+      "created": "2016-04-15T07:57:44.383Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/21393243",
+      "samples_number": "122",
+      "business_address": "Academic Medical Center, Netherlands",
+      "_version_": 1579521154902654976,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:38.058Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "b4e6de35-bcba-45fa-81e1-0c5d0a4c1357",
+      "platform": "GPL570",
+      "name": "pubmed_21781289",
+      "title": "Breast Cancer_pubmed_21781289",
+      "disease": "Breast Cancer",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Breast Cancer_pubmed_21781289",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Integrating Factor Analysis and a Transgenic Mouse Model to Reveal a Peripheral Blood Predictor of Breast Tumors",
+      "created": "2016-04-15T07:57:38.049Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/21781289",
+      "samples_number": "162",
+      "business_address": "Institute for Genome Sciences and Policy, Duke University, USA",
+      "_version_": 1579521155294822400,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:20.121Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "fc4b3203-cc7c-460a-9088-0279c5480337",
+      "platform": "GPL570",
+      "name": "pubmed_23136194",
+      "title": "Renal Cell Carcinoma_pubmed_23136194",
+      "disease": "Renal Cell Carcinoma",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Renal Cell Carcinoma_pubmed_23136194",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Impact of Ischemia and Procurement Conditions on Gene Expression in Renal Cell Carcinoma",
+      "created": "2016-04-15T07:57:20.112Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/23136194",
+      "samples_number": "140",
+      "business_address": "Department of Urology, Indiana University Hospital, USA",
+      "_version_": 1579521155843227648,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:56:25.652Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "3903cfad-d06e-4a81-89a5-51f75a0b7cfc",
+      "platform": "GPL6244",
+      "name": "pubmed_21835902",
+      "title": "Pulmonary Fibrosis_pubmed_21835902",
+      "disease": "Pulmonary Fibrosis",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Pulmonary Fibrosis_pubmed_21835902",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Gene expression profiles based on Pulmonary Artery Pressures in Pulmonary Fibrosis",
+      "created": "2016-04-15T07:56:25.642Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/21835902",
+      "samples_number": "116",
+      "business_address": "Medicine/Surgery, Toronto Lung Transplant Program, Canada",
+      "_version_": 1579521155454205952,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:31.465Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "5d8aaedf-da17-443e-a862-e71927488420",
+      "platform": "GPL9392",
+      "name": "pubmed_22476717",
+      "title": "AIDS_pubmed_22476717",
+      "disease": "AIDS",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "AIDS_pubmed_22476717",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "HIV Infection and Antiretroviral Therapy Have Divergent Effects on Mitochondria in Adipose Tissue",
+      "created": "2016-04-15T07:57:31.456Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/22476717",
+      "samples_number": "166",
+      "business_address": "Clinical Services Program, Leidos Biomedical Research, Inc., USA",
+      "_version_": 1579521155608346624,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:22.830Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "a93eb075-311b-4a1e-8622-f0bfe0da81b3",
+      "platform": "GPL11533",
+      "name": "pubmed_22617837",
+      "title": "pubmed_22617837",
+      "organism": "Mus musculus",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_22617837",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Identification of the core gene-regulatory network that governs the dynamic adaptation of intestinal homeostasis during conventionalization in mice",
+      "created": "2016-04-15T07:57:22.820Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/22617837",
+      "samples_number": "144",
+      "business_address": "Div. Human Nutrition, Wageningen University, Netherlands",
+      "_version_": 1579521155661824000,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:34:03.680Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "cb78a3ee-29ba-482d-a49e-058e6b90ee15",
+      "platform": "GPL570",
+      "name": "pubmed_22763790",
+      "title": "Psoriasis_pubmed_22763790",
+      "disease": "Psoriasis",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Psoriasis_pubmed_22763790",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Expression data from skin biopsy samples from patients with moderate-to-severe psoriasis",
+      "created": "2016-04-15T07:34:03.671Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/22763790",
+      "samples_number": "170",
+      "business_address": "Janssen R&D, USA",
+      "_version_": 1579521155717398528,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:39.653Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "5da52c98-f847-4222-93e5-bd266acffdf7",
+      "platform": "GPL6883",
+      "name": "pubmed_21803418",
+      "title": "pubmed_21803418",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_21803418",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Comprehensive Study of Tobacco Smoke-Related Transcriptome Alterations in Maternal and Fetal Cells",
+      "created": "2016-04-15T07:57:39.643Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/21803418",
+      "samples_number": "183",
+      "business_address": "Molecular Genetics, Institute of Hematology and Transfusion, Czech Republic",
+      "_version_": 1579521155383951360,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:23.910Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "017a4e4c-bd94-4630-adb3-021e90721760",
+      "platform": "GPL6244",
+      "name": "pubmed_22768093",
+      "title": "pubmed_22768093",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_22768093",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Gene expression and genotype in normal heart",
+      "created": "2016-04-15T07:57:23.900Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/22768093",
+      "samples_number": "108",
+      "business_address": "Medicine, University of Otago Christchurch, New Zealand",
+      "_version_": 1579521155784507392,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:57:40.545Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "02a281fe-1ba2-4f7b-99db-5e1ef2cad2ed",
+      "platform": "GPL1261",
+      "name": "pubmed_21858037",
+      "title": "pubmed_21858037",
+      "organism": "Mus musculus",
+      "data_type": "Expression profiling by array",
+      "project_name": "pubmed_21858037",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Expression profile of adult mouse 51 CNS regions",
+      "created": "2016-04-15T07:57:40.536Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/21858037",
+      "samples_number": "102",
+      "business_address": "Center for Developmental Biology, RIKEN, Japan",
+      "_version_": 1579521155548577792,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T07:34:01.982Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "b74a9145-e771-4e27-bcd8-78f3fcccfb05",
+      "platform": "GPL6947",
+      "name": "pubmed_23807251",
+      "title": "Sepsis_pubmed_23807251",
+      "disease": "Sepsis",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Sepsis_pubmed_23807251",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "Whole blood transcriptome of survivors and nonsurvivors of sepsis",
+      "created": "2016-04-15T07:34:01.973Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/23807251",
+      "samples_number": "163",
+      "business_address": "Nepean Clinical School, University of Sydney, Australia",
+      "_version_": 1579521155902996480,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "modified": "2016-04-15T08:04:26.778Z",
+      "tags": [
+        "Expression Array",
+        "GEO",
+        "RNA"
+      ],
+      "groups": [
+        "NCBI GEO"
+      ],
+      "id": "47e4e47f-26a5-48cf-92da-288e36636a28",
+      "platform": "GPL6480",
+      "name": "pubmed_24518246",
+      "title": "Asthma_pubmed_24518246",
+      "disease": "Asthma",
+      "organism": "Homo sapiens",
+      "data_type": "Expression profiling by array",
+      "project_name": "Asthma_pubmed_24518246",
+      "samples_type": [
+        "RNA"
+      ],
+      "notes": "An airway epithelial iNOS-DUOX2-thyroid peroxidase metabolome drives Th1/Th2 nitrative stress in human severe asthma",
+      "created": "2016-04-15T07:34:01.137Z",
+      "pubmed_link": "http://www.ncbi.nlm.nih.gov/pubmed/24518246",
+      "samples_number": "108",
+      "business_address": "Department of Medicine, University of Pittsburgh, USA",
+      "_version_": 1579521156016242688,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null
+    },
+    {
+      "name": "ANTIMICROBIAL COMPOUNDS DATABASE",
+      "title": "ND4BB Translocation",
+      "affiliation": "University of Cagliari",
+      "contact_email": "giuliano.malloci@dsf.unica.it",
+      "contact_first_name": "Giuliano",
+      "contact_last_name": "Malloci",
+      "business_address": "Department of Physics - University of Cagliari Citt. Universitaria, S.P. Monserrato-Sestu Km 0.7 \nI-09042 Monserrato (CA) - ITALY ",
+      "funding": "IMI",
+      "dataset_modified": "2017-06-30",
+      "reference_publications": [
+        "https://doi.org/10.3390/molecules200813997",
+        "https://www.dsf.unica.it/translocation/db/"
+      ],
+      "version": "24.01.2019",
+      "study_type": "Other, calculated chemical properties for all known antimicrobial compounds",
+      "data_standards": "Yes",
+      "multi_center_study": false,
+      "primary_purpose": "Harmonized results for all known antimicrobial compounds",
+      "project_website": "http://www.translocation.eu/",
+      "groups": [
+        "IMI Projects"
+      ],
+      "tags": [
+        "IMI Projects"
+      ],
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null,
+      "is_fairplus_evaluated": true,
+      "fair_indicators": "RDA indicator v0.03",
+      "fair_indicators_href": "https://docs.google.com/spreadsheets/d/1mkjElFrTBPBH0QViODexNur0xNGhJqau0zkL4w8RRAw/edit#gid=1558529297",
+      "fair_score_overall": 36,
+      "fair_score_mandatory_indicators": 47,
+      "fair_score_recommended_indicators": 32,
+      "dataset_link_href": "https://www.dsf.unica.it/translocation/db/",
+      "dataset_link_label": "ND4BB AMR dataset, raw data",
+      "id": "79d1c3a2-104d-11ea-9e31-0050569a29db",
+      "fair_assessment_details": "Post-FAIRification assessment",
+      "fair_assessment_details_link": "https://fairplus.github.io/fairification-results/2019-12-17-ND4BB-post-assessment/"
+    },
+    {
+      "title": "RESOLUTE project",
+      "affiliation": "Research Center for Molecular Medicine of the Austrian Academy of Sciences",
+      "contact_email": "gsuperti@cemm.oeaw.ac.at",
+      "contact_first_name": "Giulio",
+      "contact_last_name": "Superti-Furga",
+      "business_address": "Lazarettgasse 14, AKH BT 25.3, 1090 Vienna, Austria ",
+      "funding": "IMI",
+      "project_website": "https://re-solute.eu",
+      "groups": [
+        "IMI Projects"
+      ],
+      "tags": [
+        "IMI Projects"
+      ],
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null,
+      "is_fairplus_evaluated": true,
+      "fair_indicators": "RDA indicator v0.03",
+      "fair_indicators_href": "https://docs.google.com/spreadsheets/d/1mkjElFrTBPBH0QViODexNur0xNGhJqau0zkL4w8RRAw/edit#gid=1558529297",
+      "fair_score_overall": 82,
+      "fair_score_mandatory_indicators": 82,
+      "fair_score_recommended_indicators": 71,
+      "dataset_link_label": "RESOLUTE transcriptomics, FAIRified sample metadata",
+      "dataset_link_href": "https://www.ncbi.nlm.nih.gov/biosample?LinkName=bioproject_biosample_all&from_uid=545487",
+      "id": "79d2691a-104d-11ea-9e31-0050569a29db",
+      "fair_assessment_details": "Post-FAIRification assessment",
+      "fair_assessment_details_link": "https://fairplus.github.io/fairification-results/2019-12-17-RESOLUTE-post-assessment/"
+    },
+    {
+      "contact_email": "david.henderson@bayer.com",
+      "modified": "2017-09-05T11:53:13.870Z",
+      "tags": [
+        "IMI",
+        "Translational Medicine"
+      ],
+      "age_range_lower_limit": 18,
+      "groups": [
+        "IMI Projects"
+      ],
+      "dataset_created": "2017-01-05T00:00:00Z",
+      "study_phase": "N/A - not a clinical trial",
+      "id": "64f33e4f-0d6d-4062-86c5-9c3db4e3a99a",
+      "total_number_subjects": 322,
+      "version": "V1.0",
+      "dose_description": "Various",
+      "body_system_or_organ_class": "Colon cancer",
+      "name": "imi_oncotrack",
+      "study_protocol_description": "OncoTrack attempts to address the core problems of drug-based cancer therapies: the low response rate of patients to their therapies, as well as its inevitable consequence, the low approval rates of oncology drugs. Only about 10% of cancer drug candidates entering clinical development are granted marketing authorization. Our program is based on two seminal developments: significant progress in our ability to analyze the molecular characteristics of individual tumors and patients (predominantly, but not exclusively, due to advancements in DNA sequencing techniques) and through the development of sophisticated computational models, which can convert this abundance of data into predictions. To address this challenge, the OncoTrack consortium recruited over 300 colon cancer patients (stages I-IV) and developed a pre-clinical platform generating a compendium of drug sensitivity data totalling > 4,000 assays testing 16 clinical drugs on patient-derived in vivo and in vitro models. This large biobank of tumors, organoid culturess and xenografts, with extensive omics data comparing donor tumors and derived models, provides a resource for advancing our understanding of colon cancer.",
+      "contact_first_name": "David",
+      "project_website": "http://www.oncotrack.eu",
+      "category": "Antineoplastics",
+      "title": "OncoTrack",
+      "affiliation": "Bayer AG",
+      "treatment_name": "Drugs tested: Oxaliplatin, Irinotecan, 5-FU, Cetuximab, AZD8931, AZD6244, Afatinib, Avastin, Regorafenib, Nintedanib, mTOR FR, BI836842 (IGF1/2 mAb), AZ1 (Tank-I),  Volitinib",
+      "study_classification": "N/A",
+      "data_standards": "CDISC",
+      "intervention_model": "N/A",
+      "organism": "Homo sapiens",
+      "age_range_upper_limit": 93,
+      "age_unit": "Year",
+      "multi_center_study": true,
+      "project_name": "IMI OncoTrack",
+      "contact_last_name": "Henderson",
+      "samples_type": [
+        "Blood",
+        "Serum",
+        "Plasma",
+        "Tumor Tissue",
+        "Healthy Surrounding Tissue (near tumor)"
+      ],
+      "business_phone_number": "00493040008769",
+      "cohorts_description": "(1) Patients with primary diagnosis of colon cancer  (2) Patients with metastatic colon cancer (3) Validation cohort of patients receiving therapy with 5FU",
+      "notes": "Methods for systematic next generation oncology biomarker development",
+      "treatment_name_standardized": "N/A",
+      "subjects_number_per_cohort": "(1) 261 primary tumor (2) 61 metastatic tumor",
+      "indication": "Carcinoma of the colon",
+      "created": "2017-01-19T11:24:32.474Z",
+      "dataset_modified": "2017-01-05T00:00:00Z",
+      "bmi_range": "N/A",
+      "secondary_analysis": "Whole genome sequencing, Exome sequencing, Transcriptome array, Methylation array, MicroRNA array, RNASeq, Proteomics, Deep-Sequencing",
+      "subjects_composition_details": "No control cohort",
+      "primary_purpose": "Biomarker discovery and validation",
+      "samples_number": ">6000",
+      "study_type": "Observational; Xenografts; 3D cell cultures",
+      "informed_consent": true,
+      "business_address": "Bayer AG,  R&D Policy & Networking, 13342 Berlin, Germany",
+      "funding": "IMI",
+      "_version_": 1579521151311282176,
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null,
+      "is_fairplus_evaluated": true,
+      "fair_indicators": "RDA indicator v0.03",
+      "fair_indicators_href": "https://docs.google.com/spreadsheets/d/1mkjElFrTBPBH0QViODexNur0xNGhJqau0zkL4w8RRAw/edit#gid=1558529297",
+      "fair_score_overall": 35,
+      "fair_score_mandatory_indicators": 46,
+      "fair_score_recommended_indicators": 13,
+      "dataset_link_label": "OncoTrack public sample metadata, FAIRifed v1",
+      "dataset_link_href": "https://owncloud.lcsb.uni.lu/apps/files/?dir=/ONCOTRACK/sample_metadata_ETL/metadata_BSD_JSON&fileid=14712690",
+      "fair_assessment_details": "Post-FAIRification assessment",
+      "fair_assessment_details_link": "https://fairplus.github.io/fairification-results/2019-12-17-OncoTrack-post-assessment/"
+    },
+    {
+      "name": "eTox Sampler Dataset",
+      "affiliation": "Hospital del Mar Research Institute (IMIM), Pompeu Fabra Universitiy (UPF)",
+      "business_address": "Parc de Recerca Biomèdica de Barcelona (PRBB)\nDr. Aiguader, 88\nE-8003 Barcelona\nSpain",
+      "business_fax_number": "+34 93 3160550",
+      "business_phone_number": "+34 93 3160540",
+      "cohorts_description": "Not applicable",
+      "contact_email": "ferran.sanz@upf.edu",
+      "contact_first_name": "Ferran",
+      "contact_last_name": "Sanz Carreras",
+      "data_standards": "No",
+      "funding": "IMI",
+      "groups": [
+        "IMI Projects"
+      ],
+      "id": "484548a2-1ce8-11ea-8039-8c8590c45a21",
+      "informed_consent": false,
+      "multi_center_study": false,
+      "organism": "Different organisms",
+      "primary_purpose": "Toxicology assessment in animal model",
+      "project_website": "http://www.etoxproject.eu/",
+      "reference_publications": [
+        "https://doi.org/10.1038/nrd.2017.177"
+      ],
+      "study_phase": "Preclinical",
+      "study_type": "Pre-clinic. Toxicology studies in animal models",
+      "tags": [
+        "IMI Projects"
+      ],
+      "title": "eTox (Sampler Dataset)",
+      "therapeutic_area_standards_disease": "Not applicable",
+      "treatment_name": "Multiple treatments",
+      "version": "3.0.0",
+      "findable": null,
+      "accessible": null,
+      "interoperable": null,
+      "reusable": null,
+      "is_fairplus_evaluated": true,
+      "fair_indicators": "RDA indicator v0.02",
+      "fair_indicators_href": "https://github.com/RDA-FAIR/FAIR-data-maturity-model-WG/tree/master/results%20of%20preliminary%20analysis/v0.02",
+      "fair_score_overall": 43,
+      "fair_score_mandatory_indicators": 50,
+      "fair_score_recommended_indicators": 53.57,
+      "fair_assessment_details": "Post-FAIRification assessment",
+      "fair_assessment_details_link": "https://fairplus.github.io/fairification-results/2019-12-17-eTOX-post-assessment/",
+      "dataset_link_label": "FAIRified dataset",
+      "dataset_link_href": "https://drive.google.com/drive/u/1/folders/1Ie8vmo3INhkHoyBIoHkfiaareh37oPYF"
+    }
+  ]
+}

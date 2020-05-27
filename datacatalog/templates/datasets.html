@@ -1,0 +1,12 @@
+{% extends 'layout_fluid.html' %}
+{% set active_page = "datasets" %}
+
+
+{% block content %}
+    <h1>Datasets</h1>
+    <ul>
+        {% for dataset in datasets %}
+            <li><a href="{{ url_for("dataset", dataset_id=dataset.id) }}">{{ dataset.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

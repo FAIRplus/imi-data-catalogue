@@ -1,0 +1,92 @@
+{% import 'macros.html' as macros %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>{{ config.get('TITLE', 'π²') }} - {% block title %}Home{% endblock %}</title>
+    {% block meta %}
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% endblock %}
+    {#    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico') }}">#}
+    {% block css %}
+        {% assets "common_css" %}
+            <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
+        {% endassets %}
+        <!-- Material Design fonts -->
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    {% endblock %}
+    <script type="text/javascript">
+        function defer(method) {
+            if (window.jQuery)
+                method();
+            else
+                setTimeout(function () {
+                    defer(method)
+                }, 50);
+        }
+    </script>
+</head>
+<body>
+{% block navbar %}
+    {% with active_page=active_page %}
+        {% include 'navbar.html' %}
+    {% endwith %}
+{% endblock %}
+
+{% block container %}
+    <div class="container" id="main-container">
+        {{ macros.show_flashes() }}
+        {% block content %}{% endblock %}
+    </div>
+{% endblock %}
+{% block extra_content %}{% endblock %}
+{% block js %}
+    {% assets "common_js" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+{% endblock %}
+<footer>
+    {% block footer %}
+        <div class="container">
+            <div class="row ">
+                <div class="col-xs-2 logo">
+                    <span class="helper"></span><img src="/static/public/images/EU_logo.jpg" alt="eu logo"/>
+                </div>
+                <div class="col-xs-2 logo">
+                    <span class="helper"></span><img src="/static/public/images/IMI_logo.png" alt="imi logo"/>
+                </div>
+
+
+                <div class="col-xs-2 logo">
+                    <span class="helper"></span><img src="/static/public/images/Elixir_LU.svg"
+                                                     alt="elixir luxembourg logo"/>
+                </div>
+                <div class="col-xs-2 logo">
+                    <span class="helper"></span><img src="/static/public/images/etriks.png" alt="etriks logo"/>
+                </div>
+                <div class="col-xs-2 logo">
+                    <span class="helper"></span><img src="/static/public/images/fairplus-logo.png" alt="fairplus logo"/>
+                </div>
+                <div class="col-sm-2 logo">
+                    <span class="helper"></span><img src="/static/public/images/efpia_logo.png"   alt="efpia logo"/>
+                </div>
+
+            </div>
+        </div>
+
+        <p style='text-align:center;padding-bottom: 20px'>
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+                <img style='width:88px; border-width:0'
+                     alt="Creative Commons License"
+                     src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"/></a><br/>This
+            work is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons
+                Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+        </p>
+    {% endblock %}
+</footer>
+</body>
+</html>
