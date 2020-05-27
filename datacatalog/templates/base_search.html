@@ -1,0 +1,175 @@
+{% extends 'layout.html' %}
+{% set query = request.args.query %}
+{% set entity_plural_name =  config.get('entities').get(entity_name).plural_name() %}
+{% macro render_facets(query, sort_by, order, facet, facets) %}
+    {% set facet_field = results.facets['facet_fields'][facet.field_name] %}
+    <div class="row facet">
+        <h3>{{ facet.label }}</h3>
+        <ul>
+            {% for i in range(0,  [facet_field | count, 20] | min, 2) %}
+                {% set facet_value = facet_field[i] %}
+                {% set facet_value_count = facet_field[i + 1] %}
+                {% set facet_selected = facet_value in facet.values %}
+                {% if facet_value_count != 0 %}
+                    {% if facet_selected %}
+                        <li class="facet-option facet-option-selected">
+                            <a href="{{ macros.build_link(query, sort_by, order, facets, none, (facet.field_name, facet_value), no_default) }}">{{ facet_value }}
+                                ({{ facet_value_count }})
+                                <p class="facet-remove pull-right">
+                                    <i class="material-icons text-primary">cancel</i>
+                                </p>
+                            </a>
+
+                        </li>
+                    {% else %}
+                        <li class="facet-option">
+                            <a href="{{ macros.build_link(query, sort_by, order, facets, (facet.field_name, facet_value), none, no_default) }}">{{ facet_value }}
+                                ({{ facet_value_count }})</a>
+                        </li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endmacro %}
+
+{% macro render_facets_range(query, sort_by, order, facet, facets) %}
+    {% set facet_field = results.facets['facet_ranges'][facet.field_name] %}
+    {% set facet_field_counts = facet_field['counts'] %}
+    <div class="row facet">
+        <h3>{{ facet.label }}</h3>
+        <ul>
+            {% for start, end in facet.range.iter_intervals() %}
+                {% set facet_value_count = facet_field_counts[loop.index0 * 2 + 1] %}
+                {% set facet_value = "[{} TO {}]".format(start, end) %}
+                {% set facet_selected = facet_value in facet.values %}
+                {% if facet_value_count != 0 %}
+                    {% if facet_selected %}
+                        <li class="facet-option  facet-option-selected">
+                            <a href="{{ macros.build_link(query, sort_by, order, facets, none, (facet.field_name, facet_value), no_default) }}">{{ start }}
+                                → {{ end }} ({{ facet_value_count }})
+                                <p class="facet-remove pull-right">
+                                    <i class="material-icons text-primary">cancel</i>
+                                </p>
+                            </a>
+
+                        </li>
+                    {% else %}
+                        <li class="facet-option">
+                            <a href="{{ macros.build_link(query, sort_by, order, facets, (facet.field_name, facet_value), none, no_default) }}">{{ start }}
+                                → {{ end }} ({{ facet_value_count }})
+                            </a>
+
+                        </li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% if facet.range.other == 'after' and facet_field["after"] != 0 %}
+                {% set facet_value = "[{} TO *]".format(facet.range.end) %}
+                {% set facet_selected = facet_value in facet.values %}
+                {% if facet_selected %}
+                    <li class="facet-option facet-option-selected">
+                        <a href="{{ macros.build_link(query, sort_by, order, facets, none, (facet.field_name, facet_value), no_default) }}">≥ {{ facet.range.end }}
+                            ({{ facet_field["after"] }})
+                            <p class="facet-remove pull-right">
+                                <i class="material-icons text-primary">cancel</i>
+                            </p>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="facet-option">
+                        <a href="{{ macros.build_link(query, sort_by, order, facets, (facet.field_name, facet_value), none, no_default) }}">≥ {{ facet.range.end }}
+                            ({{ facet_field["after"] }})
+                        </a>
+                    </li>
+                {% endif %}
+            {% endif %}
+        </ul>
+    </div>
+{% endmacro %}
+
+{% block content %}
+    <div class="row">
+        <h1 class="col-lg-6 col-md-12" id="title-home">Search {{ entity_plural_name }}</h1>
+        <form
+                id="search-form" method="GET"
+                role="form" class="col-md-12 form-horizontal">
+            <div class="form-group">
+                <div class="row">
+
+                    <div style="margin-right:30px;" class="col-md-5 col-sm-11 col-xs-11 input-group pull-left">
+                        <input title="query" placeholder="enter your query here" type="search" name="query"
+                               id="query" class="form-control"
+                               value="{{ query }}"/>
+                        <span class="input-group-addon"><button type="submit"
+                                                                class="btn btn-primary btn-raised"
+                                                                id="search-button"><i
+                                class="material-icons">search</i>
+                        </button>
+                        </span>
+                    </div>
+
+
+                    <label for="sort_by" class="pull-left control-label">Sort by</label>
+
+                    <select style="margin-left:5px;width:auto;" id="sort_by" name="sort_by"
+                            class="pull-left form-control">
+                        <option {% if not selected_sort %}selected="selected" {% endif %} value="">relevance</option>
+                        {% for value in sort_options %}
+                            {% if sort_labels and sort_labels[loop.index0] %}
+                                <option {% if value== selected_sort %}selected="selected" {% endif %}
+                                        value="{{ value }}">{{ sort_labels[loop.index0] }}
+                                </option>
+                            {% else %}
+                                <option {% if value== selected_sort %}selected="selected" {% endif %}
+                                        value="{{ value }}">{{ value }}
+                                </option>
+                            {% endif %}
+
+                        {% endfor %}
+                    </select>
+                    <label style="margin-left:25px;" for="order" class="pull-left control-label">Order</label>
+
+                    <select style="margin-left:5px; margin-right:5px;width:auto;" id="order" name="order"
+                            class="pull-left form-control">
+                        <option {% if sort_order=='asc' %}selected="selected"{% endif %}>asc</option>
+                        <option {% if sort_order=='desc' %}selected="selected"{% endif %}>desc</option>
+                    </select>
+                </div>
+            </div>
+            {% for facet in facets if facet.values %}
+                {% for value in facet.values %}
+                    <input type="hidden" name="{{ facet.field_name }}" value="{{ value }}"/>
+                {% endfor %}
+            {% endfor %}
+        </form>
+
+
+    </div>
+    <div class="row"><p class="pull-right">{{ results.hits }}
+        {{ results.hits | pluralize(singular=entity_name, plural=entity_plural_name) }}
+        found</p>
+    </div>
+    <div class="row">
+
+        <div class="facets col-md-4 hidden-sm hidden-xs">
+            {% for facet in facets %}
+                {% if facet.range %}
+                    {{ render_facets_range(query, selected_sort, sort_order, facet, facets) }}
+                {% else %}
+                    {{ render_facets(query, selected_sort, sort_order, facet, facets) }}
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div id="search-results" class="col-md-8">
+
+            <div class="row">
+
+                {% block search_results %}{% endblock %}
+                {{ macros.show_pagination(pagination, query, sort_order, selected_sort, facets) }}
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

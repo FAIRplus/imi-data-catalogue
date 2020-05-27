@@ -1,0 +1,56 @@
+{% set active_page = active_page|default('datasets') -%}
+
+<div class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target=".navbar-responsive-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">{{ config.get('TITLE', 'π²') }}</a>
+        </div>
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+            <ul class="nav navbar-nav">
+                {% if show_entities %}
+                    {% for entity_name_item, entity_class in config.get('entities').items() %}
+                        <li
+                                {% if entity_name== entity_name_item %} class="active" {% endif %}><a
+                                href="{{ url_for('entities_search', entity_name=entity_name_item) }}">{{ entity_class.plural_name() | title }}</a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+                {% for href, id, caption in navigation_bar %}
+                    <li
+                            {% if id== active_page %} class="active" {% endif %}><a
+                            href="{{ url_for(href) }}">{{ caption|e }}</a></li>
+                {% endfor %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if config.get('SHOW_LOGIN') %}
+                    {% if current_user.is_authenticated %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">{{ current_user }} <span class="caret"></span></a>
+                            <ul class="dropdown-menu dropdown-menu-left">
+                                <li class="dropdown-item" id="logout_btn"><a href="{{ url_for('logout') }}">Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li><a href="{{ url_for('login', next=request.path) }}">Login</a></li>
+                    {% endif %}
+                {% endif %}
+                {% block submit_link %}
+                    {% if config.get('SURVEY_LINK', None) is not none %}
+                        <li>
+                            <a href="{{ config.get('SURVEY_LINK', None) }}">Submit {{ config.get('ENTITY_NAME', 'dataset') }}</a>
+                        </li>
+                    {% endif %}
+                {% endblock %}
+            </ul>
+        </div>
+    </div>
+</div>

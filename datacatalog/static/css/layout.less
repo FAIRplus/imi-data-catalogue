@@ -1,0 +1,353 @@
+/*
+ * DataCatalog
+ * Copyright (C) 2020  University of Luxembourg
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+@import "../vendor/node_modules/bootstrap-material-design/less/bootstrap-material-design.less";
+
+@brand-primary: @blue-grey-500;
+@alternative-color: @orange-100;
+@labels-color: @blue-grey-300;
+@footer-color: white;
+
+footer {
+  background-color: @footer-color;
+  //padding: 50px;
+  clear: both;
+}
+
+footer .logo {
+  //background-color: red;
+  height: 200px;
+  white-space: nowrap;
+
+}
+
+@media (max-width: 768px) {
+  .logo.col-xs-1, .logo.col-xs-2, .logo.col-xs-3 {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+footer img {
+  vertical-align: middle;
+  //max-height: 200px;
+  //max-width: 160px;
+  width: 100%;
+}
+
+footer .helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.sorting_asc, .sorting_desc {
+  font-weight: bold;
+}
+
+.form-group .help-block {
+  display: block;
+  position: inherit;
+}
+
+.dataTables_filter label {
+  color: black;
+}
+
+.label.label-default .label.label-primary {
+  background-color: @labels-color;
+}
+
+.large {
+  width: 60%;
+}
+
+.modal-body {
+  overflow-x: hidden;
+}
+
+.modal-footer button {
+  margin-right: 20px !important;
+}
+
+.filter ul {
+  list-style: none;
+}
+
+.red {
+  color: #B71C1C;
+}
+
+.grey {
+  color: #9E9E9E;
+}
+
+.transparent-grey {
+  color: rgba(158, 158, 158, 0.59);
+}
+
+.navigation-arrow i {
+  font-size: 200px
+}
+
+.navigation-arrow {
+  position: fixed;
+  top: 20%;
+}
+
+.fixed-right {
+  right: 0px;
+}
+
+.disabled-link {
+  pointer-events: none;
+  cursor: default;
+}
+
+.fixed-bottom-right {
+  position: fixed;
+  right: 30px;
+  bottom: 20px;
+}
+
+.left-side-bar {
+  //background-color: rgb(255, 248, 226);;
+  //box-shadow: 0 0px 17px 0 rgba(0, 0, 0, 0.2), 0 0px 20px 0 rgba(0, 0, 0, 0.19);
+  //border-radius: 2px;
+  //border: 1px solid orange;
+  margin: 0;
+  padding: 0;
+}
+
+.left-side-bar h2 {
+  padding-left: 10px;
+}
+
+.left-side-bar ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.left-side-bar li:hover, .left-side-bar li.selected {
+  background-color: rgba(119, 158, 146, 0.25);
+  border-right: 1px solid rgba(119, 158, 146, 1);
+}
+
+.left-side-bar li {
+  box-shadow: 0 0px 0 0 rgba(0, 0, 0, 0.2), 0 2px 0 0 rgba(119, 158, 146, 0.25);
+  padding-left: 30px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+}
+
+#search-button {
+  padding: 2px;
+  margin: 10px 0 0;
+}
+
+#search-form {
+  border-radius: 20px;
+  box-shadow: none;
+  border: 1px solid #bbb;
+  background-color: white;
+  padding: 0px 0px 20px 50px;
+  margin-bottom: 20px;
+}
+
+.pagination > .active > a, .pagination > .active > a:hover {
+  background-color: @brand-primary;
+  border-color: darken(@brand-primary, 20)
+}
+
+.pagination > li > a {
+  color: @brand-primary;
+}
+
+.dataset-card {
+  column-count: 3;
+  -moz-column-count: 3;
+  -webkit-column-count: 3;
+  list-style: none;
+}
+
+.panel-dataset h3 {
+  margin-top: 0;
+
+}
+
+.facets {
+  padding-left: 0px;
+}
+
+.facet {
+  background-color: white;
+  margin: 0 0 40px;
+  border: 1px solid @grey-300;
+  padding: 0;
+  border-radius: 10px;
+}
+
+.facet h3 {
+  background-color: @brand-primary;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  color: white;
+  padding: 5px 0 5px 0;
+  margin: 0;
+  text-align: center;
+  //font-weight: bold;
+  font-size: 1.2em;
+}
+
+.facet ul {
+  list-style: none;
+  padding: 0 0 0 20px;
+  margin-top: 20px;
+}
+
+.facet-option-selected {
+  background-color: @alternative-color;
+  border-left: 5px solid @brand-primary;
+  margin-left: -10px;
+  padding-left: 5px;
+  padding-right: 0;
+  border-bottom: 0
+}
+
+.facet-option {
+  clear: both;
+}
+
+.facet-remove i {
+  font-size: 18px;
+}
+
+.facet-remove {
+  margin: 0;
+}
+
+.panel-footer {
+  background-color: @alternative-color;
+  padding: 6px 0 0;
+}
+
+.panel-body h3 a {
+  color: black;
+}
+
+.panel-dataset .panel-body {
+  padding-bottom: 5px;
+}
+
+.panel-heading {
+  background-color: @alternative-color !important;
+
+}
+
+.panel-flat {
+  border-radius: 2px;
+  box-shadow: none;
+  border: 1px solid @alternative-color;
+}
+
+.panel-dataset {
+  border-top-left-radius: 10px;
+}
+
+dt {
+  float: left;
+  clear: left;
+  width: 15em;
+  margin-top: 15px;
+  font-weight: normal;
+  font-style: italic;
+}
+
+dd {
+  float: left;
+  margin-top: 15px;
+  margin-left: 3px;
+}
+
+.notes {
+  font-size: 1.2em;
+  font-style: italic;
+
+}
+
+.fairResultsStamp {
+  width: 55px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  transform: rotate(20deg);
+  display: block;
+}
+
+.fairResultsStamp img {
+  width: 55px;
+}
+
+.datasetDetails .fairResultsStamp img {
+  width: 100px;
+}
+
+.datasetDetails .fairResultsStamp {
+  top: 45px;
+  right: 45px;
+  width: 100px;
+}
+
+.FAIR_rank span {
+  display: block;
+  float: left;
+  width: 23px;
+  height: 28px;
+  border: 1px solid #ccc;
+  text-align: center;
+  padding-top: 2px;
+  margin-right: 0;
+  color: #777;
+  font-size: 16px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.good {
+  background-color: rgb(198, 255, 202);
+}
+
+
+.bad {
+  background-color: #FF7365;
+}
+
+
+.medium {
+  background-color: @alternative-color;
+}
+
+.default {
+  background-color: white;
+}
+
+.datasetDetails {
+  position: relative;
+}

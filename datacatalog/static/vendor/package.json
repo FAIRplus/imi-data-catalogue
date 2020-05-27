@@ -1,0 +1,21 @@
+{
+  "name": "datacatalog",
+  "version": "1.0.0",
+  "description": "datacatalog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Valentin Grouès",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "3.3.7",
+    "bootstrap-material-design": "0.5.10",
+    "chart.js": "2.x.x",
+    "handlebars": "^4.0.6",
+    "jquery": "3.1.1",
+    "jquery-ui-dist": "1.12.1",
+    "typeahead.js": "^0.11.1",
+    "x-editable": "1.x.x"
+  }
+}

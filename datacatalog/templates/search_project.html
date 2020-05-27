@@ -1,0 +1,36 @@
+{% extends 'base_search.html' %}
+{% set entity_controller = "project_details" %}
+{% set entity_name = "project" %}
+{% set search_controller = "search_entities" %}
+{% set entities = results.entities %}
+{% block description %}Projects{% endblock %}
+
+
+
+
+{% block search_results %}
+    {% set start_rank = (pagination.page - 1) * pagination.per_page %}
+    {% for project in entities %}
+
+        <div class="panel panel-default panel-flat panel-dataset">
+
+            <div class="panel-body" style="position:relative">
+                <h3>
+                    <a href="{{ url_for('entity_details', entity_name=entity_name, entity_id=project.id) }}">{{ project.title| truncate(55, True) }}</a>
+                </h3>
+                <p>{{ project.summary | default("", True)|truncate(500, True) }}</p>
+                <p style="position:absolute;top:0;right:0;padding:2px;"><span>{{ loop.index + start_rank }}</span></p>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="dataset-card">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+
+{% endblock %}

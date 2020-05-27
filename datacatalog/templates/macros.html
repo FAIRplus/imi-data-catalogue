@@ -1,0 +1,199 @@
+{% macro show_flashes() %}
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if category == 'error' or category is none %}
+                    <div class="alert alert-dismissible alert-danger" role="alert">
+                {% else %}
+                    <div class="alert alert-{{ category }}" role="alert">
+                {% endif %}
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ message }}</strong>
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+{% endmacro %}
+
+
+{% macro split_labels(list, type="primary") %}
+    {% for value in list %}
+        <span class="label label-{{ type }}">{{ value | urlize }}</span>
+    {% endfor %}
+{% endmacro %}
+
+{% macro split_values(list) %}
+    <span>{{ list | join(", ")| urlize }}</span>
+{% endmacro %}
+
+
+
+
+{% macro show_pagination(pagination, query, sort_order, selected_sort, facets=[]) %}
+    <div class="row text-center">
+        <ul class="pagination">
+
+            {% if pagination.has_prev %}
+                <li>
+                    <a href="{{ build_link(query, selected_sort, sort_order, facets, none, none) }}&page={{ pagination.page - 1 }}">«</a>
+                </li>
+            {% else %}
+                <li class="disabled"><a href="javascript:void(0)">«</a></li>
+            {% endif %}
+            {%- for page in pagination.iter_pages() %}
+                {% if page %}
+                    {% if page != pagination.page %}
+                        <li>
+                            <a href="{{ build_link(query, selected_sort, sort_order, facets, none, none) }}&page={{ page }}">{{ page }}</a>
+                        </li>
+                    {% else %}
+                        <li class="active"><a
+                                href="{{ build_link(query, selected_sort, sort_order, facets, none, none) }}&page={{ page }}">{{ page }}</a>
+                        </li>
+                    {% endif %}
+                {% else %}
+                    <li><span class=ellipsis>…</span></li>
+                {% endif %}
+            {%- endfor %}
+
+            {#                <li href="{{ url_for_other_page(pagination.page + 1) }}">»</li>#}
+            {% if pagination.has_next %}
+                <li>
+                    <a href="{{ build_link(query, selected_sort, sort_order, facets, none, none) }}&page={{ pagination.page + 1 }}">»</a>
+                </li>
+            {% else %}
+                <li class="disabled"><a href="javascript:void(0)">»</a></li>
+            {% endif %}
+        </ul>
+
+    </div>
+{% endmacro %}
+
+
+{%- macro build_link(query, sort_by, order, facets, to_add, to_remove, no_defaults) %}
+
+    {{ url_for('search', query=query, sort_by=sort_by, order=order) }}
+    {%- for facet in facets %}
+        {%- if facet.using_default and to_remove[0]==facet.field_name %}&no_default={{ facet.field_name }}
+            {%- else %}{%- for value in facet.values %}
+                {%- set not_to_remove = not to_remove or to_remove[0]!=facet.field_name or to_remove[1]!=value -%}
+                {%- if not_to_remove %}&{{ facet.field_name }}={{ value | urlencode }}{% endif -%}
+            {% endfor -%}
+        {% endif -%}
+    {% endfor -%}{%- for no_default in no_defaults %}&no_default={{ no_default }}{% endfor -%}
+    {%- if to_add %}&{{ to_add[0] }}={{ to_add[1] | urlencode }}{% endif -%}
+
+{% endmacro -%}
+
+
+
+
+{% macro show_field(value, label, link=None, long=False, list=False, reference_list=False) %}
+    <dt>{{ label }}</dt>
+    <dd>
+        {% if value is not none %}
+            {% if not long %}{% if link %}
+                <a href="{{ link }}">{{ value }}</a>
+                {% else %}{% if list %}{{ split_labels(value) }}{% elif reference_list %}
+                    {{ split_values(value) }}{% else %}{{ value | urlize }}
+                {% endif %}{% endif %}
+            {% else %}
+                <blockquote>{{ value | urlize }}</blockquote>
+            {% endif %}
+        {% else %}
+            -
+        {% endif %}
+    </dd>
+{% endmacro %}
+
+{% macro show_field_text(value, label, list=False) %}
+    {{ show_field(value, label, False, list=list) }}
+{% endmacro %}
+
+{% macro show_field_percentage(value, label, list=False) %}
+    {{ show_field(value | string + '%', label, False, list=list) }}
+{% endmacro %}
+
+{% macro show_field_list(value, label, reference_list=False) %}
+    {% if  value %}
+        {{ show_field(value, label, False, reference_list=reference_list) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro show_field_text_long(value, label) %}
+    {{ show_field(value, label, False, False) }}
+{% endmacro %}
+
+{% macro show_field_email(value, label, link) %}
+    {% if value is not none %}
+        {{ show_field_link(value, label, "mailto:"+link) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro show_field_link(value, label, link) %}
+    {{ show_field(value, label, link) }}
+{% endmacro %}
+
+
+{% macro form_group(field) -%}
+    <div class="form-group required">
+        <label for="{{ field.id }}" class="form-control-label">{{ field.label }}</label>
+        {% if field.errors %}
+            {{ field(class_="form-control is-invalid") }}
+        {% else %}
+            {{ field(class_="form-control") }}
+        {% endif %}
+        {% if field.errors and field.type != 'RecaptchaField' %}
+            <div class="invalid-feedback red">
+                {{ field.errors[0] }}
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro quick_form(form) -%}
+    <form class="form" method="POST">
+        {% for field in form %}
+            {% if field.type in ('HiddenField', 'CSRFTokenField') %}
+                {{ field() }}
+            {% elif field.type == 'SubmitField' %}
+                {{ field(class_="btn btn-default btn-primary") }}
+            {% elif field.type == 'TextAreaField' %}
+                <label for="{{ field.id }}" class="form-control-label">{{ field.label }}</label>
+                {{ field(class_="form-control ", rows='4',cols='15')|safe }}
+
+            {% else %}
+                {{ form_group(field) }}
+            {% endif %}
+        {% endfor %}
+    </form>
+{% endmacro %}
+
+
+{% macro start_panel(label, id, expanded=False) %}
+
+    <div class="panel panel-default panel-flat">
+    <div class="panel-heading" role="tab" id="{{ id }}-heading">
+        <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#{{ id }}-fields"
+               aria-expanded="true" aria-controls="{{ id }}-fields">
+                {{ label }}
+            </a>
+        </h4>
+    </div>
+    <div id="{{ id }}-fields"
+         class="panel-collapse collapse{% if not expanded %} start-collapsed{% else %} start-visible{% endif %}"
+         role="tabpanel"
+         aria-labelledby="{{ id }}-headings">
+    <div class="panel-body">
+    <dl>
+
+{% endmacro %}
+
+{% macro end_panel() %}
+    </dl>
+    </div>
+    </div>
+    </div>
+{% endmacro %}

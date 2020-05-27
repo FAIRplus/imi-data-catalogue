@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% set active_page = "request_access" %}
+
+{% block title %} {% endblock %}
+
+{% block content %}
+
+
+
+    <div class="well box container">
+
+        <div class="col-md-11">
+            <div class="align-items-center justify-content-center">
+
+                <h3>Request Access</h3>
+
+
+                <form action="{{ url_for('request_access', entity_name='dataset', entity_id=dataset.id) }}" method=post>
+
+                    {{ macros.quick_form(form) }}
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

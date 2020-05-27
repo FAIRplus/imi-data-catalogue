@@ -1,0 +1,110 @@
+import os
+
+class Config(object):
+    SECRET_KEY = 'fdsaf87s@#$d98g7fsd89g7w89e$#@%#@$7f9s8dv7sd9frw%R#@$%98e7fwefds7897ws98wf7ew8'
+    TITLE = 'Data Catalog'
+    CKAN_URL = '###########'
+
+    CKAN_DIRECT_MAPPING = {
+	"Affiliation": "affiliation",
+	"Therapeutic Area Standards  Disease Area  if applicable": "therapeutic_area_standards_disease",
+	"Organism": "organism",
+	"PubMed": "pubmed_link",
+	"Type of Samples": "samples_type",
+	"Number of Samples": "samples_number",
+	"Disease": "disease",
+	"Contact Address": "business_address",
+	"Platform": "platform",
+	"Indication": "indication",
+	"Type of Data": "data_type",
+	"Description of Cohorts  if multi cohorts": "cohorts_description",
+	'Dataset Title': "title",
+	'Email': "contact_email",
+	'Study Type': "study_type",
+	'Funding': "funding",
+	'Version': "version",
+	'Primary Purpose': "primary_purpose",
+	'Secondary Analysis': "secondary_analysis",
+	'Informed Consent': "informed_consent",
+	'Standardized Treatment Name': "treatment_name_standardized",
+	'Study Classification': "study_classification",
+	'First Name': "contact_first_name",
+	'Multi center Study': "multi_center_study",
+	'Type of Samples Collected': "samples_type",
+	"Name of Treatment": "treatment_name",
+	"Dose Description": "dose_description",
+	"Study Phase": "study_phase",
+	"Business Phone Number": "business_phone_number",
+	"Study Protocol Description": "study_protocol_description",
+	"BMI Range": "bmi_range",
+	"Project Website": "project_website",
+	"Last Name": "contact_last_name",
+	"Intervention Model": "intervention_model",
+	"Business Address": "business_address",
+	"Detail Subject Composition": "subjects_composition_details",
+	"Data Standards Implemented": "data_standards",
+	"Body System or Organ Class": "body_system_or_organ_class",
+	"Age Unit  of the above range": "age_unit",
+	"Total Number of  Human  Subjects": "total_number_subjects",
+	"Number of Samples Collected": "samples_number",
+	"Age Range  Upper Llimit  of Study Participants": "age_range_upper_limit",
+	"Age Range  Low Limit  of Study Participants": "age_range_lower_limit",
+	"Number of Subjects in Each Cohorts  if multi cohorts": "subjects_number_per_cohort",
+	"Reference Publications": "reference_publications",
+	"Total Number of Subjects": "total_number_subjects",
+	"Category": "category",
+	"Planned Arm  Description of Sub cohorts": "planned_arm",
+	"Date of Creation of the dataset": "dataset_created",
+	"Date of the Last Update of the dataset": "dataset_modified"
+
+    }
+    CKAN_TO_SKIP = ["Email Address", "Project Name"]
+    FACETS_ORDER = [
+        ("organism", "Organism"),
+        ("tags", "Tags"),
+        ("secondary_analysis", "Secondary Analysis"),
+        ("therapeutic_area_standards_disease", "Therapeutic area or disease"),
+        ("groups", "Groups"),
+    ]
+    RESULTS_PER_PAGE = 8
+    SURVEY_LINK = "/limesurvey/?r=survey/index&sid=779596"
+    # Flask-Mail Configuration
+    MAIL_SERVER = 'localhost'
+    MAIL_PORT = 25
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = False
+
+    RECAPTCHA_PUBLIC_KEY = '${RECAPTCHA_PUBLIC_KEY}'
+    RECAPTCHA_PRIVATE_KEY = "${RECAPTCHA_PRIVATE_KEY}"
+    TEST_GEO_STUDY_LIST_PATH = "tests/geo_studies_test/test.txt"
+    #LDAP Configuration
+    LDAP_HOST = os.environ.get('LDAP_HOST')
+    LDAP_USERNAME = os.environ.get('LDAP_USERNAME')
+    LDAP_PASSWORD = os.environ.get('LDAP_PASSWORD')
+    LDAP_BASE_DN = os.environ.get('LDAP_BASE_DN')
+    LDAP_USER_GROUPS_FIELD = os.environ.get('LDAP_USER_GROUPS_FIELD')
+    AUTHENTICATION_DICT = {LDAP_USERNAME: LDAP_PASSWORD}
+
+class ProdConfig(Config):
+    # not used for local dev
+    pass
+
+
+class DevConfig(Config):
+    DEBUG = True
+    CACHE_CONFIG = {'CACHE_TYPE': 'null', 'CACHE_DIR': "cache",
+                    'CACHE_THRESHOLD': 10000, 'CACHE_TIMEOUT': 0}
+    SECRET_KEY = b'\xcc\x94\x66kuGE\xde\xe0\xc1\x99P\xa4q\xe8N\xb7\x15\x97\xe3pr\x02N'
+    SOLR_ENDPOINT = 'http://solr:8983/solr'
+    SOLR_COLLECTION = 'datacatalog'
+
+
+class TestConfig(Config):
+    DEBUG = True
+    SQLALCHEMY_ECHO = True
+    ASSETS_DEBUG = True
+    TESTING = True
+    CACHE_CONFIG = {'CACHE_TYPE': 'null'}
+    WTF_CSRF_ENABLED = False
+    SOLR_ENDPOINT = 'http://solr:8983/solr'
+    SOLR_COLLECTION = 'test'
