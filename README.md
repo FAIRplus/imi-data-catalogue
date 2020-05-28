@@ -5,6 +5,20 @@
 **Goal:** Create a database of IMI funded **projects** and their associated **datasets**
 
 Local installation of development environment and procedure for docker version are described below. 
+
+## Table of content
+
+  * [Local installation](#local-installation)
+  	* [Requirements](#requirements)
+	* [Procedure](#procedure)
+	* [Testing](#testing)
+  * [Docker-compose build](#docker-compose-build)
+  	* [Requirements](#requirements-for-docker-compose-build)
+	* [Building](#building)
+	* [Maintenance](#maintenance-of-docker-compose)
+	* [Modifying the datasets](#modifying-the-datasets)
+  * [Single Docker deployment](#single-docker-deployment)
+  
 ## Local installation
 
 ### Requirements
@@ -84,7 +98,7 @@ By default, it should be called datacatalog_test.
 ## Docker-compose build
 Thanks to docker-compose, it is possible to easily manage all the components (solr and web server) required to run the application.
 
-### Requirements
+### Requirements for docker-compose build
 
 Docker and git must be installed.
 
