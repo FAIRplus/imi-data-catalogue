@@ -142,7 +142,7 @@ If you don't plan to use HTTPS or just want to see demo running, you can skip th
 	
 	(PRESS CTRL+D or type: "exit" to exit)
 	```
-1. The web application should now be available with loaded data via https://localhost  
+1. The web application should now be available with loaded data via http://localhost and https://localhost with ssl connection (beware that most browsers display a warning or block self-signed certificates)
 
 ### Maintenance of docker-compose
 Docker container keeps the application in the state that it has been when it was built. 

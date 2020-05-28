@@ -5,8 +5,6 @@ services:
         build: .
         expose:
             - '5000'
-        ports:
-            - "5000:5000"
         command: "-t 600 -w 2 datacatalog:app --bind 0.0.0.0:5000"
         entrypoint: "gunicorn"
         environment:
@@ -17,8 +15,8 @@ services:
             - solr
     solr:
         image: solr:7.3
-        ports:
-            - "8983:8983"
+        expose:
+          - '8983'
         volumes:
             - solrdata:/var/solr
     nginx:
@@ -39,6 +37,7 @@ services:
             - "./docker/nginx/nginx-selfsigned.key:/etc/ssl/private/nginx-selfsigned.key"
             - "./docker/nginx/dhparam.pem:/etc/ssl/certs/dhparam.pem"
             - "./docker/nginx/datacatalog.conf:/etc/nginx/conf.d/datacatalog.conf"
+            - "./docker/nginx/datacatalog-ssl.conf:/etc/nginx/conf.d/datacatalog-ssl.conf"
             - static_files:/var/www/shared/static/
             - nginx_logs:/log
             
