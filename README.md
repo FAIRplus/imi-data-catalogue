@@ -109,7 +109,15 @@ Docker and git must be installed.
 1. First, generate the certificates that will be used to enable HTTPS in reverse proxy. To do so, change directory to `docker/nginx/` and execute `generate_keys.sh` (relies on OpenSSL).
 If you don't plan to use HTTPS or just want to see demo running, you can skip this (warning - it would cause the HTTPS connection to be unsafe!).
 
-1. Then, copy `datacatalog/settings.py.template` to `datacatalog/settings.py`. Edit the `settings.py` file to add a random string of characters in `SECRET_KEY` and then run:
+1. Then, copy `datacatalog/settings.py.template` to `datacatalog/settings.py`. Edit the `settings.py` file to add a random string of characters in `SECRET_KEY`.
+	For maximum security use:
+	
+	```
+	import os
+	os.urandom(24)
+	```
+	in python to generate this key.  
+	Then build and start the dockers containers by running:
 
 	```
 	(local) $ docker-compose up --build
