@@ -37,7 +37,7 @@ class SolrEntity:
     """
     Base class for a solr entity
     Base entity contains a created and modified field
-    Provides methods to save, delete, parse ans serialize the entity
+    Provides methods to save, delete, parse and serialize the entity
     """
     created = SolrDateTimeField("created")
     modified = SolrDateTimeField("modified")
