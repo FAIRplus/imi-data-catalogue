@@ -1,0 +1,78 @@
+{% extends 'layout.html' %}
+{% set entity_name = "study" %}
+{% import 'macros.html' as macros %}
+{% block title %}Study - {{ study.title }}{% endblock %}
+
+
+{% block content %}
+    <div class="well box studyDetails">
+        {% if fair_evaluations_show and study.is_fairplus_evaluated %}
+            <a class="fairResultsStamp" data-expand="fairplus-evaluation-fields"
+               href="#fairplus-evaluation-fields"><img alt='fairplus stamp'
+                                                       src="/static/public/images/fairplus-stamp.png"/></a>
+        {% endif %}
+        <h1>{{ study.title }}</h1>
+        <p class="notes">{{ study.description | default("", True) }}</p>
+        <p>
+            {% if study.keywords %}
+                keywords: {{ macros.split_labels(study.keywords) }}
+            {% endif %}
+        </p>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="row">
+                <div class="col-md-6">
+                    {#    PROJECT      #}
+                    {{ macros.start_panel("Project", "project", True) }}
+                    {% set project = study.project_entity %}
+                    {{ macros.show_field_link(project.title, "Project Title", url_for('entity_details', entity_name='project', entity_id=project.id)) }}
+                    {% if project.website %}
+                        {{ macros.show_field_link(project.website, "Project website", project.website) }}
+                    {% endif %}
+                    {% if project.contact_entities %}
+                        {{ macros.show_field_list(project.contact_entities, "Contact Person(s)", reference_list=True) }}
+                    {% endif %}
+                    {{ macros.end_panel() }}
+                </div>
+                <div class="col-md-6">
+                    {#    DATASETS    #}
+
+                    {{ macros.start_panel("Datasets", "datasets", True) }}
+                    {{ macros.show_field_list_entities(study.datasets_entities , "Datasets", 'dataset') }}
+                    {{ macros.end_panel() }}
+                </div>
+            </div>
+            <br/>
+
+            {#    PLANNING SITE    #}
+
+            {{ macros.start_panel("Study description", "description") }}
+            {{ macros.show_field_text(study.primary_purpose, "Primary Purpose") }}
+            {{ macros.show_field_list(study.types, "Study Types") }}
+            {{ macros.show_field_text_long(study.cohorts_description, "Description of Cohorts") }}
+            {{ macros.show_field_text(study.informed_consent, "Informed Consent Given?") }}
+            {{ macros.show_field_text(study.multi_center_study, "Multi-center Study?") }}
+            {{ macros.end_panel() }}
+
+            {#    STUDY SUBJECTS #}
+
+            {{ macros.start_panel("Subjects", "study-subjects") }}
+            {{ macros.show_field_list(study.organisms, "Organisms") }}
+            {{ macros.show_field_text(study.size, "Number of subjects") }}
+            {{ macros.show_field_list(study.disease, "Diseases") }}
+            {{ macros.show_field_text(study.samples_type, "Type of Samples Collected", list=True) }}
+
+
+            {{ macros.end_panel() }}
+
+            {#    DEMOGRAPHIC AND PARTICIPANT INFORMATION   #}
+
+            {{ macros.start_panel("Demographic and Participant Information", "demographic") }}
+            {{ macros.show_field_text(study.age_range, "Age Range of Study Participants") }}
+            {{ macros.show_field_text(study.bmi_range, "BMI Range of Study Participants") }}
+            {{ macros.end_panel() }}
+
+        </div>
+    </div>
+
+
+{% endblock %}

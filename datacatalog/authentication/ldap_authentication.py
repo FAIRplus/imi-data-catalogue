@@ -19,14 +19,14 @@
     datacatalog.authentication.ldap_authentication
     -------------------
 
-    Contains an implementation of class Authentication for LDAP authentication
+    Contains an implementation of class UserPasswordAuthentication for LDAP authentication
 
 """
-from typing import Tuple, List
+from typing import Tuple, List, Optional
 
 from ldap.ldapobject import LDAPObject
 
-from . import Authentication
+from . import UserPasswordAuthentication
 from .. import app, ldap
 from ..exceptions import AuthenticationException
 
@@ -35,18 +35,37 @@ __author__ = 'Kavita Rege'
 logger = app.logger
 
 
-class LDAPAuthentication(Authentication):
+class LDAPUserPasswordAuthentication(UserPasswordAuthentication):
     """
-    Implementation of class Authentication for LDAP authentication
+    Implementation of class UserPasswordAuthentication for LDAP authentication
     """
 
     def __init__(self, ldap_address: str) -> None:
         """
-        Initialize a LDAPAuthentication instance setting the ldap address
+        Initialize a LDAPUserPasswordAuthentication instance setting the ldap address
         @param ldap_address: address and port of the LDAP server
         """
         self.ldap_address = ldap_address
-        logger.info("LDAPAuthentication initialized with address %s", ldap_address)
+        logger.info("LDAPUserPasswordAuthentication initialized with address %s", ldap_address)
+
+    def get_user_details(self, conn: LDAPObject, username: str) -> List[str]:
+        """
+        Retrieve user details
+        @param username: the name of the user
+        @return: raises an exception if unsuccessful,
+        returns list containing email and display_name if successful
+        """
+        try:
+            member_list = []
+            member = "uid={},cn=users,cn=accounts,dc=uni,dc=lu".format(username)
+            attributes = self.get_attributes_by_dn(member, conn, username, ['displayName', 'mail'])
+            if attributes is None:
+                raise AuthenticationException("Invalid user")
+            member_list.append(attributes.get('mail'))
+            member_list.append(attributes.get('displayName'))
+            return member_list
+        except ldap.SERVER_DOWN:
+            raise AuthenticationException("LDAP server could not be reached")
 
     def authenticate_user(self, username: str, password: str) -> Tuple[bool, List[str]]:
         """
@@ -57,7 +76,6 @@ class LDAPAuthentication(Authentication):
         returns True and a list containing email and displayname if successful
         """
         try:
-            memberlist = []
             conn = self.get_ldap_connection()
             member = "uid={},cn=users,cn=accounts,dc=uni,dc=lu".format(username)
             conn.simple_bind_s(
@@ -71,13 +89,8 @@ class LDAPAuthentication(Authentication):
             try:
                 members = results[0][1]['member']
                 if member.encode('ASCII') in members:
-                    email = self.get_email_by_dn(member, conn, username)
-                    displayname = self.get_displayname_by_dn(member, conn, username)
-                    if email:
-                        memberlist.append(email)
-                    if displayname:
-                        memberlist.append(displayname)
-                return True, memberlist
+                    userDetails = self.get_user_details(conn, username)
+                return True, userDetails
             except IndexError:
                 raise AuthenticationException("User not authorized")
         except ldap.INVALID_CREDENTIALS:
@@ -91,9 +104,32 @@ class LDAPAuthentication(Authentication):
         @return: an open connection
         """
         conn = ldap.initialize(self.ldap_address, bytes_mode=False)
-        conn.set_option(ldap.OPT_REFERRALS, 0)
+        conn.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
+        conn.protocol_version = ldap.VERSION3
         conn.set_option(ldap.OPT_X_TLS_NEWCTX, 0)
         return conn
+
+    def get_attributes_by_dn(self, dn: str, ad_conn: LDAPObject, uid: str, attributes: List[str]) -> Optional[dict]:
+        """
+        Retrieve the specified attributes for a dedicated user
+        @param dn: AD distinguished name
+        @param ad_conn: connection to AD
+        @param uid: user id
+        @param attributes: list of attributes to retrieve
+        @return: the list of attributes values
+        """
+        result = ad_conn.search_s(dn, ldap.SCOPE_SUBTREE, \
+                                  '(&(objectClass=person)(uid={}))'.format(uid), attrlist=attributes)
+        results = {}
+        if not result:
+            # return None if user not found
+            return None
+        for dn, attributes_ad in result:
+            for attribute_ad, attribute_ad_value in attributes_ad.items():
+                if attribute_ad in attributes and attribute_ad_value:
+                    results[attribute_ad] = attribute_ad_value[0].lower().decode('ASCII')
+
+        return results
 
     @staticmethod
     def get_email_by_dn(dn: str, ad_conn: LDAPObject, uid: str) -> str:
@@ -104,7 +140,7 @@ class LDAPAuthentication(Authentication):
         @param uid: user id
         @return: the email address of user uid in dn or an empty string
         """
-        email = ''
+        email = b''
         result = ad_conn.search_s(dn, ldap.SCOPE_BASE, \
                                   '(&(objectClass=person)(uid={}))'.format(uid))
         if result:

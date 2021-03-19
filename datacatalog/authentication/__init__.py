@@ -20,9 +20,10 @@
     datacatalog.authentication
     -------------------
 
-    Package for the abstract class Authentication and its implementations
+    Package for the abstract classs UserPasswordAuthentication, RemoteAuthentication  and its implementations
     Implementations:
         - LDAPAuthentication
+        - OIDCAuthentication
 
 """
 
@@ -30,12 +31,43 @@ from abc import ABCMeta, abstractmethod
 
 __author__ = 'Valentin Grouès'
 
+from enum import Enum
 
-class Authentication(metaclass=ABCMeta):
+
+class LoginType(Enum):
+    REDIRECT = 1
+    FORM = 2
+
+
+class RemoteAuthentication(metaclass=ABCMeta):
+    """
+    Abstract class specifying methods to implement to authenticate users if not based on username and password
+    Typically for OIDC implementation
+    Is used for login process
+    """
+    LOGIN_TYPE = LoginType.REDIRECT
+
+    @abstractmethod
+    def authenticate_user(self):
+        """
+        @return an exception if not successful or redirects to identity provider
+        """
+        pass
+
+    @abstractmethod
+    def get_logout_url(self) -> str:
+        """
+        Build the logout url and returns it
+        """
+        pass
+
+
+class UserPasswordAuthentication(metaclass=ABCMeta):
     """
     Abstract class specifying methods to implement to authenticate users
     Is used for login process
     """
+    LOGIN_TYPE = LoginType.FORM
 
     @abstractmethod
     def authenticate_user(self, username, password):

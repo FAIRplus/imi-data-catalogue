@@ -38,7 +38,7 @@ from werkzeug.exceptions import abort
 
 from .facets import Facet, FacetRange
 from .solr_orm_entity import DATETIME_FORMAT, DATETIME_FORMAT_NO_MICRO, SolrEntity
-from .solr_orm_fields import SolrField
+from .solr_orm_fields import SolrField, SolrForeignKeyField
 from .solr_orm_schema import SolrSchemaAdmin
 from .. import app
 from ..exceptions import SolrQueryException
@@ -57,11 +57,15 @@ class SolrQuery(object):
     Class to handle search and retrieval of entities from Solr
     """
     # The sort options that will be offered on the search page
-    SORT_OPTIONS = ["created", "id"]
+    SORT_OPTIONS = []
+    # The sort options labels that will be offered on the search page
+    SORT_LABELS = []
     # default sort option
-    DEFAULT_SORT = "created"
+    DEFAULT_SORT = ""
     # default sort order
     DEFAULT_SORT_ORDER = "asc"
+    # allows giving more weight to some fields than others for default search
+    BOOST = None
 
     def __init__(self, class_object: Type[SolrEntity], solr_orm) -> None:
         """
@@ -72,6 +76,21 @@ class SolrQuery(object):
         self.class_object = class_object
         self.entity_name = class_object.__name__.lower()
         self.solr_orm = solr_orm
+
+    def search_holding_entities(self, target_entity_id, field_name, source_entity_type):
+        params = {
+            'fq': [
+                f'type:"{source_entity_type}"',
+                f'{source_entity_type}_{field_name}:"{target_entity_id}"',
+            ]
+        }
+        results = self.solr_orm.indexer.search('*:*', **params)
+        entities = []
+        for doc in results.docs:
+            entity = self._build_instance(doc)
+            entities.append(entity)
+        results.entities = entities
+        return results
 
     def search(self, query: str, rows: int = 50, start: int = 0, sort: str = DEFAULT_SORT, sort_order: str = "desc",
                fq: List[str] = None, facets: List[Facet] = None,
@@ -103,15 +122,17 @@ class SolrQuery(object):
             'fq': fq
         }
         query = query.strip()
+        q = '*:*'
         if query:
-            if fuzzy:
-                terms = query.split()
-                fuzzy_terms = ' '.join(
-                    ['OR {}_textfuzzy_:{}{}'.format(self.entity_name, term, FUZZY_SEARCH_SUFFIX) for term in terms])
-                query = "({}_text_:'{}' {})".format(self.entity_name, query, fuzzy_terms)
+            if ':' in query:
+                q = query
             else:
-                query = "{}_text_:'{}'".format(self.entity_name, FUZZY_SEARCH_SUFFIX)
-            fq.append(query)
+                if fuzzy:
+                    fuzzy_terms = 'OR {}_textfuzzy_:{}{}'.format(self.entity_name, query, FUZZY_SEARCH_SUFFIX)
+                    query = "({}_text_:'{}' {})".format(self.entity_name, query, fuzzy_terms)
+                else:
+                    query = "{}_text_:'{}'".format(self.entity_name, FUZZY_SEARCH_SUFFIX)
+                fq.append(query)
         if rows:
             params['rows'] = rows
         if start:
@@ -135,7 +156,7 @@ class SolrQuery(object):
                         fq.append('{}_{}:"{}"'.format(self.entity_name, facet.field_name, value))
                     params["facet.field"].append("{}_{}".format(self.entity_name, facet.field_name))
         try:
-            results = self.solr_orm.indexer.search('*:*', **params)
+            results = self.solr_orm.indexer.search(q, **params)
             entities = []
             for doc in results.docs:
                 entity = self._build_instance(doc)
@@ -253,6 +274,41 @@ class SolrQuery(object):
             instances.append(self._build_instance(result))
         return instances
 
+    def all_ids(self) -> List[SolrEntity]:
+        """
+        Retrieve from solr all the entities  ids of the underlying SolrEntity as defined by self.class_object
+        @return: a list of solr entities
+        """
+        results = self.solr_orm.indexer.search(q="type:" + self.entity_name, fl='id', rows=1000000)
+        return [r['id'][len(self.entity_name) + 1:] for r in results.docs]
+
+
+class SolrAutomaticQuery(SolrQuery):
+
+    def __init__(self, class_object: Type[SolrEntity], solr_orm) -> None:
+        """
+        Initialize a SolrQuery instance setting the SolrEntity class and the SolrORM instance
+        @param class_object: SolrEntity class indicating which entity we are searching or retrieving
+        @param solr_orm: SolrORM instance holding the solr connection
+        """
+        super().__init__(class_object, solr_orm)
+        self.entity_name = class_object.__name__.lower()
+        if not self.__class__.SORT_OPTIONS:
+            self.__class__.SORT_OPTIONS = ["title", "id"]
+        # labels of the sort options that will be offered on the search page
+        if not self.__class__.SORT_LABELS:
+            self.__class__.SORT_LABELS = ["title", "id"]
+        # allows giving more weight to some fields than others for default search
+        if not self.__class__.BOOST:
+            boosts = app.config.get('SOLR_BOOST', {})
+            boost = boosts.get(self.entity_name)
+            self.__class__.BOOST = boost or f'{self.entity_name}_title^5 {self.entity_name}_text_^1'
+        # default sort option
+        if not self.__class__.DEFAULT_SORT:
+            default_sorts = app.config.get('SOLR_DEFAULT_SORT', {})
+            default_sort = default_sorts.get(self.entity_name)
+            self.__class__.DEFAULT_SORT = default_sort or 'title'
+
 
 class SolrORM(object):
     """
@@ -280,6 +336,16 @@ class SolrORM(object):
         for entity_class in SolrEntity.__subclasses__():
             if not hasattr(entity_class, '_solr_fields'):
                 entity_class._solr_fields = self.get_fields_for_class(entity_class)
+                for field in entity_class._solr_fields.values():
+                    # we record of solrforeignkeyfield having reversed_by attributes in the target entity
+                    if isinstance(field, SolrForeignKeyField) and field.reversed_by:
+                        reversed_attributes = field.reversed_by
+                        target_entity_class = app.config['entities'].get(field.linked_entity_name)
+                        if target_entity_class:
+                            source_entity_class_name = entity_class.__name__.lower()
+                            target_entity_class.reversed_field[reversed_attributes] = (
+                                source_entity_class_name, field.name, field.reversed_multiple)
+
             if hasattr(entity_class, "query_class"):
                 entity_class.query = entity_class.query_class(entity_class, self)
             else:

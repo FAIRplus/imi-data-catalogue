@@ -1,0 +1,295 @@
+{
+   "title":"RESOLUTE project",
+   "@type":"Project",
+   "@context":[
+      "http://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+      "http://w3id.org/dats/context/obo/dataset_obo_context.jsonld"
+   ],
+   "types":[
+      {
+         "@type":"Annotation",
+         "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value":"IMI project"
+      }
+   ],
+   "identifier":{
+      "identifier":"dc9c1316-147a-11eb-b51f-8c8590c45a21",
+      "@type":"Identifier",
+      "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+   },
+   "startDate": {
+        "@type": "Date",
+        "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+        "date": "2018-07-01",
+        "type": {
+            "value": "start date",
+            "valueIRI": "http://semanticscience.org/resource/SIO_000031"
+      }
+   },
+   "endDate": {
+        "@type": "Date",
+        "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+        "date": "2023-06-30",
+        "type": {
+            "value": "end date",
+            "valueIRI": "http://semanticscience.org/resource/SIO_000036"
+        }
+   },
+   "projectLeads":[
+      {
+         "@type":"Person",
+         "@context":"https://w3id.org/dats/context/sdo/person_sdo_context.jsonld",
+         "firstName":"Giulio",
+         "lastName":"Superti-Furga",
+         "email":"gsuperti@cemm.oeaw.ac.at",
+         "roles":[
+            {
+               "@type":"Annotation",
+               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+               "value":"Primary Study Contact",
+               "valueIRI":"http://purl.obolibrary.org/obo/NCIT_C127533"
+            }
+         ],
+         "affiliations":[
+            {
+               "@type":"Organization",
+               "@context":"https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+               "name":"Research Center for Molecular Medicine of the Austrian Academy of Sciences",
+               "location":{
+                  "postalAddress":"Lazarettgasse 14, AKH BT 25.3, 1090 Vienna, Austria ",
+                  "@type":"Place",
+                  "@context":"https://w3id.org/dats/context/sdo/place_sdo_context.jsonld"
+               }
+            }
+         ]
+      }
+   ],
+   "keywords":[
+      {
+         "@type":"Annotation",
+         "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value":"IMI project"
+      },
+      {
+         "@type": "Annotation",
+         "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value": "Tools for predicting/monitoring efficacy"
+      },
+      {
+         "@type": "Annotation",
+         "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value": "Disease taxonomy"
+      },
+      {
+         "@type": "Annotation",
+         "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value": "Target identification"
+      }
+   ],
+   "extraProperties":[
+      {
+         "values":[
+            {
+               "value":"https://re-solute.eu",
+               "@type":"Annotation",
+               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+            }
+         ],
+         "category":"website"
+      }
+   ],
+   "fundedBy":[
+      {
+         "name":"IMI2 - Call 10",
+         "identifier":{
+               "identifier": "777372",
+               "@type":"Identifier",
+               "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+         },
+         "@type":"Grant",
+         "@context":"https://w3id.org/dats/context/sdo/grant_sdo_context.jsonld"
+      }
+   ],
+   "projectAssets": [
+      {
+         "name":"RESOLUTE project",
+         "identifier":{
+            "identifier":"dc9c1154-147a-11eb-b51f-8c8590c45a21",
+            "@type":"Identifier",
+            "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+         },
+         "@type":"Study",
+         "@context":"https://w3id.org/dats/context/sdo/study_sdo_context.jsonld",
+         "types":[
+            {
+               "value":"solute carrier (SLC) membrane transport proteins",
+               "@type":"Annotation",
+               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+            }
+         ],
+         "output": [
+            {
+               "title":"RESOLUTE project",
+               "identifier":{
+                  "identifier":"79d2691a-104d-11ea-9e31-0050569a29db",
+                  "@type":"Identifier",
+                  "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+               },
+               "types":[
+                  {
+                     "method":{
+                        "@type":"Annotation",
+                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                        "value":"transcriptomics"
+                     },
+                     "@type":"DataType",
+                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                  },
+                  {
+                     "method":{
+                        "@type":"Annotation",
+                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                        "value":"proteomics"
+                     },
+                     "@type":"DataType",
+                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                  },
+                  {
+                     "method":{
+                        "@type":"Annotation",
+                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                        "value":"targeted metabolomics"
+                     },
+                     "@type":"DataType",
+                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                  }
+               ],
+               "@type":"Dataset",
+               "@context":"https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+               "distributions":[
+                  {
+                     "@type":"DatasetDistribution",
+                     "@context":"https://w3id.org/dats/context/sdo/dataset_distribution_sdo_context.jsonld",
+                     "access":{
+                        "landingPage":"RESOLUTE transcriptomics, FAIRified sample metadata",
+                        "accessURL":"https://www.ncbi.nlm.nih.gov/biosample?LinkName=bioproject_biosample_all&from_uid=545487",
+                        "@type":"Access",
+                        "@context":"https://w3id.org/dats/context/sdo/access_sdo_context.jsonld"
+                     },
+                     "dates":[
+                        {
+                           "date":"2020-10-22 17:25:48.471252",
+                           "@type":"Date",
+                           "@context":"https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                           "type":{
+                              "@type":"Annotation",
+                              "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                              "value":"creation date",
+                              "valueIRI":""
+                           }
+                        }
+                     ]
+                  }
+               ],
+               "creators":[
+                  {
+                     "@type":"Organization",
+                     "@context":"https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                     "name":""
+                  }
+               ],
+               "extraProperties": [
+                  {
+                     "values":[
+                        {
+                           "value":"https://fairplus.github.io/fairification-results/2019-12-17-RESOLUTE-post-assessment/",
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"fairAssessmentLink"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":"Post-FAIRification assessment",
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"fairAssessmentDetails"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":71,
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"fairScoreRecommended"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":82,
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"fairScoreMandatory"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":82,
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"fairScoreOverall"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":"https://docs.google.com/spreadsheets/d/1mkjElFrTBPBH0QViODexNur0xNGhJqau0zkL4w8RRAw/edit#gid=1558529297",
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"fairIndicatorsHref"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":"RDA indicator v0.03",
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"fairIndicators"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":"true",
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"fairEvaluation"
+                  }
+               ]
+            }
+         ]
+      }
+   ]
+}

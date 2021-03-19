@@ -23,22 +23,12 @@
 """
 import logging
 
-from datacatalog.models import DatasetQuery
+from datacatalog.solr.solr_orm import SolrAutomaticQuery
 from datacatalog.solr.solr_orm_entity import SolrEntity
-from datacatalog.solr.solr_orm_fields import SolrField, SolrTextField
+from datacatalog.solr.solr_orm_fields import SolrBooleanField, SolrField, SolrTextField, SolrForeignKeyField, \
+    SolrIntField, SolrFloatField
 
 logger = logging.getLogger(__name__)
-
-
-class StudyQuery(DatasetQuery):
-    # The sort options that will be offered on the search page
-    SORT_OPTIONS = ["title", "id"]
-    # labels of the sort options that will be offered on the search page
-    SORT_LABELS = ["title", "id"]
-    # default sort option
-    DEFAULT_SORT = 'title'
-    # default sort order
-    DEFAULT_SORT_ORDER = 'desc'
 
 
 class Study(SolrEntity):
@@ -46,10 +36,26 @@ class Study(SolrEntity):
     Study entity, subclass of SolrEntity
     """
     # specifies the list of compatibles connectors
-    COMPATIBLE_CONNECTORS = ['Json']
-    query_class = StudyQuery
+    COMPATIBLE_CONNECTORS = ['Json', 'Dats']
+    query_class = SolrAutomaticQuery
+    age_range = SolrField("age_range")
+    bmi_range = SolrField("bmi_range", indexed=False)
+
+    cohorts_description = SolrField("cohorts_description")
+    datasets = SolrForeignKeyField("datasets", entity_name="dataset", multivalued=True, reversed_by='study',
+                                   reversed_multiple=False)
+    description = SolrTextField("description")
+    disease = SolrField("disease", multivalued=True)
+    informed_consent = SolrBooleanField("informed_consent")
+    multi_center_study = SolrBooleanField("multi_center_study")
+    organisms = SolrField("organisms", multivalued=True)
+    primary_purpose = SolrField("primary_purpose")
+    samples_type = SolrField("samples_type", multivalued=True)
+    size = SolrIntField("size")
     title = SolrField("title")
-    summary = SolrTextField("summary")
+    types = SolrField("types", multivalued=True)
+
+    is_fairplus_evaluated = SolrBooleanField("is_fairplus_evaluated")
 
     def __init__(self, title: str = None, entity_id: str = None) -> None:
         """

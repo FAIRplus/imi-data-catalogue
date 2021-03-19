@@ -1,0 +1,264 @@
+{
+   "title":"RHAPSODY",
+   "description":"Risk Assessment and ProgreSsiOn of Diabetes",
+
+   "@type":"Project",
+   "@context":[
+      "http://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+      "http://w3id.org/dats/context/obo/dataset_obo_context.jsonld"
+   ],
+   "types":[
+      {
+         "@type":"Annotation",
+         "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value":"IMI project"
+      }
+   ],
+   "identifier":{
+      "identifier":"68816ad0-54c1-11eb-9562-acde48001122",
+      "@type":"Identifier",
+      "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+   },
+   "startDate": {
+        "@type": "Date",
+        "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+        "date": "2016-04-01",
+        "type": {
+            "value": "start date",
+            "valueIRI": "http://semanticscience.org/resource/SIO_000031"
+      }
+   },
+   "endDate": {
+        "@type": "Date",
+        "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+        "date": "2021-03-31",
+        "type": {
+            "value": "end date",
+            "valueIRI": "http://semanticscience.org/resource/SIO_000036"
+        }
+   },
+   "projectLeads":[
+      {
+         "@type":"Person",
+         "@context":"https://w3id.org/dats/context/sdo/person_sdo_context.jsonld",
+         "firstName":"Mark",
+         "lastName":"Ibberson",
+         "email":"Mark.Ibberson@sib.swiss",
+         "roles":[
+            {
+               "@type":"Annotation",
+               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+               "value":"Primary Study Contact",
+               "valueIRI":"http://purl.obolibrary.org/obo/NCIT_C127533"
+            }
+         ],
+         "affiliations":[
+            {
+               "@type":"Organization",
+               "@context":"https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+               "name":"Swiss Institute of Bioinformatics"
+            }
+         ]
+      }
+   ],
+   "keywords":[
+      {
+         "@type":"Annotation",
+         "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value":"IMI project"
+      },
+       {
+         "@type":"Annotation",
+         "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value":"translational medicine"
+      },
+       {
+         "@type":"Annotation",
+         "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value":"diabetes"
+      },
+      {
+         "@type": "Annotation",
+         "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value": "metabolic disorders"
+      },
+      {
+         "@type": "Annotation",
+         "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value": "Clinical trial design"
+      },
+      {
+         "@type": "Annotation",
+         "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value": "Disease taxonomy"
+      }
+   ],
+   "extraProperties":[
+      {
+         "values":[
+            {
+               "value":"RHAPSODY",
+               "@type":"Annotation",
+               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+            }
+         ],
+         "@type":"CategoryValuesPair",
+         "category":"projectAcronym"
+      },
+      {
+         "values":[
+            {
+               "value":"https://imi-rhapsody.eu/",
+               "@type":"Annotation",
+               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+            }
+         ],
+         "category":"website"
+      }
+   ],
+   "fundedBy":[
+      {
+         "name":"IMI2 - Call 3",
+         "identifier":{
+               "identifier": "1158881",
+               "@type":"Identifier",
+               "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+         },
+         "@type":"Grant",
+         "@context":"https://w3id.org/dats/context/sdo/grant_sdo_context.jsonld"
+      }
+   ],
+   "projectAssets": [
+      {
+         "name":"RHAPSODY study",
+         "identifier":{
+            "identifier":"a6c83b0c-54c1-11eb-9562-acde48001122",
+            "@type":"Identifier",
+            "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+         },
+         "@type":"Study",
+         "@context":"https://w3id.org/dats/context/sdo/study_sdo_context.jsonld",
+         "types":[
+            {
+               "value":"risk and progression of prediabetes and type 2 diabetes",
+               "@type":"Annotation",
+               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+            }
+         ],
+         "input":[
+            {
+               "@type":"Material",
+               "@context":"https://w3id.org/dats/context/sdo/material_sdo_context.jsonld",
+               "name":"input material",
+               "taxonomy":[
+                  {
+                     "@type":"TaxonomicInformation",
+                     "@context":"https://w3id.org/dats/context/sdo/taxonomic_info_sdo_context.jsonld",
+                     "name":"Homo sapiens",
+                     "identifier":{
+                        "@type":"Identifier",
+                        "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                        "identifier":"http://purl.obolibrary.org/obo/NCBITaxon_9606",
+                        "identifierSource":"NCBI Taxon ID"
+                     }
+                  }
+               ],
+               "bearerOfDisease":[
+                  {
+                     "name":"type II diabetes",
+                     "@type":"Disease",
+                     "@context":"https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                  }
+               ]
+            }
+         ],
+         "extraProperties":[
+            {
+               "values":[
+                  {
+                     "value":"true",
+                     "@type":"Annotation",
+                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                  }
+               ],
+               "@type":"CategoryValuesPair",
+               "category":"informedConsent"
+            },
+            {
+               "values":[
+                  {
+                     "value":"true",
+                     "@type":"Annotation",
+                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                  }
+               ],
+               "@type":"CategoryValuesPair",
+               "category":"multiCenter"
+            }
+         ],
+         "output": [
+            {
+               "title":"RHAPSODY dataset",
+               "identifier":{
+                  "identifier":"e9a93eb2-54c1-11eb-9562-acde48001122",
+                  "@type":"Identifier",
+                  "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+               },
+               "types":[
+                  {
+                     "method":{
+                        "@type":"Annotation",
+                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                        "value":"transcriptomics"
+                     },
+                     "@type":"DataType",
+                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                  },
+                  {
+                     "method":{
+                        "@type":"Annotation",
+                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                        "value":"genetics"
+                     },
+                     "@type":"DataType",
+                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                  }
+               ],
+               "@type":"Dataset",
+               "@context":"https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+               "distributions":[
+                  {
+                     "@type":"DatasetDistribution",
+                     "@context":"https://w3id.org/dats/context/sdo/dataset_distribution_sdo_context.jsonld",
+                     "access":{
+                        "landingPage":"",
+                        "@type":"Access",
+                        "@context":"https://w3id.org/dats/context/sdo/access_sdo_context.jsonld"
+                     },
+                     "dates":[
+                        {
+                           "date":"2021-01-12",
+                           "@type":"Date",
+                           "@context":"https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                           "type":{
+                              "@type":"Annotation",
+                              "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                              "value":"creation date",
+                              "valueIRI":""
+                           }
+                        }
+                     ]
+                  }
+               ],
+               "creators":[
+                  {
+                     "@type":"Organization",
+                     "@context":"https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                     "name":""
+                  }
+               ]
+            }
+         ]
+      }
+   ]
+}

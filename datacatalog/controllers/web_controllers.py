@@ -26,25 +26,29 @@
         - request_access
 """
 
-from typing import List
+from typing import List, Tuple
 
-from flask import render_template, flash, redirect, url_for, request, Response, Request
-from flask_login import current_user
-from flask_mail import Message
+from flask import render_template, flash, redirect, url_for, request, Response, Request, send_from_directory
+from flask_login import current_user, login_required
 from flask_wtf.csrf import CSRFError
 
-from .. import mail, login_manager
-from ..exceptions import SolrQueryException
-from ..forms.request_access_form import RequestAccess
+from .. import login_manager, get_access_handler
+from ..exceptions import SolrQueryException, AuthenticationException
 from ..models import *
-from ..solr.solr_orm_entity import SolrEntity
 from ..pagination import Pagination
+from ..solr.facets import Facet
+from ..solr.solr_orm_entity import SolrEntity
 
 logger = app.logger
+
 RESULTS_PER_PAGE = 5
 FAIR_VALUES = app.config.get('FAIR_VALUES')
 FAIR_VALUES_SHOW = app.config.get('FAIR_VALUES_SHOW')
 FAIR_EVALUATIONS_SHOW = app.config.get('FAIR_EVALUATIONS_SHOW')
+
+
+def make_key():
+    return request.full_path
 
 
 # errors handlers
@@ -54,6 +58,12 @@ def csrf_error(reason) -> Response:
     explanation = "The session might have timed out, try to go back and refresh the page before doing any action"
     return render_template('error.html', message="Error 400 - " + reason,
                            explanation=explanation), 400
+
+
+@app.errorhandler(AuthenticationException)
+def authentication_errors(reason) -> Response:
+    return render_template('error.html', message=f"Authentication Error - {reason.status}",
+                           explanation=reason), reason.status
 
 
 @app.errorhandler(404)
@@ -70,7 +80,7 @@ def page_not_found(e) -> Response:
 
 
 @app.route('/<entity_name>s', methods=['GET'])
-@app.cache.cached(timeout=0)
+@app.cache.cached(timeout=0, query_string=True)
 def entities_search(entity_name: str) -> Response:
     """
     Generic search endpoint for any entity
@@ -78,15 +88,36 @@ def entities_search(entity_name: str) -> Response:
     @return: html page showing the search results and facets
     """
     entity_class = app.config['entities'][entity_name]
+    search_examples = app.config.get('SEARCH_EXAMPLES', {}).get(entity_name)
     exporter = getattr(app, 'excel_exporter', None)
-    return default_search(request, exporter=exporter, entity=entity_class, template='search_' + entity_name + '.html')
-
-
-def make_key():
-    return request.full_path
+    return default_search(request, exporter=exporter, entity=entity_class, template='search_' + entity_name + '.html',
+                          search_examples=search_examples)
 
 
 @app.route('/', methods=['GET'])
+def home() -> Response:
+    """
+    Search view for default entity, home page
+    @return: html page showing the search results and facets for default entity
+    """
+    no_landing = app.config.get('NO_LANDING', False)
+    if no_landing:
+        exporter = getattr(app, 'excel_exporter', None)
+        default_entity = app.config['entities'][app.config.get('DEFAULT_ENTITY', 'dataset')]
+        return default_search(request, exporter=exporter, entity=default_entity)
+    else:
+        return landing()
+
+
+def landing():
+    entities = app.config['entities']
+    counts_entities = {}
+    for entity_name, entity_class in entities.items():
+        counts_entities[entity_name] = entity_class.query.count()
+    return render_template('landing.html', counts_entities=counts_entities)
+
+
+@app.route('/search', methods=['GET'])
 def search() -> Response:
     """
     Search view for default entity, home page
@@ -100,7 +131,7 @@ def search() -> Response:
 def default_search(search_request: Request, extra_filter: List[str] = None, template: str = None,
                    facets_order: List[str] = None,
                    results_per_page: int = None,
-                   exporter: object = None, entity: SolrEntity = None) -> Response:
+                   exporter: object = None, entity: SolrEntity = None, search_examples: List[str] = None) -> Response:
     """
     Compute search results and render the search template
     @param search_request: the flask request object
@@ -110,6 +141,7 @@ def default_search(search_request: Request, extra_filter: List[str] = None, temp
     @param results_per_page: number of results per page
     @param exporter: to allow custom exporter (e.g. excel exporter)
     @param entity: the entity class
+    :param search_examples: will be showed as queries examples below the search field
     @return: HTML page showing search results
     """
     query = search_request.args.get('query', '').strip()
@@ -184,7 +216,7 @@ def default_search(search_request: Request, extra_filter: List[str] = None, temp
                            sort_options=sort_options, sort_labels=sort_labels, selected_sort=sort_by,
                            sort_order=sort_order, facets=ordered_facets,
                            fair_values=FAIR_VALUES, fair_values_show=FAIR_VALUES_SHOW,
-                           fair_evaluations_show=FAIR_EVALUATIONS_SHOW)
+                           fair_evaluations_show=FAIR_EVALUATIONS_SHOW, search_examples=search_examples)
 
 
 @app.route('/e/<entity_name>/<entity_id>', methods=['GET'])
@@ -197,10 +229,18 @@ def entity_details(entity_name: str, entity_id: str) -> Response:
     @param entity_id: id of the entity
     @return: HTML page
     """
-    entity = get_entity(entity_name, entity_id)
+    results, facets = get_entity_with_facets(entity_name, entity_id)
+    entity = results.entities[0]
     kwargs = {
-        entity_name: entity
+        entity_name: entity,
+        "facets": facets,
+        "results": results,
+        "has_access": False
     }
+    if current_user.is_authenticated:
+        handler = get_access_handler(current_user, entity_name)
+        if handler and handler.supports_listing_accesses():
+            kwargs['has_access'] = handler.has_access(entity)
     return render_template(entity_name + '.html', fair_evaluations_show=FAIR_EVALUATIONS_SHOW, **kwargs)
 
 
@@ -216,6 +256,33 @@ def get_entity(entity_name: str, entity_id: str) -> SolrEntity:
     return entity
 
 
+def get_entity_with_facets(entity_name: str, entity_id: str) -> Tuple[SolrEntity, List[Facet]]:
+    facets_order = app.config.get('FACETS_ORDER', {}).get(entity_name, [])
+    entity_class = app.config['entities'][entity_name]
+    searcher = entity_class.query
+    # only do facet when some records are present as solr triggers an error if not
+    facets = searcher.get_facets(facets_order)
+    for facet in facets.values():
+        facet.use_default()
+    try:
+        fq = ["id: {}_{}".format(entity_name, entity_id)]
+        results = searcher.search(query="", fq=fq, rows=1, facets=facets.values())
+    except SolrQueryException as e:
+        logger.error(str(e), exc_info=e)
+        return render_template('error.html', message="a problem occurred while querying the indexer",
+                               explanation="see log for more details")
+    ordered_facets = []
+    entity = results.entities[0]
+    for (attribute_name, label) in facets_order:
+        facet = facets.get(attribute_name, None)
+        if facet is not None:
+            values = getattr(entity, attribute_name)
+            if values:
+                facet.set_values(values)
+            ordered_facets.append(facet)
+    return results, ordered_facets
+
+
 @app.route('/about', methods=['GET'])
 @app.cache.cached(timeout=0)
 def about() -> Response:
@@ -225,6 +292,14 @@ def about() -> Response:
     """
     return render_template('about.html')
 
+@app.route('/help', methods=['GET'])
+@app.cache.cached(timeout=0)
+def help() -> Response:
+    """
+    Static help page
+    @return: HTML page
+    """
+    return render_template('help.html')
 
 @app.route('/request_access/<entity_name>/<entity_id>', methods=['GET', 'POST'])
 def request_access(entity_name: str, entity_id: str) -> Response:
@@ -236,32 +311,45 @@ def request_access(entity_name: str, entity_id: str) -> Response:
     @param entity_id: the id of the dataset the user want to request to
     @return: redirects to / or form
     """
-    form = RequestAccess(request.form)
+    specified_type = request.args.get('type')
     entity = get_entity(entity_name, entity_id)
+    title = f"'{entity.title}'"
+    url_submit = url_for('request_access', entity_name=entity_name, entity_id=entity_id)
+    kwargs = {'entity_name': entity_name, 'entity_id': entity_id, 'entity_title': title, 'url_submit': url_submit}
+    handler = get_access_handler(current_user, entity_name)
+    if not handler:
+        return render_template('error.html', message="Error 400 - No compatible request handlers for this entity"), 400
+    if handler.requires_logged_in_user() and not current_user.is_authenticated:
+        here = request.full_path
+        return redirect(url_for('login'), f'?next={here}')
+
+    form = handler.create_form(entity, request.form)
+    if specified_type:
+        title += f' - {specified_type}'
+        url_submit += f'?type={specified_type}'
     if request.method == 'POST':
         if not form.validate():
+            if hasattr(form, 'recaptcha') and form.recaptcha.errors:
+                flash('The Captcha response parameter is missing.', category="error")
 
-            if form.recaptcha.errors:
-                flash('The Captcha response parameter is missing..', category="error")
-
-            kwargs = {entity_name: entity}
             return render_template('request_access.html', form=form, **kwargs)
         else:
-            subject = "Grant access to " + entity.title
-            url = url_for('entity_details', entity_name=entity_name, entity_id=entity.id, _external=True)
-            msg = Message(subject, sender=form.email.data, recipients=app.config['EMAIL_RECIPIENT'])
-
-            msg.body = """
-        From: %s <%s>
-        
-        %s
-
-        %s
-        """ % (form.name.data, form.email.data, form.message.data, url)
-            mail.send(msg)
-            flash("Email sent successfully.", category='success')
-            return redirect('/')
+            handler.apply(entity, form)
+            flash("Access request sent successfully.", category='success')
+            return redirect(url_for('search'))
 
     elif request.method == 'GET':
-        kwargs = {entity_name: entity}
         return render_template('request_access.html', form=form, **kwargs)
+
+
+@app.route('/static_plugin/<path:filename>')
+def custom_static(filename):
+    return send_from_directory(app.config['CUSTOM_STATIC_PATH'], filename)
+
+
+@app.route('/user/my_applications/<entity_name>')
+@login_required
+def my_applications(entity_name):
+    handler = get_access_handler(current_user, entity_name)
+    applications = handler.my_applications()
+    return render_template('my_applications.html', applications=applications, entity_name=entity_name)

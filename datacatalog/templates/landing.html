@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+    <div class="text-center">
+        <h1>Welcome to</h1>
+        <img width="60%" src="{{ config.get('URL_PREFIX', '') }}/static/public/images/datacatalog_logo.svg"
+             alt="datacatalog logo"/>
+    </div>
+    <div class="row landing-cards">
+        <div class="col-sm-4">
+            <a title="Browse Projects" href="{{ url_for('entities_search', entity_name='project') }}">
+                <i class="material-icons text-primary">description</i>
+                <h3>
+                    Projects
+                    <span class="badge badge-info">{{ counts_entities['project'] }}</span>
+                </h3>
+            </a>
+            <p>
+                The <strong>Project</strong> view presents high-level information about Data Catalog entries, such
+                as title, general research area, and publications, as well as funding and contributor contact
+                information.
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <a title="Browse Datasets"
+               href=" {{ url_for('entities_search', entity_name='dataset') }} ">
+                <i class="material-icons text-primary">analytics</i>
+                <h3>
+                    Datasets
+                    <span class="badge badge-info">{{ counts_entities['dataset'] }}</span>
+                </h3>
+            </a>
+            <p>
+                The <strong>Dataset</strong> view presents metadata about collections of data associated with projects,
+                including version numbers and creation dates, links to source data and general.
+
+            </p>
+        </div>
+
+        <div class="col-sm-4">
+            <a title="Browse Studies" href="{{ url_for('entities_search', entity_name='study') }}">
+                <i class="material-icons text-primary">biotech</i>
+                <h3>
+                    Studies
+                    <span class="badge badge-info">{{ counts_entities['study'] }}</span>
+                </h3>
+            </a>
+            <p>
+                The <strong>Study</strong> view presents a range of metadata describing the data acquisition process
+                such as sample and protocol information.
+            </p>
+        </div>
+
+    </div>
+    <div class="row landing-quote">
+        <blockquote class="blockquote">
+            The IMI <strong>Data Catalog</strong> is a unique collection of project-level metadata from large research
+            initiatives in a diverse range of fields, including clinical, molecular and observational studies. Its aim
+            is to improve the findability of these projects following FAIR data principles.
+        </blockquote>
+    </div>
+{% endblock %}

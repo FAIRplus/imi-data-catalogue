@@ -30,13 +30,13 @@
 
 
 
-{% macro show_pagination(pagination, query, sort_order, selected_sort, facets=[]) %}
+{% macro show_pagination(pagination, query, sort_order, selected_sort, facets=[], search_controller="search", entity_name='dataset') %}
     <div class="row text-center">
         <ul class="pagination">
 
             {% if pagination.has_prev %}
                 <li>
-                    <a href="{{ build_link(query, selected_sort, sort_order, facets, none, none) }}&page={{ pagination.page - 1 }}">«</a>
+                    <a href="{{ build_link(query, selected_sort, sort_order, facets, search_controller=search_controller, entity_name=entity_name) }}&page={{ pagination.page - 1 }}">«</a>
                 </li>
             {% else %}
                 <li class="disabled"><a href="javascript:void(0)">«</a></li>
@@ -45,11 +45,11 @@
                 {% if page %}
                     {% if page != pagination.page %}
                         <li>
-                            <a href="{{ build_link(query, selected_sort, sort_order, facets, none, none) }}&page={{ page }}">{{ page }}</a>
+                            <a href="{{ build_link(query, selected_sort, sort_order, facets, search_controller=search_controller, entity_name=entity_name) }}&page={{ page }}">{{ page }}</a>
                         </li>
                     {% else %}
                         <li class="active"><a
-                                href="{{ build_link(query, selected_sort, sort_order, facets, none, none) }}&page={{ page }}">{{ page }}</a>
+                                href="{{ build_link(query, selected_sort, sort_order, facets, search_controller=search_controller, entity_name=entity_name) }}&page={{ page }}">{{ page }}</a>
                         </li>
                     {% endif %}
                 {% else %}
@@ -60,7 +60,7 @@
             {#                <li href="{{ url_for_other_page(pagination.page + 1) }}">»</li>#}
             {% if pagination.has_next %}
                 <li>
-                    <a href="{{ build_link(query, selected_sort, sort_order, facets, none, none) }}&page={{ pagination.page + 1 }}">»</a>
+                    <a href="{{ build_link(query, selected_sort, sort_order, facets, search_controller=search_controller, entity_name=entity_name) }}&page={{ pagination.page + 1 }}">»</a>
                 </li>
             {% else %}
                 <li class="disabled"><a href="javascript:void(0)">»</a></li>
@@ -71,9 +71,9 @@
 {% endmacro %}
 
 
-{%- macro build_link(query, sort_by, order, facets, to_add, to_remove, no_defaults) %}
+{%- macro build_link(query, sort_by, order, facets, to_add, to_remove, no_defaults, search_controller="search", entity_name='dataset') %}
 
-    {{ url_for('search', query=query, sort_by=sort_by, order=order) }}
+    {{ url_for(search_controller, entity_name=entity_name, query=query, sort_by=sort_by, order=order) }}
     {%- for facet in facets %}
         {%- if facet.using_default and to_remove[0]==facet.field_name %}&no_default={{ facet.field_name }}
             {%- else %}{%- for value in facet.values %}
@@ -117,9 +117,40 @@
 
 {% macro show_field_list(value, label, reference_list=False) %}
     {% if  value %}
-        {{ show_field(value, label, False, reference_list=reference_list) }}
+        {{ show_field(value, label, list=True, reference_list=reference_list) }}
     {% endif %}
 {% endmacro %}
+
+{% macro show_field_list_entities_inline(entities, label, entity_name) %}
+    <dt>{{ label }}</dt>
+    <dd>
+        {% if entities %}
+            {% for entity in entities %}
+                {% set link = url_for('entity_details', entity_name=entity_name, entity_id = entity.id) %}
+                <a href="{{ link }}">{{ entity.title }}</a>
+            {% endfor %}
+        {% else %}
+            -
+        {% endif %}
+    </dd>
+
+{% endmacro %}
+
+{% macro show_field_list_entities(entities, label, entity_name) %}
+    <ol>
+        {% if entities %}
+            {% for entity in entities %}
+                <li>
+                    {% set link = url_for('entity_details', entity_name=entity_name, entity_id = entity.id) %}
+                    <a href="{{ link }}">{{ entity.title }}</a>
+                </li>
+            {% endfor %}
+        {% else %}
+            -
+        {% endif %}
+    </ol>
+{% endmacro %}
+
 
 {% macro show_field_text_long(value, label) %}
     {{ show_field(value, label, False, False) }}
@@ -137,8 +168,8 @@
 
 
 {% macro form_group(field) -%}
-    <div class="form-group required">
-        <label for="{{ field.id }}" class="form-control-label">{{ field.label }}</label>
+    <div class="form-group {% if field.flags.required %}required{% endif %}">
+        <label for="{{ field.id }}" class="form-control-label">{{ field.label.text }}</label>
         {% if field.errors %}
             {{ field(class_="form-control is-invalid") }}
         {% else %}
@@ -158,28 +189,69 @@
             {% if field.type in ('HiddenField', 'CSRFTokenField') %}
                 {{ field() }}
             {% elif field.type == 'SubmitField' %}
-                {{ field(class_="btn btn-default btn-primary") }}
+                <div class="form-group">
+                    {{ field(class_="btn btn-default btn-raised btn-primary") }}
+                </div>
+            {% elif field.type == 'BooleanField' %}
+                <div class="row form-group {% if field.flags.required %}required{% endif %}">
+                    <div class="pull-left checkbox">
+                        <label><input id="{{ field.name }}" name="{{ field.name }}"
+                                      type="checkbox"
+                                      {% if field.data %}checked="checked"{% endif %}/></label>
+                        <label for="{{ field.name }}" class="control-label">
+                            {% if field.render_kw['url'] %}
+                                {{ field.label.text }}&nbsp;<a href="{{ field.render_kw['url'] }}"><span
+                                    class="glyphicon glyphicon-new-window"/></a>
+                            {% else %}
+                                {{ field.label.text }}
+                            {% endif %}
+                        </label>
+                    </div>
+                </div>
             {% elif field.type == 'TextAreaField' %}
-                <label for="{{ field.id }}" class="form-control-label">{{ field.label }}</label>
-                {{ field(class_="form-control ", rows='4',cols='15')|safe }}
-
+                <div class="form-group {% if field.flags.required %}required{% endif %}">
+                    <label for="{{ field.id }}" class="form-control-label">{{ field.label.text }}</label>
+                    {{ field(class_="form-control ", rows='4',cols='15')|safe }}
+                </div>
+            {% elif field.type == 'FileField' %}
+                <div class="form-group {% if field.flags.required %}required{% endif %} is-fileinput">
+                    <label for="{{ field.id }}" class="form-control-label">{{ field.label.text }}</label>
+                    <input type="text" readonly="" class="form-control" placeholder="Browse...">
+                    <input class="form-control" id="{{ field.id }}" name="{{ field.id }}" type="file">
+                </div>
+            {% elif field.render_kw and 'label' in field.render_kw %}
+                <div class="form-group">
+                    <p>{{ field.label.text }}</p>
+                </div>
+            {% elif field.render_kw and 'header' in field.render_kw %}
+                <h2>{{ field.label.text }}</h2>
             {% else %}
                 {{ form_group(field) }}
+            {% endif %}
+            {% if field.errors %}
+                {% for error in field.errors %}<p class="help-block">*{{ error }}</p>{% endfor %}
             {% endif %}
         {% endfor %}
     </form>
 {% endmacro %}
 
 
-{% macro start_panel(label, id, expanded=False) %}
+{% macro start_panel(label, id, expanded=False, buttons=None) %}
 
     <div class="panel panel-default panel-flat">
-    <div class="panel-heading" role="tab" id="{{ id }}-heading">
+    <div class="panel-heading" role="tab" id="{{ id }}-heading" data-toggle="collapse" data-parent="#accordion"
+         href="#{{ id }}-fields"
+         aria-expanded="true" aria-controls="{{ id }}-fields">
         <h4 class="panel-title">
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#{{ id }}-fields"
                aria-expanded="true" aria-controls="{{ id }}-fields">
                 {{ label }}
             </a>
+            {% for (glyph, label, url) in buttons or [] %}
+                <a href="{{ url }}" class="btn panel-access" role="button"><span
+                        class="glyphicon {{ glyph }}"
+                        data-toggle="tooltip"
+                        title="{{ label }}"></span></a>{% endfor %}
         </h4>
     </div>
     <div id="{{ id }}-fields"

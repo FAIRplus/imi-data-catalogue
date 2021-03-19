@@ -1,0 +1,438 @@
+{
+   "title":"DIRECT",
+   "description":"Diabetes research on patient stratification",
+   "@type":"Project",
+   "@context":[
+      "http://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+      "http://w3id.org/dats/context/obo/dataset_obo_context.jsonld"
+   ],
+   "types":[
+      {
+         "@type":"Annotation",
+         "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value":"IMI project"
+      }
+   ],
+   "identifier":{
+      "identifier":"dc9ae6bc-147a-11eb-b51f-8c8590c45a21",
+      "@type":"Identifier",
+      "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+   },
+   "startDate": {
+        "@type": "Date",
+        "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+        "date": "2012-02-01",
+        "type": {
+            "value": "start date",
+            "valueIRI": "http://semanticscience.org/resource/SIO_000031"
+      }
+   },
+   "endDate": {
+        "@type": "Date",
+        "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+        "date": "2019-07-31",
+        "type": {
+            "value": "end date",
+            "valueIRI": "http://semanticscience.org/resource/SIO_000036"
+        }
+   },
+   "projectLeads":[
+      {
+         "@type":"Person",
+         "@context":"https://w3id.org/dats/context/sdo/person_sdo_context.jsonld",
+         "firstName":"Hartmut",
+         "lastName":"Ruetten",
+         "email":"hartmut.ruetten@sanofi.com",
+         "roles":[
+            {
+               "@type":"Annotation",
+               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+               "value":"Primary Study Contact",
+               "valueIRI":"http://purl.obolibrary.org/obo/NCIT_C127533"
+            }
+         ],
+         "affiliations":[
+            {
+               "@type":"Organization",
+               "@context":"https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+               "name":"Sanofi",
+               "location":{
+                  "postalAddress":"Sanofi-Aventis Deutschland GmbH, Industriepark Hoechst, Geb. H823, 65926 Frankfurt a.M.",
+                  "@type":"Place",
+                  "@context":"https://w3id.org/dats/context/sdo/place_sdo_context.jsonld"
+               }
+            }
+         ],
+         "extraProperties":[
+            {
+               "values":[
+                  {
+                     "value":"496930513547",
+                     "@type":"Annotation",
+                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                  }
+               ],
+               "category":"phoneNumber"
+            }
+         ]
+      }
+   ],
+   "keywords":[
+      {
+         "@type":"Annotation",
+         "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value":"IMI project"
+      },
+      {
+         "@type":"Annotation",
+         "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value":"Translational Medicine"
+      },
+      {
+         "@type": "Annotation",
+         "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value": "Diabetes & metabolic disorders"
+      },
+      {
+         "@type": "Annotation",
+         "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value": "Disease taxonomy"
+      }
+   ],
+   "extraProperties":[
+      {
+         "values":[
+            {
+               "value":"IMI DIRECT",
+               "@type":"Annotation",
+               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+            }
+         ],
+         "@type":"CategoryValuesPair",
+         "category":"projectAcronym"
+      },
+      {
+         "values":[
+            {
+               "value":"http://www.direct-diabetes.org",
+               "@type":"Annotation",
+               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+            }
+         ],
+         "category":"website"
+      }
+   ],
+   "primaryPublications": [
+      {
+         "@type": "Publication",
+         "@context":"https://w3id.org/dats/context/sdo/publication_sdo_context.jsonld",
+         "identifier":{
+               "identifier": "Diabetologia. 2014 Jun;57(6):1132-42",
+               "@type":"Identifier",
+               "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+         }
+      },
+       {
+         "@type": "Publication",
+         "@context":"https://w3id.org/dats/context/sdo/publication_sdo_context.jsonld",
+         "identifier":{
+               "identifier": "Diabetes Care. 2014;37(3):718-24",
+               "@type":"Identifier",
+               "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+         }
+      }
+   ],
+   "fundedBy":[
+      {
+   		"name":"IMI1 - Call 3",
+         "identifier":{
+               "identifier": "115317",
+               "@type":"Identifier",
+               "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+         },
+         "@type":"Grant",
+         "@context":"https://w3id.org/dats/context/sdo/grant_sdo_context.jsonld"
+      }
+   ],
+   "projectAssets": [
+      {
+         "name":"DIRECT",
+         "identifier":{
+            "identifier":"dc9ae590-147a-11eb-b51f-8c8590c45a21",
+            "@type":"Identifier",
+            "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+         },
+         "@type":"Study",
+         "@context":"https://w3id.org/dats/context/sdo/study_sdo_context.jsonld",
+         "description":"Interim analysis. Study outline is available in Diabetologia (2014) 57:1132\u20131142.",
+         "types":[
+            {
+               "value":"observational",
+               "@type":"Annotation",
+               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+            }
+         ],
+         "studyGroups":[
+            {
+               "@type":"StudyGroup",
+               "@context":"https://w3id.org/dats/context/sdo/studygroup_sdo_context.jsonld",
+               "size":3050,
+               "name":"2300 pre-diabetics; 850 type 2 Diabetes patients. Details in Diabetologia (2014) 57:1132\u20131142",
+               "extraProperties": [
+                   {
+                     "values":[
+                        {
+                           "value":"20-50",
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"BMI range"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":"35",
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"Age range lower limit"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":"75",
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"Age range upper limit"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":"year",
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"Age unit"
+                  }
+               ]
+            }
+         ],
+         "input":[
+            {
+               "@type":"Material",
+               "@context":"https://w3id.org/dats/context/sdo/material_sdo_context.jsonld",
+               "name":"input material",
+               "taxonomy":[
+                  {
+                     "@type":"TaxonomicInformation",
+                     "@context":"https://w3id.org/dats/context/sdo/taxonomic_info_sdo_context.jsonld",
+                     "name":"Homo sapiens",
+                     "identifier":{
+                        "@type":"Identifier",
+                        "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                        "identifier":"http://purl.obolibrary.org/obo/NCBITaxon_9606",
+                        "identifierSource":"NCBI Taxon ID"
+                     }
+                  }
+               ],
+               "bearerOfDisease":[
+                  {
+                     "name":"type II diabetes",
+                     "@type":"Disease",
+                     "@context":"https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                  }
+               ],
+               "derivesFrom":[
+                  {
+                     "name":"Serum",
+                     "@type":"AnatomicalPart",
+                     "@context":"https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                  },
+                  {
+                     "name":"Plasma",
+                     "@type":"AnatomicalPart",
+                     "@context":"https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                  },
+                  {
+                     "name":"Urine",
+                     "@type":"AnatomicalPart",
+                     "@context":"https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                  },
+                  {
+                     "name":"faeces",
+                     "@type":"AnatomicalPart",
+                     "@context":"https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                  }
+               ]
+            }
+         ],
+         "extraProperties":[
+            {
+               "values":[
+                  {
+                     "value":"true",
+                     "@type":"Annotation",
+                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                  }
+               ],
+               "@type":"CategoryValuesPair",
+               "category":"informedConsent"
+            },
+            {
+               "values":[
+                  {
+                     "value":"Identification of risk prediction marker(s) for progression from pre-diabetes to diabetes or diabetes progression",
+                     "@type":"Annotation",
+                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                  }
+               ],
+               "@type":"CategoryValuesPair",
+               "category":"primaryPurpose"
+            },
+            {
+               "values":[
+                  {
+                     "value":"true",
+                     "@type":"Annotation",
+                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                  }
+               ],
+               "@type":"CategoryValuesPair",
+               "category":"multiCenter"
+            }
+         ],
+         "output": [
+            {
+               "title":"DIRECT",
+               "identifier":{
+                  "identifier":"cbde7608-371b-4f9c-af76-af48ed803d65",
+                  "@type":"Identifier",
+                  "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+               },
+               "@type":"Dataset",
+               "@context":"https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+               "types":[
+                  {
+                     "method":{
+                        "@type":"Annotation",
+                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                        "value":"whole genome sequencing"
+                     },
+                     "@type":"DataType",
+                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                  },
+                  {
+                     "method":{
+                        "@type":"Annotation",
+                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                        "value":"RNASeq"
+                     },
+                     "@type":"DataType",
+                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                  },
+                  {
+                     "method":{
+                        "@type":"Annotation",
+                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                        "value":"clinical imaging"
+                     },
+                     "@type":"DataType",
+                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                  },
+                  {
+                     "method":{
+                        "@type":"Annotation",
+                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                        "value":"metabolomics"
+                     },
+                     "@type":"DataType",
+                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                  },
+                  {
+                     "method":{
+                        "@type":"Annotation",
+                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                        "value":"proteomics"
+                     },
+                     "@type":"DataType",
+                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                  }
+               ],
+               "isAbout":[
+                  {
+                     "name":"type II diabetes",
+                     "@type":"Disease",
+                     "@context":"https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                  }
+               ],
+               "extraProperties":[
+                  {
+                     "category":"number of samples",
+                     "values":[
+                        {
+                           "value":"from all 3.050 subjects",
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "@context":"http://w3id.org/dats/context/obo/category_values_pair_obo_context.jsonld"
+                  }
+               ],
+               "distributions":[
+                  {
+                     "@type":"DatasetDistribution",
+                     "@context":"https://w3id.org/dats/context/sdo/dataset_distribution_sdo_context.jsonld",
+                     "dates":[
+                        {
+                           "date":"2012-05-01T00:00:00Z",
+                           "@type":"Date",
+                           "@context":"https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                           "type":{
+                              "@type":"Annotation",
+                              "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                              "value":"creation date",
+                              "valueIRI":""
+                           }
+                        },
+                        {
+                           "date":"2017-09-05T11:51:29.326Z",
+                           "@type":"Date",
+                           "@context":"https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                           "type":{
+                              "@type":"Annotation",
+                              "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                              "value":"last update date",
+                              "valueIRI":""
+                           }
+                        }
+                     ],
+                     "version":"ongoing",
+                     "access":{
+                        "landingPage":"",
+                        "@type":"Access",
+                        "@context":"https://w3id.org/dats/context/sdo/access_sdo_context.jsonld"
+                     }
+                  }
+               ],
+               "creators":[
+                  {
+                     "@type":"Organization",
+                     "@context":"https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                     "name":""
+                  }
+               ]
+            }
+         ]
+      }
+   ]
+}

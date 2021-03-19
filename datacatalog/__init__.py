@@ -27,10 +27,10 @@ from typing import Optional
 
 import jinja2
 import ldap
-from flask import Flask
+from flask import Flask, request, redirect, url_for
 from flask_assets import Environment
 from flask_caching import Cache
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from flask_mail import Mail
 from flask_reverse_proxy_fix.middleware import ReverseProxyPrefixFix
 from flask_wtf.csrf import CSRFProtect
@@ -45,15 +45,53 @@ DEFAULT_ENTITIES = {'dataset': 'datacatalog.models.dataset.Dataset', 'study': 'd
 ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
 
 
+def get_access_handler(user, entity_name):
+    custom_handler_map = app.config.get('CUSTOM_ACCESS_HANDLERS', {})
+    if entity_name in custom_handler_map:
+        custom_handler_string_class = custom_handler_map[entity_name]
+        split = custom_handler_string_class.split('.')
+        custom_handler_string_module = ".".join(split[:-1])
+        custom_handler_string_class = "".join(split[-1:])
+        handler_module = __import__(custom_handler_string_module, fromlist=[custom_handler_string_class])
+        handler_class = getattr(handler_module, custom_handler_string_class)
+        return handler_class.get_instance(current_user)
+    access_handler_map = app.config.get('ACCESS_HANDLERS', {"dataset": "Email"})
+    access_handler_string = access_handler_map.get(entity_name)
+    if access_handler_string == 'Rems':
+        from .acces_handler.rems_handler import RemsAccessHandler
+        if user.is_authenticated:
+            user_rems_id = user.id
+        else:
+            user_rems_id = "data-catalogue-service"
+        all_ids = app.config['entities'][entity_name].query.all_ids()
+        return RemsAccessHandler(user, api_username=user_rems_id,
+                                 api_key=app.config.get('REMS_API_KEY'),
+                                 host=app.config.get('REMS_URL'), verify_ssl=app.config.get('REMS_VERIFY_SSL', True),
+                                 all_ids=all_ids)
+    if access_handler_string == 'Email':
+        from .acces_handler.email_handler import EmailAccessHandler
+        return EmailAccessHandler(user)
+    return None
+
+
 def configure_authentication_system() -> None:
     """
     Configure the authentication system
     Loads the authentication method as specified in the AUTHENTICATION_METHOD settings parameter
     """
-    from .authentication.ldap_authentication import LDAPAuthentication
     authentication_method = app.config.get('AUTHENTICATION_METHOD', 'LDAP')
     if authentication_method == 'LDAP':
-        authentication = LDAPAuthentication(app.config['LDAP_HOST'])
+        from .authentication.ldap_authentication import LDAPUserPasswordAuthentication
+        authentication = LDAPUserPasswordAuthentication(app.config['LDAP_HOST'])
+    elif authentication_method == 'OIDC':
+        from .authentication.oidc_authentication import OIDCAuthentication
+        authentication = OIDCAuthentication(app.config['OIDC_SERVICE'], app.config['OIDC_CONFIG'])
+    elif authentication_method == 'PYOIDC':
+        from .authentication.pyoidc_authentication import PyOIDCAuthentication
+        authentication = PyOIDCAuthentication(base_url=app.config['BASE_URL'],
+                                              client_id=app.config['PYOIDC_CLIENT_ID'],
+                                              client_secret=app.config['PYOIDC_CLIENT_SECRET'],
+                                              idp_url=app.config['PYOIDC_IDP_URL'])
     else:
         raise ValueError("Unsupported authentication method")
     app.config['authentication'] = authentication
@@ -98,6 +136,11 @@ def create_application() -> Flask:
                     static_url_path=getattr(config_object, 'STATIC_URL_PATH', None)
                     )
     new_app.config.from_object(config_object)
+    plugin = new_app.config.get('PLUGIN')
+    if plugin:
+        plugin_settings = __import__(f'{plugin}.settings', fromlist=['PluginConfig'])
+        plugin_settings_class = getattr(plugin_settings, 'PluginConfig')
+        new_app.config.from_object(plugin_settings_class)
     new_app.config['ENV'] = env
     url_prefix = new_app.config.get('URL_PREFIX')
     if url_prefix:
@@ -143,6 +186,20 @@ assets_env = Environment(app)
 assets_loader = PythonAssetsLoader(assets)
 for name, bundle in assets_loader.load_bundles().items():
     assets_env.register(name, bundle)
+
+
+@app.before_request
+def always_login():
+    login_valid = current_user.is_authenticated
+    require_login = app.config.get('REQUIRE_LOGIN_ALL', False)
+    if require_login and request.endpoint and 'static' not in request.endpoint and not login_valid and not getattr(
+            app.view_functions[request.endpoint], 'is_public', False):
+        return redirect(url_for('login', next=request.full_path))
+
+
+def public_route(decorated_function):
+    decorated_function.is_public = True
+    return decorated_function
 
 
 @app.template_filter('dt')
@@ -215,6 +272,16 @@ def pluralize(number: int, singular: str = '', plural: str = 's') -> str:
         return singular
     else:
         return plural
+
+
+@app.context_processor
+def inject_access_handler():
+    """
+    Used to decide if we show the my applications link in navbar
+    """
+    handler = get_access_handler(current_user, app.config.get('DEFAULT_ENTITY', 'dataset'))
+    show = handler and handler.supports_listing_accesses()
+    return dict(show_my_application=show)
 
 
 # Import all controllers so that routes can be resolved

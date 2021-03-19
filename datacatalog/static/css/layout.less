@@ -18,22 +18,99 @@
 
 @import "../vendor/node_modules/bootstrap-material-design/less/bootstrap-material-design.less";
 
-@brand-primary: @blue-grey-500;
-@alternative-color: @orange-100;
+@brand-primary: #083452;
+@alternative-color: #f7941d;
+@alternative-color-light: lighten(@alternative-color, 30);
 @labels-color: @blue-grey-300;
 @footer-color: white;
+@footer-height: 30.5rem;
+
+.navbar .navbar-nav > li > a:hover, .navbar .navbar-nav > li > a:focus {
+  border-bottom: 3px solid lighten(@brand-primary, 60);
+  background-color: lighten(@brand-primary, 80);
+}
+
+.navbar .navbar-nav > li > a {
+  border-bottom: 3px solid transparent;
+}
+
+.landing-cards a:hover .material-icons {
+  text-shadow: 3px 3px @alternative-color-light;
+  //font-size: 5.2em;
+  //transform: rotate(5deg);
+}
+
+.landing-cards {
+  text-align: center;
+  margin-top: 8rem;
+  margin-bottom: 4rem;
+
+
+  a:hover {
+    text-decoration: none;
+  }
+
+
+  .material-icons {
+    font-size: 5em;
+
+  }
+
+  .badge-info {
+    background-color: @alternative-color;
+  }
+}
+
+
+.landing-quote {
+  border-left: 4px solid @alternative-color;
+  margin-bottom: 4rem;
+}
+
+.navbar .navbar-nav > .active > a, .navbar .navbar-nav > .active > a:hover, .navbar .navbar-nav > .active > a:focus {
+  background-color: @alternative-color-light;
+  border-bottom: 3px solid @alternative-color;
+}
+
+.navbar, .navbar.navbar-default {
+  background-color: white;
+  color: #083452;
+}
+
+.navbar .navbar-nav > li > a {
+  font-size: 1.6em;
+}
+
+.navbar .navbar-brand img {
+  padding-top: 0;
+  margin-top: -8px;
+}
+
+.label-primary a {
+  color: white;
+}
+
+#submit-login {
+  text-align: center;
+}
 
 footer {
   background-color: @footer-color;
-  //padding: 50px;
-  clear: both;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: @footer-height;
+  padding-top: 20px;
 }
 
-footer .logo {
-  //background-color: red;
-  height: 200px;
-  white-space: nowrap;
 
+body {
+  position: relative;
+  min-height: 100vh;
+}
+
+#main-container {
+  padding-bottom: @footer-height;
 }
 
 @media (max-width: 768px) {
@@ -223,7 +300,7 @@ footer .helper {
 }
 
 .facet-option-selected {
-  background-color: @alternative-color;
+  background-color: @alternative-color-light;
   border-left: 5px solid @brand-primary;
   margin-left: -10px;
   padding-left: 5px;
@@ -244,7 +321,7 @@ footer .helper {
 }
 
 .panel-footer {
-  background-color: @alternative-color;
+  background-color: @alternative-color-light;
   padding: 6px 0 0;
 }
 
@@ -257,14 +334,23 @@ footer .helper {
 }
 
 .panel-heading {
-  background-color: @alternative-color !important;
+  background-color: @alternative-color-light !important;
 
+}
+
+#accordion .panel-heading {
+  cursor: pointer;
 }
 
 .panel-flat {
   border-radius: 2px;
   box-shadow: none;
-  border: 1px solid @alternative-color;
+  border: 1px solid @alternative-color-light;
+}
+
+.panel-access {
+  padding: 0;
+  margin: 0 0 0 10px;
 }
 
 .panel-dataset {
@@ -289,7 +375,9 @@ dd {
 .notes {
   font-size: 1.2em;
   font-style: italic;
-
+  min-height: 30px;
+  width: 87%;
+  text-align: justify;
 }
 
 .fairResultsStamp {
@@ -305,11 +393,21 @@ dd {
   width: 55px;
 }
 
-.datasetDetails .fairResultsStamp img {
+.datasetDetails h1 {
+  min-height: 60px;
+}
+
+.datasetDetails .fairResultsStamp img, .projectDetails .fairResultsStamp img, .studyDetails .fairResultsStamp img {
   width: 100px;
 }
 
-.datasetDetails .fairResultsStamp {
+.search-description {
+  text-align: justify;
+  width: 87%;
+  min-height: 20px;
+}
+
+.datasetDetails .fairResultsStamp, .projectDetails .fairResultsStamp, .studyDetails .fairResultsStamp {
   top: 45px;
   right: 45px;
   width: 100px;
@@ -341,13 +439,100 @@ dd {
 
 
 .medium {
-  background-color: @alternative-color;
+  background-color: @alternative-color-light;
 }
 
 .default {
   background-color: white;
 }
 
-.datasetDetails {
+.datasetDetails, .studyDetails, .projectDetails {
   position: relative;
 }
+
+.studyDetails .notes {
+  min-height: 50px;
+}
+
+.request-access h3 {
+  margin-bottom: 100px;
+}
+
+.control-label {
+  font-size: 16px !important;
+  padding-left: 0px !important;
+}
+
+.checkbox {
+  margin-right: 10px;
+}
+
+.help-block {
+  color: @brand-danger;
+  font-style: italic;
+}
+
+.form-group.required label:after {
+  color: @brand-danger;
+  content: " *";
+}
+
+footer {
+  .logo {
+    //background-color: red;
+    white-space: nowrap;
+    height: 80px;
+  }
+
+  .container {
+    margin-bottom: 30px;
+  }
+}
+
+@media (min-width: 1025px) {
+  footer .logo {
+    width: 15%;
+  }
+
+  #eulogo, #imilogo {
+    width: 10%;
+  }
+}
+
+.button-link {
+  background-color: #eee;
+  border: 1px solid #777;
+  width: 17%;
+  border-radius: 6px;
+  margin-bottom: 30px;
+
+  .input-group-btn {
+    border-right: 1px solid #777;
+    padding: 3px 0;
+
+    .material-icons {
+      padding: 2px 6px 0 6px;
+      margin: 0;
+      font-size: 3rem
+    }
+  }
+
+  .button-link-text {
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 3px 0;
+    vertical-align: middle;
+    display: table-cell;
+    position: relative;
+    margin-bottom: 0;
+    text-transform: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+}
+

@@ -27,7 +27,7 @@ requirements = [
     'cssmin', 'webassets', 'Flask-Testing', 'requests', 'GEOparse',
     'Flask-Caching', 'python-ldap',
     'Flask-Login', 'Flask-WTF', 'pysolr==3.8.1', 'ckanapi', 'Flask-Mail==0.9.1', 'flask_wtf', 'wtforms',
-    'flask-reverse-proxy-fix', 'email_validator'
+    'flask-reverse-proxy-fix', 'email_validator', 'oic', 'jsonpath_ng'
 ]
 
 test_requirements = [
@@ -38,9 +38,9 @@ setup(
     name='datacatalog',
     version='0.0.1',
     description="Data catalog",
-    author="Valentin Grouès - University of Luxembourg",
+    author="Valentin Grouès",
     author_email='valentin.groues@uni.lu',
-    url='https://github.com/FAIRplus/imi-data-catalogue/',
+    url='https://git-r3lab.uni.lu/core-services/data-catalog',
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
     package_dir={'datacatalog':
                      'datacatalog'},
@@ -49,9 +49,12 @@ setup(
     zip_safe=False,
     keywords=['data catalog', 'lcsb'],
     classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
+        # 'Intended Audience :: Developers',
+        # 'License :: OSI Approved :: ISC License (ISCL)',
         'Natural Language :: English',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
     ],
     test_suite='tests',
     tests_require=test_requirements,

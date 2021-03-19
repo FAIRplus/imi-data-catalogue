@@ -65,6 +65,10 @@ $(document).ready(function () {
     } else {
         $('.start-visible').collapse('show');
     }
+    // to prevent accordion to toggle
+    $(".panel-access").click(function (e) {
+        e.stopPropagation();
+    });
     var fairPlusStamp = $(".fairResultsStamp");
     if (fairPlusStamp) {
         var expandId = fairPlusStamp.data('expand');

@@ -48,6 +48,16 @@ class SolrField:
         self.attribute_name = attribute_name or name
 
 
+class SolrCaseInsensitiveStringField(SolrField):
+    """
+    SolrField subclass setting solr type to lowercase
+    """
+
+    def __init__(self, name: str, attribute_name: Optional[str] = None, indexed: bool = True, stored: bool = True,
+                 multivalued: bool = False) -> None:
+        super().__init__(name, attribute_name, "lowercase", indexed, stored, multivalued)
+
+
 class SolrDateTimeField(SolrField):
     """
     SolrField subclass setting solr type to pdate
@@ -118,3 +128,16 @@ class SolrBooleanField(SolrField):
     def __init__(self, name: str, attribute_name: Optional[str] = None, indexed: bool = True, stored: bool = True,
                  multivalued: bool = False) -> None:
         super().__init__(name, attribute_name, "boolean", indexed, stored, multivalued)
+
+
+class SolrForeignKeyField(SolrField):
+    """
+    SolrField subclass for links between entities
+    """
+
+    def __init__(self, name: str, entity_name: str, attribute_name: Optional[str] = None,
+                 multivalued: bool = False, reversed_by: 'SolrEntity' = None, reversed_multiple: bool = False) -> None:
+        self.linked_entity_name = entity_name
+        self.reversed_by = reversed_by
+        self.reversed_multiple = reversed_multiple
+        super().__init__(name, attribute_name, "string", True, True, multivalued)

@@ -35,7 +35,10 @@ class AuthenticationException(DataCatalogException):
     """
     Authentication related exceptions
     """
-    pass
+
+    def __init__(self, message, status=None):
+        super().__init__(message)
+        self.status = status
 
 
 class SolrIndexerException(DataCatalogException):
@@ -48,5 +51,12 @@ class SolrIndexerException(DataCatalogException):
 class SolrQueryException(SolrIndexerException):
     """
     Exception for Solr queries errors
+    """
+    pass
+
+
+class PostRequestException(DataCatalogException):
+    """
+    Exception for error happening during post request hook
     """
     pass

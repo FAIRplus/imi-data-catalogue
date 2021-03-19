@@ -22,7 +22,6 @@
 
 """
 import logging
-import uuid
 
 from flask_login import UserMixin
 
@@ -43,7 +42,7 @@ class User(UserMixin):
         @param displayname: version of the username for display
         @param active: boolean showing if the user is active or not
         """
-        self.id = uuid.uuid1().int
+        self.id = username
         self.username = username
         self.email = email
         self.displayname = displayname

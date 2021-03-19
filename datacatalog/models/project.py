@@ -20,26 +20,17 @@
 
    Module containing the Project entity
 
+@deprecated - fields moved to Project entity
+
 
 """
 import logging
 
-from ..models import DatasetQuery
+from ..solr.solr_orm import SolrAutomaticQuery
 from ..solr.solr_orm_entity import SolrEntity
-from ..solr.solr_orm_fields import SolrField, SolrTextField
+from ..solr.solr_orm_fields import SolrField, SolrTextField, SolrForeignKeyField, SolrDateTimeField, SolrBooleanField
 
 logger = logging.getLogger(__name__)
-
-
-class ProjectQuery(DatasetQuery):
-    # The sort options that will be offered on the search page
-    SORT_OPTIONS = ["title", "id"]
-    # labels of the sort options that will be offered on the search page
-    SORT_LABELS = ["title", "id"]
-    # default sort option
-    DEFAULT_SORT = 'title'
-    # default sort order
-    DEFAULT_SORT_ORDER = 'desc'
 
 
 class Project(SolrEntity):
@@ -47,10 +38,35 @@ class Project(SolrEntity):
     Project entity, subclass of SolrEntity
     """
     # specifies the list of compatibles connectors
-    COMPATIBLE_CONNECTORS = ['Json']
-    query_class = ProjectQuery
+    COMPATIBLE_CONNECTORS = ['Json', 'Dats']
+    query_class = SolrAutomaticQuery
+    affiliation = SolrField("affiliation")
+    business_address = SolrField("business_address", indexed=False)
+    business_fax_number = SolrField("business_fax_number", indexed=False)
+    business_phone_number = SolrField("business_phone_number", indexed=False)
+    datasets = SolrForeignKeyField("datasets", entity_name="dataset", multivalued=True, reversed_by='project',
+                                   reversed_multiple=False)
+    description = SolrTextField("description")
+    display_name = SolrField("display_name")
+    email = SolrField("contact_email", indexed=False)
+    end_date = SolrDateTimeField("end_date")
+    contact_title = SolrField("contact_title", indexed=False)
+    first_name = SolrField("contact_first_name")
+    funded_by = SolrField("funded_by")
+    keywords = SolrField("keywords", multivalued=True)
+    last_name = SolrField("contact_last_name")
+    project_name = SolrField("project_name")
+    reference_publications = SolrField("reference_publications", indexed=False, multivalued=True)
+    role = SolrField("role", multivalued=True)
+    start_date = SolrDateTimeField("start_date")
+    studies = SolrForeignKeyField("studies", entity_name="study", multivalued=True, reversed_by='project',
+                                  reversed_multiple=False)
     title = SolrField("title")
-    summary = SolrTextField("summary")
+    types = SolrField("types", multivalued=True)
+    website = SolrField("website", indexed=False)
+
+    is_fairplus_evaluated = SolrBooleanField("is_fairplus_evaluated")
+
 
     def __init__(self, title: str = None, entity_id: str = None) -> None:
         """

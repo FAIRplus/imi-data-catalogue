@@ -1,7 +1,7 @@
 {% extends 'base_search.html' %}
 {% set entity_controller = "project_details" %}
 {% set entity_name = "project" %}
-{% set search_controller = "search_entities" %}
+{% set search_controller = "entities_search" %}
 {% set entities = results.entities %}
 {% block description %}Projects{% endblock %}
 
@@ -18,13 +18,42 @@
                 <h3>
                     <a href="{{ url_for('entity_details', entity_name=entity_name, entity_id=project.id) }}">{{ project.title| truncate(55, True) }}</a>
                 </h3>
-                <p>{{ project.summary | default("", True)|truncate(500, True) }}</p>
+                <p class="search-description">{{ project.description | default("", True)|truncate(500, True) }}</p>
+                {% if project.keywords %}
+                    <p>
+                        <span class="dataset-field-label">Keywords:</span>
+                        {% for keyword in project.keywords %}
+                            <span class="label label-default">{{ keyword }}</span>
+                        {% endfor %}
+                    </p>
+                {% endif %}
+                {% if fair_evaluations_show and project.is_fairplus_evaluated %}
+                    <a href="{{ url_for('entity_details', entity_name=entity_name, entity_id=project.id) }}#fairplus-evaluation-fields"
+                       class="fairResultsStamp"><img alt='fairplus stamp'
+                                                     src="/static/public/images/fairplus-stamp.png"/></a>
+                {% endif %}
                 <p style="position:absolute;top:0;right:0;padding:2px;"><span>{{ loop.index + start_rank }}</span></p>
             </div>
             <div class="panel-footer">
                 <div class="row">
                     <div class="col-md-12">
                         <ul class="dataset-card">
+                            {% if project.start_date %}
+                                <li><span
+                                        class="dataset-field-label">Start:</span> {{ project.start_date | date }}
+                                </li>
+                            {% endif %}
+                            {% if project.website %}
+                                <li><span class="dataset-field-label"><a
+                                        href="{{ project.website }}">Project website</a></span>
+
+                                </li>
+                            {% endif %}
+                            {% if project.display_name %}
+                                <li><span
+                                        class="dataset-field-label">Contact:</span> {{ project.display_name }}
+                                </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>

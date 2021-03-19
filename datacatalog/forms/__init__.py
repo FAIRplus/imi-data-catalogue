@@ -25,7 +25,7 @@
 """
 from urllib.parse import urlparse, urljoin
 
-from flask import redirect, request, Response
+from flask import redirect, request, Response, url_for
 from flask_wtf import FlaskForm
 from wtforms import HiddenField
 
@@ -69,7 +69,7 @@ class RedirectForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         FlaskForm.__init__(self, *args, **kwargs)
         if not self.next.data:
-            self.next.data = get_redirect_target() or '/'
+            self.next.data = get_redirect_target() or url_for('home')
 
     def redirect(self) -> Response:
         """

@@ -10,23 +10,21 @@
                 {% set facet_value = facet_field[i] %}
                 {% set facet_value_count = facet_field[i + 1] %}
                 {% set facet_selected = facet_value in facet.values %}
-                {% if facet_value_count != 0 %}
-                    {% if facet_selected %}
-                        <li class="facet-option facet-option-selected">
-                            <a href="{{ macros.build_link(query, sort_by, order, facets, none, (facet.field_name, facet_value), no_default) }}">{{ facet_value }}
-                                ({{ facet_value_count }})
-                                <p class="facet-remove pull-right">
-                                    <i class="material-icons text-primary">cancel</i>
-                                </p>
-                            </a>
+                {% if facet_selected %}
+                    <li class="facet-option facet-option-selected">
+                        <a href="{{ macros.build_link(query, sort_by, order, facets, none, (facet.field_name, facet_value), no_default, search_controller=search_controller, entity_name=entity_name) }}">{{ facet_value }}
+                            ({{ facet_value_count }})
+                            <p class="facet-remove pull-right">
+                                <i class="material-icons text-primary">cancel</i>
+                            </p>
+                        </a>
 
-                        </li>
-                    {% else %}
-                        <li class="facet-option">
-                            <a href="{{ macros.build_link(query, sort_by, order, facets, (facet.field_name, facet_value), none, no_default) }}">{{ facet_value }}
-                                ({{ facet_value_count }})</a>
-                        </li>
-                    {% endif %}
+                    </li>
+                {% else %}
+                    <li class="facet-option">
+                        <a href="{{ macros.build_link(query, sort_by, order, facets, (facet.field_name, facet_value), none, no_default, search_controller=search_controller, entity_name=entity_name) }}">{{ facet_value }}
+                            ({{ facet_value_count }})</a>
+                    </li>
                 {% endif %}
             {% endfor %}
         </ul>
@@ -46,7 +44,7 @@
                 {% if facet_value_count != 0 %}
                     {% if facet_selected %}
                         <li class="facet-option  facet-option-selected">
-                            <a href="{{ macros.build_link(query, sort_by, order, facets, none, (facet.field_name, facet_value), no_default) }}">{{ start }}
+                            <a href="{{ macros.build_link(query, sort_by, order, facets, none, (facet.field_name, facet_value), no_default, search_controller=search_controller, entity_name=entity_name) }}">{{ start }}
                                 → {{ end }} ({{ facet_value_count }})
                                 <p class="facet-remove pull-right">
                                     <i class="material-icons text-primary">cancel</i>
@@ -56,7 +54,7 @@
                         </li>
                     {% else %}
                         <li class="facet-option">
-                            <a href="{{ macros.build_link(query, sort_by, order, facets, (facet.field_name, facet_value), none, no_default) }}">{{ start }}
+                            <a href="{{ macros.build_link(query, sort_by, order, facets, (facet.field_name, facet_value), none, no_default, search_controller=search_controller, entity_name=entity_name) }}">{{ start }}
                                 → {{ end }} ({{ facet_value_count }})
                             </a>
 
@@ -69,7 +67,7 @@
                 {% set facet_selected = facet_value in facet.values %}
                 {% if facet_selected %}
                     <li class="facet-option facet-option-selected">
-                        <a href="{{ macros.build_link(query, sort_by, order, facets, none, (facet.field_name, facet_value), no_default) }}">≥ {{ facet.range.end }}
+                        <a href="{{ macros.build_link(query, sort_by, order, facets, none, (facet.field_name, facet_value), no_default, search_controller=search_controller, entity_name=entity_name) }}">≥ {{ facet.range.end }}
                             ({{ facet_field["after"] }})
                             <p class="facet-remove pull-right">
                                 <i class="material-icons text-primary">cancel</i>
@@ -78,7 +76,7 @@
                     </li>
                 {% else %}
                     <li class="facet-option">
-                        <a href="{{ macros.build_link(query, sort_by, order, facets, (facet.field_name, facet_value), none, no_default) }}">≥ {{ facet.range.end }}
+                        <a href="{{ macros.build_link(query, sort_by, order, facets, (facet.field_name, facet_value), none, no_default, search_controller=search_controller, entity_name=entity_name) }}">≥ {{ facet.range.end }}
                             ({{ facet_field["after"] }})
                         </a>
                     </li>
@@ -136,6 +134,13 @@
                         <option {% if sort_order=='desc' %}selected="selected"{% endif %}>desc</option>
                     </select>
                 </div>
+                {% if search_examples %}
+                    <div class="row">
+                        <p>Examples: {% for search_example in search_examples %}
+                            <a href="{{ url_for(search_controller, entity_name=entity_name, query=search_example) }}">{{ search_example }}</a>{% endfor %}
+                        </p>
+                    </div>
+                {% endif %}
             </div>
             {% for facet in facets if facet.values %}
                 {% for value in facet.values %}
@@ -146,10 +151,12 @@
 
 
     </div>
-    <div class="row"><p class="pull-right">{{ results.hits }}
-        {{ results.hits | pluralize(singular=entity_name, plural=entity_plural_name) }}
-        found</p>
-    </div>
+    {% block numberFound %}
+        <div class="row"><p class="pull-right">{{ results.hits }}
+            {{ results.hits | pluralize(singular=entity_name, plural=entity_plural_name) }}
+            found</p>
+        </div>
+    {% endblock %}
     <div class="row">
 
         <div class="facets col-md-4 hidden-sm hidden-xs">
@@ -166,7 +173,9 @@
             <div class="row">
 
                 {% block search_results %}{% endblock %}
-                {{ macros.show_pagination(pagination, query, sort_order, selected_sort, facets) }}
+                {% block pagination %}
+                    {{ macros.show_pagination(pagination, query, sort_order, selected_sort, facets, search_controller=search_controller, entity_name=entity_name) }}
+                {% endblock %}
             </div>
 
         </div>

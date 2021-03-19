@@ -22,21 +22,39 @@ dirname = os.path.dirname(__file__)
 class Config(object):
     SECRET_KEY = b''
     TITLE = 'Data Catalog'
-    ENTITIES = {'dataset': 'datacatalog.models.dataset.Dataset'}
+    ENTITIES = {'dataset': 'datacatalog.models.dataset.Dataset',
+                'project': 'datacatalog.models.project.Project',
+                'study': 'datacatalog.models.study.Study'}
+    DEFAULT_ENTITY = 'dataset'
     # CUSTOM FOLDER TO ALLOW OVERRIDING THE  DEFAULT TEMPLATES
     # TEMPLATES_EXTRA_FOLDER = ""
     # TO GIVE MORE WEIGHT TO CERTAIN FIELDS FOR THE SEARCH RESULTS
-    SOLR_BOOST = 'dataset_title^5 dataset_notes^2 dataset_text_^1'
+    SOLR_BOOST = {
+        'dataset': 'dataset_title^5 dataset_text_^1',
+        'project': 'project_title^5 project_description^2 project_text_^1',
+        'study': 'study_title^5 study_description^2 study_text_^1',
+    }
+
     # DEFAULT SORT FIELD
-    SOLR_DEFAULT_SORT = 'dataset_created'
+    SOLR_DEFAULT_SORT = {'dataset': 'title'}
     # THE FACETS THAT WILL SHOW UP ON THE LEFT SIDE MENU
-    FACETS_ORDER = {'dataset': [
-        ("groups", "Groups"),
-        ("therapeutic_area_standards_disease", "Therapeutic area or disease"),
-        ("organism", "Organism"),
-        ("tags", "Tags"),
-        ("secondary_analysis", "Secondary Analysis"),
-    ]}
+    FACETS_ORDER = {
+        'dataset': [
+            ("data_types", "Data types"),
+            ("disease", "Disease"),
+            ("data_standards", "Data standards"),
+        ],
+        'project': [
+            ("types", "Types"),
+            ("keywords", "Keywords"),
+        ],
+        'study': [
+            ("types", "Study types"),
+            ("organisms", "Organisms"),
+            ("disease", "Disease"),
+            ("samples_types", "Samples types"),
+        ]
+    }
     # NUMBER OF SEARCH RESULTS DISPLAYED PER PAGE
     RESULTS_PER_PAGE = 8
     # SOLR URL
@@ -44,9 +62,11 @@ class Config(object):
     # SOLR CORE
     SOLR_COLLECTION = 'datacatalog'
     # FOR ENTITIES IMPORT FROM JSON FILES
-    JSON_FILE_PATH = {'dataset': 'tests/data/records.json'}
+    JSON_FILE_PATH = {'dataset': 'data/imi_projects',
+                      'project': 'data/imi_projects',
+                      'study': 'data/imi_projects'}
     # EMAIL ADDRESS TO SEND ACCESS REQUEST TO
-    EMAIL_RECIPIENT = ['study-request@elixir-luxembourg.org']
+    EMAIL_RECIPIENT = ['data-catalog@elixir-luxembourg.org']
     # FLASK-MAIL CONFIGURATION
     MAIL_SERVER = 'localhost'
     MAIL_PORT = 25
@@ -64,14 +84,36 @@ class Config(object):
                    3: {'class': 'bad', 'text': 'bad'}}
 
     # WHICH FIELDS ARE USED FOR DEFAULT SEARCH
-    SOLR_QUERY_TEXT_FIELD = {'dataset': ["title", "groups", "funding", "organism",
-                                         "project_name", "study_type", "therapeutic_area_standards_disease"
-                                                                       "treatment_category"]}
+    SOLR_QUERY_TEXT_FIELD = {
+        'dataset': [
+            "title",
+            "disease",
+            "data_types",
+            "data_standards",
+        ],
+        'project': [
+            'keywords',
+            'title',
+            'types'
+        ],
+        'study': [
+            'title',
+            'organisms',
+            'disease',
+            'samples_type',
+            'types'
+        ]
+
+    }
+    # the entities that appears in the menu / navbar
+    ENTITIES_MENU = ['project', 'dataset', 'study']
 
     # GEO IMPORTER
     # THIS FOLDER SHOULD CONTAIN '.TXT' FILES WITH 'DISEASE' AS NAME OF FILE CONTAINING GEO SERIES. FOR EX: ASTHMA.TXT
     GEO_FILE_PATH = 'tests/data/geo_studies/'
     GEO_TEMP_FOLDER = 'tests/data/geo_studies/temp_files/'
+    # AUTHENTICATION_METHOD CAN BE LDAP OR PYOIDC
+    AUTHENTICATION_METHOD = 'LDAP'
     # LDAP configuration
     LDAP_HOST = 'ldaps://xxxxxxxxxx'
     LDAP_USERNAME = 'xxxxx'
@@ -79,8 +121,25 @@ class Config(object):
     LDAP_BASE_DN = 'xxxxxxxx'
     LDAP_USER_GROUPS_FIELD = 'xxxxxxxxxxxx'
     AUTHENTICATION_DICT = {LDAP_USERNAME: LDAP_PASSWORD}
+    # OIDC CONFIGURATION
+    PYOIDC_CLIENT_ID = ''
+    PYOIDC_CLIENT_SECRET = ''
+    PYOIDC_IDP_URL = ''
     # DISPLAY THE 'LOGIN' LINK IN NAVBAR
     SHOW_LOGIN = False
+    # ACCESS HANDLER (used for access requests)
+    # Rems or Email
+    ACCESS_HANDLERS = {
+        "dataset": "Email"
+    }
+    # If REMS handler
+    REMS_API_KEY = ""
+    REMS_URL = ""
+    REMS_API_USER = ""
+    SEARCH_EXAMPLES = {
+        "dataset": ["ABIRISK*", "dataset_samples_type:Blood"],
+        "project": ["APPROACH"]
+    }
 
 
 class DockerConfig(Config):

@@ -35,6 +35,7 @@ from flask_assets import ManageAssets
 from flask_script import Manager, Shell
 
 from datacatalog import app
+from datacatalog.exporter.entities_exporter import EntitiesExporter
 from datacatalog.importer.entities_importer import EntitiesImporter
 
 manager = Manager(app)
@@ -103,14 +104,14 @@ def import_entities(connector_name, entity_name):
     """
     Import entities of type entity_name using the connector specified by connector_name
     Doesn't trigger a commit but will clear the cache.
-    @param connector_name: Short name of the connector to use, e.g. Json. See method get_connector
+    @param connector_name: Short name of the connector to use, e.g. Json. See method get_importer_connector
     @type entity_name: type of the entities to import
     """
     if entity_name not in app.config['entities']:
         app.logger.error('unknown entity name')
         exit(1)
     entity_class = app.config['entities'][entity_name]
-    connector = get_connector(connector_name, entity_class)
+    connector = get_importer_connector(connector_name, entity_class)
     if not connector:
         app.logger.error('no known connector found')
         exit(1)
@@ -119,7 +120,34 @@ def import_entities(connector_name, entity_name):
     app.cache.clear()
 
 
-def get_connector(connector_name, entity_class):
+@manager.command
+def export_entities(connector_name, entity_name):
+    """
+    Import entities of type entity_name using the connector specified by connector_name
+    @param connector_name: Short name of the connector to use, e.g. Rems.
+    @type entity_name: type of the entities to import
+    """
+    if entity_name not in app.config['entities']:
+        app.logger.error('unknown entity name')
+        exit(1)
+    entity_class = app.config['entities'][entity_name]
+    from datacatalog.connector.rems_connector import RemsConnector
+    connector = RemsConnector(api_username=app.config.get('REMS_API_USER'),
+                              api_key=app.config.get('REMS_API_KEY'),
+                              host=app.config.get('REMS_URL'),
+                              verify_ssl=app.config.get('REMS_VERIFY_SSL', True)
+                              )
+    # connector = RemsConnector(api_username="data-catalogue-service", api_key="oKYsMFAYaGNLHG8AKoEJ",
+    #                           host="https://rems.lcsb.uni.lu")
+    if not connector:
+        app.logger.error('no known connector found')
+        exit(1)
+    entities = entity_class.query.all()
+    exporter = EntitiesExporter([connector])
+    exporter.export_all(entities)
+
+
+def get_importer_connector(connector_name, entity_class):
     """
     Returns an instance of the connector corresponding to connector_name
     Will check if the entity_class is compatible with the connector asked.
@@ -134,16 +162,19 @@ def get_connector(connector_name, entity_class):
         app.logger.error('connector and entity name not compatible')
         exit(1)
     elif connector_name == 'Ckan':
-        from datacatalog.importer.connector.ckan_connector import CKANConnector
+        from datacatalog.connector.ckan_connector import CKANConnector
         connector = CKANConnector(app.config['CKAN_URL'])
     elif connector_name == 'Geo':
-        from datacatalog.importer.connector.geostudies_connector import GEOStudiesConnector
+        from datacatalog.connector.geostudies_connector import GEOStudiesConnector
         connector = GEOStudiesConnector(app.config['GEO_FILE_PATH'])
     elif connector_name == 'Json':
-        from datacatalog.importer.connector.json_connector import JSONConnector
+        from datacatalog.connector.json_connector import JSONConnector
         connector = JSONConnector(app.config['JSON_FILE_PATH'][entity_class.__name__.lower()], entity_class)
+    elif connector_name == 'Dats':
+        from datacatalog.connector.dats_connector import DATSConnector
+        connector = DATSConnector(app.config['JSON_FILE_PATH'][entity_class.__name__.lower()], entity_class)
     elif connector_name == 'Limesurvey':
-        from datacatalog.importer.connector.limesurvey_connector import LimesurveyConnector
+        from datacatalog.connector.limesurvey_connector import LimesurveyConnector
         connector = LimesurveyConnector(app.config['LIMESURVEY_URL'],
                                         app.config['LIMESURVEY_USERNAME'],
                                         app.config['LIMESURVEY_PASSWORD'],

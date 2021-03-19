@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h1>My applications</h1>
+    <blockquote>This page lists your access applications</blockquote>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>{{ entity_name | title }}</th>
+            <th>Application State</th>
+            <th>Created on</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for application in applications %}
+            {% set state = application.state.value %}
+            {% set state_icon = {"submitted": "hourglass", "approved": "ok-circle", "rejected": "remove-circle", "closed": "remove-circle", "revoked": "remove-circle"}.get(state) %}
+            {% set state_color = {"submitted": "info", "approved": "success", "closed": "danger", "revoked": "danger", "rejected": "danger"}.get(state) %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('entity_details', entity_name=entity_name, entity_id=application.entity_id) }}">{{ application.entity_title }}</a>
+                </td>
+                <td>{% if state_icon %}
+                    <span title="{{ state }}" style="font-size:20px;"
+                          class="glyphicon glyphicon-{{ state_icon }} text-{{ state_color }}"/>{% else %}
+                    {{ state }}{% endif %}
+                </td>
+                <td>{{ application.creation_date | date }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

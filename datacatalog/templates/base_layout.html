@@ -11,12 +11,11 @@
     {% endblock %}
     {#    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico') }}">#}
     {% block css %}
+        <!-- Material Design fonts -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
         {% assets "common_css" %}
             <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
         {% endassets %}
-        <!-- Material Design fonts -->
-        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
-        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
     {% endblock %}
     <script type="text/javascript">
         function defer(method) {
@@ -29,11 +28,13 @@
         }
     </script>
 </head>
-<body>
+<body class="{{ body_extra_class }}">
 {% block navbar %}
-    {% with active_page=active_page %}
-        {% include 'navbar.html' %}
-    {% endwith %}
+    {% if not no_navbar %}
+        {% with active_page=active_page %}
+            {% include 'navbar.html' %}
+        {% endwith %}
+    {% endif %}
 {% endblock %}
 
 {% block container %}
@@ -43,50 +44,76 @@
     </div>
 {% endblock %}
 {% block extra_content %}{% endblock %}
+
+<footer>
+    {% block footer %}
+        {% block footerlogos %}
+            <div class="container">
+                <div class="row ">
+                    <div class="col-xs-2 logo" id="eulogo">
+                        <a href="https://ec.europa.eu/"><span class="helper"></span><img
+                                src="{{ config.get('URL_PREFIX', '') }}/static/public/images/EU_logo.jpg"
+                                alt="eu logo"/></a>
+                    </div>
+                    <div class="col-xs-2 logo" id="ullogo">
+                        <a href="https://www.uni.lu/lcsb"><span class="helper"></span><img
+                                src="{{ config.get('URL_PREFIX', '') }}/static/public/images/unilcsb.svg"
+                                alt="ul logo"/></a>
+                    </div>
+                    <div class="col-xs-2 logo" id="imilogo">
+                        <a href="https://www.imi.europa.eu"><span class="helper"></span><img
+                                src="{{ config.get('URL_PREFIX', '') }}/static/public/images/IMI_logo.png"
+                                alt="imi logo"/></a>
+                    </div>
+
+
+                    <div class="col-xs-2 logo" id="elixirlogo">
+                        <a href="https://www.elixir-luxembourg.org"><span class="helper"></span><img
+                                src="{{ config.get('URL_PREFIX', '') }}/static/public/images/Elixir_LU.svg"
+                                alt="elixir luxembourg logo"/></a>
+                    </div>
+                    <div class="col-xs-2 logo" id="etrikslogo">
+                        <a href="https://www.etriks.org/"><span class="helper"></span><img
+                                src="{{ config.get('URL_PREFIX', '') }}/static/public/images/etriks.png"
+                                alt="etriks logo"/></a>
+                    </div>
+                    <div class="col-xs-2 logo" id="fairpluslogo">
+                        <a href="https://fairplus-project.eu/"><span class="helper"></span><img
+                                src="{{ config.get('URL_PREFIX', '') }}/static/public/images/fairplus-logo.png"
+                                alt="fairplus logo"/></a>
+                    </div>
+                    <div class="col-xs-2 logo" id="efpialogo">
+                        <a href="https://www.efpia.eu/"><span class="helper"></span><img
+                                src="{{ config.get('URL_PREFIX', '') }}/static/public/images/efpia_logo.png"
+                                alt="efpia logo"/></a>
+                    </div>
+
+                </div>
+            </div>
+        {% endblock %}
+        {% block footercopyright %}
+            <p style='text-align:center;padding-bottom: 20px'>
+                <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+                    <img style='width:88px; border-width:0'
+                         alt="Creative Commons License"
+                         src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"/></a><br/>This
+                work is licensed under a
+                <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons
+                    Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+            </p>
+        {% endblock %}
+    {% endblock %}
+</footer>
 {% block js %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
+            integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
+            crossorigin="anonymous"></script>
     {% assets "common_js" %}
         <script type="text/javascript" src="{{ ASSET_URL }}"></script>
     {% endassets %}
 {% endblock %}
-<footer>
-    {% block footer %}
-        <div class="container">
-            <div class="row ">
-                <div class="col-xs-2 logo">
-                    <span class="helper"></span><img src="/static/public/images/EU_logo.jpg" alt="eu logo"/>
-                </div>
-                <div class="col-xs-2 logo">
-                    <span class="helper"></span><img src="/static/public/images/IMI_logo.png" alt="imi logo"/>
-                </div>
-
-
-                <div class="col-xs-2 logo">
-                    <span class="helper"></span><img src="/static/public/images/Elixir_LU.svg"
-                                                     alt="elixir luxembourg logo"/>
-                </div>
-                <div class="col-xs-2 logo">
-                    <span class="helper"></span><img src="/static/public/images/etriks.png" alt="etriks logo"/>
-                </div>
-                <div class="col-xs-2 logo">
-                    <span class="helper"></span><img src="/static/public/images/fairplus-logo.png" alt="fairplus logo"/>
-                </div>
-                <div class="col-sm-2 logo">
-                    <span class="helper"></span><img src="/static/public/images/efpia_logo.png"   alt="efpia logo"/>
-                </div>
-
-            </div>
-        </div>
-
-        <p style='text-align:center;padding-bottom: 20px'>
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
-                <img style='width:88px; border-width:0'
-                     alt="Creative Commons License"
-                     src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"/></a><br/>This
-            work is licensed under a
-            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons
-                Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
-        </p>
-    {% endblock %}
-</footer>
 </body>
 </html>

@@ -1,47 +1,46 @@
 version: '3'
 
 services:
-    web:
-        build: .
-        expose:
-            - '5000'
-        command: "-t 600 -w 2 datacatalog:app --bind 0.0.0.0:5000"
-        entrypoint: "gunicorn"
-        environment:
-            - DATACATALOG_ENV=docker
-        volumes:
-            - static_files:/static/
-        depends_on:
-            - solr
-    solr:
-        image: solr:7.3
-        expose:
-          - '8983'
-        volumes:
-            - solrdata:/var/solr
-    nginx:
-        command:
-            - nginx-debug
-            - "-g"
-            - "daemon off;"
-        image: "nginx:alpine"
-        ports:
-            - "80:80"
-            - "443:443"
-        depends_on:
-            - web
-            - solr
-        volumes:
-            - "./docker/nginx/nginx.conf:/etc/nginx/nginx.conf"
-            - "./docker/nginx/nginx-selfsigned.crt:/etc/ssl/certs/nginx-selfsigned.crt"
-            - "./docker/nginx/nginx-selfsigned.key:/etc/ssl/private/nginx-selfsigned.key"
-            - "./docker/nginx/dhparam.pem:/etc/ssl/certs/dhparam.pem"
-            - "./docker/nginx/datacatalog.conf:/etc/nginx/conf.d/datacatalog.conf"
-            - "./docker/nginx/datacatalog-ssl.conf:/etc/nginx/conf.d/datacatalog-ssl.conf"
-            - static_files:/var/www/shared/static/
-            - nginx_logs:/log
-            
+  web:
+    build: .
+    expose:
+      - '5000'
+    command: "-t 600 -w 2 datacatalog:app --bind 0.0.0.0:5000"
+    entrypoint: "gunicorn"
+    environment:
+      - DATACATALOG_ENV=docker
+    volumes:
+      - static_files:/static/
+    depends_on:
+      - solr
+  solr:
+    image: solr:8.8.1
+    expose:
+      - "8983"
+    volumes:
+      - solrdata:/var/solr
+  nginx:
+    command:
+      - nginx-debug
+      - "-g"
+      - "daemon off;"
+    image: "nginx:alpine"
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - web
+      - solr
+    volumes:
+      - "./docker/nginx/nginx.conf:/etc/nginx/nginx.conf"
+      - "./docker/nginx/nginx-selfsigned.crt:/etc/ssl/certs/nginx-selfsigned.crt"
+      - "./docker/nginx/nginx-selfsigned.key:/etc/ssl/private/nginx-selfsigned.key"
+      - "./docker/nginx/dhparam.pem:/etc/ssl/certs/dhparam.pem"
+      - "./docker/nginx/datacatalog.conf:/etc/nginx/conf.d/datacatalog.conf"
+      - static_files:/var/www/shared/static/
+      - nginx_logs:/log
+
 volumes:
-    solrdata:
-    static_files:
-    nginx_logs:
+  solrdata:
+  static_files:
+  nginx_logs:

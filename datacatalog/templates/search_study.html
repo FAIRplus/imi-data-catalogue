@@ -1,9 +1,9 @@
 {% extends 'base_search.html' %}
 {% set entity_controller = "study_details" %}
 {% set entity_name = "study" %}
-{% set search_controller = "search_entities" %}
+{% set search_controller = "entities_search" %}
 {% set entities = results.entities %}
-{% block description %}Datasets{% endblock %}
+{% block description %}Studies{% endblock %}
 
 
 {% block search_results %}
@@ -16,13 +16,38 @@
                 <h3>
                     <a href="{{ url_for('entity_details', entity_name=entity_name, entity_id=study.id) }}">{{ study.title| truncate(55, True) }}</a>
                 </h3>
-                <p>{{ study.summary | default("", True)|truncate(500, True) }}</p>
+                {% if fair_evaluations_show and study.is_fairplus_evaluated %}
+                    <a href="{{ url_for('entity_details', entity_name=entity_name, entity_id=study.id) }}#fairplus-evaluation-fields"
+                       class="fairResultsStamp"><img alt='fairplus stamp'
+                                                     src="/static/public/images/fairplus-stamp.png"/></a>
+                {% endif %}
+                <p class="search-description">{{ study.description | default("", True)|truncate(500, True) }}</p>
                 <p style="position:absolute;top:0;right:0;padding:2px;"><span>{{ loop.index + start_rank }}</span></p>
             </div>
             <div class="panel-footer">
                 <div class="row">
                     <div class="col-md-12">
                         <ul class="dataset-card">
+                            {% if study.keywords %}
+                                <li><span class="dataset-field-label">Keywords:</span>
+                                    {% for keyword in study.keywords %}
+                                        <span class="label label-default">{{ keyword }}</span>
+                                    {% endfor %}
+                                </li>
+                            {% endif %}
+                            {% if study.types %}
+                                <li>
+                                    <span class="dataset-field-label">Types:</span>
+                                    {% for type in study.types %}
+                                        <span class="label label-default">{{ type | title }}</span>
+                                    {% endfor %}
+                                </li>
+                            {% endif %}
+                            {% if study.category %}
+                                <li><span
+                                        class="dataset-field-label">Therapeutic area:</span> {{ study.therapeutic_area_standards_disease }}
+                                </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>

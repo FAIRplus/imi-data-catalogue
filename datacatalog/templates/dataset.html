@@ -11,118 +11,87 @@
                href="#fairplus-evaluation-fields"><img alt='fairplus stamp'
                                                        src="/static/public/images/fairplus-stamp.png"/></a>
         {% endif %}
-        <h1>{{ dataset.title }}
-            {% if dataset.open_access_link %}
-                <a href={{ dataset.open_access_link }}
-                           class="btn" role="button" style="width:1px;padding:5px;font-size: 18px"><span
-                        class="glyphicon glyphicon-download"
-                        data-toggle="tooltip" title="download"></span></a>
+        <h1>{{ dataset.title }}</h1>
+        {% if dataset.open_access_link %}
+            <a href={{ dataset.open_access_link }}
+                       class="btn" role="button" style="width:1px;padding:5px;font-size: 18px"><span
+                    class="glyphicon glyphicon-download"
+                    data-toggle="tooltip" title="download"></span></a>
+        {% else %}
+            {% if has_access.value == 'approved' %}
+                <span title="you were granted access to this dataset" style="font-size:20px;"
+                      class="text-success  glyphicon glyphicon-ok-circle"/>
+            {% elif has_access.value == 'submitted' %}
+                <span title="you have already requested access to this dataset" style="font-size:20px;"
+                      class="text-info glyphicon glyphicon-hourglass"/>
             {% else %}
-                <a href="{{ url_for('request_access', entity_name='dataset', entity_id=dataset.id) }}"
-                   class="btn " role="button" style="width:1px;padding:5px;"><span class="glyphicon glyphicon-share"
-                                                                                   data-toggle="tooltip"
-                                                                                   title="request access"></span></a>
+
+                <div class="button-link input-group">
+                    <p class="input-group-btn">
+                        <i class="material-icons">fact_check</i>
+                    </p>
+                    <a class="btn button-link-text"
+                       href="{{ url_for('request_access', entity_name='dataset', entity_id=dataset.id) }}">Request
+                        Access</a>
+                </div>
 
             {% endif %}
+        {% endif %}
 
-        </h1>
-        <p class="notes">{{ dataset.notes | default("", True) }}</p>
-        <p>{% if dataset.groups %}
-            groups: {{ macros.split_labels(dataset.groups) }}
-        {% endif %}</p>
-        <p>
+
+        <p class="clearfix">
             {% if dataset.tags %}
                 tags: {{ macros.split_labels(dataset.tags) }}
             {% endif %}
         </p>
+
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="row">
+                <div class="col-md-6">
+                    {#    PROJECT      #}
+                    {{ macros.start_panel("Project", "project", True) }}
+                    {% set study =  dataset.study_entity %}
+                    {% set project = study.project_entity if study else dataset.project_entity %}
+                    {% if project %}
+                        {{ macros.show_field_link(project.title, "Project Title", url_for('entity_details', entity_name='project', entity_id=project.id)) }}
+                        {% if project.website %}
+                            {{ macros.show_field_link(project.website, "Project website", project.website) }}
+                        {% endif %}
+                        {% if project.contact_entities %}
+                            {{ macros.show_field_list(project.contact_entities, "Contact Person(s)", reference_list=True) }}
+                        {% endif %}
+                    {% endif %}
+                    {{ macros.end_panel() }}
+                </div>
+                <div class="col-md-6">
+                    {#    DATASETS    #}
 
-            {#    PROJECT CONTACT      #}
+                    {{ macros.start_panel("Studies", "studies", True) }}
+                    {{ macros.show_field_link(study.title, "Study title", url_for('entity_details', entity_name='study', entity_id=study.id)) }}
+                    {{ macros.end_panel() }}
+                </div>
+            </div>
+        </div>
 
-            {{ macros.start_panel("Project Contact", "project", True) }}
-            {% if dataset.contact_names %}
-                {{ macros.show_field_list(dataset.contact_names, "Contact Person(s)", reference_list=True) }}
-            {% else %}
-                {{ macros.show_field_text(dataset.contact_first_name, "First Name") }}
-                {{ macros.show_field_text(dataset.contact_last_name, "Last Name") }}
-            {% endif %}
-            {{ macros.show_field_text(dataset.affiliation, "Affiliation") }}
-            {{ macros.show_field_email(dataset.contact_email, "Email", dataset.contact_email) }}
-            {{ macros.show_field_text(dataset.business_phone_number, "Business Phone Number") }}
-            {{ macros.show_field_text(dataset.business_fax_number, "Business Fax Number") }}
-            {{ macros.show_field_text(dataset.business_address, "Business Address") }}
-            {{ macros.show_field_link(dataset.project_website, "Project Website", dataset.project_website) }}
-            {{ macros.end_panel() }}
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
             {#    GENERAL DATASET INFORMATION    #}
 
-            {{ macros.start_panel("General Dataset Information", "general") }}
+            {{ macros.start_panel("General Dataset Information", "general", True) }}
+
             {{ macros.show_field_text(dataset.version, "Version") }}
             {{ macros.show_field_text(dataset.dataset_created | date, "Date of creation of the dataset") }}
             {{ macros.show_field_text(dataset.dataset_modified | date, "Date of the last update of the dataset") }}
-            {{ macros.show_field_text(dataset.funding, "Funding") }}
-            {{ macros.show_field_list(dataset.reference_publications , "Reference Publications", reference_list=True) }}
-            {{ macros.end_panel() }}
-
-            {#    PLANNING SITE    #}
-
-            {{ macros.start_panel("Planning Site", "planning") }}
-            {{ macros.show_field_text(dataset.data_standards, "Data Standards Implemented") }}
-            {{ macros.show_field_text(dataset.therapeutic_area_standards_disease, "Therapeutic Area Standards (Disease Area)") }}
-            {{ macros.show_field_text_long(dataset.study_protocol_description, "Study Protocal Description") }}
-            {{ macros.show_field_text(dataset.multi_center_study, "Multi-center Study") }}
-            {{ macros.show_field_text_long(dataset.cohorts_description, "Description of Cohorts") }}
-            {{ macros.show_field_text(dataset.study_type, "Study Type") }}
-            {{ macros.show_field_text_long(dataset.study_type_comment, "Study Type Comment") }}
-            {{ macros.show_field_text(dataset.primary_purpose, "Primary Purpose") }}
-            {{ macros.show_field_text(dataset.study_phase, "Study Phase") }}
-            {{ macros.show_field_text(dataset.intervention_model, "Intervention Model") }}
-            {{ macros.show_field_text(dataset.study_classification, "Study Classification") }}
-            {{ macros.show_field_text(dataset.indication, "Indication") }}
-            {{ macros.end_panel() }}
-
-            {#    DEMOGRAPHIC AND PARTICIPANT INFORMATION   #}
-
-            {{ macros.start_panel("Demographic and Participant Information", "demographic") }}
-            {{ macros.show_field_text(dataset.age_range_lower_limit, "Age Range (Low Limit) of Study") }}
-            {{ macros.show_field_text(dataset.age_range_upper_limit, "Age Range (Upper Limit) of Study") }}
-            {{ macros.show_field_text(dataset.age_unit, "Age Unit (of the above ranges)") }}
-            {{ macros.show_field_text(dataset.bmi_range, "BMI Range") }}
-            {{ macros.show_field_text(dataset.bmi_range_lower_limit, "BMI Range (lower limit)") }}
-            {{ macros.show_field_text(dataset.bmi_range_upper_limit, "BMI Range (upper limit)") }}
-            {{ macros.show_field_text(dataset.informed_consent, "Informed Consent") }}
-            {{ macros.show_field_text_long(dataset.planned_arm, "Planned Arm (Description of Sub-cohorts)") }}
-            {{ macros.end_panel() }}
-
-            {#    INTERVENTIONS AND OBSERVATIONS  #}
-
-            {{ macros.start_panel("Interventions and Observations", "interventions") }}
-            {{ macros.show_field_text(dataset.treatment_name, "Name of Treatment") }}
-            {{ macros.show_field_text(dataset.treatment_name_standardized, "Standardized Name of Treatment") }}
-            {{ macros.show_field_text(dataset.category, "Category") }}
-            {{ macros.show_field_text_long(dataset.dose_description, "Dose Description") }}
-            {{ macros.end_panel() }}
-
-            {#    STUDY SUBJECTS #}
-
-            {{ macros.start_panel("Study Subjects", "study-subjects") }}
-            {{ macros.show_field_text(dataset.organism, "Organism") }}
-            {{ macros.show_field_text(dataset.body_system_or_organ_class, "Body System or Organ Class") }}
-            {{ macros.show_field_text(dataset.total_number_subjects, "Total Number of (Human) Subjects") }}
-            {{ macros.show_field_text(dataset.total_number_subjects, "Total Number of (Non-Human) Subjects") }}
-            {# TODO: handle those two fields separately #}
-            {{ macros.show_field_text_long(dataset.subjects_number_per_cohort, "Number of Subjects in Each Cohorts (if multi-cohorts)") }}
-            {{ macros.show_field_text_long(dataset.subjects_composition_details, "Detail Subject Composition") }}
-            {{ macros.show_field_text(dataset.samples_type, "Type of Samples Collected", list=True) }}
+            {{ macros.show_field_list(dataset.data_standards, "Data standards") }}
+            {{ macros.show_field_list(dataset.data_types, "Experiment types") }}
+            {{ macros.show_field_text(study.samples_type, "Type of Samples Collected", list=True) }}
             {{ macros.show_field_text(dataset.samples_number, "Number of Samples Collected") }}
-            {{ macros.show_field_text_long(dataset.samples_details, "Samples Details") }}
+            {{ macros.show_field_list(dataset.disease, "Diseases in samples") }}
+            {{ macros.show_field_list(dataset.treatment_category, "Treatment or experiment categories") }}
+            {{ macros.show_field_text(dataset.treatment_name, "Treatment or experiment names") }}
+
             {{ macros.end_panel() }}
 
-            {#    STUDY SUBJECTS #}
-
-            {{ macros.start_panel("Analyses", "analyses") }}
-            {{ macros.show_field_text(dataset.secondary_analysis, "Secondary Analysis") }}
-            {{ macros.end_panel() }}
 
             {#    FAIRified #}
             {% if fair_evaluations_show and dataset.is_fairplus_evaluated %}

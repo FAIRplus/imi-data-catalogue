@@ -23,8 +23,9 @@ Local installation of development environment and procedure for docker version a
 
 ### Requirements
 
-Python ≥ 3.7
-Solr ≥ 8.2
+Python ≥ 3.7  
+Solr ≥ 8.2  
+npm ≥ 7.5.6  
 
 ### Procedure
 
@@ -44,7 +45,7 @@ Solr ≥ 8.2
     ```
     cp datacatalog/settings.py.template datacatalog/settings.py
     ```
-1. Modify the setting file according to your local environment.
+1. Modify the setting file (in datacatalog folder) according to your local environment.
    The SECRET_KEY parameter needs to be filled with a random string.
    For maximum security, generate it using python:
    ```python
@@ -59,6 +60,7 @@ Solr ≥ 8.2
     ```
 1. Create a solr core
     ```bash
+    $SOLR_INSTALLATION_FOLDER/bin/solr start
     $SOLR_INSTALLATION_FOLDER/bin/solr create_core -c datacatalog
     ```
 
@@ -73,10 +75,12 @@ Solr ≥ 8.2
     ```
     ./manage.py init_index
     ```
-1. Index the provided datasets:
+1. Index the provided studies, projects and datasets:
 
      ```
-     ./manage.py import_entities Json dataset
+     ./manage.py import_entities Dats study
+     ./manage.py import_entities Dats project
+     ./manage.py import_entities Dats dataset
      ```
 
 1. Run the development server:
@@ -111,12 +115,13 @@ If you don't plan to use HTTPS or just want to see demo running, you can skip th
 
 1. Then, copy `datacatalog/settings.py.template` to `datacatalog/settings.py`. Edit the `settings.py` file to add a random string of characters in `SECRET_KEY`.
 	For maximum security use:
-	
+
 	```
 	import os
 	os.urandom(24)
 	```
-	in python to generate this key.  
+	in python to generate this key.
+
 	Then build and start the dockers containers by running:
 
 	```
@@ -138,7 +143,9 @@ If you don't plan to use HTTPS or just want to see demo running, you can skip th
 	```
 	(local) $ docker-compose exec web /bin/bash
 	(web container) $ python manage.py init_index 
-	(web container) $ python manage.py import_entities Json dataset 
+	(web container) $ python manage.py import_entities Dats study
+	(web container) $ python manage.py import_entities Dats project
+	(web container) $ python manage.py import_entities Dats dataset 
 	
 	(PRESS CTRL+D or type: "exit" to exit)
 	```
@@ -160,9 +167,9 @@ docker-compose down --volumes
 
 ### Modifying the datasets
 
-The datasets are all defined in the file `tests/data/records.json`.
-This file can me modified to add, delete and modify datasets.
-After saving the file, rebuild and restart docker-compose with:
+The datasets, projects and studies are all defined in the files located in the folder `data/imi_projects`.
+Those files can me modified to add, delete and modify those entities.
+After saving the files, rebuild and restart docker-compose with:
 
 ```
 CTLR+D
@@ -176,11 +183,14 @@ to rebuild and restart the containers
 
 ```
 (local) $ docker-compose exec web /bin/bash
-(web container) $ python manage.py import_entities Json dataset 
+(web container) $ python manage.py import_entities Dats study 
+(web container) $ python manage.py import_entities Dats project
+(web container) $ python manage.py import_entities Dats dataset
+ 
 
 (PRESS CTRL+D or type: "exit" to exit)
 ```
-To reindex the datasets
+To reindex the entities
 
 ## Single Docker deployment
 In some cases, you might not want Solr and Nginx to run (for example if there are multiple instances of Data Catalog runnning).

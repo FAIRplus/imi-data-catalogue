@@ -16,7 +16,7 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-    datacatalog.importer.entities_importer.entities_importer
+    datacatalog.importer.entities_importer
     -------------------
 
    Module containing the EntitiesImporter class
@@ -25,8 +25,8 @@
 """
 from typing import List
 
-from .connector.entities_connector import EntitiesConnector
 from .. import app
+from ..connector.entities_connector import ImportEntitiesConnector
 
 __author__ = 'Valentin Grouès'
 
@@ -38,14 +38,14 @@ class EntitiesImporter(object):
     Entities importer
     """
 
-    def __init__(self, connectors: List[EntitiesConnector]) -> None:
+    def __init__(self, connectors: List[ImportEntitiesConnector]) -> None:
         """
         Initialize the entities importer with a list of connectors
         @param connectors: a list of EntitiesConnector that will be used to retrieve entities
         """
         self.connectors = connectors
         for connector in connectors:
-            assert (isinstance(connector, EntitiesConnector))
+            assert (isinstance(connector, ImportEntitiesConnector))
 
     def import_all(self) -> None:
         """

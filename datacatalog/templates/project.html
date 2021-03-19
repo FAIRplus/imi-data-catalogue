@@ -1,0 +1,75 @@
+{% extends 'layout.html' %}
+{% set entity_name = "project" %}
+{% import 'macros.html' as macros %}
+{% block title %}Project - {{ project.title }}{% endblock %}
+
+
+{% block content %}
+    <div class="well box studyDetails">
+        {% if fair_evaluations_show and project.is_fairplus_evaluated %}
+            <a class="fairResultsStamp" data-expand="fairplus-evaluation-fields"
+               href="#fairplus-evaluation-fields"><img alt='fairplus stamp'
+                                                       src="/static/public/images/fairplus-stamp.png"/></a>
+        {% endif %}
+        <h1>{{ project.title }}</h1>
+        <p class="notes">{{ project.description | default("", True) }}</p>
+        <p>
+            {% if project.keywords %}
+                keywords: {{ macros.split_labels(project.keywords) }}
+            {% endif %}
+        </p>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+            {#    GENERAL INFORMATION   #}
+
+            {{ macros.start_panel("General Project Information", "general_information", True) }}
+            {{ macros.show_field_link(project.website, "Project website", project.website) }}
+            {{ macros.show_field_text(project.start_date | date, "Start date") }}
+            {{ macros.show_field_text(project.end_date | date, "End date") }}
+            {{ macros.show_field_list(project.types, "Types") }}
+            {{ macros.show_field_list(project.reference_publications, "Project publications") }}
+
+            {{ macros.end_panel() }}
+
+            {#    CONTACTS    #}
+
+            {{ macros.start_panel("Contacts", "contacts") }}
+            {{ macros.show_field_text(project.display_name , "Main contact") }}
+            {{ macros.show_field_text(project.email , "Email") }}
+            {{ macros.show_field_text(project.affiliation , "Affiliation") }}
+            {{ macros.show_field_text(project.business_address , "Business Address") }}
+            {{ macros.show_field_text(project.business_phone_number , "Business Phone Number") }}
+
+            {{ macros.end_panel() }}
+
+
+            {{ macros.start_panel("Studies and datasets", "studies_datasets") }}
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <td>Study</td>
+                    <td>Datasets</td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for study in project.studies_entities %}
+                    <tr>
+                        <td>
+                            <a href="{{ url_for('entity_details', entity_name='study', entity_id=study.id) }}">{{ study.title }}</a>
+                        </td>
+                        <td>
+                            {% for  dataset in study.datasets_entities %}
+                                <span class="label label-primary"><a class="text-info"
+                                                                     href="{{ url_for('entity_details', entity_name='dataset', entity_id=dataset.id) }}">{{ dataset.title }}</a></span>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {{ macros.end_panel() }}
+        </div>
+    </div>
+
+
+{% endblock %}

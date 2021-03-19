@@ -1,0 +1,307 @@
+{
+   "title":"ABIRISK",
+   "description":"Anti-Biopharmaceutical Immunization: Prediction and Analysis of Clinical Relevance to Minimize the Risk",
+   "@type":"Project",
+   "@context":[
+      "http://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+      "http://w3id.org/dats/context/obo/dataset_obo_context.jsonld"
+   ],
+   "types":[
+      {
+         "@type":"Annotation",
+         "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value":"IMI project"
+      }
+   ],
+   "identifier":{
+      "identifier":"dc9b062e-147a-11eb-b51f-8c8590c45a21",
+      "@type":"Identifier",
+      "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+   },
+   "startDate": {
+        "@type": "Date",
+        "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+        "date": "2012-03-01",
+        "type": {
+            "value": "start date",
+            "valueIRI": "http://semanticscience.org/resource/SIO_000031"
+      }
+   },
+   "endDate": {
+        "@type": "Date",
+        "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+        "date": "2018-02-28",
+        "type": {
+            "value": "end date",
+            "valueIRI": "http://semanticscience.org/resource/SIO_000036"
+        }
+   },
+   "projectLeads":[
+      {
+         "@type":"Person",
+         "@context":"https://w3id.org/dats/context/sdo/person_sdo_context.jsonld",
+         "firstName":"Pierre",
+         "lastName":"D\u00f6nnes",
+         "email":"pierre@scicross.com",
+         "roles":[
+            {
+               "@type":"Annotation",
+               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+               "value":"Primary Study Contact",
+               "valueIRI":"http://purl.obolibrary.org/obo/NCIT_C127533"
+            }
+         ],
+         "affiliations":[
+            {
+               "@type":"Organization",
+               "@context":"https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+               "name":"SciCross AB"
+            }
+         ],
+         "extraProperties":[
+            {
+               "values":[
+                  {
+                     "value":"46703919310",
+                     "@type":"Annotation",
+                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                  }
+               ],
+               "category":"phoneNumber"
+            }
+         ]
+      }
+   ],
+   "keywords":[
+      {
+         "@type":"Annotation",
+         "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value":"IMI project"
+      },
+      {
+         "@type":"Annotation",
+         "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+         "value":"Translational Medicine"
+      },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Biologicals"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Tools for predicting/monitoring efficacy"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Manufacturing technologies"
+        }
+   ],
+   "extraProperties":[
+      {
+         "values":[
+            {
+               "value":"IMI ABIRISK",
+               "@type":"Annotation",
+               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+            }
+         ],
+         "@type":"CategoryValuesPair",
+         "category":"projectAcronym"
+      },
+      {
+         "values":[
+            {
+               "value":"http://www.abirisk.eu",
+               "@type":"Annotation",
+               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+            }
+         ],
+         "category":"website"
+      }
+   ],
+   "primaryPublications": [
+       {
+         "@type": "Publication",
+         "@context":"https://w3id.org/dats/context/sdo/publication_sdo_context.jsonld",
+         "identifier":{
+               "identifier": "http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0162752",
+               "@type":"Identifier",
+               "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+         }
+      }
+   ],
+   "fundedBy":[
+      {
+         "name":"IMI1 - Call 3",
+         "identifier":{
+               "identifier": "115303",
+               "@type":"Identifier",
+               "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+         },
+         "@type":"Grant",
+         "@context":"https://w3id.org/dats/context/sdo/grant_sdo_context.jsonld"
+      }
+   ],
+   "projectAssets": [
+      {
+         "name":"ABIRISK",
+         "identifier":{
+            "identifier":"dc9b03ae-147a-11eb-b51f-8c8590c45a21",
+            "@type":"Identifier",
+            "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+         },
+         "@type":"Study",
+         "@context":"https://w3id.org/dats/context/sdo/study_sdo_context.jsonld",
+         "description":"Clinical and anti-drug antibody data from 4 european countries",
+         "types":[
+            {
+               "value":"observational",
+               "@type":"Annotation",
+               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+            }
+         ],
+         "studyGroups":[
+            {
+               "@type":"StudyGroup",
+               "@context":"https://w3id.org/dats/context/sdo/studygroup_sdo_context.jsonld",
+               "name":"Data collected in Sweden, Austria, Germany and Denmark",
+               "size":20465
+            }
+         ],
+         "input":[
+            {
+               "@type":"Material",
+               "@context":"https://w3id.org/dats/context/sdo/material_sdo_context.jsonld",
+               "name":"input material",
+               "taxonomy":[
+                  {
+                     "@type":"TaxonomicInformation",
+                     "@context":"https://w3id.org/dats/context/sdo/taxonomic_info_sdo_context.jsonld",
+                     "name":"Homo sapiens",
+                     "identifier":{
+                        "@type":"Identifier",
+                        "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                        "identifier":"http://purl.obolibrary.org/obo/NCBITaxon_9606",
+                        "identifierSource":"NCBI Taxon ID"
+                     }
+                  }
+               ],
+               "bearerOfDisease":[
+                  {
+                     "name":"multiple sclerosis",
+                     "@type":"Disease",
+                     "@context":"https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                  }
+               ],
+               "derivesFrom":[
+                  {
+                     "name":"Serum",
+                     "@type":"AnatomicalPart",
+                     "@context":"https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                  }
+               ]
+            }
+         ],
+         "extraProperties":[
+            {
+               "values":[
+                  {
+                     "value":"true",
+                     "@type":"Annotation",
+                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                  }
+               ],
+               "@type":"CategoryValuesPair",
+               "category":"informedConsent"
+            },
+            {
+               "values":[
+                  {
+                     "value":"Association of ADA to clinical variables.",
+                     "@type":"Annotation",
+                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                  }
+               ],
+               "@type":"CategoryValuesPair",
+               "category":"primaryPurpose"
+            },
+            {
+               "values":[
+                  {
+                     "value":"true",
+                     "@type":"Annotation",
+                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                  }
+               ],
+               "@type":"CategoryValuesPair",
+               "category":"multiCenter"
+            }
+         ],
+         "output": [
+            {
+               "title":"ABIRISK",
+               "identifier":{
+                  "identifier":"6bd9243b-0368-4cc9-bc92-d00ba1d40b75",
+                  "@type":"Identifier",
+                  "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+               },
+               "@type":"Dataset",
+               "@context":"https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+               "types":[
+                  {
+                     "method":{
+                        "@type":"Annotation",
+                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                        "value":"Antidrug antibody assessment"
+                     },
+                     "@type":"DataType",
+                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                  }
+               ],
+               "isAbout":[
+                  {
+                     "name":"multiple sclerosis",
+                     "@type":"Disease",
+                     "@context":"https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                  }
+               ],
+               "distributions":[
+                  {
+                     "@type":"DatasetDistribution",
+                     "@context":"https://w3id.org/dats/context/sdo/dataset_distribution_sdo_context.jsonld",
+                     "dates":[
+                        {
+                           "date":"2021-01-08T00:00:00Z",
+                           "@type":"Date",
+                           "@context":"https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                           "type":{
+                              "@type":"Annotation",
+                              "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                              "value":"creation date",
+                              "valueIRI":""
+                           }
+                        }
+                     ],
+                     "version":"1",
+                     "access":{
+                        "landingPage":"",
+                        "@type":"Access",
+                        "@context":"https://w3id.org/dats/context/sdo/access_sdo_context.jsonld"
+                     }
+                  }
+               ],
+               "creators":[
+                  {
+                     "@type":"Organization",
+                     "@context":"https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                     "name":""
+                  }
+               ]
+            }
+         ]
+      }
+   ]
+}

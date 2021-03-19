@@ -23,9 +23,10 @@
 import logging
 import uuid
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Any
 
 from .solr_orm_fields import SolrDateTimeField, SolrField, SolrIntField
+from .. import app
 
 logger = logging.getLogger(__name__)
 # datetime formats for json serialization
@@ -37,10 +38,12 @@ class SolrEntity:
     """
     Base class for a solr entity
     Base entity contains a created and modified field
-    Provides methods to save, delete, parse and serialize the entity
+    Provides methods to save, delete, parse ans serialize the entity
     """
     created = SolrDateTimeField("created")
     modified = SolrDateTimeField("modified")
+    # dict holding reverse foreign keys references
+    reversed_field = {}
     query = None
     _solr_orm = None
 
@@ -69,6 +72,42 @@ class SolrEntity:
         """
         return cls.__name__.lower() + 's'
 
+    def __getattr__(self, attribute: str) -> Any:
+        """
+        check if we have foreign key reference and resolve it if it's the case
+        @todo: ADD caching
+        @param attribute: name of the attribute
+        @return: list of entities if many to many relationship
+        """
+        elements = attribute.rsplit('_')
+        suffix = elements[-1]
+        prefix = "".join(elements[0:-1])
+        if suffix in ['entities', 'entity']:
+            # check if it's a reversed relationship
+            if prefix in self.reversed_field:
+                source_entity_name, field_name, field_reversed_multiple = self.reversed_field[prefix]
+                source_entity_class = app.config.get('entities').get(source_entity_name)
+                holding_entities = \
+                    source_entity_class.query.search_holding_entities(field_name=field_name,
+                                                                      target_entity_id=self.id,
+                                                                      source_entity_type=source_entity_name).entities
+                if field_reversed_multiple or not holding_entities:
+                    return holding_entities
+                else:
+                    return holding_entities[0]
+            else:
+                entities_ids = getattr(self, prefix, [])
+                results = []
+                if entities_ids:
+                    # get foreign entity type
+                    linked_entity_name = self._solr_fields[prefix].linked_entity_name
+                    linked_entity_class = app.config['entities'][linked_entity_name]
+                    for entity_id in entities_ids:
+                        linked_entity = linked_entity_class.query.get(entity_id)
+                        results.append(linked_entity)
+            return results
+        raise AttributeError("'{}' object has no attribute '{}'".format(self.__class__.__name__, attribute))
+
     def save(self) -> str:
         """
         Create dict representation of the entity instance and index it in solr
@@ -81,7 +120,7 @@ class SolrEntity:
         entity_dict['type'] = entity_type
         return self._solr_orm.add(entity_dict)
 
-    def to_dict(self) -> dict:
+    def to_dict(self, add_prefix=True) -> dict:
         """
         Create a dict containing all attributes as key and the field values as value
         @return: dict representation of the entity instance
@@ -92,9 +131,14 @@ class SolrEntity:
             attribute_value = getattr(self, attribute_name, None)
             if isinstance(attribute_value, SolrField):
                 attribute_value = None
-            entity_dict[entity_type + '_' + field.name] = attribute_value
+            if add_prefix:
+                key = entity_type + '_' + field.name
+            else:
+                key = field.name
+            entity_dict[key] = attribute_value
         if self.id is None or isinstance(self.id, SolrField):
             self.id = str(uuid.uuid1())
+        entity_dict['id'] = self.id
         return entity_dict
 
     def to_api_dict(self) -> dict:
