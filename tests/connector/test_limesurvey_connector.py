@@ -18,7 +18,7 @@
 
 import unittest
 
-from base_test import BaseTest
+from tests.base_test import BaseTest
 from datacatalog import app
 from datacatalog.connector.limesurvey_connector import LimesurveyConnector
 

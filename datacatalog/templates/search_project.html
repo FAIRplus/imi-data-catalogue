@@ -30,6 +30,7 @@
                 {% if fair_evaluations_show and project.is_fairplus_evaluated %}
                     <a href="{{ url_for('entity_details', entity_name=entity_name, entity_id=project.id) }}#fairplus-evaluation-fields"
                        class="fairResultsStamp"><img alt='fairplus stamp'
+                                                     title="Dataset processed by FAIRplus. See FAIRplus Evaluation tab for details."
                                                      src="/static/public/images/fairplus-stamp.png"/></a>
                 {% endif %}
                 <p style="position:absolute;top:0;right:0;padding:2px;"><span>{{ loop.index + start_rank }}</span></p>

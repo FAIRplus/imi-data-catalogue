@@ -317,6 +317,7 @@ class DATSConnector(ImportEntitiesConnector):
             treatment = []
             treatment_category = []
             disease = []
+            sampleType = []
             for entity in metadata['isAbout']:
                 if entity['@type'] == 'MolecularEntity':
                     treatment.append(entity['name'])
@@ -329,9 +330,13 @@ class DATSConnector(ImportEntitiesConnector):
                 elif entity['@type'] == 'Disease':
                     disease.append(entity['name'])
 
+                elif entity['@type'] == 'AnatomicalPart':
+                    sampleType.append(entity['name'])
+
             dataset.treatment_name = ', '.join(treatment)
             dataset.treatment_category = ', '.join(treatment_category)
             dataset.disease = disease
+            dataset.samples_type = sampleType
 
         if 'extraProperties' in metadata:
             for ep in metadata['extraProperties']:

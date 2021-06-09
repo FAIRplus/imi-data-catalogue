@@ -18,7 +18,7 @@
 
 import os
 
-from base_test import BaseTest
+from tests.base_test import BaseTest
 from datacatalog.connector.json_connector import JSONConnector
 
 __author__ = 'Valentin Grouès'

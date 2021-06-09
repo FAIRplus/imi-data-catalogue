@@ -1,0 +1,105 @@
+{
+    "title": [
+        "Transcriptional Response of Human Microglial Cells to Interferon-gamma"
+    ],
+    "geo_accession": [
+        "GSE1432"
+    ],
+    "status": [
+        "Public on Dec 25 2004"
+    ],
+    "submission_date": [
+        "May 25 2004"
+    ],
+    "last_update_date": [
+        "Aug 10 2018"
+    ],
+    "pubmed_id": [
+        "16163375"
+    ],
+    "summary": [
+        "Microglial cells are resident macrophages in the central nervous system (CNS) and play a pivotal role in the innate and adaptive immune responses against microbial infections. The immune functions of microglia are regulated by a milieu of cytokines including interferon (IFN)-gamma. We here performed a series of experiments to acertain the transcriptional profile of human fetal microglial cells at 1, 6, and 24 h after IFN-gamma treatment.  Primary human microglial cells were either untreated or treated with 200u/ml IFN-gamma.  Affymetrix U133A chips were utilized.  Four different tissue samples (B18, O, W, and Y20) were analyzed at the three time points.",
+        "Keywords: time-course, microglia, interferon-gamma"
+    ],
+    "type": [
+        "expression profiling by array"
+    ],
+    "contributor": [
+        "Robert,B,Rock",
+        "Shuxian,,Hu",
+        "Archana,,Deshpande",
+        "Shirin,,Munir",
+        "Barbara,,May",
+        "Phillip,K,Peterson",
+        "Vivek,,Kapur"
+    ],
+    "sample_id": [
+        "GSM23887",
+        "GSM23893",
+        "GSM23895",
+        "GSM23899",
+        "GSM23903",
+        "GSM23904",
+        "GSM23908",
+        "GSM23912",
+        "GSM23916",
+        "GSM23919",
+        "GSM23921",
+        "GSM23922",
+        "GSM26925",
+        "GSM26926",
+        "GSM26927",
+        "GSM26928",
+        "GSM26929",
+        "GSM26930",
+        "GSM26931",
+        "GSM26932",
+        "GSM26933",
+        "GSM26934",
+        "GSM26936",
+        "GSM26937"
+    ],
+    "contact_name": [
+        "Robert,Bryan,Rock"
+    ],
+    "contact_email": [
+        "brock1007@msn.com"
+    ],
+    "contact_phone": [
+        "612-624-9996"
+    ],
+    "contact_institute": [
+        "University of Minnesota"
+    ],
+    "contact_city": [
+        "Minneapolis"
+    ],
+    "contact_state": [
+        "MN"
+    ],
+    "contact_zip/postal_code": [
+        "55455"
+    ],
+    "contact_country": [
+        "USA"
+    ],
+    "platform_id": [
+        "GPL96"
+    ],
+    "platform_taxid": [
+        "9606"
+    ],
+    "sample_taxid": [
+        "9606"
+    ],
+    "relation": [
+        "BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA89967"
+    ],
+    "keywords": [
+        "macrophages"
+    ],
+    "project_id": "924d2810-71e8-11eb-bafe-3e22fbb3883f",
+    "dataset_id": "924d2874-71e8-11eb-bafe-3e22fbb3883f",
+    "study_id": "924d28a6-71e8-11eb-bafe-3e22fbb3883f",
+    "species": "Homo sapiens"
+}

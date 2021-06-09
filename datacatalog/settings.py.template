@@ -54,6 +54,7 @@ class Config(object):
             ("disease", "Disease"),
             ("samples_types", "Samples types"),
         ]
+
     }
     # NUMBER OF SEARCH RESULTS DISPLAYED PER PAGE
     RESULTS_PER_PAGE = 8
@@ -87,30 +88,20 @@ class Config(object):
     SOLR_QUERY_TEXT_FIELD = {
         'dataset': [
             "title",
-            "disease",
-            "data_types",
-            "data_standards",
+            "keywords",
+            "treatment_name"
+            "treatment_category"
         ],
-        'project': [
-            'keywords',
-            'title',
-            'types'
-        ],
-        'study': [
-            'title',
-            'organisms',
-            'disease',
-            'samples_type',
-            'types'
-        ]
-
     }
     # the entities that appears in the menu / navbar
     ENTITIES_MENU = ['project', 'dataset', 'study']
 
     # GEO IMPORTER
     # THIS FOLDER SHOULD CONTAIN '.TXT' FILES WITH 'DISEASE' AS NAME OF FILE CONTAINING GEO SERIES. FOR EX: ASTHMA.TXT
-    GEO_FILE_PATH = 'tests/data/geo_studies/'
+    # GEO_FILE_PATH = 'tests/data/geo_studies/'
+    GEO_FILE_PATH = {'dataset': 'data/geo_studies',
+                      'project': 'data/geo_studies',
+                      'study': 'data/geo_studies'}
     GEO_TEMP_FOLDER = 'tests/data/geo_studies/temp_files/'
     # AUTHENTICATION_METHOD CAN BE LDAP OR PYOIDC
     AUTHENTICATION_METHOD = 'LDAP'
@@ -136,10 +127,8 @@ class Config(object):
     REMS_API_KEY = ""
     REMS_URL = ""
     REMS_API_USER = ""
-    SEARCH_EXAMPLES = {
-        "dataset": ["ABIRISK*", "dataset_samples_type:Blood"],
-        "project": ["APPROACH"]
-    }
+    # Export entity as dats
+    ALLOW_ENTITY_EXPORT = False
 
 
 class DockerConfig(Config):

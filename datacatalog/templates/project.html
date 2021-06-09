@@ -5,13 +5,27 @@
 
 
 {% block content %}
-    <div class="well box studyDetails">
+    <div class="well box projectDetails">
         {% if fair_evaluations_show and project.is_fairplus_evaluated %}
             <a class="fairResultsStamp" data-expand="fairplus-evaluation-fields"
                href="#fairplus-evaluation-fields"><img alt='fairplus stamp'
+                                                       title="Dataset processed by FAIRplus. See FAIRplus Evaluation tab for details."
                                                        src="/static/public/images/fairplus-stamp.png"/></a>
         {% endif %}
         <h1>{{ project.title }}</h1>
+        {% if config.get('ALLOW_ENTITY_EXPORT', False) %}
+            <div class="form-inline">
+                <div class="button-link input-group">
+                    <p class="input-group-btn">
+                        <i class="material-icons">download</i>
+                    </p>
+                    <a class="btn button-link-text"
+                       href="{{ url_for('export_dats_entity', entity_name='project', entity_id=project.id) }}">Export Metadata
+                        as DATS</a>
+
+                </div>
+            </div>
+        {% endif %}
         <p class="notes">{{ project.description | default("", True) }}</p>
         <p>
             {% if project.keywords %}

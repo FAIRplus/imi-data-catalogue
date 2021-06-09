@@ -166,7 +166,7 @@ def get_importer_connector(connector_name, entity_class):
         connector = CKANConnector(app.config['CKAN_URL'])
     elif connector_name == 'Geo':
         from datacatalog.connector.geostudies_connector import GEOStudiesConnector
-        connector = GEOStudiesConnector(app.config['GEO_FILE_PATH'])
+        connector = GEOStudiesConnector(app.config['GEO_FILE_PATH'][entity_class.__name__.lower()], entity_class)
     elif connector_name == 'Json':
         from datacatalog.connector.json_connector import JSONConnector
         connector = JSONConnector(app.config['JSON_FILE_PATH'][entity_class.__name__.lower()], entity_class)

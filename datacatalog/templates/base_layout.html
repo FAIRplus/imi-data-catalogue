@@ -3,30 +3,65 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>{{ config.get('TITLE', 'π²') }} - {% block title %}Home{% endblock %}</title>
-    {% block meta %}
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block head %}
+        <title>{{ config.get('TITLE', 'π²') }} - {% block title %}Home{% endblock %}</title>
+        {% block meta %}
+            <meta http-equiv="content-type" content="text/html; charset=utf-8">
+            <meta name="csrf-token" content="{{ csrf_token() }}">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% endblock %}
+        {#    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico') }}">#}
+        {% block css %}
+            <!-- Material Design fonts -->
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+            {% assets "common_css" %}
+                <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
+            {% endassets %}
+        {% endblock %}
+        {% block jsonld %}
+            <script type="application/ld+json">
+                {
+                  "@context": "http://schema.org",
+                  "@id": "{{ request.url }}",
+                  "@type": "DataCatalog",
+                  "dct:conformsTo": "https://bioschemas.org/profiles/DataCatalog/0.3-RELEASE-2019_07_01",
+                  "description": "The IMI Data Catalog is a unique collection of project-level metadata from large research initiatives in a diverse range of fields, including clinical, molecular and observational studies. Its aim is to improve the findability of these projects following FAIR data principles.",
+                  "keywords": [
+                    "translational medicine",
+                    "IMI",
+                    "project metadata",
+                    "FAIRplus",
+                    " FAIR metadata",
+                    "IMI-eTriks",
+                    "Elixir Luxembourg"
+                  ],
+                  "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+                  "name": "{{ "IMI " + config.get('TITLE', 'π²') }}",
+                  "provider": [
+                    {
+                      "@context": "http://schema.org",
+                      "@type": "Organization",
+                      "dct:conformsTo": "https://bioschemas.org/profiles/Organization/0.2-DRAFT-2019_07_19",
+                      "description": "The LCSB is accelerating biomedical research by closing the link between systems biology and medical research",
+                      "name": "LCSB - Luxembourg Centre for Systems Biomedicine"
+                    }
+                  ],
+                  "url": "{{ request.url }}"
+                }
+
+            </script>
+        {% endblock %}
+        <script type="text/javascript">
+            function defer(method) {
+                if (window.jQuery)
+                    method();
+                else
+                    setTimeout(function () {
+                        defer(method)
+                    }, 50);
+            }
+        </script>
     {% endblock %}
-    {#    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico') }}">#}
-    {% block css %}
-        <!-- Material Design fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
-        {% assets "common_css" %}
-            <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
-        {% endassets %}
-    {% endblock %}
-    <script type="text/javascript">
-        function defer(method) {
-            if (window.jQuery)
-                method();
-            else
-                setTimeout(function () {
-                    defer(method)
-                }, 50);
-        }
-    </script>
 </head>
 <body class="{{ body_extra_class }}">
 {% block navbar %}

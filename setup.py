@@ -23,15 +23,16 @@ except ImportError:
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 requirements = [
-    'Flask>=0.10.1', 'Flask-Assets==0.12', 'Flask-Script', 'Jinja2', 'SQLAlchemy', 'werkzeug==0.16.1', 'closure',
-    'cssmin', 'webassets', 'Flask-Testing', 'requests', 'GEOparse',
-    'Flask-Caching', 'python-ldap',
-    'Flask-Login', 'Flask-WTF', 'pysolr==3.8.1', 'ckanapi', 'Flask-Mail==0.9.1', 'flask_wtf', 'wtforms',
-    'flask-reverse-proxy-fix', 'email_validator', 'oic', 'jsonpath_ng'
+    'Flask==1.1.2', 'Flask-Assets==2.0', 'Flask-Script==2.0.6', 'Jinja2==2.11.3', 'SQLAlchemy==1.4.5',
+    'werkzeug==0.16.1', 'closure==20191111',
+    'cssmin==0.2.0', 'webassets==2.0', 'Flask-Testing==0.8.1', 'requests==2.25.1', 'GEOparse==2.0.3',
+    'Flask-Caching==1.10.1', 'python-ldap==3.3.1',
+    'Flask-Login==0.5.0', 'Flask-WTF==0.14.3', 'pysolr==3.8.1', 'ckanapi==4.3', 'Flask-Mail==0.9.1',
+    'flask-reverse-proxy-fix==0.2.1', 'email-validator==1.1.1', 'oic==1.2.0', 'jsonpath-ng==1.5.2'
 ]
 
 test_requirements = [
-    'coverage'
+    'coverage==5.5'
 ]
 
 setup(

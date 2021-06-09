@@ -15,10 +15,10 @@
 #
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
+import json
 import os
 
-from base_test import BaseTest
+from tests.base_test import BaseTest
 from datacatalog.connector.dats_connector import DATSConnector
 
 __author__ = 'Danielle Welter'
@@ -36,10 +36,17 @@ class TestJSONConnector(BaseTest):
         for file in os.listdir(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../data/imi_projects')):
             if file.endswith(".json"):
                 project_count += 1
-
-                if "_full" in file:
-                    dataset_count +=1
-                    study_count += 1
+                with open(os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                                       '../../data/imi_projects' + "/" + file)) as json_file:
+                    data = json.load(json_file)
+                    if 'projectAssets' in data:
+                        for asset in data['projectAssets']:
+                            if asset['@type'] == 'Dataset':
+                                dataset_count += 1
+                            elif asset['@type'] == 'Study' and 'output' in asset:
+                                study_count += 1
+                                for dataset in asset['output']:
+                                    dataset_count += 1
 
         dats_datasets_connector = DATSConnector(
             os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../data/imi_projects'), Dataset)

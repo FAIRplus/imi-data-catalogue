@@ -1,6 +1,63 @@
 {% set entity_name = "dataset" %}
 {% extends 'layout.html' %}
 {% import 'macros.html' as macros %}
+{% block jsonld %}
+    {{ super() }}
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@id": "{{ request.url }}",
+      "@type": "Dataset",
+      "dct:conformsTo": "https://bioschemas.org/profiles/Dataset/0.3-RELEASE-2019_06_14",
+      "description": "{{ dataset.title }}",
+      "identifier": [
+        {
+          "@id": "{{ dataset.id }}",
+          "@type": "PropertyValue"
+        }
+      ],
+      "includedInDataCatalog": [
+        {
+          "@context": "http://schema.org",
+          "@type": "DataCatalog",
+          "name": "{{ "IMI " +  config.get('TITLE', 'Datacatalog') }}",
+          "url": "{{ config.get('BASE_URL') }}"
+        }
+      ],
+      "keywords": [
+        {%- set keywords = [dataset.data_standards, dataset.data_types, dataset.study_entity.samples_type,
+        dataset.disease, dataset.treatment_category, dataset.treatment_name, dataset.fair_indicators,
+        dataset.fair_assessment_details] -%}
+        {%- set rndr_keywords = [] -%}
+        {%- for entry in keywords -%}
+            {%- if entry -%}
+                {%- if loop.index < 6 -%}
+                    {%- set tmp = rndr_keywords.append(entry | join(', ')) -%}
+                {%- else -%}
+                    {%- set tmp = rndr_keywords.append(entry) -%}
+                {%- endif -%}
+            {%- endif -%}
+        {%- endfor %}
+        {% for keyword in rndr_keywords -%}
+        "{{ keyword }}"{{ ",
+        " if not loop.last }}
+        {%- endfor %}
+        ],
+      "name": "{{ dataset.title }}",
+      "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "url": "{{ request.url }}",
+      {% if dataset.dataset_link_href -%}
+        "distribution": {
+            "@id": "{{ dataset.dataset_link_href }}",
+            "@type": "DataDownload"
+        },
+      {% endif %}
+      "version": "{{ dataset.version }}"
+
+    }
+
+    </script>
+{% endblock %}
 {% block title %}Dataset - {{ dataset.title }}{% endblock %}
 
 
@@ -9,36 +66,59 @@
         {% if fair_evaluations_show and dataset.is_fairplus_evaluated %}
             <a class="fairResultsStamp" data-expand="fairplus-evaluation-fields"
                href="#fairplus-evaluation-fields"><img alt='fairplus stamp'
+                                                       title="Dataset processed by FAIRplus. See FAIRplus Evaluation tab for details."
                                                        src="/static/public/images/fairplus-stamp.png"/></a>
         {% endif %}
         <h1>{{ dataset.title }}</h1>
-        {% if dataset.open_access_link %}
-            <a href={{ dataset.open_access_link }}
-                       class="btn" role="button" style="width:1px;padding:5px;font-size: 18px"><span
-                    class="glyphicon glyphicon-download"
-                    data-toggle="tooltip" title="download"></span></a>
-        {% else %}
-            {% if has_access.value == 'approved' %}
-                <span title="you were granted access to this dataset" style="font-size:20px;"
-                      class="text-success  glyphicon glyphicon-ok-circle"/>
-            {% elif has_access.value == 'submitted' %}
-                <span title="you have already requested access to this dataset" style="font-size:20px;"
-                      class="text-info glyphicon glyphicon-hourglass"/>
-            {% else %}
-
+        <div class="form-inline">
+            {% if dataset.dataset_link_href %}
                 <div class="button-link input-group">
                     <p class="input-group-btn">
-                        <i class="material-icons">fact_check</i>
+                        <i class="material-icons">download</i>
                     </p>
                     <a class="btn button-link-text"
-                       href="{{ url_for('request_access', entity_name='dataset', entity_id=dataset.id) }}">Request
-                        Access</a>
+                       href="{{ dataset.dataset_link_href  }}" target="_blank">Access Data</a>
+
                 </div>
+            {% else %}
+                {% if has_access.value == 'approved' %}
+                    <div class="dataset_request_status">
+                        <span title="you were granted access to this dataset"
+                              class="text-success  glyphicon glyphicon-ok-circle"></span>
+                        Data Access Granted
+                    </div>
+                {% elif has_access.value == 'submitted' %}
+                    <div class="dataset_request_status">
+                        <span title="you have already requested access to this dataset"
+                              class="text-muted glyphicon glyphicon-hourglass"></span>
+                        Data Access Requested
+                    </div>
 
+                {% else %}
+                    <div class="button-link input-group">
+                        <p class="input-group-btn">
+                            <i class="material-icons">fact_check</i>
+                        </p>
+                        <a class="btn button-link-text"
+                           href="{{ url_for('request_access', entity_name='dataset', entity_id=dataset.id) }}">Request Data
+                            Access</a>
+
+                    </div>
+                {% endif %}
             {% endif %}
-        {% endif %}
 
+            {% if config.get('ALLOW_ENTITY_EXPORT', False) %}
+                <div class="button-link input-group right_side_btn">
+                    <p class="input-group-btn">
+                        <i class="material-icons">download</i>
+                    </p>
+                    <a class="btn button-link-text"
+                       href="{{ url_for('export_dats_entity', entity_name='dataset', entity_id=dataset.id) }}">Export Metadata
+                        as DATS</a>
 
+                </div>
+            {% endif %}
+        </div>
         <p class="clearfix">
             {% if dataset.tags %}
                 tags: {{ macros.split_labels(dataset.tags) }}
@@ -84,7 +164,11 @@
             {{ macros.show_field_text(dataset.dataset_modified | date, "Date of the last update of the dataset") }}
             {{ macros.show_field_list(dataset.data_standards, "Data standards") }}
             {{ macros.show_field_list(dataset.data_types, "Experiment types") }}
-            {{ macros.show_field_text(study.samples_type, "Type of Samples Collected", list=True) }}
+            {% if dataset.samples_type %}
+                {{ macros.show_field_text(dataset.samples_type, "Type of Samples Collected", list=True) }}
+            {% else %}
+                {{ macros.show_field_text(study.samples_type, "Type of Samples Collected", list=True) }}
+            {% endif %}
             {{ macros.show_field_text(dataset.samples_number, "Number of Samples Collected") }}
             {{ macros.show_field_list(dataset.disease, "Diseases in samples") }}
             {{ macros.show_field_list(dataset.treatment_category, "Treatment or experiment categories") }}
@@ -95,7 +179,7 @@
 
             {#    FAIRified #}
             {% if fair_evaluations_show and dataset.is_fairplus_evaluated %}
-                {{ macros.start_panel("FAIRPlus Evaluation", "fairplus-evaluation") }}
+                {{ macros.start_panel("FAIRplus Evaluation", "fairplus-evaluation") }}
                 {{ macros.show_field_link(dataset.fair_indicators, "FAIR indicators", dataset.fair_indicators_href) }}
                 {{ macros.show_field_percentage(dataset.fair_score_overall, "FAIR score, overall") }}
                 {{ macros.show_field_percentage(dataset.fair_score_mandatory_indicators, "FAIR score, mandatory indicators") }}

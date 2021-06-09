@@ -13,16 +13,23 @@
 #
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
+import csv
+import datetime
+import json
 import os
+import re
+import uuid
 from datetime import datetime
-from typing import Generator
+from typing import Generator, Type
 
 import GEOparse
 
 from .entities_connector import ImportEntitiesConnector
 from .. import app
 from ..models.dataset import Dataset
+from ..models.project import Project
+from ..models.study import Study
+from ..solr.solr_orm_entity import SolrEntity
 
 """
     datacatalog.connector.geostudies_connector
@@ -41,85 +48,200 @@ class GEOStudiesConnector(ImportEntitiesConnector):
     """
     Import datasets from the geo database.
     From a list of geo studies id, downloads them from the geo database and creates datasets.
+    Alternatively, import directly from local json files
     """
 
-    def __init__(self, study_file_path: str) -> None:
+    def __init__(self, input_folder_path: str, entity_class: Type[SolrEntity]) -> None:
         """
-        Initialize GEOStudiesConnector instance configuring the study file path.
-        This file must contain a list of geo studies to import.
+        Initialize GEOStudiesConnector instance configuring the folder of the files to import.
+        The folder can contain either tsv files with one geo id per line or directly json files
         One id per line, example:
             GSE31773
             GSE44037
-        @param study_file_path: the file containing the list of geo identifiers
+        @param input_folder_path: the path to the folder containing the geo files
+        @param entity_class: the kind of entity to create
         """
-        self.geostudies_list = study_file_path
+        self.input_folder_path = input_folder_path
+        self.entity_class = entity_class
 
-    def build_all_entities(self) -> Generator[Dataset, None, None]:
+    def build_all_entities(self) -> Generator[SolrEntity, None, None]:
         """
-        For each geo study specified in self.geostudies_list, retrieves the metadata from geo database
-        and yields a corresponding dataset.
+        For each geo study specified in self.input_folder_path, retrieves the metadata from geo database or
+         from the json files
+        and yields a corresponding project, study or dataset.
         """
-        try:
-            for file in os.listdir(self.geostudies_list):
-                if file.endswith('.txt'):
-                    disease_name = file.split(".")[0]
-                    geostudies_open = open(os.path.join(self.geostudies_list, file), 'r')
-                    for series in geostudies_open:
-                        logger.info("Downloading GEO Series " + series)
-                        gse = GEOparse.get_GEO(geo=series.strip(), destdir=app.config.get('GEO_TEMP_FOLDER'),
-                                               silent=True)
+        with os.scandir(self.input_folder_path) as data_files:
+            for data_file in data_files:
+                try:
+                    new_entity = self.entity_class()
 
-                        yield self.create_dataset(gse, disease_name)
-        except ValueError as e:
-            logger.error(e)
+                    json_full_path = os.path.join(self.input_folder_path, data_file.name)
+                    logger.info("importing from file %s", json_full_path)
+                    if data_file.name.endswith('.tsv'):
+                        with open(json_full_path, 'r') as new_geo_studies:
+                            rd = csv.reader(new_geo_studies, delimiter="\t", quotechar='"')
+
+                            for entry in rd:
+                                series = entry.split('\t')[0]
+                                disease_name = entry.spit('\t')[1]
+                                logger.info("Downloading GEO Series " + series)
+                                gse = GEOparse.get_GEO(geo=series.strip(), destdir=app.config.get('GEO_TEMP_FOLDER'),
+                                                       silent=True)
+                                metadata = gse.metadata
+                                metadata["disease"] = disease_name
+                                metadata['project_id'] = str(uuid.uuid1())
+                                metadata['dataset_id'] = str(uuid.uuid1())
+                                metadata['study_id'] = str(uuid.uuid1())
+                                accession = gse.get_accession()
+
+                                meta_json = json.dumps(metadata, indent=4)
+                                with open(self.input_folder_path + accession + '.json', "w") as f:
+                                    f.write(meta_json)
+                                self.create_entry(metadata, new_entity)
+                                yield new_entity
+                    elif data_file.name.endswith('.json'):
+                        with open(json_full_path) as json_file:
+                            metadata = json.load(json_file)
+                        self.create_entry(metadata, new_entity)
+                        yield new_entity
+                    else:
+                        logger.warning("ignoring file, format not supported")
+                except ValueError as e:
+                    logger.error(e)
 
     @staticmethod
-    def create_dataset(gse: 'GEOparse.BaseGEO', disease_name: str) -> Dataset:
+    def create_entry(metadata: dict, new_entity: SolrEntity) -> None:
         """
-        Create a Dataset instance from a geoparse object and a disease name
-        @param gse: geoparse object containing the metadata from the geo database
-        @param disease_name:
-        @return: a Dataset instance
+            Configure the new_entity instance with metadata from the metadata dict
+            @param metadata: dict containing the metadata from the geo files
+            @param new_entity: the instance to configure
+            @return: None
         """
-        logger.info("Processing and creating dataset")
-        metadata = gse.metadata
-        dataset_id = metadata['geo_accession'][0]
+        if isinstance(new_entity, Project):
+            # title, geo_accession, summary, type, contributor, contact*, web_link?, relation?, citation
+            if 'title' in metadata:
+                new_entity.title = metadata['title'][0]
+            if 'geo_accession' in metadata:
+                new_entity.project_name = metadata['geo_accession'][0]
+            new_entity.keywords = ['NCBI GEO']
+            if 'project_id' in metadata:
+                new_entity.id = metadata['project_id']
+            if 'summary' in metadata:
+                para = ''
+                for line in metadata['summary']:
+                    if 'Keywords' in line:
+                        line = line.replace('Keywords: ', '')
+                        new_entity.keywords = re.split('; |, ', line)
+                    else:
+                        para = para + line
+                new_entity.description = para
 
-        dataset = Dataset(None, dataset_id)
-        if disease_name:
-            dataset.therapeutic_area_standards_disease = disease_name
-        if 'title' in metadata:
-            dataset.title = metadata['title'][0]
-        if 'summary' in metadata:
-            dataset.notes = metadata['summary'][0]
-        if 'contact_name' in metadata:
-            dataset.contact_names = metadata['contact_name'][0].replace(',,', '.').replace(',', '.')
-        address = metadata['contact_institute'][0] + "  " + metadata['contact_address'][0] + "  " + \
-                  metadata['contact_city'][0] \
-                  + "  " + metadata['contact_zip/postal_code'][0] + "  " + metadata['contact_country'][0]
-        dataset.business_address = address
-        if 'relation' in metadata:
-            index = [i for i, x in enumerate(gse.metadata['relation']) if 'BioProject' in x][0]
-            link = gse.metadata['relation'][index].split(":", 1)[1]
-            if link:
-                dataset.project_website = link
-        if 'contact_phone' in metadata:
-            dataset.business_phone_number = metadata['contact_phone'][0]
-        if 'contact_email' in metadata:
-            dataset.contact_email = metadata['contact_email'][0]
-        if 'pubmed_id' in metadata:
-            dataset.pubmed_link = metadata['pubmed_id'][0]
-            dataset.reference_publications = metadata['pubmed_id']
-        if 'type' in metadata:
-            dataset.samples_type = metadata['type'][0]
-        if 'sample_id' in metadata:
-            dataset.samples_number = len(metadata['sample_id'][0])
-        if 'platform_id' in metadata:
-            dataset.organism = gse.gpls[gse.metadata['platform_id'][0]].metadata['organism'][0]
-        if 'last_update_date' in metadata:
-            dataset.dataset_modified = datetime.strptime(gse.metadata['last_update_date'][0], "%b %d %Y").date()
-        dataset.groups = ['GEO']
-        dataset.tags = ['GEO']
-        # TODO, enable this when download feature is activated
-        # dataset.open_access_link = app.config.get('DATASET_OPEN_ACCESS_LINK_REPOSITORY') + disease_name + "/" + dataset_id + ".zip"
-        return dataset
+            if 'keywords' in metadata:
+                for kw in metadata['keywords']:
+                    new_entity.keywords.append(kw)
+
+            if 'type' in metadata:
+                for t in metadata['type']:
+                    new_entity.keywords.append(t)
+
+            if 'contact_name' in metadata:
+                new_entity.display_name = metadata['contact_name'][0].replace(',,', ' ').replace(',', ' ')
+            if 'contact_email' in metadata:
+                new_entity.email = metadata['contact_email'][0]
+            if 'contact_institute' in metadata:
+                new_entity.affiliation = metadata['contact_institute'][0]
+            address = ''
+            if 'contact_address' in metadata:
+                address = address + metadata['contact_address'][0] + ','
+            if 'contact_city' in metadata:
+                address = address + metadata['contact_city'][0] + ','
+            if 'contact_state' in metadata:
+                address = address + metadata['contact_state'][0] + ','
+            if 'contact_zip/postal_code' in metadata:
+                address = address + metadata['contact_zip/postal_code'][0] + ','
+            if 'contact_country' in metadata:
+                address = address + metadata['contact_country'][0]
+            new_entity.business_address = address
+
+            if 'contact_phone' in metadata:
+                new_entity.business_phone_number = metadata['contact_phone'][0]
+            if 'contact_fax' in metadata:
+                new_entity.business_fax_number = metadata['contact_fax'][0]
+
+            if 'relation' in metadata:
+                index = [i for i, x in enumerate(metadata['relation']) if 'BioProject' in x][0]
+                link = metadata['relation'][index].split(":", 1)[1]
+                if link:
+                    new_entity.website = link
+
+            if 'pubmed_id' in metadata:
+                new_entity.reference_publications = []
+                for pmid in metadata['pubmed_id']:
+                    new_entity.reference_publications.append('https://pubmed.ncbi.nlm.nih.gov/' + pmid)
+
+            new_entity.types = ['NCBI GEO']
+
+            if 'study_id' in metadata:
+                new_entity.studies = [metadata['study_id']]
+
+            if 'dataset_id' in metadata:
+                new_entity.datasets = [metadata['dataset_id']]
+
+        elif isinstance(new_entity, Dataset):
+            # submission_date, last_update_date, status?, supplementary_file, platform_id, platform_taxid
+
+            if 'dataset_id' in metadata:
+                new_entity.id = metadata['dataset_id']
+
+            if 'title' in metadata:
+                new_entity.title = metadata['title'][0]
+
+            if 'submission_date' in metadata:
+                sub_date = datetime.strptime(metadata['submission_date'][0], '%b %d %Y')
+                new_entity.dataset_created = sub_date.date()
+
+            if 'last_update_date' in metadata:
+                update_date = datetime.strptime(metadata['last_update_date'][0], '%b %d %Y')
+                new_entity.dataset_modified = update_date.date()
+
+            if 'platform_id' in metadata:
+                new_entity.platform = ','.join(metadata['platform_id'])
+
+            if 'type' in metadata:
+                new_entity.data_types = metadata['type']
+
+            if 'supplementary_file' in metadata:
+                new_entity.dataset_link_href = metadata['supplementary_file'][0]
+
+            if 'disease' in metadata:
+                new_entity.disease = metadata['disease']
+
+            if 'sample_id' in metadata:
+                new_entity.samples_number = str(len(metadata['sample_id']))
+
+        elif isinstance(new_entity, Study):
+            # overall_design, sample_id, sample_taxid
+
+            if 'study_id' in metadata:
+                new_entity.id = metadata['study_id']
+
+            if 'title' in metadata:
+                new_entity.title = metadata['title'][0]
+
+            if 'overall_design' in metadata:
+                para = ''
+                for line in metadata['overall_design']:
+                    para = para + line
+                new_entity.description = para
+
+            if 'dataset_id' in metadata:
+                new_entity.datasets = [metadata['dataset_id']]
+
+            if 'disease' in metadata:
+                new_entity.disease = metadata['disease']
+
+            if 'species' in metadata:
+                new_entity.organisms = [metadata['species']]
+        else:
+            logger.error("Entity type not recognised")
+

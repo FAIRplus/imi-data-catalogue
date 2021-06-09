@@ -36,7 +36,7 @@ class Study(SolrEntity):
     Study entity, subclass of SolrEntity
     """
     # specifies the list of compatibles connectors
-    COMPATIBLE_CONNECTORS = ['Json', 'Dats']
+    COMPATIBLE_CONNECTORS = ['Json', 'Dats', 'Geo']
     query_class = SolrAutomaticQuery
     age_range = SolrField("age_range")
     bmi_range = SolrField("bmi_range", indexed=False)

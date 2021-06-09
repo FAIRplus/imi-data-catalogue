@@ -10,7 +10,7 @@
         {
             "@type": "Annotation",
             "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-            "value": "IMI project"
+            "value": "IMI projects"
         }
     ],
     "identifier": {
@@ -95,7 +95,7 @@
         {
             "@type": "Annotation",
             "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-            "value": "IMI project"
+            "value": "IMI projects"
         },
         {
             "@type": "Annotation",

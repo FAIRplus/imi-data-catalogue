@@ -129,7 +129,9 @@ class RemsConnector(ExportEntitiesConnector):
     def get_catalogue_item(self, dataset_id):
         rems_catalogue = remsclient.CatalogueItemsApi(self.rems_client)
         items = rems_catalogue.api_catalogue_items_get(resource=dataset_id, **self.authentication_kwargs)
-        return items[0]
+        if len(items) > 0:
+            return items[0]
+        return items
 
     def get_resource(self, resource_id):
         rems_resource = remsclient.ResourcesApi(self.rems_client)

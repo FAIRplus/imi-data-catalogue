@@ -59,13 +59,6 @@ class Config(object):
 
     }
     CKAN_TO_SKIP = ["Email Address", "Project Name"]
-    FACETS_ORDER = [
-        ("organism", "Organism"),
-        ("tags", "Tags"),
-        ("secondary_analysis", "Secondary Analysis"),
-        ("therapeutic_area_standards_disease", "Therapeutic area or disease"),
-        ("groups", "Groups"),
-    ]
     RESULTS_PER_PAGE = 8
     SURVEY_LINK = "/limesurvey/?r=survey/index&sid=779596"
     # Flask-Mail Configuration
@@ -85,20 +78,6 @@ class Config(object):
     LDAP_USER_GROUPS_FIELD = os.environ.get('LDAP_USER_GROUPS_FIELD')
     AUTHENTICATION_DICT = {LDAP_USERNAME: LDAP_PASSWORD}
 
-class ProdConfig(Config):
-    # not used for local dev
-    pass
-
-
-class DevConfig(Config):
-    DEBUG = True
-    CACHE_CONFIG = {'CACHE_TYPE': 'null', 'CACHE_DIR': "cache",
-                    'CACHE_THRESHOLD': 10000, 'CACHE_TIMEOUT': 0}
-    SECRET_KEY = b'\xcc\x94\x66kuGE\xde\xe0\xc1\x99P\xa4q\xe8N\xb7\x15\x97\xe3pr\x02N'
-    SOLR_ENDPOINT = 'http://solr:8983/solr'
-    SOLR_COLLECTION = 'datacatalog'
-
-
 class TestConfig(Config):
     DEBUG = True
     SQLALCHEMY_ECHO = True
@@ -108,3 +87,38 @@ class TestConfig(Config):
     WTF_CSRF_ENABLED = False
     SOLR_ENDPOINT = 'http://solr:8983/solr'
     SOLR_COLLECTION = 'test'
+    BASE_URL = os.environ.get('BASE_URL')
+    PYOIDC_IDP_URL = os.environ.get('PYOIDC_IDP_URL')
+    PYOIDC_CLIENT_ID = os.environ.get('PYOIDC_CLIENT_ID')
+    PYOIDC_CLIENT_SECRET = os.environ.get('PYOIDC_CLIENT_SECRET')
+    REMS_URL = os.environ.get('REMS_URL')
+    REMS_API_USER = os.environ.get('REMS_API_USER')
+    REMS_API_KEY = os.environ.get('REMS_API_KEY')
+    # LDAP configuration
+    LDAP_HOST = os.environ.get('LDAP_HOST')
+    LDAP_USERNAME = os.environ.get('LDAP_USERNAME')
+    LDAP_PASSWORD = os.environ.get('LDAP_PASSWORD')
+    LDAP_BASE_DN = os.environ.get('LDAP_BASE_DN')
+    LDAP_USER_GROUPS_FIELD = os.environ.get('LDAP_USER_GROUPS_FIELD')
+    AUTHENTICATION_DICT = {LDAP_USERNAME: LDAP_PASSWORD}
+    FACETS_ORDER = {
+        'dataset': [
+            ("data_types", "Data types"),
+            ("disease", "Disease"),
+            ("data_standards", "Data standards"),
+        ],
+        'project': [
+            ("types", "Types"),
+            ("keywords", "Keywords"),
+        ],
+        'study': [
+            ("types", "Study types"),
+            ("organisms", "Organisms"),
+            ("disease", "Disease"),
+            ("samples_types", "Samples types"),
+        ]
+
+    }
+    # Export entity as dats
+    ALLOW_ENTITY_EXPORT = True
+

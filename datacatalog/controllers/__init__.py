@@ -16,10 +16,10 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from . import api_controllers
+from . import api_entities
 from . import web_controllers
 from . import login_controllers
 
 __author__ = 'Valentin Grouès'
 
-__all__ = [api_controllers, web_controllers, login_controllers]
+__all__ = [api_entities, web_controllers, login_controllers]

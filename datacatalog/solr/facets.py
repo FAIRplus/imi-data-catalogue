@@ -25,6 +25,8 @@
 """
 import logging
 
+import math
+
 from typing import Tuple, Generator, List
 
 logger = logging.getLogger(__name__)
@@ -61,10 +63,10 @@ class Range(object):
         """
         Generator yielding each interval of this range instance as a tuple (interval_start, interval_end)
         """
-        number_of_intervals = int((self.end - self.start) / self.gap)
+        number_of_intervals = math.ceil((self.end - self.start) / self.gap)
         for i in range(0, number_of_intervals):
-            interval_start = i * self.gap
-            interval_end = (i + 1) * self.gap
+            interval_start = (i * self.gap) + self.start
+            interval_end = (i + 1) * self.gap + self.start
             yield interval_start, interval_end
 
 
@@ -91,6 +93,7 @@ class Facet(object):
 
     def set_values(self, values):
         self.values = values
+        self.using_default = False
         if values == self.default_values:
             self.using_default = True
 

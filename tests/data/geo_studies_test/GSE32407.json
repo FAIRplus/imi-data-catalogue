@@ -1,0 +1,142 @@
+{
+    "title": [
+        "A single intradermal injection of IFN-\u03b3 induces a psoriasis-like state in both non-lesional psoriatic and healthy skin"
+    ],
+    "geo_accession": [
+        "GSE32407"
+    ],
+    "status": [
+        "Public on Nov 30 2011"
+    ],
+    "submission_date": [
+        "Sep 27 2011"
+    ],
+    "last_update_date": [
+        "Dec 06 2018"
+    ],
+    "pubmed_id": [
+        "22277938"
+    ],
+    "summary": [
+        "psoriasis is a chronic, debilitating, immune-mediated inflammatory skin disease. As IFN-\u03b3 is involved in many cellular processes, including activation of T cells and dendritic cells (DCs), antigen processing and presentation, cell adhesion and trafficking, and cytokine and chemokine production, IFN-\u03b3-producing Th1 cells were proposed to be integral to the pathogenesis of psoriasis. Recently, IFN-\u03b3 was shown to enhance IL-23 and IL-1 production by DCs and subsequently induce Th17 cells, important contributors to the inflammatory cascade in psoriasis lesions.  To determine if IFN-\u03b3 indeed induces the pathways leading to the development of psoriasis lesions, a single intradermal injection of IFN-\u03b3 was administered to an area of clinically normal, non-lesional skin of psoriasis patients and biopsies were collected 24 hours later. Although there were no visible changes in the skin, IFN-\u03b3 induced molecular and histological features characteristic of psoriasis lesions.  IFN-\u03b3 increased a number of differentially expressed genes in the skin, including many chemokines concomitant with an influx of T cells and inflammatory DCs. Furthermore, inflammatory DC products TNF, iNOS, IL-23, and TRAIL were present in IFN-\u03b3-treated skin. Thus, IFN-\u03b3, which is significantly elevated in non-lesional skin compared to healthy skin, appears to be a key pathogenic cytokine that can induce the inflammatory cascade in psoriasis."
+    ],
+    "overall_design": [
+        "RNA was isolated from whole skin punch biopsies of either healthy or non-lesional psoraisis patients at baseline or 24 hours after placebo or IFN-g injection."
+    ],
+    "type": [
+        "expression profiling by array"
+    ],
+    "contributor": [
+        "Mayte,,Su\u00e1rez-Fari\u00f1as",
+        "Leanne,M,Johnson-Huang",
+        "Michelle,A,Lowes"
+    ],
+    "sample_id": [
+        "GSM802135",
+        "GSM802136",
+        "GSM802137",
+        "GSM802138",
+        "GSM802139",
+        "GSM802140",
+        "GSM802141",
+        "GSM802142",
+        "GSM802143",
+        "GSM802144",
+        "GSM802145",
+        "GSM802146",
+        "GSM802147",
+        "GSM802148",
+        "GSM802149",
+        "GSM802150",
+        "GSM802151",
+        "GSM802152",
+        "GSM802153",
+        "GSM802154",
+        "GSM802155",
+        "GSM802156",
+        "GSM802157",
+        "GSM802158",
+        "GSM802159",
+        "GSM802160",
+        "GSM802161",
+        "GSM802162",
+        "GSM802163",
+        "GSM802164",
+        "GSM802165",
+        "GSM802166",
+        "GSM802167",
+        "GSM802168",
+        "GSM802169",
+        "GSM802170",
+        "GSM802171",
+        "GSM802172",
+        "GSM802173",
+        "GSM802174",
+        "GSM802175",
+        "GSM802176",
+        "GSM802177",
+        "GSM802178",
+        "GSM802179",
+        "GSM802180",
+        "GSM802181",
+        "GSM802182",
+        "GSM802183",
+        "GSM802184",
+        "GSM802185",
+        "GSM802186",
+        "GSM802187",
+        "GSM802188",
+        "GSM802189",
+        "GSM802190",
+        "GSM802191",
+        "GSM802192",
+        "GSM802193",
+        "GSM802194"
+    ],
+    "contact_name": [
+        "Mayte,,Suarez-Farinas"
+    ],
+    "contact_email": [
+        "mayte.suarezfarinas@mssm.edu"
+    ],
+    "contact_institute": [
+        "Mount SinaiSchool of Medicine"
+    ],
+    "contact_address": [
+        "1425 Madison Ave, L2-70C, Box 1077,"
+    ],
+    "contact_city": [
+        "New York"
+    ],
+    "contact_state": [
+        "NY"
+    ],
+    "contact_zip/postal_code": [
+        "10075"
+    ],
+    "contact_country": [
+        "USA"
+    ],
+    "supplementary_file": [
+        "ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE32nnn/GSE32407/suppl/GSE32407_RAW.tar"
+    ],
+    "platform_id": [
+        "GPL571"
+    ],
+    "platform_taxid": [
+        "9606"
+    ],
+    "sample_taxid": [
+        "9606"
+    ],
+    "relation": [
+        "BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA146401"
+    ],
+    "disease": [
+        "psoriasis"
+    ],
+    "project_id": "925a5788-71e8-11eb-bafe-3e22fbb3883f",
+    "dataset_id": "925a590e-71e8-11eb-bafe-3e22fbb3883f",
+    "study_id": "925a5968-71e8-11eb-bafe-3e22fbb3883f",
+    "species": "Homo sapiens"
+}

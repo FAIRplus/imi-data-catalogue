@@ -62,6 +62,8 @@ class Dataset(SolrEntity):
     treatment_category = SolrField("treatment_category", multivalued=True)
     treatment_name = SolrField("treatment_name")
     disease = SolrField("disease", multivalued=True)
+    samples_type = SolrField("samples_type", multivalued=True)
+
 
     def __init__(self, title: str = None, entity_id: str = None) -> None:
         """

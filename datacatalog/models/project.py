@@ -38,7 +38,7 @@ class Project(SolrEntity):
     Project entity, subclass of SolrEntity
     """
     # specifies the list of compatibles connectors
-    COMPATIBLE_CONNECTORS = ['Json', 'Dats']
+    COMPATIBLE_CONNECTORS = ['Json', 'Dats', 'Geo']
     query_class = SolrAutomaticQuery
     affiliation = SolrField("affiliation")
     business_address = SolrField("business_address", indexed=False)

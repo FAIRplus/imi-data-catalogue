@@ -55,9 +55,12 @@ class EntitiesImporter(object):
         logger.info("Importing all entities")
         count = 0
         for connector in self.connectors:
+            count_connector = 0
             entities = connector.build_all_entities()
             for entity in entities:
                 entity.save()
                 count += 1
+                count_connector += 1
+            logger.info("%s entities imported for connector %s", count_connector, connector.__class__.__name__)
         app.config['_solr_orm'].commit()
         logger.info("%s entities have been imported", count)

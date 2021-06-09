@@ -57,22 +57,6 @@ class PyOIDCAuthentication(RemoteAuthentication):
         logout_url += "?" + urlencode(
             {"post_logout_redirect_uri": self.oidc_client.registration_response[
                 "post_logout_redirect_uris"][0]})
-        # If there is an ID token send it along as a id_token_hint
-        # removed as keycloak doesn t seem to like it
-        # _idtoken = self.get_id_token()
-        # if _idtoken:
-        #     logout_url += "&" + urlencode({
-        #         "id_token_hint": self.id_token_as_signed_jwt(_idtoken, "HS256")})
         return logout_url
 
-    def get_id_token(self):
-        try:
-            return self.oidc_client.grant[session["state"]].get_id_token()
-        except KeyError:
-            return None
 
-    # Produce a JWS, a signed JWT, containing a previously received ID token
-    def id_token_as_signed_jwt(self, id_token, alg="RS256"):
-        ckey = self.oidc_client.keyjar.get_signing_key(alg2keytype(alg), "")
-        _signed_jwt = id_token.to_jwt(key=ckey, algorithm=alg)
-        return _signed_jwt

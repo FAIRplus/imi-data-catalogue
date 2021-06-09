@@ -28,7 +28,7 @@
 
 from typing import List, Tuple
 
-from flask import render_template, flash, redirect, url_for, request, Response, Request, send_from_directory
+from flask import render_template, flash, redirect, url_for, request, Response, Request, send_from_directory, jsonify
 from flask_login import current_user, login_required
 from flask_wtf.csrf import CSRFError
 
@@ -38,6 +38,9 @@ from ..models import *
 from ..pagination import Pagination
 from ..solr.facets import Facet
 from ..solr.solr_orm_entity import SolrEntity
+
+import re
+from datacatalog.exporter.dats_exporter import DATSExporter
 
 logger = app.logger
 
@@ -77,6 +80,19 @@ def page_not_found(e) -> Response:
     """
     app.logger.error(e)
     return render_template('error.html', message="Error 404 - Page not found", show_home_link=True), 404
+
+
+@app.errorhandler(500)
+def internal_server_error(e) -> Response:
+    """
+    Customize the 500 pages
+    @param e: the exception that triggered the 500
+    @type e: Exception
+    @return: a custom 500 page
+    @rtype:  str
+    """
+    app.logger.error(e)
+    return render_template('error.html', message="Error 500 - Internal server error", show_home_link=True), 500
 
 
 @app.route('/<entity_name>s', methods=['GET'])
@@ -292,6 +308,7 @@ def about() -> Response:
     """
     return render_template('about.html')
 
+
 @app.route('/help', methods=['GET'])
 @app.cache.cached(timeout=0)
 def help() -> Response:
@@ -300,6 +317,26 @@ def help() -> Response:
     @return: HTML page
     """
     return render_template('help.html')
+
+
+@app.route('/e/<entity_name>/<entity_id>/export_dats_entity', methods=['GET'])
+def export_dats_entity(entity_name: str, entity_id: str) -> Response:
+    try:
+        dats_exporter = DATSExporter()
+        entity = get_entity(entity_name, entity_id)
+        dats_output = dats_exporter.export_dats_entity(entity)
+        title = re.sub('[^A-Za-z0-9]+', '_', entity.title)
+        filename = title + "_" + entity_name + ".json"
+        response = jsonify(dats_output)
+        response.headers['Content-Disposition'] = f'attachment;filename={filename}'
+        return response
+
+    except Exception as e:
+        logger.error(e)
+        flash('The Export metadata as DATS function is currently not available. Please try again later.',
+              category="error")
+        return redirect(url_for('entity_details', entity_name=entity_name, entity_id=entity_id))
+
 
 @app.route('/request_access/<entity_name>/<entity_id>', methods=['GET', 'POST'])
 def request_access(entity_name: str, entity_id: str) -> Response:

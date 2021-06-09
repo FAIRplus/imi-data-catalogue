@@ -83,9 +83,6 @@ def configure_authentication_system() -> None:
     if authentication_method == 'LDAP':
         from .authentication.ldap_authentication import LDAPUserPasswordAuthentication
         authentication = LDAPUserPasswordAuthentication(app.config['LDAP_HOST'])
-    elif authentication_method == 'OIDC':
-        from .authentication.oidc_authentication import OIDCAuthentication
-        authentication = OIDCAuthentication(app.config['OIDC_SERVICE'], app.config['OIDC_CONFIG'])
     elif authentication_method == 'PYOIDC':
         from .authentication.pyoidc_authentication import PyOIDCAuthentication
         authentication = PyOIDCAuthentication(base_url=app.config['BASE_URL'],
