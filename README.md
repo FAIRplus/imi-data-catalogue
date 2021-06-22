@@ -4,28 +4,34 @@
 
 **Goal:** Create a database of IMI funded **projects** and their associated **datasets**
 
-Local installation of development environment and procedure for docker version are described below. 
+Local installation of development environment and procedure for docker version are described below.
 
 ## Table of content
 
-  * [Local installation](#local-installation)
-  	* [Requirements](#requirements)
-	* [Procedure](#procedure)
-	* [Testing](#testing)
-  * [Docker-compose build](#docker-compose-build)
-  	* [Requirements](#requirements-for-docker-compose-build)
-	* [Building](#building)
-	* [Maintenance](#maintenance-of-docker-compose)
-	* [Modifying the datasets](#modifying-the-datasets)
-  * [Single Docker deployment](#single-docker-deployment)
-  
+* [Local installation](#local-installation)
+    * [Requirements](#requirements)
+    * [Procedure](#procedure)
+    * [Testing](#testing)
+* [Docker-compose build](#docker-compose-build)
+    * [Requirements](#requirements-for-docker-compose-build)
+    * [Building](#building)
+    * [Maintenance](#maintenance-of-docker-compose)
+    * [Modifying the datasets](#modifying-the-datasets)
+* [Single Docker deployment](#single-docker-deployment)
+
 ## Local installation
 
 ### Requirements
 
 Python ≥ 3.7  
 Solr ≥ 8.2  
-npm ≥ 7.5.6  
+npm ≥ 7.5.6
+
+#### For Ubuntu
+
+```
+sudo apt-get install libsasl2-dev libldap2-dev libssl-dev
+```
 
 ### Procedure
 
@@ -45,9 +51,8 @@ npm ≥ 7.5.6
     ```
     cp datacatalog/settings.py.template datacatalog/settings.py
     ```
-1. Modify the setting file (in datacatalog folder) according to your local environment.
-   The SECRET_KEY parameter needs to be filled with a random string.
-   For maximum security, generate it using python:
+1. Modify the setting file (in datacatalog folder) according to your local environment. The SECRET_KEY parameter needs
+   to be filled with a random string. For maximum security, generate it using python:
    ```python
    import os
    os.urandom(24)
@@ -59,6 +64,7 @@ npm ≥ 7.5.6
     npm install
     ```
 1. Create a solr core
+
     ```bash
     $SOLR_INSTALLATION_FOLDER/bin/solr start
     $SOLR_INSTALLATION_FOLDER/bin/solr create_core -c datacatalog
@@ -88,19 +94,24 @@ npm ≥ 7.5.6
     ```
     ./manage.py runserver
     ```
+
 The application should now be available under http://localhost:5000
 
 ### Testing
+
 To run the unit tests:
 
 ```
 python setup.py test
 ```
 
-Note that a different core is used for tests and will have to be created.
-By default, it should be called datacatalog_test.
+Note that a different core is used for tests and will have to be created. By default, it should be called
+datacatalog_test.
+
 ## Docker-compose build
-Thanks to docker-compose, it is possible to easily manage all the components (solr and web server) required to run the application.
+
+Thanks to docker-compose, it is possible to easily manage all the components (solr and web server) required to run the
+application.
 
 ### Requirements for docker-compose build
 
@@ -110,56 +121,61 @@ Docker and git must be installed.
 
 `(local)` and `(web container)` indicate context of execution.
 
-1. First, generate the certificates that will be used to enable HTTPS in reverse proxy. To do so, change directory to `docker/nginx/` and execute `generate_keys.sh` (relies on OpenSSL).
-If you don't plan to use HTTPS or just want to see demo running, you can skip this (warning - it would cause the HTTPS connection to be unsafe!).
+1. First, generate the certificates that will be used to enable HTTPS in reverse proxy. To do so, change directory
+   to `docker/nginx/` and execute `generate_keys.sh` (relies on OpenSSL). If you don't plan to use HTTPS or just want to
+   see demo running, you can skip this (warning - it would cause the HTTPS connection to be unsafe!).
 
-1. Then, copy `datacatalog/settings.py.template` to `datacatalog/settings.py`. Edit the `settings.py` file to add a random string of characters in `SECRET_KEY`.
-	For maximum security use:
+1. Then, copy `datacatalog/settings.py.template` to `datacatalog/settings.py`. Edit the `settings.py` file to add a
+   random string of characters in `SECRET_KEY`. For maximum security use:
 
-	```
-	import os
-	os.urandom(24)
-	```
-	in python to generate this key.
+   ```
+   import os
+   os.urandom(24)
+   ```
+   in python to generate this key.
 
-	Then build and start the dockers containers by running:
+   Then build and start the dockers containers by running:
 
-	```
-	(local) $ docker-compose up --build
-	```
-	
-	That will create a container with datacatalog web application, and a container for solr (the data will be persisted between runs).
+   ```
+   (local) $ docker-compose up --build
+   ```
+
+   That will create a container with datacatalog web application, and a container for solr (the data will be persisted
+   between runs).
 
 1. Then, to create solr cores, execute in another console:
 
-	```
-	(local) $ docker-compose exec solr solr create_core -c datacatalog
-	(local) $ docker-compose exec solr solr create_core -c datacatalog_test
-	
-	```
+   ```
+   (local) $ docker-compose exec solr solr create_core -c datacatalog
+   (local) $ docker-compose exec solr solr create_core -c datacatalog_test
 
-1. Then, to fill solr data:  
+   ```
 
-	```
-	(local) $ docker-compose exec web /bin/bash
-	(web container) $ python manage.py init_index 
-	(web container) $ python manage.py import_entities Dats study
-	(web container) $ python manage.py import_entities Dats project
-	(web container) $ python manage.py import_entities Dats dataset 
-	
-	(PRESS CTRL+D or type: "exit" to exit)
-	```
-1. The web application should now be available with loaded data via http://localhost and https://localhost with ssl connection (beware that most browsers display a warning or block self-signed certificates)
+1. Then, to fill solr data:
+
+   ```
+   (local) $ docker-compose exec web /bin/bash
+   (web container) $ python manage.py init_index
+   (web container) $ python manage.py import_entities Dats study
+   (web container) $ python manage.py import_entities Dats project
+   (web container) $ python manage.py import_entities Dats dataset
+
+   (PRESS CTRL+D or type: "exit" to exit)
+   ```
+1. The web application should now be available with loaded data via http://localhost and https://localhost with ssl
+   connection (beware that most browsers display a warning or block self-signed certificates)
 
 ### Maintenance of docker-compose
-Docker container keeps the application in the state that it has been when it was built. 
-Therefore, if you change any files in the project, in order to see changes in application the container has to be rebuilt:
+
+Docker container keeps the application in the state that it has been when it was built. Therefore, if you change any
+files in the project, in order to see changes in application the container has to be rebuilt:
 
 ```
 docker-compose up --build
 ```
 
-If you wanted to delete solr data, you need to run (that will remove any persisted data - you must redo `solr create_core`):
+If you wanted to delete solr data, you need to run (that will remove any persisted data - you must
+redo `solr create_core`):
 
 ```
 docker-compose down --volumes
@@ -167,18 +183,20 @@ docker-compose down --volumes
 
 ### Modifying the datasets
 
-The datasets, projects and studies are all defined in the files located in the folder `data/imi_projects`.
-Those files can me modified to add, delete and modify those entities.
-After saving the files, rebuild and restart docker-compose with:
+The datasets, projects and studies are all defined in the files located in the folder `data/imi_projects`. Those files
+can me modified to add, delete and modify those entities. After saving the files, rebuild and restart docker-compose
+with:
 
 ```
 CTLR+D
 ```
+
 to stop all the containers
 
 ```
 docker-compose up --build
 ```
+
 to rebuild and restart the containers
 
 ```
@@ -190,11 +208,13 @@ to rebuild and restart the containers
 
 (PRESS CTRL+D or type: "exit" to exit)
 ```
+
 To reindex the entities
 
 ## Single Docker deployment
-In some cases, you might not want Solr and Nginx to run (for example if there are multiple instances of Data Catalog runnning).
-Then, simply use:
+
+In some cases, you might not want Solr and Nginx to run (for example if there are multiple instances of Data Catalog
+runnning). Then, simply use:
 
 ```
 (local) $ docker build . -t "data-catalog"
