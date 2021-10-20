@@ -1,0 +1,457 @@
+{
+    "title": "CARE",
+    "description": "Corona accelerated R&D in Europe",
+    "@type": "Project",
+    "@context": [
+        "http://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+        "http://w3id.org/dats/context/obo/dataset_obo_context.jsonld"
+    ],
+    "types": [
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "IMI projects"
+        }
+    ],
+    "identifier": {
+        "identifier": "f2d1aec0-5f11-11eb-917b-acde48001122",
+        "@type": "Identifier",
+        "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+    },
+    "startDate": {
+        "@type": "Date",
+        "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+        "date": "2020-04-01",
+        "type": {
+            "value": "start date",
+            "valueIRI": "http://semanticscience.org/resource/SIO_000031"
+        }
+    },
+    "endDate": {
+        "@type": "Date",
+        "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+        "date": "2025-03-31",
+        "type": {
+            "value": "end date",
+            "valueIRI": "http://semanticscience.org/resource/SIO_000036"
+        }
+    },
+    "projectLeads": [
+        {
+            "@type": "Person",
+            "@context": "https://w3id.org/dats/context/sdo/person_sdo_context.jsonld",
+            "firstName": "Yves",
+            "lastName": "Levy",
+            "roles": [
+                {
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                    "value": "Project coordinator"
+                }
+            ],
+            "affiliations": [
+                {
+                    "@type": "Organization",
+                    "@context": "https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                    "name": "Institut National De La Sante Et De La Recherche Medicale",
+                    "location": {
+                        "postalAddress": "",
+                        "@type": "Place",
+                        "@context": "https://w3id.org/dats/context/sdo/place_sdo_context.jsonld"
+                    }
+                }
+            ],
+            "fullName": "Yves Levy"
+        }
+    ],
+    "keywords": [
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "IMI projects"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Respiratory diseases"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Infectious diseases"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Coronaviruses"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Conducting clinical trials"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Target identification"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Drug discovery"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Drug repurposing"
+        }
+    ],
+    "extraProperties": [
+        {
+            "values": [
+                {
+                    "value": "CARE",
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                }
+            ],
+            "@type": "CategoryValuesPair",
+            "category": "projectAcronym"
+        },
+        {
+            "values": [
+                {
+                    "value": "https://www.imi-care.eu/",
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                }
+            ],
+            "@type": "CategoryValuesPair",
+            "category": "website"
+        }
+    ],
+    "fundedBy": [
+        {
+            "name": "IMI2 - Call 21",
+            "identifier": {
+                "identifier": "101005077",
+                "@type": "Identifier",
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+            },
+            "@type": "Grant",
+            "@context": "https://w3id.org/dats/context/sdo/grant_sdo_context.jsonld"
+        }
+    ],
+    "projectAssets": [
+        {
+         "name":"CARE",
+         "identifier":{
+            "identifier":"532cda6a-ee0a-11eb-920d-acde48001122",
+            "@type":"Identifier",
+            "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+         },
+         "@type":"Study",
+         "@context":"https://w3id.org/dats/context/sdo/study_sdo_context.jsonld",
+         "description":"Screening of ~5500 FDA-approved drugs and clinical candidates for anti-SARS-CoV-2 activity",
+         "types":[
+            {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                "value": "Clinical trial"
+            },
+            {
+                "@type": "Annotation",
+                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                "value": "Target identification"
+            },
+            {
+                "@type": "Annotation",
+                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                "value": "Drug discovery"
+            },
+            {
+                "@type": "Annotation",
+                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                "value": "Drug repurposing"
+            }
+         ],
+         "input":[
+            {
+               "@type":"Material",
+               "@context":"https://w3id.org/dats/context/sdo/material_sdo_context.jsonld",
+               "name":"cell line",
+                "identifier":{
+                    "@type":"Identifier",
+                    "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                    "identifier":"https://web.expasy.org/cellosaurus/CVCL_0574",
+                    "identifierSource":"Cellosaurus"
+                },
+                "types": [
+                    {
+                        "value":"Vero E6 (green monkey cell line)",
+                        "valueIRI": "https://web.expasy.org/cellosaurus/CVCL_0574",
+                        "@type":"Annotation",
+                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                    }
+                ],
+               "taxonomy":[
+                  {
+                     "@type":"TaxonomicInformation",
+                     "@context":"https://w3id.org/dats/context/sdo/taxonomic_info_sdo_context.jsonld",
+                     "name":"Chlorocebus sabaeus",
+                     "identifier":{
+                        "@type":"Identifier",
+                        "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                        "identifier":"http://purl.obolibrary.org/obo/NCBITaxon_60711",
+                        "identifierSource":"NCBI Taxon ID"
+                     }
+                  }
+               ],
+               "bearerOfDisease":[
+                  {
+                     "name":"respiratory disease",
+                     "@type":"Disease",
+                     "@context":"https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                  },
+                   {
+                     "name":"infectious disease",
+                     "@type":"Disease",
+                     "@context":"https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                  },
+                   {
+                     "name":"Covid-19",
+                     "@type":"Disease",
+                     "@context":"https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                  }
+               ]
+            }
+         ],
+         "extraProperties":[
+            {
+               "values":[
+                  {
+                     "value":"In vitro drug screening",
+                     "@type":"Annotation",
+                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                  }
+               ],
+               "@type":"CategoryValuesPair",
+               "category":"primaryPurpose"
+            }
+         ],
+         "output": [
+            {
+               "title":"CARE",
+               "identifier":{
+                  "identifier":"44aca5b4-eebf-11eb-920d-acde48001122",
+                  "@type":"Identifier",
+                  "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+               },
+               "@type":"Dataset",
+               "@context":"https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+               "types":[
+                  {
+                     "method":{
+                        "@type":"Annotation",
+                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                        "value":"in vitro drug screening assay"
+                     },
+                     "@type":"DataType",
+                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                  }
+               ],
+               "isAbout":[
+                   {
+                       "category":"Experiment category",
+                       "values":[
+                            {
+                               "value":"antiviral therapy effects",
+                               "@type":"Annotation",
+                               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                            }
+                       ],
+                       "@type":"CategoryValuesPair",
+                       "@context":"http://w3id.org/dats/context/obo/category_values_pair_obo_context.jsonld"
+                  },
+                    {
+                       "category":"Experiment category",
+                       "values":[
+                            {
+                               "value":"assessment of anti-cytopathic effect",
+                               "@type":"Annotation",
+                               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                            }
+                       ],
+                       "@type":"CategoryValuesPair",
+                       "@context":"http://w3id.org/dats/context/obo/category_values_pair_obo_context.jsonld"
+                  },
+                  {
+                     "name":"carcinoma of the colon",
+                     "@type":"Disease",
+                     "@context":"https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                  }
+               ],
+               "extraProperties":[
+                  {
+                     "category":"number of samples",
+                     "values":[
+                        {
+                           "value":"~5500",
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "@context":"http://w3id.org/dats/context/obo/category_values_pair_obo_context.jsonld"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":"https://fairplus.github.io/fairification-results/2021-07-20-CARE-pre-assessment/",
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"fairAssessmentLink"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":"Pre-FAIRification assessment",
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"fairAssessmentDetails"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":20,
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"fairScoreRecommended"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":55,
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"fairScoreMandatory"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":37.50,
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"fairScoreOverall"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":"https://docs.google.com/spreadsheets/d/1vaRf4PXJ7FvxLZpIKXRIkiEYDSZP5ajsb3KnETz7Em0/edit#gid=1375297260",
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"fairIndicatorsHref"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":"RDA indicator v0.05",
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"fairIndicators"
+                  },
+                  {
+                     "values":[
+                        {
+                           "value":"true",
+                           "@type":"Annotation",
+                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                     ],
+                     "@type":"CategoryValuesPair",
+                     "category":"fairEvaluation"
+                  }
+               ],
+               "distributions":[
+                  {
+                     "@type":"DatasetDistribution",
+                     "@context":"https://w3id.org/dats/context/sdo/dataset_distribution_sdo_context.jsonld",
+                     "access":{
+                        "landingPage":"",
+                        "@type":"Access",
+                        "@context":"https://w3id.org/dats/context/sdo/access_sdo_context.jsonld"
+                     },
+                     "dates":[
+                        {
+                           "date":"2021-05-03T00:00:00Z",
+                           "@type":"Date",
+                           "@context":"https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                           "type":{
+                              "@type":"Annotation",
+                              "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                              "value":"creation date",
+                              "valueIRI":""
+                           }
+                        },
+                        {
+                           "date":"2021-05-20T11:53:13.870Z",
+                           "@type":"Date",
+                           "@context":"https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                           "type":{
+                              "@type":"Annotation",
+                              "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                              "value":"last update date",
+                              "valueIRI":""
+                           }
+                        }
+                     ],
+                     "version":"V1.0"
+                  }
+               ],
+               "creators":[
+                  {
+                     "@type":"Organization",
+                     "@context":"https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                     "name":"CARE consortium"
+                  },
+                   {
+                        "@type": "Person",
+                        "@context": "https://w3id.org/dats/context/sdo/person_sdo_context.jsonld",
+                        "firstName": "Ellen",
+                        "lastName": "Van Damme",
+                        "roles": [
+                            {
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                "value": "Project contact"
+                            }
+                        ],
+                        "fullName": "Ellen Van Damme"
+                   }
+               ]
+            }
+         ]
+      }
+    ]
+}
