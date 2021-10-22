@@ -56,7 +56,7 @@ class JSONConnector(ImportEntitiesConnector):
         """
         Yields instances of self.entity_class parsed from the json file self.json_file_path
         """
-        with open(self.json_file_path) as json_file:
+        with open(self.json_file_path, encoding='utf8') as json_file:
             data = json.load(json_file)
             for entity in data['docs']:
                 new_entity = self.entity_class()

@@ -26,12 +26,13 @@ import logging
 from datacatalog.solr.solr_orm import SolrAutomaticQuery
 from datacatalog.solr.solr_orm_entity import SolrEntity
 from datacatalog.solr.solr_orm_fields import SolrBooleanField, SolrField, SolrTextField, SolrForeignKeyField, \
-    SolrIntField, SolrFloatField
+    SolrIntField
+from . import EntityWithSlugs
 
 logger = logging.getLogger(__name__)
 
 
-class Study(SolrEntity):
+class Study(SolrEntity, EntityWithSlugs):
     """
     Study entity, subclass of SolrEntity
     """
@@ -50,12 +51,13 @@ class Study(SolrEntity):
     multi_center_study = SolrBooleanField("multi_center_study")
     organisms = SolrField("organisms", multivalued=True)
     primary_purpose = SolrField("primary_purpose")
+    samples_source = SolrField("samples_source", multivalued=True)
     samples_type = SolrField("samples_type", multivalued=True)
     size = SolrIntField("size")
     title = SolrField("title")
     types = SolrField("types", multivalued=True)
 
-    is_fairplus_evaluated = SolrBooleanField("is_fairplus_evaluated")
+    fair_evaluation = SolrField("fair_evaluation")
 
     def __init__(self, title: str = None, entity_id: str = None) -> None:
         """

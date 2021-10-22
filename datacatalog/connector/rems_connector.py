@@ -25,12 +25,17 @@ from remsclient.rest import ApiException
 
 from .entities_connector import ExportEntitiesConnector
 from .. import app
+from ..exceptions import CouldNotCloseApplicationException
 from ..solr.solr_orm_entity import SolrEntity
 
 logger = logging.getLogger(__name__)
 
 
 class UserDoesntExistException(Exception):
+    pass
+
+
+class CatalogueItemDoesntExistException(Exception):
     pass
 
 
@@ -129,9 +134,9 @@ class RemsConnector(ExportEntitiesConnector):
     def get_catalogue_item(self, dataset_id):
         rems_catalogue = remsclient.CatalogueItemsApi(self.rems_client)
         items = rems_catalogue.api_catalogue_items_get(resource=dataset_id, **self.authentication_kwargs)
-        if len(items) > 0:
-            return items[0]
-        return items
+        if len(items) == 0:
+            raise CatalogueItemDoesntExistException(f"no catalogue item found for resource {dataset_id}")
+        return items[0]
 
     def get_resource(self, resource_id):
         rems_resource = remsclient.ResourcesApi(self.rems_client)
@@ -151,6 +156,16 @@ class RemsConnector(ExportEntitiesConnector):
         rems_applications = remsclient.ApplicationsApi(self.rems_client)
         body = remsclient.SubmitCommand(application_id)
         rems_applications.api_applications_submit_post(body, **self.authentication_kwargs)
+
+    def close_application(self, application_id):
+        rems_applications = remsclient.ApplicationsApi(self.rems_client)
+        body = remsclient.CloseCommand(application_id, comment="cancelled by the user through the data catalogue")
+        try:
+            result = rems_applications.api_applications_close_post(body, **self.authentication_kwargs_admin)
+            if not result.success:
+                raise CouldNotCloseApplicationException(result.errors[0]['type'])
+        except ApiException as e:
+            raise CouldNotCloseApplicationException(e)
 
     def my_applications(self):
         try:
@@ -178,3 +193,9 @@ class RemsConnector(ExportEntitiesConnector):
         response = rems_attachment.api_applications_add_attachment_post(file_path, application_id,
                                                                         **self.authentication_kwargs)
         return response.id
+
+    def get_application(self, application_id):
+        rems_application = remsclient.ApplicationsApi(self.rems_client)
+        application = rems_application.api_applications_application_id_get(application_id,
+                                                                           **self.authentication_kwargs)
+        return application

@@ -120,6 +120,16 @@ class SolrTextField(SolrField):
         super().__init__(name, attribute_name, "text_en", indexed, stored, multivalued)
 
 
+class SolrJsonField(SolrField):
+    """
+    SolrField subclass setting solr type to text, meant for storing JSON
+    """
+
+    def __init__(self, name: str, attribute_name: Optional[str] = None, indexed: bool = True, stored: bool = True,
+                 multivalued: bool = False) -> None:
+        super().__init__(name, attribute_name, "text_en", indexed, stored, multivalued)
+
+
 class SolrBooleanField(SolrField):
     """
     SolrField subclass setting solr type to boolean

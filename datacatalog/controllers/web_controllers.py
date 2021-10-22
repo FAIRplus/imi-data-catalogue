@@ -26,21 +26,21 @@
         - request_access
 """
 
+import re
 from typing import List, Tuple
 
-from flask import render_template, flash, redirect, url_for, request, Response, Request, send_from_directory, jsonify
+from flask import render_template, flash, redirect, url_for, request, Response, Request, send_from_directory, jsonify, \
+    abort
 from flask_login import current_user, login_required
 from flask_wtf.csrf import CSRFError
 
 from .. import login_manager, get_access_handler
-from ..exceptions import SolrQueryException, AuthenticationException
+from ..exceptions import CouldNotCloseApplicationException, SolrQueryException, AuthenticationException
+from ..exporter.dats_exporter import DATSExporter
 from ..models import *
 from ..pagination import Pagination
 from ..solr.facets import Facet
 from ..solr.solr_orm_entity import SolrEntity
-
-import re
-from datacatalog.exporter.dats_exporter import DATSExporter
 
 logger = app.logger
 
@@ -103,7 +103,10 @@ def entities_search(entity_name: str) -> Response:
     @param entity_name:  the name of the entity we want to browse/search
     @return: html page showing the search results and facets
     """
-    entity_class = app.config['entities'][entity_name]
+    try:
+        entity_class = app.config['entities'][entity_name]
+    except KeyError:
+        abort(404)
     search_examples = app.config.get('SEARCH_EXAMPLES', {}).get(entity_name)
     exporter = getattr(app, 'excel_exporter', None)
     return default_search(request, exporter=exporter, entity=entity_class, template='search_' + entity_name + '.html',
@@ -260,6 +263,17 @@ def entity_details(entity_name: str, entity_id: str) -> Response:
     return render_template(entity_name + '.html', fair_evaluations_show=FAIR_EVALUATIONS_SHOW, **kwargs)
 
 
+@app.route('/r/<entity_name>/<slug_name>', methods=['GET'])
+@app.cache.cached(timeout=0)
+def entity_by_slug(entity_name: str, slug_name: str) -> Response:
+    try:
+        entity_class = app.config['entities'][entity_name]
+    except KeyError:
+        abort(404)
+    entity = entity_class.query.get_by_slug_or_404(slug_name)
+    return redirect(url_for('entity_details', entity_name=entity_name, entity_id=entity.id), code=301)
+
+
 def get_entity(entity_name: str, entity_id: str) -> SolrEntity:
     """
     Retrieve an entity from Solr and create an instance of the corresponding Entity
@@ -267,7 +281,10 @@ def get_entity(entity_name: str, entity_id: str) -> SolrEntity:
     @param entity_id: id of the entity
     @return: an instance of the corresponding entity or 404 if not found
     """
-    entity_class = app.config['entities'][entity_name]
+    try:
+        entity_class = app.config['entities'][entity_name]
+    except KeyError:
+        abort(404)
     entity = entity_class.query.get_or_404(entity_id)
     return entity
 
@@ -288,6 +305,8 @@ def get_entity_with_facets(entity_name: str, entity_id: str) -> Tuple[SolrEntity
         return render_template('error.html', message="a problem occurred while querying the indexer",
                                explanation="see log for more details")
     ordered_facets = []
+    if len(results.entities) == 0:
+        abort(404)
     entity = results.entities[0]
     for (attribute_name, label) in facets_order:
         facet = facets.get(attribute_name, None)
@@ -356,11 +375,16 @@ def request_access(entity_name: str, entity_id: str) -> Response:
     handler = get_access_handler(current_user, entity_name)
     if not handler:
         return render_template('error.html', message="Error 400 - No compatible request handlers for this entity"), 400
+    template = handler.template
     if handler.requires_logged_in_user() and not current_user.is_authenticated:
         here = request.full_path
-        return redirect(url_for('login'), f'?next={here}')
+        redirect_url = url_for('login') + f'?next={here}'
+        return redirect(redirect_url), 302
 
     form = handler.create_form(entity, request.form)
+    if form is None:
+        return render_template('error.html', message="Error 400 - Could not find a form for this dataset",
+                               explanation="Check if the datasets have been correctly exported"), 400
     if specified_type:
         title += f' - {specified_type}'
         url_submit += f'?type={specified_type}'
@@ -369,14 +393,14 @@ def request_access(entity_name: str, entity_id: str) -> Response:
             if hasattr(form, 'recaptcha') and form.recaptcha.errors:
                 flash('The Captcha response parameter is missing.', category="error")
 
-            return render_template('request_access.html', form=form, **kwargs)
+            return render_template(template, form=form, **kwargs)
         else:
             handler.apply(entity, form)
             flash("Access request sent successfully.", category='success')
             return redirect(url_for('search'))
 
     elif request.method == 'GET':
-        return render_template('request_access.html', form=form, **kwargs)
+        return render_template(template, form=form, **kwargs)
 
 
 @app.route('/static_plugin/<path:filename>')
@@ -390,3 +414,21 @@ def my_applications(entity_name):
     handler = get_access_handler(current_user, entity_name)
     applications = handler.my_applications()
     return render_template('my_applications.html', applications=applications, entity_name=entity_name)
+
+
+@app.route('/user/my_applications/<entity_name>/<application_id>/close', methods=['POST'])
+@login_required
+def close_application(entity_name, application_id):
+    handler = get_access_handler(current_user, entity_name)
+    try:
+        result = handler.close_application(application_id)
+    except CouldNotCloseApplicationException as e:
+        flash('an error occurred, application was not closed', 'error')
+        logger.error(str(e))
+        return str(e), 400
+    if result is True:
+        flash('application was closed', 'success')
+        return "ok", 200
+    else:
+        flash('an error occurred, application was not closed', 'error')
+        return "error", 400

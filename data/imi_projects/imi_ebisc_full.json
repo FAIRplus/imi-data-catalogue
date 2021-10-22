@@ -148,7 +148,15 @@
             {
                "@type":"Material",
                "@context":"https://w3id.org/dats/context/sdo/material_sdo_context.jsonld",
-               "name":"input material",
+               "name":"cell lines",
+                 "types": [
+                    {
+                        "value":"cell line",
+                        "valueIRI": "http://purl.obolibrary.org/obo/NCIT_C16403",
+                        "@type":"Annotation",
+                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                    }
+                ],
                "taxonomy":[
                   {
                      "@type":"TaxonomicInformation",

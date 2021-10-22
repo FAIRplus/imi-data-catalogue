@@ -38,7 +38,7 @@ from werkzeug.exceptions import abort
 
 from .facets import Facet, FacetRange
 from .solr_orm_entity import DATETIME_FORMAT, DATETIME_FORMAT_NO_MICRO, SolrEntity
-from .solr_orm_fields import SolrField, SolrForeignKeyField
+from .solr_orm_fields import SolrField, SolrForeignKeyField, SolrJsonField
 from .solr_orm_schema import SolrSchemaAdmin
 from .. import app
 from ..exceptions import SolrQueryException
@@ -108,9 +108,12 @@ class SolrQuery(object):
         @param fuzzy:boolean triggering fuzzy search to be active or not
         @return: a pysolr.Results instance containing the search results
         """
-        if sort:
+        if sort_order or sort:
             order = sort_order or "desc"
-            sort_with_order = sort + " " + order
+            if sort:
+                sort_with_order = sort + " " + order
+            else:
+                sort_with_order = "score " + order
         else:
             sort_with_order = ''
         if fq is None:
@@ -121,18 +124,23 @@ class SolrQuery(object):
             'qf': self.__class__.BOOST,
             'fq': fq
         }
+
         query = query.strip()
         q = '*:*'
         if query:
-            if ':' in query:
-                q = query
+            if ':' in query:  # for queries like "dataset_disease:*corona*"
+                fq.append(query)
             else:
                 if fuzzy:
                     fuzzy_terms = 'OR {}_textfuzzy_:{}{}'.format(self.entity_name, query, FUZZY_SEARCH_SUFFIX)
                     query = "({}_text_:'{}' {})".format(self.entity_name, query, fuzzy_terms)
                 else:
                     query = "{}_text_:'{}'".format(self.entity_name, FUZZY_SEARCH_SUFFIX)
-                fq.append(query)
+
+                if "score" in sort_with_order: # If sort has 'score' add to “scoring” query 'q'
+                    q = query
+                else:
+                    fq.append(query)
         if rows:
             params['rows'] = rows
         if start:
@@ -225,6 +233,31 @@ class SolrQuery(object):
         new_instance = self._build_instance(doc)
         return new_instance
 
+    def get_by_slug(self, slug: str) -> Optional[SolrEntity]:
+        """
+        Retrieve from solr and build a SolrEntity instance for a given entity slug
+        @param slug: slug of the entity to retrieve from solr
+        @return: a self.class_object instance or None if not found
+        """
+
+        results = self.solr_orm.indexer.search(q="{}_slugs:{}".format(self.entity_name, slug), rows=1)
+        if results.hits == 0:
+            return None
+        doc = results.docs[0]
+        new_instance = self._build_instance(doc)
+        return new_instance
+
+    def get_by_slug_or_404(self, slug: str) -> Union[SolrEntity, Response]:
+        """
+        Similar as get_by_slug method but returns a 404 page if entity not found
+        @param slug: slug of the entity to retrieve from solr
+        @return: a self.class_object instance or a 404 response if not found
+        """
+        new_instance = self.get_by_slug(slug)
+        if new_instance is None:
+            abort(404)
+        return new_instance
+
     def _build_instance(self, doc):
         new_instance = self.class_object()
         for attribute_name, field in self.class_object._solr_fields.items():
@@ -234,7 +267,8 @@ class SolrQuery(object):
                     solr_value = datetime.strptime(solr_value, DATETIME_FORMAT)
                 except ValueError:
                     solr_value = datetime.strptime(solr_value, DATETIME_FORMAT_NO_MICRO)
-
+            elif solr_value is not None and isinstance(field, SolrJsonField):
+                solr_value = json.loads(solr_value)
             setattr(new_instance, attribute_name, solr_value)
         doc_id = doc.get('id', None)
         # remove prefix from id (entity_name_)

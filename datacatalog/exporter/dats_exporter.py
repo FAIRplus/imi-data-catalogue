@@ -36,7 +36,7 @@ __author__ = 'Nirmeen Sallam'
 logger = app.logger
 
 w3id_base_url = "https://w3id.org/dats/context/sdo/"
-w3id_annotation = w3id_base_url+"annotation_sdo_context.jsonld"
+w3id_annotation = w3id_base_url + "annotation_sdo_context.jsonld"
 
 
 class DATSExporter:
@@ -71,13 +71,13 @@ class DATSExporter:
     def build_dats_project(metadata, project):
 
         metadata["@type"] = "Project"
-        metadata["@context"] = [w3id_base_url+"dataset_sdo_context.jsonld",
+        metadata["@context"] = [w3id_base_url + "dataset_sdo_context.jsonld",
                                 "http://w3id.org/dats/context/obo/dataset_obo_context.jsonld"]
         if project.id:
             metadata['identifier'] = {
                 "identifier": project.id,
                 "@type": "Identifier",
-                "@context": w3id_base_url+"identifier_info_sdo_context.jsonld"
+                "@context": w3id_base_url + "identifier_info_sdo_context.jsonld"
             }
         else:
             logger.error("Project entity has no identifier")
@@ -103,7 +103,7 @@ class DATSExporter:
             for name in funded_by_names:
                 temp = {"name": name,
                         "@type": "Grant",
-                        "@context": w3id_base_url+"grant_sdo_context.jsonld"
+                        "@context": w3id_base_url + "grant_sdo_context.jsonld"
                         }
                 metadata['fundedBy'].append(temp)
 
@@ -122,7 +122,7 @@ class DATSExporter:
                 project.business_phone_number:
             metadata['projectLeads'] = [{
                 "@type": "Person",
-                "@context": w3id_base_url+"person_sdo_context.jsonld"
+                "@context": w3id_base_url + "person_sdo_context.jsonld"
             }]
             if project.contact_title:
                 metadata['projectLeads'][0]['title'] = project.contact_title
@@ -141,7 +141,7 @@ class DATSExporter:
             if project.affiliation:
                 metadata['projectLeads'][0]['affiliations'] = [{
                     "@type": "Organization",
-                    "@context": w3id_base_url+"organization_sdo_context.jsonld",
+                    "@context": w3id_base_url + "organization_sdo_context.jsonld",
                     "name": project.affiliation
                 }]
 
@@ -149,7 +149,7 @@ class DATSExporter:
                     metadata['projectLeads'][0]['affiliations'][0]['location'] = {
                         "postalAddress": project.business_address,
                         "@type": "Place",
-                        "@context": w3id_base_url+"place_sdo_context.jsonld"
+                        "@context": w3id_base_url + "place_sdo_context.jsonld"
                     }
 
             if project.role:
@@ -197,7 +197,7 @@ class DATSExporter:
         if project.start_date:
             metadata['startDate'] = {
                 "@type": "Date",
-                "@context": w3id_base_url+"date_info_sdo_context.jsonld",
+                "@context": w3id_base_url + "date_info_sdo_context.jsonld",
                 "date": project.start_date,
                 "type": {
                     "value": "start date",
@@ -208,7 +208,7 @@ class DATSExporter:
         if project.end_date:
             metadata['endDate'] = {
                 "@type": "Date",
-                "@context": w3id_base_url+"date_info_sdo_context.jsonld",
+                "@context": w3id_base_url + "date_info_sdo_context.jsonld",
                 "date": project.end_date,
                 "type": {
                     "value": "end date",
@@ -221,11 +221,11 @@ class DATSExporter:
             for publication in project.reference_publications:
                 temp = {
                     "@type": "Publication",
-                    "@context": w3id_base_url+"publication_sdo_context.jsonld",
+                    "@context": w3id_base_url + "publication_sdo_context.jsonld",
                     "identifier": {
                         "identifier": publication,
                         "@type": "Identifier",
-                        "@context": w3id_base_url+"identifier_info_sdo_context.jsonld"
+                        "@context": w3id_base_url + "identifier_info_sdo_context.jsonld"
                     }
                 }
                 metadata['primaryPublications'].append(temp)
@@ -265,11 +265,11 @@ class DATSExporter:
                 for study in project.studies:
                     temp = {
                         "@type": "Study",
-                        "@context": w3id_base_url+"study_sdo_context.jsonld",
+                        "@context": w3id_base_url + "study_sdo_context.jsonld",
                         "identifier": {
                             "identifier": study,
                             "@type": "Identifier",
-                            "@context": w3id_base_url+"identifier_info_sdo_context.jsonld"
+                            "@context": w3id_base_url + "identifier_info_sdo_context.jsonld"
                         }
 
                     }
@@ -279,11 +279,11 @@ class DATSExporter:
                 for dataset in project.datasets:
                     temp = {
                         "@type": "Dataset",
-                        "@context": w3id_base_url+"dataset_sdo_context.jsonld",
+                        "@context": w3id_base_url + "dataset_sdo_context.jsonld",
                         "identifier": {
                             "identifier": dataset,
                             "@type": "Identifier",
-                            "@context": w3id_base_url+"identifier_info_sdo_context.jsonld"
+                            "@context": w3id_base_url + "identifier_info_sdo_context.jsonld"
                         }
 
                     }
@@ -295,7 +295,7 @@ class DATSExporter:
     def build_dats_dataset(metadata, dataset):
         metadata["projectAssets"] = [{}]
         metadata["projectAssets"][0]["@type"] = "Dataset"
-        metadata["projectAssets"][0]["@context"] = w3id_base_url+"dataset_sdo_context.jsonld"
+        metadata["projectAssets"][0]["@context"] = w3id_base_url + "dataset_sdo_context.jsonld"
         if dataset.title:
             metadata["projectAssets"][0]['title'] = dataset.title
 
@@ -303,7 +303,7 @@ class DATSExporter:
             metadata["projectAssets"][0]['identifier'] = {
                 "identifier": dataset.id,
                 "@type": "Identifier",
-                "@context": w3id_base_url+"identifier_info_sdo_context.jsonld"
+                "@context": w3id_base_url + "identifier_info_sdo_context.jsonld"
             }
         else:
             logger.error("Dataset entity has no identifier")
@@ -318,7 +318,7 @@ class DATSExporter:
                         "value": dataset_type
                     },
                     "@type": "DataType",
-                    "@context": w3id_base_url+"data_type_sdo_context.jsonld"
+                    "@context": w3id_base_url + "data_type_sdo_context.jsonld"
                 }
                 metadata["projectAssets"][0]['types'].append(temp)
         if dataset.platform:
@@ -330,7 +330,7 @@ class DATSExporter:
                         "value": platform
                     },
                     "@type": "DataType",
-                    "@context": w3id_base_url+"data_type_sdo_context.jsonld"
+                    "@context": w3id_base_url + "data_type_sdo_context.jsonld"
                 }
                 metadata["projectAssets"][0]['types'].append(temp)
 
@@ -342,7 +342,7 @@ class DATSExporter:
             for treatment_name in treatments:
                 temp = {
                     "@type": "MolecularEntity",
-                    "@context": w3id_base_url+"molecular_entity_sdo_context.jsonld",
+                    "@context": w3id_base_url + "molecular_entity_sdo_context.jsonld",
                     "name": treatment_name,
                     "identifier": {
 
@@ -354,14 +354,14 @@ class DATSExporter:
             temp = {
                 "name": dataset.disease,
                 "@type": "Disease",
-                "@context": w3id_base_url+"disease_sdo_context.jsonld"
+                "@context": w3id_base_url + "disease_sdo_context.jsonld"
             }
             metadata["projectAssets"][0]['isAbout'].append(temp)
 
         if dataset.samples_number or dataset.fair_indicators or dataset.fair_indicators_href \
                 or dataset.fair_score_mandatory_indicators or dataset.fair_score_overall \
                 or dataset.fair_score_recommended_indicators or dataset.fair_assessment_details \
-                or dataset.fair_assessment_details_link or dataset.is_fairplus_evaluated:
+                or dataset.fair_assessment_details_link or dataset.fair_evaluation:
             metadata["projectAssets"][0]["extraProperties"] = []
         if dataset.samples_number:
             temp = {
@@ -469,11 +469,11 @@ class DATSExporter:
                 "category": "fairScoreOverall"
             }
             metadata["projectAssets"][0]["extraProperties"].append(temp)
-        if dataset.is_fairplus_evaluated:
+        if dataset.fair_evaluation:
             temp = {
                 "values": [
                     {
-                        "value": dataset.is_fairplus_evaluated,
+                        "value": dataset.fair_evaluation,
                         "@type": "Annotation",
                         "@context": w3id_annotation
                     }
@@ -492,7 +492,7 @@ class DATSExporter:
                 "accessURL": dataset.dataset_link_href if dataset.dataset_link_href else "",
                 "landingPage": dataset.dataset_link_label if dataset.dataset_link_label else "",
                 "@type": "Access",
-                "@context": w3id_base_url+"access_sdo_context.jsonld"
+                "@context": w3id_base_url + "access_sdo_context.jsonld"
             }
         if dataset.dataset_created or dataset.dataset_modified:
             metadata["projectAssets"][0]["distributions"][0]["dates"] = []
@@ -500,7 +500,7 @@ class DATSExporter:
                 temp = {
                     "date": dataset.dataset_created,
                     "@type": "Date",
-                    "@context": w3id_base_url+"date_info_sdo_context.jsonld",
+                    "@context": w3id_base_url + "date_info_sdo_context.jsonld",
                     "type": {
                         "@type": "Annotation",
                         "@context": w3id_annotation,
@@ -512,7 +512,7 @@ class DATSExporter:
                 temp = {
                     "date": dataset.dataset_modified,
                     "@type": "Date",
-                    "@context": w3id_base_url+"date_info_sdo_context.jsonld",
+                    "@context": w3id_base_url + "date_info_sdo_context.jsonld",
                     "type": {
                         "@type": "Annotation",
                         "@context": w3id_annotation,
@@ -531,7 +531,7 @@ class DATSExporter:
                         "value": "clinical data standard"
                     },
                     "@type": "DataStandard",
-                    "@context": w3id_base_url+"data_standard_sdo_context.jsonld"
+                    "@context": w3id_base_url + "data_standard_sdo_context.jsonld"
                 }
             ]
         if dataset.version:
@@ -543,13 +543,13 @@ class DATSExporter:
     def build_dats_study(metadata, study):
         metadata["projectAssets"] = [{}]
         metadata["projectAssets"][0]["@type"] = "Study"
-        metadata["projectAssets"][0]["@context"] = w3id_base_url+"study_sdo_context.jsonld"
+        metadata["projectAssets"][0]["@context"] = w3id_base_url + "study_sdo_context.jsonld"
 
         if study.id:
             metadata["projectAssets"][0]['identifier'] = {
                 "identifier": study.id,
                 "@type": "Identifier",
-                "@context": w3id_base_url+"identifier_info_sdo_context.jsonld"
+                "@context": w3id_base_url + "identifier_info_sdo_context.jsonld"
             }
         else:
             logger.error("Study entity has no identifier")
@@ -573,7 +573,7 @@ class DATSExporter:
         if study.size or study.cohorts_description:
             metadata["projectAssets"][0]['studyGroups'] = [{
                 "@type": "StudyGroup",
-                "@context": w3id_base_url+"studygroup_sdo_context.jsonld"
+                "@context": w3id_base_url + "studygroup_sdo_context.jsonld"
             }]
             if study.size:
                 metadata["projectAssets"][0]['studyGroups'][0]['size'] = study.size
@@ -656,7 +656,7 @@ class DATSExporter:
         if study.organisms or study.disease or study.samples_type:
             metadata["projectAssets"][0]['input'] = [{
                 "@type": "Material",
-                "@context": w3id_base_url+"material_sdo_context.jsonld",
+                "@context": w3id_base_url + "material_sdo_context.jsonld",
                 "name": "input material"
             }]
 
@@ -665,7 +665,7 @@ class DATSExporter:
                 for organism in study.organisms:
                     temp = {
                         "@type": "TaxonomicInformation",
-                        "@context": w3id_base_url+"taxonomic_info_sdo_context.jsonld",
+                        "@context": w3id_base_url + "taxonomic_info_sdo_context.jsonld",
                         "name": organism
                     }
 
@@ -677,7 +677,7 @@ class DATSExporter:
                     temp = {
                         "name": disease,
                         "@type": "Disease",
-                        "@context": w3id_base_url+"disease_sdo_context.jsonld"
+                        "@context": w3id_base_url + "disease_sdo_context.jsonld"
                     }
                     metadata["projectAssets"][0]['input'][0]['bearerOfDisease'].append(temp)
 
@@ -687,7 +687,7 @@ class DATSExporter:
                     temp = {
                         "name": samples_type,
                         "@type": "AnatomicalPart",
-                        "@context": w3id_base_url+"anatomical_part_sdo_context.jsonld"
+                        "@context": w3id_base_url + "anatomical_part_sdo_context.jsonld"
                     }
                     metadata["projectAssets"][0]['input'][0]['derivesFrom'].append(temp)
 
@@ -696,11 +696,11 @@ class DATSExporter:
             for dataset in study.datasets:
                 temp = {
                     "@type": "Dataset",
-                    "@context": w3id_base_url+"dataset_sdo_context.jsonld",
+                    "@context": w3id_base_url + "dataset_sdo_context.jsonld",
                     "identifier": {
                         "identifier": dataset,
                         "@type": "Identifier",
-                        "@context": w3id_base_url+"identifier_info_sdo_context.jsonld"
+                        "@context": w3id_base_url + "identifier_info_sdo_context.jsonld"
                     }
 
                 }

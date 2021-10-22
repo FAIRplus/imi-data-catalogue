@@ -121,4 +121,4 @@ class TestConfig(Config):
     }
     # Export entity as dats
     ALLOW_ENTITY_EXPORT = True
-
+    DAISY_API_URLS = {'dataset': 'notused', 'project': 'notused'}

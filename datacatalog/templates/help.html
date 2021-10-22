@@ -5,16 +5,24 @@
 
 {% block content %}
 
-    <div class="wrapper"><h1 id="helpHeader">Frequently Asked Questions</h1>
-        <p>Here are some of the most frequently asked questions about the IMI Data Catalog and how to use it. If you have a question that isn't answered here, please don't hesitate to <a href="mailto:data-catalog@elixir-luxembourg.org">contact us.</a> </p>
-        <h3>What is the IMI Data Catalog?</h3>
+    <div class="wrapper wrapper-text"><h1 id="helpHeader">Frequently Asked Questions</h1>
+        <p>Here are some of the most frequently asked questions about the IMI Data Catalog and how to use it. If you
+            have a question that isn't answered here, please don't hesitate to <a
+                    href="mailto:data-catalog@elixir-luxembourg.org">contact us.</a></p>
+        <h2>What is the IMI Data Catalog?</h2>
         <p>For more information on the IMI Data Catalog, see our <strong><a href="{{ url_for('about') }}">About page</a></strong>.
         </p>
 
-        <h3>Why does the Data Catalog look different to the last time I visited?</h3>
-        <p>We recently did some major redevelopment work on the IMI Data Catalog, including creating a new user interface, implementing a new data model based on the <strong><a href="https://github.com/datatagsuite/README">DATS model</a></strong> and recurating a lot of the content. We are still in the process of adding some of the older projects into the new model. If you urgently need access to any of the old Catalog entries, we have an <a href="https://datacatalog.elixir-luxembourg.org/old">archived version</a> of the old Data Catalog available.</p>
+        <h2>Why does the Data Catalog look different to the last time I visited?</h2>
+        <p>We recently did some major redevelopment work on the IMI Data Catalog, including creating a new user
+            interface, implementing a new data model based on the <strong><a
+                    href="https://github.com/datatagsuite/README">DATS model</a></strong> and recurating a lot of the
+            content. We are still in the process of adding some of the older projects into the new model. If you
+            urgently need access to any of the old Catalog entries, we have an <a
+                    href="https://datacatalog.elixir-luxembourg.org/old">archived version</a> of the old Data Catalog
+            available.</p>
 
-        <h3>What is the difference between "Project", "Study" and "Dataset"?</h3>
+        <h2>What is the difference between "Project", "Study" and "Dataset"?</h2>
         <p>The data model on which the IMI Data Catalog distinguishes between these three categories:</p>
         <p>
             The <strong>Project</strong> view presents high-level information about Data Catalog entries, such
@@ -33,12 +41,12 @@
             Dataset-level information for all projects is an ongoing process, so you may find empty place-holder pages
             for many of these.</p>
 
-        <h3>How can I search the IMI Data Catalog?</h3>
+        <h2>How can I search the IMI Data Catalog?</h2>
         <p>You can search each of the three aspects (Project, Study and Dataset) separately, using a number of factors
             including title, disease, species, keywords, data types etc. The search functionality is under active
             development as we work on providing an integrated experience across the entire Catalog.</p>
 
-        <h3>How can I request access to a dataset?</h3>
+        <h2>How can I request access to a dataset?</h2>
         <p>On each Dataset page, you will find a "Request access" button, which allows you to submit a data access
             request to the system. Please note that data access requests are currently processed manually. We are not
             able to provide or facilitate dataset access for projects with Dataset placeholder (empty) pages at this
@@ -46,22 +54,25 @@
             dataset-level content.</p>
 
 
-        <h3>What does the "FAIRplus Evaluated" badge signify?</h3>
+        <h2>What does the "FAIRplus Evaluated" badge signify?</h2>
         <p>The <strong><a href="https://fairplus-project.eu/">FAIRplus project</a></strong> works on developing tools
             and guidelines for making life science data FAIR, using a range of IMI projects as data sources to showcase
             and test its output. The "FAIRplus Evaluated" badge highlights projects which have been processed by the
             FAIRplus project, undergoing at least one "FAIRification cycle", including an evaluation of FAIRness before
-            and after the FAIRification work. A link to the FAIRplus evaluation is available on relevant Dataset pages. </p>
+            and after the FAIRification work. A link to the FAIRplus evaluation is available on relevant Dataset pages.
+        </p>
 
-        <h3>How do I report a bug or request a new feature?</h3>
+        <h2>How do I report a bug or request a new feature?</h2>
         <p>Please submit any bug reports and feature requests to the <strong><a
                 href="https://github.com/FAIRplus/imi-data-catalogue/issues">issue tracker</a></strong> on the FAIRplus
             Data Catalog Github repo. We'd love to hear from you!</p>
 
-        <h3>I think my project should be in the Data Catalog but it isn't. How can I get it included?</h3>
-        <p>To talk to us about Data Catalog content, please either create a ticket on our <strong><a href="https://github.com/FAIRplus/imi-data-catalogue/issues">issue tracker</a></strong> or drop us <strong><a href="mailto:data-catalog@elixir-luxembourg.org">an email</a></strong>.</p>
+        <h2>I think my project should be in the Data Catalog but it isn't. How can I get it included?</h2>
+        <p>To talk to us about Data Catalog content, please either create a ticket on our <strong><a
+                href="https://github.com/FAIRplus/imi-data-catalogue/issues">issue tracker</a></strong> or drop us
+            <strong><a href="mailto:data-catalog@elixir-luxembourg.org">an email</a></strong>.</p>
 
-        <h3>I have found a mistake in the metdata for my project. How can I get it fixed?</h3>
+        <h2>I have found a mistake in the metdata for my project. How can I get it fixed?</h2>
         <p>To correct existing Data Catalog content, please submit a ticket on our <strong><a
                 href="https://github.com/FAIRplus/imi-data-catalogue/issues">issue tracker</a></strong>.</p>
     </div>

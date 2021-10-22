@@ -5,19 +5,24 @@
 
 {% block content %}
 
-    <div class="request-access well box container">
+    <div class="row no-margin-row request-access well box">
 
         <div class="col-md-11">
             <div class="align-items-center justify-content-center">
 
-                <h3>Request access to {{ entity_title }}</h3>
+                <h2>Request access to {{ entity_title }}</h2>
 
 
                 <form action="{{ url_submit }}"
                       method=post enctype="multipart/form-data">
-
-                    {{ macros.quick_form(form) }}
+                    {% block form %}
+                        {{ macros.quick_form(form, include_form_tag=False) }}
+                    {% endblock %}
                 </form>
+
+                {% block extra_form_content %}
+
+                {% endblock %}
                 <p><span class="text-danger">*</span> mandatory fields</p>
             </div>
         </div>

@@ -4,11 +4,11 @@
 {% block content %}
     <div class="text-center">
         <h1>Welcome to</h1>
-        <img width="60%" src="{{ config.get('URL_PREFIX', '') }}/static/public/images/datacatalog_logo.svg"
+        <img class="mainLogo" src="{{ config.get('URL_PREFIX', '') }}/static/public/images/datacatalog_logo.svg"
              alt="datacatalog logo"/>
     </div>
-    <div class="row landing-cards">
-        <div class="col-sm-4">
+    <div class="landing-cards">
+        <div>
             <a title="Browse Projects" href="{{ url_for('entities_search', entity_name='project') }}">
                 <i class="material-icons text-primary">description</i>
                 <h3>
@@ -22,7 +22,7 @@
                 information.
             </p>
         </div>
-        <div class="col-sm-4">
+        <div>
             <a title="Browse Datasets"
                href=" {{ url_for('entities_search', entity_name='dataset') }} ">
                 <i class="material-icons text-primary">analytics</i>
@@ -38,7 +38,7 @@
             </p>
         </div>
 
-        <div class="col-sm-4">
+        <div>
             <a title="Browse Studies" href="{{ url_for('entities_search', entity_name='study') }}">
                 <i class="material-icons text-primary">biotech</i>
                 <h3>

@@ -43,6 +43,7 @@
          "firstName":"Pierre",
          "lastName":"D\u00f6nnes",
          "email":"pierre@scicross.com",
+         "phoneNumber":"46703919310",
          "roles":[
             {
                "@type":"Annotation",
@@ -56,18 +57,6 @@
                "@type":"Organization",
                "@context":"https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
                "name":"SciCross AB"
-            }
-         ],
-         "extraProperties":[
-            {
-               "values":[
-                  {
-                     "value":"46703919310",
-                     "@type":"Annotation",
-                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                  }
-               ],
-               "category":"phoneNumber"
             }
          ]
       }
@@ -175,7 +164,15 @@
             {
                "@type":"Material",
                "@context":"https://w3id.org/dats/context/sdo/material_sdo_context.jsonld",
-               "name":"input material",
+               "name":"tissue sample",
+                "types": [
+                    {
+                        "value":"tissue sample",
+                        "valueIRI": "http://purl.obolibrary.org/obo/NCIT_C19697",
+                        "@type":"Annotation",
+                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                    }
+                ],
                "taxonomy":[
                   {
                      "@type":"TaxonomicInformation",

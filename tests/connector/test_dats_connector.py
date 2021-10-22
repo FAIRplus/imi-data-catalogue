@@ -43,10 +43,11 @@ class TestJSONConnector(BaseTest):
                         for asset in data['projectAssets']:
                             if asset['@type'] == 'Dataset':
                                 dataset_count += 1
-                            elif asset['@type'] == 'Study' and 'output' in asset:
+                            elif asset['@type'] == 'Study':
                                 study_count += 1
-                                for dataset in asset['output']:
-                                    dataset_count += 1
+                                if 'output' in asset:
+                                    for dataset in asset['output']:
+                                        dataset_count += 1
 
         dats_datasets_connector = DATSConnector(
             os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../data/imi_projects'), Dataset)

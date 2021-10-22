@@ -43,6 +43,7 @@ class RequestAccess(FlaskForm):
     name = StringField("Name", [validators.DataRequired("Please enter your name.")])
     email = EmailField("Email",
                        [validators.Email("This field requires a valid email address"), validators.DataRequired()])
-    message = TextAreaField("Your message", [validators.DataRequired("Please enter a message.")], render_kw={"placeholder": 'I would like to request access to the dataset for this project'})
+    message = TextAreaField("Describe your planned research on the dataset",
+                            [validators.DataRequired("Please enter a message.")])
     recaptcha = RecaptchaField()
     submit = SubmitField("Send")

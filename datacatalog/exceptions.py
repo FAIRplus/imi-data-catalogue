@@ -60,3 +60,10 @@ class PostRequestException(DataCatalogException):
     Exception for error happening during post request hook
     """
     pass
+
+
+class CouldNotCloseApplicationException(DataCatalogException):
+    """
+    When an access request application could not be closed
+    """
+    pass

@@ -27,45 +27,55 @@ $.ajaxSetup({
 });
 
 $.extend(
-    {
-        redirectPost: function (location, args) {
-            var form = $('<form>');
-            form.attr("method", "post");
-            form.attr("action", location);
+        {
+            redirectPost: function (location, args) {
+                var form = $('<form>');
+                form.attr("method", "post");
+                form.attr("action", location);
 
-            $.each(args, function (key, value) {
-                var field = $('<input>');
+                $.each(args, function (key, value) {
+                    var field = $('<input>');
 
-                field.attr("type", "hidden");
-                field.attr("name", key);
-                field.attr("value", value);
+                    field.attr("type", "hidden");
+                    field.attr("name", key);
+                    field.attr("value", value);
 
+                    form.append(field);
+                });
+                var field = $('<input type="hidden" name="csrf_token">').attr('value', csrftoken);
                 form.append(field);
-            });
-            var field = $('<input type="hidden" name="csrf_token">').attr('value', csrftoken);
-            form.append(field);
-            $(form).appendTo('body').submit();
-        }
-    });
+                $(form).appendTo('body').submit();
+            }
+        });
 
 
 $(document).ready(function () {
 
     $.material.init();
     $('[data-toggle="tooltip"]').tooltip();
-    $('#query').change(function () {
-        $('#sort_by').val('');
+
+    //change sort to relevance if a new query is entered
+    $('#query').keypress(function () {
+        if(!$(this).val()){
+            $('#sort_by').val('').trigger('change');
+        }
     });
 
+    //set relevance sort order to desc by default
+    $('#sort_by').change(function () {
+        var sort_by = $(this).val();
+        if(!sort_by && $("#order").val() == 'asc'){
+           $('#order').val('desc').trigger('change');
+        }
+    });
+
+    $('.start-visible').collapse('show');
     $('.start-collapsed').collapse('hide');
     var hash = window.location.hash;
     if (hash) {
         $('div' + hash).collapse('show');
-
-    } else {
-        $('.start-visible').collapse('show');
     }
-    // to prevent accordion to toggle
+
     $(".panel-access").click(function (e) {
         e.stopPropagation();
     });
@@ -78,5 +88,13 @@ $(document).ready(function () {
             });
         }
     }
+    //my applications
+    $(".closeApplication").click(function (e) {
+        var url = $(this).data("closeUrl");
+        $.post(url).always(function () {
+            location.reload();
+        });
+        return false;
+    });
 })
 ;

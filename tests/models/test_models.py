@@ -16,14 +16,8 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import os
-
-from base_test import BaseTest, get_resource_path
+from base_test import BaseTest
 from datacatalog import app
-from datacatalog.connector.dats_connector import DATSConnector
-from datacatalog.connector.geostudies_connector import GEOStudiesConnector
-from datacatalog.connector.json_connector import JSONConnector
-from datacatalog.importer.entities_importer import EntitiesImporter
 from datacatalog.models.dataset import Dataset
 from datacatalog.models.project import Project
 from datacatalog.models.study import Study
@@ -53,6 +47,32 @@ class TestModels(BaseTest):
         self.assertEqual(created.month, retrieved_dataset.created.month)
         self.assertEqual(created.second, retrieved_dataset.created.second)
 
+    def test_dataset_set_values(self):
+        self.solr_orm.delete(query='*:*')
+        title = "Great dataset!"
+        dataset = Dataset(title)
+        dataset.use_restrictions = [{'use_class': 'PS', 'use_class_label': "test",
+                                     'use_restriction_note': 'Use is restricted to projects: MDEG2',
+                                     'use_restriction_rule': 'CONSTRAINED_PERMISSION'},
+                                    {'use_class': 'PUB', 'use_class_label': "test2",
+                                     'use_restriction_note': 'Acknowledgement required.',
+                                     'use_restriction_rule': 'CONSTRAINED_PERMISSION'}]
+        dataset.set_computed_values()
+        dataset.save()
+        self.solr_orm.commit()
+        self.assertEqual(set(dataset.use_restrictions_class_label), {"test2", "test"})
+        results, icons = dataset.use_restrictions_by_type
+        self.assertEqual(results, {'CONSTRAINED_PERMISSION': [{'use_class': 'PS',
+                                                               'use_class_label': 'test',
+                                                               'use_restriction_note': 'Use is restricted to '
+                                                                                       'projects: MDEG2',
+                                                               'use_restriction_rule': 'CONSTRAINED_PERMISSION'},
+                                                              {'use_class': 'PUB',
+                                                               'use_class_label': 'test2',
+                                                               'use_restriction_note': 'Acknowledgement '
+                                                                                       'required.',
+                                                               'use_restriction_rule': 'CONSTRAINED_PERMISSION'}]})
+        self.assertEqual(icons, {'CONSTRAINED_PERMISSION': ('info', 'text-default', 'Constrained permissions')})
 
     def test_linked_entities(self):
         study1_title = "study1"

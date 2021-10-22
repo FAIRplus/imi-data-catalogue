@@ -26,6 +26,7 @@
 """
 import logging
 
+from . import EntityWithSlugs
 from ..solr.solr_orm import SolrAutomaticQuery
 from ..solr.solr_orm_entity import SolrEntity
 from ..solr.solr_orm_fields import SolrField, SolrTextField, SolrForeignKeyField, SolrDateTimeField, SolrBooleanField
@@ -33,12 +34,12 @@ from ..solr.solr_orm_fields import SolrField, SolrTextField, SolrForeignKeyField
 logger = logging.getLogger(__name__)
 
 
-class Project(SolrEntity):
+class Project(SolrEntity, EntityWithSlugs):
     """
     Project entity, subclass of SolrEntity
     """
     # specifies the list of compatibles connectors
-    COMPATIBLE_CONNECTORS = ['Json', 'Dats', 'Geo']
+    COMPATIBLE_CONNECTORS = ['Json', 'Dats', 'Geo', 'Daisy']
     query_class = SolrAutomaticQuery
     affiliation = SolrField("affiliation")
     business_address = SolrField("business_address", indexed=False)
@@ -65,8 +66,7 @@ class Project(SolrEntity):
     types = SolrField("types", multivalued=True)
     website = SolrField("website", indexed=False)
 
-    is_fairplus_evaluated = SolrBooleanField("is_fairplus_evaluated")
-
+    fair_evaluation = SolrField("fair_evaluation")
 
     def __init__(self, title: str = None, entity_id: str = None) -> None:
         """

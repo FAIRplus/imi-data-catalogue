@@ -58,6 +58,7 @@ class EntitiesImporter(object):
             count_connector = 0
             entities = connector.build_all_entities()
             for entity in entities:
+                entity.set_computed_values()
                 entity.save()
                 count += 1
                 count_connector += 1

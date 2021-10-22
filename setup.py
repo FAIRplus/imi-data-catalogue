@@ -23,12 +23,13 @@ except ImportError:
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 requirements = [
-    'Flask==1.1.2', 'Flask-Assets==2.0', 'Flask-Script==2.0.6', 'Jinja2==2.11.3', 'SQLAlchemy==1.4.5',
+    'Flask==1.1.2', 'Flask-Assets==2.0', 'Flask-Script==2.0.6', 'Jinja2==3.0.1',
     'werkzeug==0.16.1', 'closure==20191111',
-    'cssmin==0.2.0', 'webassets==2.0', 'Flask-Testing==0.8.1', 'requests==2.25.1', 'GEOparse==2.0.3',
+    'cssmin==0.2.0', 'webassets==2.0', 'Flask-Testing==0.8.1', 'requests==2.26.0', 'GEOparse==2.0.3',
     'Flask-Caching==1.10.1', 'python-ldap==3.3.1', 'wtforms==2.3.3',
-    'Flask-Login==0.5.0', 'Flask-WTF==0.15.1', 'pysolr==3.8.1', 'ckanapi==4.3', 'Flask-Mail==0.9.1',
-    'flask-reverse-proxy-fix==0.2.1', 'email-validator==1.1.1', 'oic==1.2.0', 'jsonpath-ng==1.5.2'
+    'Flask-Login==0.5.0', 'Flask-WTF==0.15.1', 'pysolr==3.8.1', 'ckanapi==4.6', 'Flask-Mail==0.9.1',
+    'flask-reverse-proxy-fix==0.2.1', 'email-validator==1.1.3', 'oic==1.3.0', 'jsonpath-ng==1.5.3',
+    'python-slugify==5.0.2'
 ]
 
 test_requirements = [

@@ -27,6 +27,7 @@ class AccessHandler(metaclass=ABCMeta):
     def __init__(self, user: User):
         self.user = user
         self.datasets = self.get_datasets()
+        self.template = 'request_access.html'
 
     @abstractmethod
     def get_datasets(self):
@@ -66,8 +67,10 @@ class ApplicationState(Enum):
 
 
 class Application:
-    def __init__(self, state: ApplicationState, entity_id, entity_title, creation_date):
+    def __init__(self, application_id, state: ApplicationState, entity_id, entity_title, creation_date, applicant_id):
         self.creation_date = creation_date
         self.entity_id = entity_id
         self.entity_title = entity_title
         self.state = state
+        self.id = application_id
+        self.applicant_id = applicant_id

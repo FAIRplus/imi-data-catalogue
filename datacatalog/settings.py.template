@@ -100,8 +100,8 @@ class Config(object):
     # THIS FOLDER SHOULD CONTAIN '.TXT' FILES WITH 'DISEASE' AS NAME OF FILE CONTAINING GEO SERIES. FOR EX: ASTHMA.TXT
     # GEO_FILE_PATH = 'tests/data/geo_studies/'
     GEO_FILE_PATH = {'dataset': 'data/geo_studies',
-                      'project': 'data/geo_studies',
-                      'study': 'data/geo_studies'}
+                     'project': 'data/geo_studies',
+                     'study': 'data/geo_studies'}
     GEO_TEMP_FOLDER = 'tests/data/geo_studies/temp_files/'
     # AUTHENTICATION_METHOD CAN BE LDAP OR PYOIDC
     AUTHENTICATION_METHOD = 'LDAP'
@@ -129,6 +129,11 @@ class Config(object):
     REMS_API_USER = ""
     # Export entity as dats
     ALLOW_ENTITY_EXPORT = False
+    # Parameters for DAISY connector
+    DAISY_API_URLS = {
+        'dataset': "https://xxxxx",
+        'project': "https://xxxxx",
+    }
 
 
 class DockerConfig(Config):
@@ -155,7 +160,6 @@ class DevConfig(Config):
 
 class TestConfig(Config):
     DEBUG = True
-    SQLALCHEMY_ECHO = True
     ASSETS_DEBUG = True
     TESTING = True
     CACHE_CONFIG = {'CACHE_TYPE': 'null'}

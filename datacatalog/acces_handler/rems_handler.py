@@ -18,6 +18,7 @@ import tempfile
 from abc import ABCMeta, abstractmethod
 
 from flask import request
+from flask_login import current_user
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import StringField, TextAreaField, SubmitField, BooleanField, SelectField, SelectMultipleField, DateField, \
@@ -27,7 +28,8 @@ from wtforms.validators import DataRequired, Length, Email, AnyOf, Optional
 
 from .access_handler import AccessHandler, ApplicationState, Application
 from .. import app
-from ..connector.rems_connector import RemsConnector
+from ..connector.rems_connector import RemsConnector, CatalogueItemDoesntExistException
+from ..exceptions import CouldNotCloseApplicationException
 
 logger = app.logger
 
@@ -52,9 +54,10 @@ class RemsAccessHandler(AccessHandler):
             result = self.rems_connector.create_user(api_username, user.displayname, user.email)
             logger.error(result)
         super().__init__(user)
+        self.template = 'request_access_rems.html'
 
     def has_access(self, dataset):
-        applications = self.rems_connector.applications(f'resource:{dataset.id}')
+        applications = self.rems_connector.applications(f'resource:"{dataset.id}"')
         has_submitted = False
         if not applications:
             return False
@@ -68,6 +71,15 @@ class RemsAccessHandler(AccessHandler):
         if has_submitted:
             return ApplicationState.submitted
         return False
+
+    def close_application(self, application_id):
+        application_id = int(application_id)
+        application_raw = self.rems_connector.get_application(application_id)
+        application = self.build_application(application_raw)
+        if application.applicant_id != current_user.id:
+            raise CouldNotCloseApplicationException('not authorized')
+        self.rems_connector.close_application(application_id)
+        return True
 
     def my_applications(self):
         applications = self.rems_connector.my_applications()
@@ -110,7 +122,11 @@ class RemsAccessHandler(AccessHandler):
         class FormClass(FlaskForm):
             pass
 
-        catalogue_item = self.rems_connector.get_catalogue_item(dataset.id)
+        try:
+            catalogue_item = self.rems_connector.get_catalogue_item(dataset.id)
+        except CatalogueItemDoesntExistException as e:
+            logger.error(e)
+            return None
         resource_id = catalogue_item.resource_id
         resource = self.rems_connector.get_resource(resource_id)
 
@@ -131,9 +147,33 @@ class RemsAccessHandler(AccessHandler):
             url = license.localizations['en']['textcontent']
             label = f"I accept the {title}"
             license_field = BooleanField(label, render_kw={"url": url},
-                                         validators=[AnyOf([True], message="You must accept the agreement")])
+                                         validators=[DataRequired(),
+                                                     AnyOf([True], message="You must accept the agreement")])
             field_id = f"license_{license_id}"
             setattr(FormClass, field_id, license_field)
+
+        for index, use_restriction in enumerate(dataset.use_restrictions or []):
+            field_id = f'use_restriction_{index}'
+            values = []
+            use_restriction_note = use_restriction.get('use_restriction_note')
+            use_class = use_restriction.get('use_class') or ''
+            use_class_label = use_restriction.get('use_class_label', '')
+            use_class_note = use_restriction.get('use_class_note', '')
+            tooltip_values = []
+            if use_restriction_note:
+                values.append(use_restriction_note)
+            if use_class_label:
+                values.append(f'({use_class_label})')
+            if use_class_note:
+                tooltip_values.append(use_class_note)
+            if use_class:
+                tooltip_values.append(f'GA4GH use restriction code: {use_class}')
+            tooltip = ", ".join(tooltip_values)
+            setattr(FormClass, field_id, BooleanField(
+                ' '.join(values),
+                validators=[DataRequired(), AnyOf([True], message="You must accept all the use restrictions")],
+                render_kw={'compact': True, 'tooltip': tooltip, 'use_restriction_rule':
+                    use_restriction['use_restriction_rule']}))
         setattr(FormClass, 'submit', SubmitField("Send"))
         return FormClass(form_data)
 
@@ -142,12 +182,14 @@ class RemsAccessHandler(AccessHandler):
         resource_id = application.applicationresources[0].resourceext_id
         resource_title = application.applicationresources[0].catalogue_itemtitle['en']
         creation_date = application.applicationcreated
+        application_id = application.applicationid
+        applicant_id = application.applicationapplicant.userid
         try:
             state = ApplicationState(application.applicationstate[18:])
         except ValueError as e:
             logger.error(e)
             state = None
-        return Application(state, resource_id, resource_title, creation_date)
+        return Application(application_id, state, resource_id, resource_title, creation_date, applicant_id)
 
 
 def get_all_subclasses(cls):

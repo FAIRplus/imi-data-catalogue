@@ -6,11 +6,10 @@
 
 {% block content %}
     <div class="well box projectDetails">
-        {% if fair_evaluations_show and project.is_fairplus_evaluated %}
-            <a class="fairResultsStamp" data-expand="fairplus-evaluation-fields"
-               href="#fairplus-evaluation-fields"><img alt='fairplus stamp'
-                                                       title="Dataset processed by FAIRplus. See FAIRplus Evaluation tab for details."
-                                                       src="/static/public/images/fairplus-stamp.png"/></a>
+        {% if fair_evaluations_show and project.fair_evaluation %}
+            <p class="fairResultsStamp"><img alt='fairplus stamp'
+                                             title="Dataset processed by FAIRplus. See FAIRplus Evaluation tab for details."
+                                             src="/static/public/images/fairplus-stamp.png"/></p>
         {% endif %}
         <h1>{{ project.title }}</h1>
         {% if config.get('ALLOW_ENTITY_EXPORT', False) %}
@@ -20,7 +19,8 @@
                         <i class="material-icons">download</i>
                     </p>
                     <a class="btn button-link-text"
-                       href="{{ url_for('export_dats_entity', entity_name='project', entity_id=project.id) }}">Export Metadata
+                       href="{{ url_for('export_dats_entity', entity_name='project', entity_id=project.id) }}">Export
+                        Metadata
                         as DATS</a>
 
                 </div>
@@ -57,31 +57,33 @@
             {{ macros.end_panel() }}
 
 
-            {{ macros.start_panel("Studies and datasets", "studies_datasets") }}
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <td>Study</td>
-                    <td>Datasets</td>
-                </tr>
-                </thead>
-                <tbody>
-                {% for study in project.studies_entities %}
+            {% if  project.studies_entities or project.dataset_entities %}
+                {{ macros.start_panel("Studies and datasets", "studies_datasets") }}
+                <table class="table table-striped">
+                    <thead>
                     <tr>
-                        <td>
-                            <a href="{{ url_for('entity_details', entity_name='study', entity_id=study.id) }}">{{ study.title }}</a>
-                        </td>
-                        <td>
-                            {% for  dataset in study.datasets_entities %}
-                                <span class="label label-primary"><a class="text-info"
-                                                                     href="{{ url_for('entity_details', entity_name='dataset', entity_id=dataset.id) }}">{{ dataset.title }}</a></span>
-                            {% endfor %}
-                        </td>
+                        <td>Study</td>
+                        <td>Datasets</td>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            {{ macros.end_panel() }}
+                    </thead>
+                    <tbody>
+                    {% for study in project.studies_entities %}
+                        <tr>
+                            <td>
+                                <a href="{{ url_for('entity_details', entity_name='study', entity_id=study.id) }}">{{ study.title }}</a>
+                            </td>
+                            <td>
+                                {% for  dataset in study.datasets_entities %}
+                                    <span class="label label-primary"><a class="text-info"
+                                                                         href="{{ url_for('entity_details', entity_name='dataset', entity_id=dataset.id) }}">{{ dataset.title }}</a></span>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {{ macros.end_panel() }}
+            {% endif %}
         </div>
     </div>
 

@@ -22,6 +22,7 @@
 
 """
 import os
+from collections import defaultdict
 from datetime import datetime
 from typing import Optional
 
@@ -41,6 +42,13 @@ from . import assets, settings
 # if not entities are defined in the settings (ENTITIES parameter), the following entities will be used
 DEFAULT_ENTITIES = {'dataset': 'datacatalog.models.dataset.Dataset', 'study': 'datacatalog.models.study.Study',
                     'project': 'datacatalog.models.project.Project'}
+
+DEFAULT_USE_RESTRICTIONS_ICONS = {
+    "PERMISSION": ('thumb_up', 'text-default', "Permissions"),
+    "OBLIGATION": ('hardware', 'text-default', "Obligations"),
+    "CONSTRAINED_PERMISSION": ('info', 'text-default', "Constrained permissions"),
+    "PROHIBITION": ('block', 'text-default', "Prohibitions"),
+}
 
 ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
 
@@ -138,6 +146,8 @@ def create_application() -> Flask:
         plugin_settings = __import__(f'{plugin}.settings', fromlist=['PluginConfig'])
         plugin_settings_class = getattr(plugin_settings, 'PluginConfig')
         new_app.config.from_object(plugin_settings_class)
+    # make sure main settings have priority over plugin settings
+    new_app.config.from_object(config_object)
     new_app.config['ENV'] = env
     url_prefix = new_app.config.get('URL_PREFIX')
     if url_prefix:
@@ -197,6 +207,19 @@ def always_login():
 def public_route(decorated_function):
     decorated_function.is_public = True
     return decorated_function
+
+
+@app.template_filter('use_restrictions')
+def _jinja2_filter_use_restrictions(form):
+    mapping_icons = app.config.get('USE_RESTRICTIONS_ICONS', DEFAULT_USE_RESTRICTIONS_ICONS)
+    result = defaultdict(list)
+    icons = {}
+    for field in form:
+        if field.render_kw and 'use_restriction_rule' in field.render_kw:
+            result[field.render_kw['use_restriction_rule']].append(field)
+    for restriction_type in result:
+        icons[restriction_type] = mapping_icons.get(restriction_type)
+    return result, icons
 
 
 @app.template_filter('dt')

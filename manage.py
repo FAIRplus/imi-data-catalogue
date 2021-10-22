@@ -137,8 +137,6 @@ def export_entities(connector_name, entity_name):
                               host=app.config.get('REMS_URL'),
                               verify_ssl=app.config.get('REMS_VERIFY_SSL', True)
                               )
-    # connector = RemsConnector(api_username="data-catalogue-service", api_key="oKYsMFAYaGNLHG8AKoEJ",
-    #                           host="https://rems.lcsb.uni.lu")
     if not connector:
         app.logger.error('no known connector found')
         exit(1)
@@ -173,6 +171,9 @@ def get_importer_connector(connector_name, entity_class):
     elif connector_name == 'Dats':
         from datacatalog.connector.dats_connector import DATSConnector
         connector = DATSConnector(app.config['JSON_FILE_PATH'][entity_class.__name__.lower()], entity_class)
+    elif connector_name == 'Daisy':
+        from datacatalog.connector.daisy_connector import DaisyConnector
+        connector = DaisyConnector(app.config['DAISY_API_URLS'][entity_class.__name__.lower()], entity_class)
     elif connector_name == 'Limesurvey':
         from datacatalog.connector.limesurvey_connector import LimesurveyConnector
         connector = LimesurveyConnector(app.config['LIMESURVEY_URL'],

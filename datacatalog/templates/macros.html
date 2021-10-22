@@ -183,56 +183,81 @@
     </div>
 {% endmacro %}
 
-{% macro quick_form(form) -%}
-    <form class="form" method="POST">
-        {% for field in form %}
-            {% if field.type in ('HiddenField', 'CSRFTokenField') %}
-                {{ field() }}
-            {% elif field.type == 'SubmitField' %}
+{% macro render_checkbox(field) %}
+    <div class="flex-checkbox checkbox">
+        <label><input id="{{ field.name }}" name="{{ field.name }}"
+                      type="checkbox"
+                      {% if field.data %}checked="checked"{% endif %}/></label>
+        <label for="{{ field.name }}" class="control-label">
+            {% if field.render_kw['icon'] %}
+                <i class="material-icons {{ field.render_kw['icon'][1] }}">{{ field.render_kw['icon'][0] }}</i>
+            {% endif %}
+            {% if field.render_kw['url'] %}
+                {{ field.label.text }}&nbsp;<a href="{{ field.render_kw['url'] }}"><span
+                    class="glyphicon glyphicon-new-window"/></a>
+            {% elif field.render_kw['tooltip'] %}
+                <span
+                        data-toggle="tooltip" data-placement="top"
+                        title="{{ field.render_kw['tooltip'] }}">
+                                   {{ field.label.text }}
+                                </span>
+            {% else %}
+                {{ field.label.text }}
+            {% endif %}
+        </label>
+    </div>
+{% endmacro %}
+
+{% macro render_quick_form(form, show_submit=True, render_rw_filter=None) -%}
+    {% for field in form if render_rw_filter is none or not field.render_kw or render_rw_filter not in field.render_kw %}
+        {% if field.type in ('HiddenField', 'CSRFTokenField') %}
+            {{ field() }}
+        {% elif field.type == 'SeparatorText' %}
+            <h3>{{ field.label.text }}</h3>
+        {% elif field.type == 'SubmitField' %}
+            {% if show_submit %}
                 <div class="form-group">
                     {{ field(class_="btn btn-default btn-raised btn-primary") }}
                 </div>
-            {% elif field.type == 'BooleanField' %}
-                <div class="row form-group {% if field.flags.required %}required{% endif %}">
-                    <div class="pull-left checkbox">
-                        <label><input id="{{ field.name }}" name="{{ field.name }}"
-                                      type="checkbox"
-                                      {% if field.data %}checked="checked"{% endif %}/></label>
-                        <label for="{{ field.name }}" class="control-label">
-                            {% if field.render_kw['url'] %}
-                                {{ field.label.text }}&nbsp;<a href="{{ field.render_kw['url'] }}"><span
-                                    class="glyphicon glyphicon-new-window"/></a>
-                            {% else %}
-                                {{ field.label.text }}
-                            {% endif %}
-                        </label>
-                    </div>
-                </div>
-            {% elif field.type == 'TextAreaField' %}
-                <div class="form-group {% if field.flags.required %}required{% endif %}">
-                    <label for="{{ field.id }}" class="form-control-label">{{ field.label.text }}</label>
-                    {{ field(class_="form-control ", rows='4',cols='15')|safe }}
-                </div>
-            {% elif field.type == 'FileField' %}
-                <div class="form-group {% if field.flags.required %}required{% endif %} is-fileinput">
-                    <label for="{{ field.id }}" class="form-control-label">{{ field.label.text }}</label>
-                    <input type="text" readonly="" class="form-control" placeholder="Browse...">
-                    <input class="form-control" id="{{ field.id }}" name="{{ field.id }}" type="file">
-                </div>
-            {% elif field.render_kw and 'label' in field.render_kw %}
-                <div class="form-group">
-                    <p>{{ field.label.text }}</p>
-                </div>
-            {% elif field.render_kw and 'header' in field.render_kw %}
-                <h2>{{ field.label.text }}</h2>
-            {% else %}
-                {{ form_group(field) }}
             {% endif %}
-            {% if field.errors %}
-                {% for error in field.errors %}<p class="help-block">*{{ error }}</p>{% endfor %}
-            {% endif %}
-        {% endfor %}
-    </form>
+        {% elif field.type == 'BooleanField' %}
+            <div class="row form-group {% if field.render_kw['compact'] %}form-group-compact{% endif %} {% if field.flags.required %}required{% endif %}">
+                {{ render_checkbox(field) }}
+            </div>
+        {% elif field.type == 'TextAreaField' %}
+            <div class="form-group {% if field.flags.required %}required{% endif %}">
+                <label for="{{ field.id }}" class="form-control-label">{{ field.label.text }}</label>
+                {{ field(class_="form-control ", rows='4',cols='15') }}
+            </div>
+        {% elif field.type == 'FileField' %}
+            <div class="form-group {% if field.flags.required %}required{% endif %} is-fileinput">
+                <label for="{{ field.id }}" class="form-control-label">{{ field.label.text }}</label>
+                <input type="text" readonly="" class="form-control" placeholder="Browse...">
+                <input class="form-control" id="{{ field.id }}" name="{{ field.id }}" type="file">
+            </div>
+        {% elif field.render_kw and 'label' in field.render_kw %}
+            <div class="form-group">
+                <p>{{ field.label.text }}</p>
+            </div>
+        {% elif field.render_kw and 'header' in field.render_kw %}
+            <h2>{{ field.label.text }}</h2>
+        {% else %}
+            {{ form_group(field) }}
+        {% endif %}
+        {% if field.errors %}
+            {% for error in field.errors %}<p class="help-block">*{{ error }}</p>{% endfor %}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro quick_form(form, show_submit=True, include_form_tag=True, render_rw_filter=None) -%}
+    {% if include_form_tag %}
+        <form class="form" method="POST">
+            {{ render_quick_form(form, show_submit, render_rw_filter) }}
+        </form>
+    {% else %}
+        {{ render_quick_form(form, show_submit, render_rw_filter) }}
+    {% endif %}
 {% endmacro %}
 
 

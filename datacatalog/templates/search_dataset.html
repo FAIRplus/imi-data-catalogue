@@ -21,7 +21,7 @@
                                 data-toggle="tooltip" title="download"></span></a>
                     {% endif %}
                 </h3>
-                {% if fair_evaluations_show and dataset.is_fairplus_evaluated %}
+                {% if fair_evaluations_show and dataset.fair_evaluation %}
                     <a href="{{ url_for('entity_details', entity_name=entity_name, entity_id=dataset.id) }}#fairplus-evaluation-fields"
                        class="fairResultsStamp"><img alt='fairplus stamp'
                                                      title="Dataset processed by FAIRplus. See FAIRplus Evaluation tab for details."

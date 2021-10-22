@@ -43,6 +43,7 @@
          "firstName":"Ferran",
          "lastName":"Sanz Carreras",
          "email":"ferran.sanz@upf.edu",
+         "phoneNumber":"+34 93 3160540",
          "roles":[
             {
                "@type":"Annotation",
@@ -61,18 +62,6 @@
                   "@type":"Place",
                   "@context":"https://w3id.org/dats/context/sdo/place_sdo_context.jsonld"
                }
-            }
-         ],
-         "extraProperties": [
-            {
-               "values":[
-                  {
-                     "value":"+34 93 3160540",
-                     "@type":"Annotation",
-                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                  }
-               ],
-               "category":"phoneNumber"
             }
          ]
       }
@@ -155,7 +144,15 @@
             {
                "@type":"Material",
                "@context":"https://w3id.org/dats/context/sdo/material_sdo_context.jsonld",
-               "name":"input material",
+               "name":"animal models",
+                "types": [
+                    {
+                        "value":"animal model",
+                        "valueIRI": "http://purl.obolibrary.org/obo/NCIT_C71164",
+                        "@type":"Annotation",
+                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                    }
+                ],
                "taxonomy":[
                   {
                      "@type":"TaxonomicInformation",
@@ -240,11 +237,18 @@
                "@type":"Dataset",
                "@context":"https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
                "isAbout":[
-                  {
-                     "@type":"Annotation",
-                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                     "value":"Multiple treatments"
-                  }
+                   {
+                       "category": "Experiment category",
+                       "values": [
+                           {
+                               "@type": "Annotation",
+                               "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                               "value": "Multiple treatments"
+                           }
+                       ],
+                       "@type": "CategoryValuesPair",
+                       "@context": "http://w3id.org/dats/context/obo/category_values_pair_obo_context.jsonld"
+                   }
                ],
                "distributions":[
                   {

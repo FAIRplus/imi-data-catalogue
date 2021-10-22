@@ -27,9 +27,30 @@ from urllib.parse import urlparse, urljoin
 
 from flask import redirect, request, Response, url_for
 from flask_wtf import FlaskForm
-from wtforms import HiddenField
+from markupsafe import Markup
+from wtforms import HiddenField, Field
 
 __author__ = 'Valentin Grouès'
+
+class EmptyWidget():
+    def __init__(self, input_type=None):
+        if input_type is not None:
+            self.input_type = input_type
+
+    def __call__(self, field, **kwargs):
+        kwargs.setdefault('id', field.id)
+        kwargs.setdefault('type', self.input_type)
+        return Markup(f'')
+
+
+class SeparatorText(Field):
+    """
+    Text only, not an input
+    """
+    widget = EmptyWidget()
+
+    def __init__(self, label=None, validators=None, **kwargs):
+        super(SeparatorText, self).__init__(label, validators, **kwargs)
 
 
 def is_safe_url(target_url: str) -> bool:

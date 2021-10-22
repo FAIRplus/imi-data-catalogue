@@ -40,8 +40,9 @@ users = {}
 login_manager.login_view = "login"
 
 
-@app.route('/login', methods=['GET', 'POST'])
+
 @public_route
+@app.route('/login', methods=['GET', 'POST'])
 def login() -> Response:
     """
     Login a user
@@ -129,7 +130,3 @@ def logout() -> Response:
 
     raise AuthenticationException("unknown authentication type")
 
-
-def clean_users_dict():
-    for user in users.items():
-        print(user[1])

@@ -20,12 +20,13 @@
    Module containing the SolrEntity class
 
 """
+import json
 import logging
 import uuid
 from datetime import datetime
 from typing import Optional, Any
 
-from .solr_orm_fields import SolrDateTimeField, SolrField, SolrIntField
+from .solr_orm_fields import SolrDateTimeField, SolrField, SolrIntField, SolrJsonField
 from .. import app
 
 logger = logging.getLogger(__name__)
@@ -116,7 +117,7 @@ class SolrEntity:
         """
         entity_dict = self.to_dict()
         entity_type = self.__class__.__name__.lower()
-        entity_dict['id'] = entity_type + "_" + self.id
+        entity_dict['id'] = entity_type + "_" + entity_dict['id']
         entity_dict['type'] = entity_type
         return self._solr_orm.add(entity_dict)
 
@@ -135,10 +136,12 @@ class SolrEntity:
                 key = entity_type + '_' + field.name
             else:
                 key = field.name
+            if isinstance(field, SolrJsonField):
+                attribute_value = json.dumps(attribute_value)
             entity_dict[key] = attribute_value
         if self.id is None or isinstance(self.id, SolrField):
             self.id = str(uuid.uuid1())
-        entity_dict['id'] = self.id
+        entity_dict['id'] = self.id.replace(' ', '_')
         return entity_dict
 
     def to_api_dict(self) -> dict:
@@ -178,3 +181,6 @@ class SolrEntity:
         if 'id' in entity_json:
             new_instance.id = entity_json.get('id')
         return new_instance
+
+    def set_computed_values(self):
+        pass

@@ -37,7 +37,11 @@ def authz():
     user = save_user(userinfo['sub'], userinfo['email'], userinfo['name'])
     login_user(user)
     flash('Logged in successfully', 'success')
-    return redirect(url_for('home'))
+    next = request.args.get('next')
+    if next:
+        return redirect(next)
+    else:
+        return redirect(url_for('home'))
 
 
 @pyoidc_views.route('/pyoidc/logged_out')

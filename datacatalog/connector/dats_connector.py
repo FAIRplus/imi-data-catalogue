@@ -29,6 +29,7 @@ import os
 from typing import Type, Generator
 
 from jsonpath_ng import parse
+from slugify import slugify
 
 from .entities_connector import ImportEntitiesConnector
 from .. import app
@@ -64,25 +65,27 @@ class DATSConnector(ImportEntitiesConnector):
 
         with os.scandir(self.json_file_path) as data_files:
             for data_file in data_files:
-                with open(self.json_file_path + "/" + data_file.name) as json_file:
+                with open(self.json_file_path + "/" + data_file.name, encoding='utf8') as json_file:
                     data = json.load(json_file)
-                    new_entity = self.entity_class()
-
-                    if isinstance(new_entity, Project):
-                        yield self.build_project(data, new_entity)
-                    elif isinstance(new_entity, Dataset):
+                    if self.entity_class == Project:
+                        new_project = Project()
+                        yield self.build_project(data, new_project)
+                    elif self.entity_class == Dataset:
                         if 'projectAssets' in data:
                             for asset in data['projectAssets']:
                                 if asset['@type'] == 'Dataset':
-                                    yield self.build_dataset(asset, new_entity)
+                                    new_dataset = Dataset()
+                                    yield self.build_dataset(asset, new_dataset)
                                 elif asset['@type'] == 'Study' and 'output' in asset:
-                                    for dataset in asset['output']:
-                                        yield self.build_dataset(dataset, new_entity)
-                    elif isinstance(new_entity, Study):
+                                    for dataset_metadata in asset['output']:
+                                        new_dataset = Dataset()
+                                        yield self.build_dataset(dataset_metadata, new_dataset)
+                    elif self.entity_class == Study:
                         if 'projectAssets' in data:
-                            for study in data['projectAssets']:
-                                if study['@type'] == 'Study':
-                                    yield self.build_study(study, new_entity)
+                            for study_metadata in data['projectAssets']:
+                                if study_metadata['@type'] == 'Study':
+                                    new_study = Study()
+                                    yield self.build_study(study_metadata, new_study)
                     else:
                         logger.error("Entity type not recognised")
 
@@ -145,13 +148,8 @@ class DATSConnector(ImportEntitiesConnector):
                     jsonpath_expr = parse('roles[*].value')
                     project.role = ', '.join([match.value for match in jsonpath_expr.find(metadata)])
 
-            if 'extraProperties' in project_lead:
-                for ep in project_lead['extraProperties']:
-                    if ep['category'] == "phoneNumber":
-                        project.business_phone_number = ep['values'][0]['value']
-
-                    elif ep['category'] == "faxNumber":
-                        project.business_fax_number = ep['values'][0]['value']
+            if 'phoneNumber' in project_lead:
+                project.business_phone_number = project_lead['phoneNumber']
 
         if 'startDate' in metadata:
             project.start_date = metadata['startDate']['date']
@@ -163,6 +161,7 @@ class DATSConnector(ImportEntitiesConnector):
             jsonpath_expr = parse('primaryPublications[*].identifier.identifier')
             project.reference_publications = [match.value for match in jsonpath_expr.find(metadata)]
 
+        project.slugs = []
         if 'extraProperties' in metadata:
             for ep in metadata['extraProperties']:
                 if ep['category'] == 'website':
@@ -170,6 +169,9 @@ class DATSConnector(ImportEntitiesConnector):
 
                 elif ep['category'] == 'projectAcronym':
                     project.project_name = ep['values'][0]['value']
+                    project.slugs.append(slugify(project.project_name))
+                elif ep['category'] == 'slugs':
+                    project.slugs.extend([value.get('value') for value in ep.get('values', []) if value.get('value')])
 
         if 'projectAssets' in metadata:
             project.studies = []
@@ -185,7 +187,8 @@ class DATSConnector(ImportEntitiesConnector):
                             if 'extraProperties' in dataset:
                                 for ep in dataset['extraProperties']:
                                     if ep['category'] == 'fairEvaluation':
-                                        project.is_fairplus_evaluated = ep['values'][0]['value']
+                                        if ep['values'][0]['value']:
+                                            project.fair_evaluation = "FAIRplus Evaluation"
 
         return project
 
@@ -253,6 +256,10 @@ class DATSConnector(ImportEntitiesConnector):
         if 'input' in metadata and len(metadata['input']) == 1:
             input = metadata['input'][0]
 
+            if 'types' in input:
+                jsonpath_expr = parse('types[*].value')
+                study.samples_source = [match.value for match in jsonpath_expr.find(input)]
+
             if 'taxonomy' in input:
                 jsonpath_expr = parse('taxonomy[*].name')
                 study.organisms = [match.value for match in jsonpath_expr.find(input)]
@@ -275,7 +282,8 @@ class DATSConnector(ImportEntitiesConnector):
                     if 'extraProperties' in dataset:
                         for ep in dataset['extraProperties']:
                             if ep['category'] == 'fairEvaluation':
-                                study.is_fairplus_evaluated = ep['values'][0]['value']
+                                if ep['values'][0]['value']:
+                                    study.fair_evaluation = "FAIRplus Evaluation"
 
         if 'extraProperties' in metadata:
             for ep in metadata['extraProperties']:
@@ -293,6 +301,8 @@ class DATSConnector(ImportEntitiesConnector):
 
                 elif ep['category'] == 'primaryPurpose':
                     study.primary_purpose = ep['values'][0]['value']
+                elif ep['category'] == 'slugs':
+                    study.slugs = [value.get('value') for value in ep.get('values', []) if value.get('value')]
 
         return study
 
@@ -333,8 +343,18 @@ class DATSConnector(ImportEntitiesConnector):
                 elif entity['@type'] == 'AnatomicalPart':
                     sampleType.append(entity['name'])
 
+                elif entity['@type'] == 'CategoryValuesPair':
+                    if entity['category'] == 'Experiment category':
+                        for val in entity['values']:
+                            if val['value'] not in treatment_category:
+                                treatment_category.append(val['value'])
+                    if entity['category'] == 'Experiment name':
+                        for val in entity['values']:
+                            if val['value'] not in treatment:
+                                treatment.append(val['value'])
+
             dataset.treatment_name = ', '.join(treatment)
-            dataset.treatment_category = ', '.join(treatment_category)
+            dataset.treatment_category = treatment_category
             dataset.disease = disease
             dataset.samples_type = sampleType
 
@@ -365,7 +385,10 @@ class DATSConnector(ImportEntitiesConnector):
                     dataset.fair_score_overall = ep['values'][0]['value']
 
                 elif ep['category'] == 'fairEvaluation':
-                    dataset.is_fairplus_evaluated = ep['values'][0]['value']
+                    if ep['values'][0]['value']:
+                        dataset.fair_evaluation = "FAIRplus Evaluation"
+                elif ep['category'] == 'slugs':
+                    dataset.slugs = [value.get('value') for value in ep.get('values', []) if value.get('value')]
 
         # TO DO deal with cases where there's more than one distribution object
         if 'distributions' in metadata and len(metadata['distributions']) == 1:

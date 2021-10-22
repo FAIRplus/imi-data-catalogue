@@ -106,6 +106,22 @@
         {
             "values": [
                 {
+                    "value": "direct1",
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                },
+                {
+                    "value": "direct2",
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                }
+            ],
+            "@type": "CategoryValuesPair",
+            "category": "slugs"
+        },
+        {
+            "values": [
+                {
                     "value": "https://amr-accelerator.eu/project/ab-direct/",
                     "@type": "Annotation",
                     "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"

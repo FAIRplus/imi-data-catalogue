@@ -16,7 +16,7 @@
                 <h3>
                     <a href="{{ url_for('entity_details', entity_name=entity_name, entity_id=study.id) }}">{{ study.title| truncate(55, True) }}</a>
                 </h3>
-                {% if fair_evaluations_show and study.is_fairplus_evaluated %}
+                {% if fair_evaluations_show and study.fair_evaluation %}
                     <a href="{{ url_for('entity_details', entity_name=entity_name, entity_id=study.id) }}#fairplus-evaluation-fields"
                        class="fairResultsStamp"><img alt='fairplus stamp'
                                                      title="Dataset processed by FAIRplus. See FAIRplus Evaluation tab for details."

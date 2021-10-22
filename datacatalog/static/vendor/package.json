@@ -11,7 +11,6 @@
   "dependencies": {
     "bootstrap": "3.4.1",
     "bootstrap-material-design": "0.5.10",
-    "chart.js": "2.x.x",
     "handlebars": "^4.7.7",
     "jquery": "3.6.0",
     "jquery-ui-dist": "1.12.1",

@@ -22,27 +22,30 @@ import shutil
 import tempfile
 import unittest
 from os import path
+from unittest.mock import MagicMock, patch
+
+from flask import url_for
 
 import datacatalog
-from unittest.mock import MagicMock, patch
-from datacatalog.models.user import User
-from tests.base_test import BaseTest, get_resource_path
-from datacatalog.controllers.web_controllers import *
 import datacatalog.controllers.login_controllers
+from datacatalog import app
 from datacatalog.connector.dats_connector import DATSConnector
 from datacatalog.connector.geostudies_connector import GEOStudiesConnector
 from datacatalog.connector.json_connector import JSONConnector
+from datacatalog.controllers.web_controllers import make_key, csrf_error, authentication_errors, page_not_found, \
+    get_entity
+from datacatalog.exceptions import AuthenticationException
 from datacatalog.importer.entities_importer import EntitiesImporter
 from datacatalog.models.dataset import Dataset
 from datacatalog.models.project import Project
 from datacatalog.models.study import Study
-
+from datacatalog.models.user import User
+from tests.base_test import BaseTest, get_resource_path
 
 __author__ = 'Nirmeen Sallam'
 
 
 class TestWebControllers(BaseTest):
-
     connector = [JSONConnector(os.path.join(get_resource_path('records.json')),
                                Dataset),
                  GEOStudiesConnector(get_resource_path('geo_studies_test'), Study),
@@ -110,17 +113,64 @@ class TestWebControllers(BaseTest):
             search_result = client.get("/search")
 
             self.assertIn('Data Catalog - Home', search_result.data.decode('utf-8'))
-            self.assertIn(f'{self.dataset_length} datasets found', re.sub(r'\s+', " ", search_result.data.decode('utf-8')))
+            self.assertIn(f'{self.dataset_length} datasets found',
+                          re.sub(r'\s+', " ", search_result.data.decode('utf-8')))
+
+    def test_search_query_sort_order(self):
+        with self.client as client:
+            search_result_desc = client.get("/search?query=med&sort_by=&order=desc")
+            search_result_asc = client.get("/search?query=med&sort_by=&order=asc")
+            temp = search_result_desc.data.decode('utf-8')
+            self.assertIn('Data Catalog - Home', search_result_desc.data.decode('utf-8'))
+            self.assertIn('search-results', search_result_desc.data.decode('utf-8'))
+            self.assertIn('search-results', search_result_asc.data.decode('utf-8'))
 
     def test_entity_details(self):
         datasets = Dataset.query.all()
         if len(datasets) > 0:
             with self.client as client:
-                entity = client.get(f'/e/dataset/{datasets[0].id}')
+                entity = client.get(url_for('entity_details', entity_name='dataset', entity_id=datasets[0].id))
             cleanrgex = re.compile('<.*?>')
             entity_cleantext = re.sub(cleanrgex, ' ', entity.data.decode('utf-8'))
             entity_cleantext = re.sub(r'\s+', ' ', entity_cleantext)
             self.assertIn(datasets[0].title, entity_cleantext)
+
+    def test_entity_by_slug(self):
+        datasets = Dataset.query.all()
+        if len(datasets) > 0:
+            dataset = datasets[0]
+            with self.client as client:
+                response = client.get(url_for('entity_by_slug', entity_name='dataset', slug_name='precisesads'),
+                                      follow_redirects=False)
+            self.assertEqual(301, response.status_code)
+            expected_redirected_location = url_for('entity_details', entity_name='dataset', entity_id=dataset.id,
+                                                   _external=True)
+            self.assertEqual(expected_redirected_location, response.location)
+
+    def test_entity_by_slug_projects(self):
+        projects = Project.query.all()
+        project = projects[0]
+        self.assertEqual(3, len(project.slugs))
+        expected_redirected_location = url_for('entity_details', entity_name='project', entity_id=project.id,
+                                               _external=True)
+        with self.client as client:
+            for slug in project.slugs:
+                response = client.get(url_for('entity_by_slug', entity_name='project', slug_name=slug),
+                                      follow_redirects=False)
+                self.assertEqual(301, response.status_code)
+                self.assertEqual(expected_redirected_location, response.location)
+
+    def test_entity_by_slug_not_found(self):
+        with self.client as client:
+            response = client.get(url_for('entity_by_slug', entity_name='dataset', slug_name='not_found'),
+                                  follow_redirects=False)
+        self.assertEqual(404, response.status_code)
+
+    def test_entity_by_slug_invalid_entity_name(self):
+        with self.client as client:
+            response = client.get(url_for('entity_by_slug', entity_name='test', slug_name='not_found'),
+                                  follow_redirects=False)
+        self.assertEqual(404, response.status_code)
 
     @patch('flask_login.utils._get_user')
     def test_entity_details_authenticated_user(self, current_user):
@@ -165,7 +215,7 @@ class TestWebControllers(BaseTest):
         datasets = Dataset.query.all()
         if len(datasets) > 0:
             with self.client as client:
-                request_access_response = client.get(url_for('request_access',entity_name="dataset",
+                request_access_response = client.get(url_for('request_access', entity_name="dataset",
                                                              entity_id=datasets[0].id))
                 self.assertIn(url_for('login'), request_access_response.location)
 
@@ -178,8 +228,8 @@ class TestWebControllers(BaseTest):
 
         datasets = Dataset.query.all()
         if len(datasets) > 0:
-            request_access_response = client.get(url_for('request_access',entity_name="dataset",
-                                                             entity_id=datasets[0].id))
+            request_access_response = client.get(url_for('request_access', entity_name="dataset",
+                                                         entity_id=datasets[0].id))
             cleanregex = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
             request_access_response = re.sub(cleanregex, ' ', request_access_response.data.decode('utf-8'))
             request_access_response = re.sub(r'\s+', ' ', request_access_response)
@@ -193,9 +243,10 @@ class TestWebControllers(BaseTest):
             with self.client as client:
                 datacatalog.get_access_handler = MagicMock()
                 datacatalog.get_access_handler.return_value = {}
-                request_access_response = client.get(url_for('request_access',entity_name="dataset",
+                request_access_response = client.get(url_for('request_access', entity_name="dataset",
                                                              entity_id=datasets[0].id))
-                self.assertIn('Error 400 - No compatible request handlers for this entity', request_access_response.data.decode('utf-8'))
+                self.assertIn('Error 400 - No compatible request handlers for this entity',
+                              request_access_response.data.decode('utf-8'))
 
     @unittest.skip('rems request access not used in production')
     @patch('flask_login.utils._get_user')
@@ -206,8 +257,8 @@ class TestWebControllers(BaseTest):
 
         datasets = Dataset.query.all()
         if len(datasets) > 0:
-            request_access_response = client.post(url_for('request_access',entity_name="dataset",
-                                                             entity_id=datasets[0].id))
+            request_access_response = client.post(url_for('request_access', entity_name="dataset",
+                                                          entity_id=datasets[0].id))
             cleanregex = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
             request_access_response = re.sub(cleanregex, ' ', request_access_response.data.decode('utf-8'))
             request_access_response = re.sub(r'\s+', ' ', request_access_response)
@@ -223,9 +274,9 @@ class TestWebControllers(BaseTest):
 
         datasets = Dataset.query.all()
         if len(datasets) > 0:
-            request_access_response = client.post(url_for('request_access',entity_name="dataset",
-                                                             entity_id=datasets[0].id),
-                                                      data={"fld3":"test","license_2":"on"})
+            request_access_response = client.post(url_for('request_access', entity_name="dataset",
+                                                          entity_id=datasets[0].id),
+                                                  data={"fld3": "test", "license_2": "on"})
             self.assertRedirects(request_access_response, url_for('search'))
 
     def test_custom_static(self):

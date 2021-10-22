@@ -25,6 +25,7 @@ import logging
 
 from .. import app
 from ..solr.solr_orm import SolrQuery
+from ..solr.solr_orm_fields import SolrField
 
 logger = logging.getLogger(__name__)
 
@@ -41,3 +42,7 @@ class DatasetQuery(SolrQuery):
     BOOST = app.config.get('SOLR_BOOST', 'dataset_title^5 dataset_text_^1')
     # default sort option
     DEFAULT_SORT = app.config.get('SOLR_DEFAULT_SORT', 'dataset_created')
+
+
+class EntityWithSlugs:
+    slugs = SolrField("slugs", multivalued=True)

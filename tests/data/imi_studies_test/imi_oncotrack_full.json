@@ -1,33 +1,33 @@
 {
-   "title":"OncoTrack",
-   "description":"Methods for systematic next generation oncology biomarker development",
-   "@type":"Project",
-   "@context":[
-      "http://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
-      "http://w3id.org/dats/context/obo/dataset_obo_context.jsonld"
-   ],
-   "types":[
-      {
-         "@type":"Annotation",
-         "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-         "value":"IMI project"
-      }
-   ],
-   "identifier":{
-      "identifier":"dc9c45f2-147a-11eb-b51f-8c8590c45a21",
-      "@type":"Identifier",
-      "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
-   },
-   "startDate": {
+    "title": "OncoTrack",
+    "description": "Methods for systematic next generation oncology biomarker development",
+    "@type": "Project",
+    "@context": [
+        "http://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+        "http://w3id.org/dats/context/obo/dataset_obo_context.jsonld"
+    ],
+    "types": [
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "IMI project"
+        }
+    ],
+    "identifier": {
+        "identifier": "dc9c45f2-147a-11eb-b51f-8c8590c45a21",
+        "@type": "Identifier",
+        "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+    },
+    "startDate": {
         "@type": "Date",
         "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
         "date": "2011-01-01T00:00:00.00Z",
         "type": {
             "value": "start date",
             "valueIRI": "http://semanticscience.org/resource/SIO_000031"
-      }
-   },
-   "endDate": {
+        }
+    },
+    "endDate": {
         "@type": "Date",
         "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
         "date": "2016-12-31",
@@ -35,740 +35,742 @@
             "value": "end date",
             "valueIRI": "http://semanticscience.org/resource/SIO_000036"
         }
-   },
-   "projectLeads":[
-      {
-         "@type":"Person",
-         "@context":"https://w3id.org/dats/context/sdo/person_sdo_context.jsonld",
-         "firstName":"David",
-         "lastName":"Henderson",
-         "email":"david.henderson@bayer.com",
-         "roles":[
-            {
-               "@type":"Annotation",
-               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-               "value":"Primary Study Contact",
-               "valueIRI":"http://purl.obolibrary.org/obo/NCIT_C127533"
-            }
-         ],
-         "affiliations":[
-            {
-               "@type":"Organization",
-               "@context":"https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
-               "name":"Bayer AG",
-               "location":{
-                  "postalAddress":"Bayer AG,  R&D Policy & Networking, 13342 Berlin, Germany",
-                  "@type":"Place",
-                  "@context":"https://w3id.org/dats/context/sdo/place_sdo_context.jsonld"
-               }
-            }
-         ],
-         "extraProperties": [
-            {
-               "values":[
-                  {
-                     "value":"00493040008769",
-                     "@type":"Annotation",
-                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                  }
-               ],
-               "category":"phoneNumber"
-            }
-         ]
-      }
-   ],
-   "keywords":[
-      {
-         "@type":"Annotation",
-         "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-         "value":"IMI project"
-      },
-      {
-         "@type":"Annotation",
-         "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-         "value":"Translational Medicine"
-      },
-      {
-         "@type": "Annotation",
-         "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-         "value": "Cancer"
-      },
-      {
-         "@type": "Annotation",
-         "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-         "value": "Tools for predicting/monitoring safety"
-      }
-   ],
-   "extraProperties":[
-      {
-         "values":[
-            {
-               "value":"IMI OncoTrack",
-               "@type":"Annotation",
-               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-            }
-         ],
-         "@type":"CategoryValuesPair",
-         "category":"projectAcronym"
-      },
-      {
-         "values":[
-            {
-               "value":"http://www.oncotrack.eu",
-               "@type":"Annotation",
-               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-            }
-         ],
-         "category":"website"
-      }
-   ],
-   "fundedBy":[
-      {
-         "name":"IMI1 - Call 2",
-         "identifier":{
-               "identifier": "115234",
-               "@type":"Identifier",
-               "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
-         },
-         "@type":"Grant",
-         "@context":"https://w3id.org/dats/context/sdo/grant_sdo_context.jsonld"
-      }
-   ],
-   "projectAssets": [
-      {
-         "name":"OncoTrack",
-         "identifier":{
-            "identifier":"dc9c42f0-147a-11eb-b51f-8c8590c45a21",
-            "@type":"Identifier",
-            "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
-         },
-         "@type":"Study",
-         "@context":"https://w3id.org/dats/context/sdo/study_sdo_context.jsonld",
-         "description":"OncoTrack attempts to address the core problems of drug-based cancer therapies: the low response rate of patients to their therapies, as well as its inevitable consequence, the low approval rates of oncology drugs. Only about 10% of cancer drug candidates entering clinical development are granted marketing authorization. Our program is based on two seminal developments: significant progress in our ability to analyze the molecular characteristics of individual tumors and patients (predominantly, but not exclusively, due to advancements in DNA sequencing techniques) and through the development of sophisticated computational models, which can convert this abundance of data into predictions. To address this challenge, the OncoTrack consortium recruited over 300 colon cancer patients (stages I-IV) and developed a pre-clinical platform generating a compendium of drug sensitivity data totalling > 4,000 assays testing 16 clinical drugs on patient-derived in vivo and in vitro models. This large biobank of tumors, organoid culturess and xenografts, with extensive omics data comparing donor tumors and derived models, provides a resource for advancing our understanding of colon cancer.",
-         "types":[
-            {
-               "value":"observational",
-               "@type":"Annotation",
-               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+    },
+    "projectLeads": [
+        {
+            "@type": "Person",
+            "@context": "https://w3id.org/dats/context/sdo/person_sdo_context.jsonld",
+            "firstName": "David",
+            "lastName": "Henderson",
+            "email": "david.henderson@bayer.com",
+            "roles": [
+                {
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                    "value": "Primary Study Contact",
+                    "valueIRI": "http://purl.obolibrary.org/obo/NCIT_C127533"
+                }
+            ],
+            "affiliations": [
+                {
+                    "@type": "Organization",
+                    "@context": "https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                    "name": "Bayer AG",
+                    "location": {
+                        "postalAddress": "Bayer AG,  R&D Policy & Networking, 13342 Berlin, Germany",
+                        "@type": "Place",
+                        "@context": "https://w3id.org/dats/context/sdo/place_sdo_context.jsonld"
+                    }
+                }
+            ],
+            "extraProperties": [
+                {
+                    "values": [
+                        {
+                            "value": "00493040008769",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                    ],
+                    "category": "phoneNumber"
+                }
+            ]
+        }
+    ],
+    "keywords": [
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "IMI project"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Translational Medicine"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Cancer"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Tools for predicting/monitoring safety"
+        }
+    ],
+    "extraProperties": [
+        {
+            "values": [
+                {
+                    "value": "IMI OncoTrack",
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                }
+            ],
+            "@type": "CategoryValuesPair",
+            "category": "projectAcronym"
+        },
+        {
+            "values": [
+                {
+                    "value": "onco1",
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                },
+                {
+                    "value": "onco2",
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                }
+            ],
+            "@type": "CategoryValuesPair",
+            "category": "slugs"
+        },
+        {
+            "values": [
+                {
+                    "value": "http://www.oncotrack.eu",
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                }
+            ],
+            "category": "website"
+        }
+    ],
+    "fundedBy": [
+        {
+            "name": "IMI1 - Call 2",
+            "identifier": {
+                "identifier": "115234",
+                "@type": "Identifier",
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
             },
-            {
-               "value":"xenografts",
-               "@type":"Annotation",
-               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+            "@type": "Grant",
+            "@context": "https://w3id.org/dats/context/sdo/grant_sdo_context.jsonld"
+        }
+    ],
+    "projectAssets": [
+        {
+            "name": "OncoTrack",
+            "identifier": {
+                "identifier": "dc9c42f0-147a-11eb-b51f-8c8590c45a21",
+                "@type": "Identifier",
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
             },
-             {
-               "value":"3D cell cultures",
-               "@type":"Annotation",
-               "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-            }
-         ],
-         "studyGroups":[
-            {
-               "@type":"StudyGroup",
-               "@context":"https://w3id.org/dats/context/sdo/studygroup_sdo_context.jsonld",
-               "name":"No control cohort. (1) Patients with primary diagnosis of colon cancer  (2) Patients with metastatic colon cancer (3) Validation cohort of patients receiving therapy with 5FU. (1) 261 primary tumor (2) 61 metastatic tumor.",
-               "size":322,
-               "extraProperties": [
-                  {
-                     "values":[
+            "@type": "Study",
+            "@context": "https://w3id.org/dats/context/sdo/study_sdo_context.jsonld",
+            "description": "OncoTrack attempts to address the core problems of drug-based cancer therapies: the low response rate of patients to their therapies, as well as its inevitable consequence, the low approval rates of oncology drugs. Only about 10% of cancer drug candidates entering clinical development are granted marketing authorization. Our program is based on two seminal developments: significant progress in our ability to analyze the molecular characteristics of individual tumors and patients (predominantly, but not exclusively, due to advancements in DNA sequencing techniques) and through the development of sophisticated computational models, which can convert this abundance of data into predictions. To address this challenge, the OncoTrack consortium recruited over 300 colon cancer patients (stages I-IV) and developed a pre-clinical platform generating a compendium of drug sensitivity data totalling > 4,000 assays testing 16 clinical drugs on patient-derived in vivo and in vitro models. This large biobank of tumors, organoid culturess and xenografts, with extensive omics data comparing donor tumors and derived models, provides a resource for advancing our understanding of colon cancer.",
+            "types": [
+                {
+                    "value": "observational",
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                },
+                {
+                    "value": "xenografts",
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                },
+                {
+                    "value": "3D cell cultures",
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                }
+            ],
+            "studyGroups": [
+                {
+                    "@type": "StudyGroup",
+                    "@context": "https://w3id.org/dats/context/sdo/studygroup_sdo_context.jsonld",
+                    "name": "No control cohort. (1) Patients with primary diagnosis of colon cancer  (2) Patients with metastatic colon cancer (3) Validation cohort of patients receiving therapy with 5FU. (1) 261 primary tumor (2) 61 metastatic tumor.",
+                    "size": 322,
+                    "extraProperties": [
                         {
-                           "value":"18",
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                        }
-                     ],
-                     "@type":"CategoryValuesPair",
-                     "category":"Age range lower limit"
-                  },
-                  {
-                     "values":[
-                        {
-                           "value":"93",
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                        }
-                     ],
-                     "@type":"CategoryValuesPair",
-                     "category":"Age range upper limit"
-                  },
-                  {
-                     "values":[
-                        {
-                           "value":"year",
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                        }
-                     ],
-                     "@type":"CategoryValuesPair",
-                     "category":"Age unit"
-                  }
-               ]
-            }
-         ],
-         "input":[
-            {
-               "@type":"Material",
-               "@context":"https://w3id.org/dats/context/sdo/material_sdo_context.jsonld",
-               "name":"input material",
-               "taxonomy":[
-                  {
-                     "@type":"TaxonomicInformation",
-                     "@context":"https://w3id.org/dats/context/sdo/taxonomic_info_sdo_context.jsonld",
-                     "name":"Homo sapiens",
-                     "identifier":{
-                        "@type":"Identifier",
-                        "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
-                        "identifier":"http://purl.obolibrary.org/obo/NCBITaxon_9606",
-                        "identifierSource":"NCBI Taxon ID"
-                     }
-                  }
-               ],
-               "bearerOfDisease":[
-                  {
-                     "name":"carcinoma of the colon",
-                     "@type":"Disease",
-                     "@context":"https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
-                  }
-               ],
-               "derivesFrom":[
-                  {
-                     "name":"Healthy Surrounding Tissue (near tumor)",
-                     "@type":"AnatomicalPart",
-                     "@context":"https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
-                  },
-                  {
-                     "name":"Blood",
-                     "@type":"AnatomicalPart",
-                     "@context":"https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
-                  },
-                  {
-                     "name":"Serum",
-                     "@type":"AnatomicalPart",
-                     "@context":"https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
-                  },
-                  {
-                     "name":"Plasma",
-                     "@type":"AnatomicalPart",
-                     "@context":"https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
-                  },
-                  {
-                     "name":"Tumor Tissue",
-                     "@type":"AnatomicalPart",
-                     "@context":"https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
-                  }
-               ]
-            }
-         ],
-         "extraProperties":[
-            {
-               "values":[
-                  {
-                     "value":"true",
-                     "@type":"Annotation",
-                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                  }
-               ],
-               "@type":"CategoryValuesPair",
-               "category":"informedConsent"
-            },
-            {
-               "values":[
-                  {
-                     "value":"Biomarker discovery and validation",
-                     "@type":"Annotation",
-                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                  }
-               ],
-               "@type":"CategoryValuesPair",
-               "category":"primaryPurpose"
-            },
-            {
-               "values":[
-                  {
-                     "value":"true",
-                     "@type":"Annotation",
-                     "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                  }
-               ],
-               "@type":"CategoryValuesPair",
-               "category":"multiCenter"
-            }
-         ],
-         "output": [
-            {
-               "title":"OncoTrack",
-               "identifier":{
-                  "identifier":"64f33e4f-0d6d-4062-86c5-9c3db4e3a99a",
-                  "@type":"Identifier",
-                  "@context":"https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
-               },
-               "@type":"Dataset",
-               "@context":"https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
-               "types":[
-                  {
-                     "method":{
-                        "@type":"Annotation",
-                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                        "value":"whole genome sequencing"
-                     },
-                     "@type":"DataType",
-                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
-                  },
-                  {
-                     "method":{
-                        "@type":"Annotation",
-                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                        "value":"exome sequencing"
-                     },
-                     "@type":"DataType",
-                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
-                  },
-                  {
-                     "method":{
-                        "@type":"Annotation",
-                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                        "value":"transcriptome array"
-                     },
-                     "@type":"DataType",
-                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
-                  },
-                  {
-                     "method":{
-                        "@type":"Annotation",
-                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                        "value":"methylation array"
-                     },
-                     "@type":"DataType",
-                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
-                  },
-                  {
-                     "method":{
-                        "@type":"Annotation",
-                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                        "value":"microRNA array"
-                     },
-                     "@type":"DataType",
-                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
-                  },
-                  {
-                     "method":{
-                        "@type":"Annotation",
-                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                        "value":"RNASeq"
-                     },
-                     "@type":"DataType",
-                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
-                  },
-                  {
-                     "method":{
-                        "@type":"Annotation",
-                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                        "value":"proteomics"
-                     },
-                     "@type":"DataType",
-                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
-                  },
-                  {
-                     "method":{
-                        "@type":"Annotation",
-                        "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                        "value":"deep-Sequencing"
-                     },
-                     "@type":"DataType",
-                     "@context":"https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
-                  }
-               ],
-               "isAbout":[
-                  {
-                     "@type":"MolecularEntity",
-                     "@context":"https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
-                     "name":"Oxaliplatin",
-                     "identifier":{
-
-                     },
-                     "roles":[
-                        {
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                           "value":"antineoplastic agent",
-                           "valueIRI":"http://purl.obolibrary.org/obo/CHEBI_35610"
-                        }
-                     ]
-                  },
-                  {
-                     "@type":"MolecularEntity",
-                     "@context":"https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
-                     "name":"Irinotecan",
-                     "identifier":{
-
-                     },
-                     "roles":[
-                        {
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                           "value":"antineoplastic agent",
-                           "valueIRI":"http://purl.obolibrary.org/obo/CHEBI_35610"
-                        }
-                     ]
-                  },
-                  {
-                     "@type":"MolecularEntity",
-                     "@context":"https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
-                     "name":"5-FU",
-                     "identifier":{
-
-                     },
-                     "roles":[
-                        {
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                           "value":"antineoplastic agent",
-                           "valueIRI":"http://purl.obolibrary.org/obo/CHEBI_35610"
-                        }
-                     ]
-                  },
-                  {
-                     "@type":"MolecularEntity",
-                     "@context":"https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
-                     "name":"Cetuximab",
-                     "identifier":{
-
-                     },
-                     "roles":[
-                        {
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                           "value":"antineoplastic agent",
-                           "valueIRI":"http://purl.obolibrary.org/obo/CHEBI_35610"
-                        }
-                     ]
-                  },
-                  {
-                     "@type":"MolecularEntity",
-                     "@context":"https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
-                     "name":"AZD8931",
-                     "identifier":{
-
-                     },
-                     "roles":[
-                        {
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                           "value":"antineoplastic agent",
-                           "valueIRI":"http://purl.obolibrary.org/obo/CHEBI_35610"
-                        }
-                     ]
-                  },
-                  {
-                     "@type":"MolecularEntity",
-                     "@context":"https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
-                     "name":"AZD6244",
-                     "identifier":{
-
-                     },
-                     "roles":[
-                        {
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                           "value":"antineoplastic agent",
-                           "valueIRI":"http://purl.obolibrary.org/obo/CHEBI_35610"
-                        }
-                     ]
-                  },
-                  {
-                     "@type":"MolecularEntity",
-                     "@context":"https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
-                     "name":"Afatinib",
-                     "identifier":{
-
-                     },
-                     "roles":[
-                        {
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                           "value":"antineoplastic agent",
-                           "valueIRI":"http://purl.obolibrary.org/obo/CHEBI_35610"
-                        }
-                     ]
-                  },
-                  {
-                     "@type":"MolecularEntity",
-                     "@context":"https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
-                     "name":"Avastin",
-                     "identifier":{
-
-                     },
-                     "roles":[
-                        {
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                           "value":"antineoplastic agent",
-                           "valueIRI":"http://purl.obolibrary.org/obo/CHEBI_35610"
-                        }
-                     ]
-                  },
-                  {
-                     "@type":"MolecularEntity",
-                     "@context":"https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
-                     "name":"Regorafenib",
-                     "identifier":{
-
-                     },
-                     "roles":[
-                        {
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                           "value":"antineoplastic agent",
-                           "valueIRI":"http://purl.obolibrary.org/obo/CHEBI_35610"
-                        }
-                     ]
-                  },
-                  {
-                     "@type":"MolecularEntity",
-                     "@context":"https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
-                     "name":"Nintedanib",
-                     "identifier":{
-
-                     },
-                     "roles":[
-                        {
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                           "value":"antineoplastic agent",
-                           "valueIRI":"http://purl.obolibrary.org/obo/CHEBI_35610"
-                        }
-                     ]
-                  },
-                  {
-                     "@type":"MolecularEntity",
-                     "@context":"https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
-                     "name":"mTOR FR",
-                     "identifier":{
-
-                     },
-                     "roles":[
-                        {
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                           "value":"antineoplastic agent",
-                           "valueIRI":"http://purl.obolibrary.org/obo/CHEBI_35610"
-                        }
-                     ]
-                  },
-                  {
-                     "@type":"MolecularEntity",
-                     "@context":"https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
-                     "name":"BI836842 (IGF1/2 mAb)",
-                     "identifier":{
-
-                     },
-                     "roles":[
-                        {
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                           "value":"antineoplastic agent",
-                           "valueIRI":"http://purl.obolibrary.org/obo/CHEBI_35610"
-                        }
-                     ]
-                  },
-                  {
-                     "@type":"MolecularEntity",
-                     "@context":"https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
-                     "name":"AZ1 (Tank-I)",
-                     "identifier":{
-
-                     },
-                     "roles":[
-                        {
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                           "value":"antineoplastic agent",
-                           "valueIRI":"http://purl.obolibrary.org/obo/CHEBI_35610"
-                        }
-                     ]
-                  },
-                  {
-                     "@type":"MolecularEntity",
-                     "@context":"https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
-                     "name":"Volitinib",
-                     "identifier":{
-
-                     },
-                     "roles":[
-                        {
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                           "value":"antineoplastic agent",
-                           "valueIRI":"http://purl.obolibrary.org/obo/CHEBI_35610"
-                        }
-                     ]
-                  },
-                  {
-                     "name":"carcinoma of the colon",
-                     "@type":"Disease",
-                     "@context":"https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
-                  }
-               ],
-               "extraProperties":[
-                  {
-                     "category":"number of samples",
-                     "values":[
-                        {
-                           "value":">6000",
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                        }
-                     ],
-                     "@type":"CategoryValuesPair",
-                     "@context":"http://w3id.org/dats/context/obo/category_values_pair_obo_context.jsonld"
-                  },
-                  {
-                     "values":[
-                        {
-                           "value":"https://fairplus.github.io/fairification-results/2019-12-17-OncoTrack-post-assessment/",
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                        }
-                     ],
-                     "@type":"CategoryValuesPair",
-                     "category":"fairAssessmentLink"
-                  },
-                  {
-                     "values":[
-                        {
-                           "value":"Post-FAIRification assessment",
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                        }
-                     ],
-                     "@type":"CategoryValuesPair",
-                     "category":"fairAssessmentDetails"
-                  },
-                  {
-                     "values":[
-                        {
-                           "value":13,
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                        }
-                     ],
-                     "@type":"CategoryValuesPair",
-                     "category":"fairScoreRecommended"
-                  },
-                  {
-                     "values":[
-                        {
-                           "value":46,
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                        }
-                     ],
-                     "@type":"CategoryValuesPair",
-                     "category":"fairScoreMandatory"
-                  },
-                  {
-                     "values":[
-                        {
-                           "value":35,
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                        }
-                     ],
-                     "@type":"CategoryValuesPair",
-                     "category":"fairScoreOverall"
-                  },
-                  {
-                     "values":[
-                        {
-                           "value":"https://docs.google.com/spreadsheets/d/1mkjElFrTBPBH0QViODexNur0xNGhJqau0zkL4w8RRAw/edit#gid=1558529297",
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                        }
-                     ],
-                     "@type":"CategoryValuesPair",
-                     "category":"fairIndicatorsHref"
-                  },
-                  {
-                     "values":[
-                        {
-                           "value":"RDA indicator v0.03",
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                        }
-                     ],
-                     "@type":"CategoryValuesPair",
-                     "category":"fairIndicators"
-                  },
-                  {
-                     "values":[
-                        {
-                           "value":"true",
-                           "@type":"Annotation",
-                           "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
-                        }
-                     ],
-                     "@type":"CategoryValuesPair",
-                     "category":"fairEvaluation"
-                  }
-               ],
-               "distributions":[
-                  {
-                     "@type":"DatasetDistribution",
-                     "@context":"https://w3id.org/dats/context/sdo/dataset_distribution_sdo_context.jsonld",
-                     "access":{
-                        "accessURL":"https://owncloud.lcsb.uni.lu/apps/files/?dir=/ONCOTRACK/sample_metadata_ETL/metadata_BSD_JSON&fileid=14712690",
-                        "landingPage":"OncoTrack public sample metadata, FAIRifed v1",
-                        "@type":"Access",
-                        "@context":"https://w3id.org/dats/context/sdo/access_sdo_context.jsonld"
-                     },
-                     "dates":[
-                        {
-                           "date":"2017-01-05T00:00:00Z",
-                           "@type":"Date",
-                           "@context":"https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
-                           "type":{
-                              "@type":"Annotation",
-                              "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                              "value":"creation date",
-                              "valueIRI":""
-                           }
+                            "values": [
+                                {
+                                    "value": "18",
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                }
+                            ],
+                            "@type": "CategoryValuesPair",
+                            "category": "Age range lower limit"
                         },
                         {
-                           "date":"2017-09-05T11:53:13.870Z",
-                           "@type":"Date",
-                           "@context":"https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
-                           "type":{
-                              "@type":"Annotation",
-                              "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                              "value":"last update date",
-                              "valueIRI":""
-                           }
-                        }
-                     ],
-                     "conformsTo":[
+                            "values": [
+                                {
+                                    "value": "93",
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                }
+                            ],
+                            "@type": "CategoryValuesPair",
+                            "category": "Age range upper limit"
+                        },
                         {
-                           "name":"CDISC",
-                           "type":{
-                              "@type":"Annotation",
-                              "@context":"https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
-                              "value":"clinical data standard"
-                           },
-                           "@type":"DataStandard",
-                           "@context":"https://w3id.org/dats/context/sdo/data_standard_sdo_context.jsonld"
+                            "values": [
+                                {
+                                    "value": "year",
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                }
+                            ],
+                            "@type": "CategoryValuesPair",
+                            "category": "Age unit"
                         }
-                     ],
-                     "version":"V1.0"
-                  }
-               ],
-               "creators":[
-                  {
-                     "@type":"Organization",
-                     "@context":"https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
-                     "name":"ONCOTRACK consortium"
-                  }
-               ]
-            }
-         ]
-      }
-   ]
+                    ]
+                }
+            ],
+            "input": [
+                {
+                    "@type": "Material",
+                    "@context": "https://w3id.org/dats/context/sdo/material_sdo_context.jsonld",
+                    "name": "input material",
+                    "taxonomy": [
+                        {
+                            "@type": "TaxonomicInformation",
+                            "@context": "https://w3id.org/dats/context/sdo/taxonomic_info_sdo_context.jsonld",
+                            "name": "Homo sapiens",
+                            "identifier": {
+                                "@type": "Identifier",
+                                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                                "identifier": "http://purl.obolibrary.org/obo/NCBITaxon_9606",
+                                "identifierSource": "NCBI Taxon ID"
+                            }
+                        }
+                    ],
+                    "bearerOfDisease": [
+                        {
+                            "name": "carcinoma of the colon",
+                            "@type": "Disease",
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                        }
+                    ],
+                    "derivesFrom": [
+                        {
+                            "name": "Healthy Surrounding Tissue (near tumor)",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "Blood",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "Serum",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "Plasma",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "Tumor Tissue",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        }
+                    ]
+                }
+            ],
+            "extraProperties": [
+                {
+                    "values": [
+                        {
+                            "value": "true",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                    ],
+                    "@type": "CategoryValuesPair",
+                    "category": "informedConsent"
+                },
+                {
+                    "values": [
+                        {
+                            "value": "Biomarker discovery and validation",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                    ],
+                    "@type": "CategoryValuesPair",
+                    "category": "primaryPurpose"
+                },
+                {
+                    "values": [
+                        {
+                            "value": "true",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                    ],
+                    "@type": "CategoryValuesPair",
+                    "category": "multiCenter"
+                }
+            ],
+            "output": [
+                {
+                    "title": "OncoTrack",
+                    "identifier": {
+                        "identifier": "64f33e4f-0d6d-4062-86c5-9c3db4e3a99a",
+                        "@type": "Identifier",
+                        "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+                    },
+                    "@type": "Dataset",
+                    "@context": "https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+                    "types": [
+                        {
+                            "method": {
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                "value": "whole genome sequencing"
+                            },
+                            "@type": "DataType",
+                            "@context": "https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                        },
+                        {
+                            "method": {
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                "value": "exome sequencing"
+                            },
+                            "@type": "DataType",
+                            "@context": "https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                        },
+                        {
+                            "method": {
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                "value": "transcriptome array"
+                            },
+                            "@type": "DataType",
+                            "@context": "https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                        },
+                        {
+                            "method": {
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                "value": "methylation array"
+                            },
+                            "@type": "DataType",
+                            "@context": "https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                        },
+                        {
+                            "method": {
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                "value": "microRNA array"
+                            },
+                            "@type": "DataType",
+                            "@context": "https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                        },
+                        {
+                            "method": {
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                "value": "RNASeq"
+                            },
+                            "@type": "DataType",
+                            "@context": "https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                        },
+                        {
+                            "method": {
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                "value": "proteomics"
+                            },
+                            "@type": "DataType",
+                            "@context": "https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                        },
+                        {
+                            "method": {
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                "value": "deep-Sequencing"
+                            },
+                            "@type": "DataType",
+                            "@context": "https://w3id.org/dats/context/sdo/data_type_sdo_context.jsonld"
+                        }
+                    ],
+                    "isAbout": [
+                        {
+                            "@type": "MolecularEntity",
+                            "@context": "https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
+                            "name": "Oxaliplatin",
+                            "identifier": {
+                            },
+                            "roles": [
+                                {
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                    "value": "antineoplastic agent",
+                                    "valueIRI": "http://purl.obolibrary.org/obo/CHEBI_35610"
+                                }
+                            ]
+                        },
+                        {
+                            "@type": "MolecularEntity",
+                            "@context": "https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
+                            "name": "Irinotecan",
+                            "identifier": {
+                            },
+                            "roles": [
+                                {
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                    "value": "antineoplastic agent",
+                                    "valueIRI": "http://purl.obolibrary.org/obo/CHEBI_35610"
+                                }
+                            ]
+                        },
+                        {
+                            "@type": "MolecularEntity",
+                            "@context": "https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
+                            "name": "5-FU",
+                            "identifier": {
+                            },
+                            "roles": [
+                                {
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                    "value": "antineoplastic agent",
+                                    "valueIRI": "http://purl.obolibrary.org/obo/CHEBI_35610"
+                                }
+                            ]
+                        },
+                        {
+                            "@type": "MolecularEntity",
+                            "@context": "https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
+                            "name": "Cetuximab",
+                            "identifier": {
+                            },
+                            "roles": [
+                                {
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                    "value": "antineoplastic agent",
+                                    "valueIRI": "http://purl.obolibrary.org/obo/CHEBI_35610"
+                                }
+                            ]
+                        },
+                        {
+                            "@type": "MolecularEntity",
+                            "@context": "https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
+                            "name": "AZD8931",
+                            "identifier": {
+                            },
+                            "roles": [
+                                {
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                    "value": "antineoplastic agent",
+                                    "valueIRI": "http://purl.obolibrary.org/obo/CHEBI_35610"
+                                }
+                            ]
+                        },
+                        {
+                            "@type": "MolecularEntity",
+                            "@context": "https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
+                            "name": "AZD6244",
+                            "identifier": {
+                            },
+                            "roles": [
+                                {
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                    "value": "antineoplastic agent",
+                                    "valueIRI": "http://purl.obolibrary.org/obo/CHEBI_35610"
+                                }
+                            ]
+                        },
+                        {
+                            "@type": "MolecularEntity",
+                            "@context": "https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
+                            "name": "Afatinib",
+                            "identifier": {
+                            },
+                            "roles": [
+                                {
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                    "value": "antineoplastic agent",
+                                    "valueIRI": "http://purl.obolibrary.org/obo/CHEBI_35610"
+                                }
+                            ]
+                        },
+                        {
+                            "@type": "MolecularEntity",
+                            "@context": "https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
+                            "name": "Avastin",
+                            "identifier": {
+                            },
+                            "roles": [
+                                {
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                    "value": "antineoplastic agent",
+                                    "valueIRI": "http://purl.obolibrary.org/obo/CHEBI_35610"
+                                }
+                            ]
+                        },
+                        {
+                            "@type": "MolecularEntity",
+                            "@context": "https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
+                            "name": "Regorafenib",
+                            "identifier": {
+                            },
+                            "roles": [
+                                {
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                    "value": "antineoplastic agent",
+                                    "valueIRI": "http://purl.obolibrary.org/obo/CHEBI_35610"
+                                }
+                            ]
+                        },
+                        {
+                            "@type": "MolecularEntity",
+                            "@context": "https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
+                            "name": "Nintedanib",
+                            "identifier": {
+                            },
+                            "roles": [
+                                {
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                    "value": "antineoplastic agent",
+                                    "valueIRI": "http://purl.obolibrary.org/obo/CHEBI_35610"
+                                }
+                            ]
+                        },
+                        {
+                            "@type": "MolecularEntity",
+                            "@context": "https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
+                            "name": "mTOR FR",
+                            "identifier": {
+                            },
+                            "roles": [
+                                {
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                    "value": "antineoplastic agent",
+                                    "valueIRI": "http://purl.obolibrary.org/obo/CHEBI_35610"
+                                }
+                            ]
+                        },
+                        {
+                            "@type": "MolecularEntity",
+                            "@context": "https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
+                            "name": "BI836842 (IGF1/2 mAb)",
+                            "identifier": {
+                            },
+                            "roles": [
+                                {
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                    "value": "antineoplastic agent",
+                                    "valueIRI": "http://purl.obolibrary.org/obo/CHEBI_35610"
+                                }
+                            ]
+                        },
+                        {
+                            "@type": "MolecularEntity",
+                            "@context": "https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
+                            "name": "AZ1 (Tank-I)",
+                            "identifier": {
+                            },
+                            "roles": [
+                                {
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                    "value": "antineoplastic agent",
+                                    "valueIRI": "http://purl.obolibrary.org/obo/CHEBI_35610"
+                                }
+                            ]
+                        },
+                        {
+                            "@type": "MolecularEntity",
+                            "@context": "https://w3id.org/dats/context/sdo/molecular_entity_sdo_context.jsonld",
+                            "name": "Volitinib",
+                            "identifier": {
+                            },
+                            "roles": [
+                                {
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                    "value": "antineoplastic agent",
+                                    "valueIRI": "http://purl.obolibrary.org/obo/CHEBI_35610"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "carcinoma of the colon",
+                            "@type": "Disease",
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                        }
+                    ],
+                    "extraProperties": [
+                        {
+                            "category": "number of samples",
+                            "values": [
+                                {
+                                    "value": ">6000",
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                }
+                            ],
+                            "@type": "CategoryValuesPair",
+                            "@context": "http://w3id.org/dats/context/obo/category_values_pair_obo_context.jsonld"
+                        },
+                        {
+                            "values": [
+                                {
+                                    "value": "https://fairplus.github.io/fairification-results/2019-12-17-OncoTrack-post-assessment/",
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                }
+                            ],
+                            "@type": "CategoryValuesPair",
+                            "category": "fairAssessmentLink"
+                        },
+                        {
+                            "values": [
+                                {
+                                    "value": "Post-FAIRification assessment",
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                }
+                            ],
+                            "@type": "CategoryValuesPair",
+                            "category": "fairAssessmentDetails"
+                        },
+                        {
+                            "values": [
+                                {
+                                    "value": 13,
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                }
+                            ],
+                            "@type": "CategoryValuesPair",
+                            "category": "fairScoreRecommended"
+                        },
+                        {
+                            "values": [
+                                {
+                                    "value": 46,
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                }
+                            ],
+                            "@type": "CategoryValuesPair",
+                            "category": "fairScoreMandatory"
+                        },
+                        {
+                            "values": [
+                                {
+                                    "value": 35,
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                }
+                            ],
+                            "@type": "CategoryValuesPair",
+                            "category": "fairScoreOverall"
+                        },
+                        {
+                            "values": [
+                                {
+                                    "value": "https://docs.google.com/spreadsheets/d/1mkjElFrTBPBH0QViODexNur0xNGhJqau0zkL4w8RRAw/edit#gid=1558529297",
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                }
+                            ],
+                            "@type": "CategoryValuesPair",
+                            "category": "fairIndicatorsHref"
+                        },
+                        {
+                            "values": [
+                                {
+                                    "value": "RDA indicator v0.03",
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                }
+                            ],
+                            "@type": "CategoryValuesPair",
+                            "category": "fairIndicators"
+                        },
+                        {
+                            "values": [
+                                {
+                                    "value": "true",
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                }
+                            ],
+                            "@type": "CategoryValuesPair",
+                            "category": "fairEvaluation"
+                        }
+                    ],
+                    "distributions": [
+                        {
+                            "@type": "DatasetDistribution",
+                            "@context": "https://w3id.org/dats/context/sdo/dataset_distribution_sdo_context.jsonld",
+                            "access": {
+                                "accessURL": "https://owncloud.lcsb.uni.lu/apps/files/?dir=/ONCOTRACK/sample_metadata_ETL/metadata_BSD_JSON&fileid=14712690",
+                                "landingPage": "OncoTrack public sample metadata, FAIRifed v1",
+                                "@type": "Access",
+                                "@context": "https://w3id.org/dats/context/sdo/access_sdo_context.jsonld"
+                            },
+                            "dates": [
+                                {
+                                    "date": "2017-01-05T00:00:00Z",
+                                    "@type": "Date",
+                                    "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                                    "type": {
+                                        "@type": "Annotation",
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "value": "creation date",
+                                        "valueIRI": ""
+                                    }
+                                },
+                                {
+                                    "date": "2017-09-05T11:53:13.870Z",
+                                    "@type": "Date",
+                                    "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                                    "type": {
+                                        "@type": "Annotation",
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "value": "last update date",
+                                        "valueIRI": ""
+                                    }
+                                }
+                            ],
+                            "conformsTo": [
+                                {
+                                    "name": "CDISC",
+                                    "type": {
+                                        "@type": "Annotation",
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "value": "clinical data standard"
+                                    },
+                                    "@type": "DataStandard",
+                                    "@context": "https://w3id.org/dats/context/sdo/data_standard_sdo_context.jsonld"
+                                }
+                            ],
+                            "version": "V1.0"
+                        }
+                    ],
+                    "creators": [
+                        {
+                            "@type": "Organization",
+                            "@context": "https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                            "name": "ONCOTRACK consortium"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

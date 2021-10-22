@@ -53,7 +53,6 @@
         },
       {% endif %}
       "version": "{{ dataset.version }}"
-
     }
 
     </script>
@@ -63,7 +62,7 @@
 
 {% block content %}
     <div class="well box datasetDetails">
-        {% if fair_evaluations_show and dataset.is_fairplus_evaluated %}
+        {% if fair_evaluations_show and dataset.fair_evaluation %}
             <a class="fairResultsStamp" data-expand="fairplus-evaluation-fields"
                href="#fairplus-evaluation-fields"><img alt='fairplus stamp'
                                                        title="Dataset processed by FAIRplus. See FAIRplus Evaluation tab for details."
@@ -77,7 +76,7 @@
                         <i class="material-icons">download</i>
                     </p>
                     <a class="btn button-link-text"
-                       href="{{ dataset.dataset_link_href  }}" target="_blank">Access Data</a>
+                       href="{{ dataset.dataset_link_href }}" target="_blank">Access Data</a>
 
                 </div>
             {% else %}
@@ -100,7 +99,8 @@
                             <i class="material-icons">fact_check</i>
                         </p>
                         <a class="btn button-link-text"
-                           href="{{ url_for('request_access', entity_name='dataset', entity_id=dataset.id) }}">Request Data
+                           href="{{ url_for('request_access', entity_name='dataset', entity_id=dataset.id) }}">Request
+                            Data
                             Access</a>
 
                     </div>
@@ -113,7 +113,8 @@
                         <i class="material-icons">download</i>
                     </p>
                     <a class="btn button-link-text"
-                       href="{{ url_for('export_dats_entity', entity_name='dataset', entity_id=dataset.id) }}">Export Metadata
+                       href="{{ url_for('export_dats_entity', entity_name='dataset', entity_id=dataset.id) }}">Export
+                        Metadata
                         as DATS</a>
 
                 </div>
@@ -178,7 +179,7 @@
 
 
             {#    FAIRified #}
-            {% if fair_evaluations_show and dataset.is_fairplus_evaluated %}
+            {% if fair_evaluations_show and dataset.fair_evaluation %}
                 {{ macros.start_panel("FAIRplus Evaluation", "fairplus-evaluation") }}
                 {{ macros.show_field_link(dataset.fair_indicators, "FAIR indicators", dataset.fair_indicators_href) }}
                 {{ macros.show_field_percentage(dataset.fair_score_overall, "FAIR score, overall") }}
@@ -186,6 +187,38 @@
                 {{ macros.show_field_percentage(dataset.fair_score_recommended_indicators, "FAIR score, recommended indicators") }}
                 {{ macros.show_field_link(dataset.fair_assessment_details, "FAIR assessment details", dataset.fair_assessment_details_link) }}
                 {{ macros.show_field_link(dataset.dataset_link_label, "Dataset link", dataset.dataset_link_href) }}
+                {{ macros.end_panel() }}
+            {% endif %}
+            {% if dataset.use_restrictions %}
+                {% set use_restrictions_by_type, icons = dataset.use_restrictions_by_type %}
+                {{ macros.start_panel("Use restrictions", "use-restrictions") }}
+                {% for restriction_type in use_restrictions_by_type %}
+                    <h4 class="restrictionType">
+                        <i class="material-icons {{ icons[restriction_type][1] }}">{{ icons[restriction_type][0] }}</i><span> {{ icons[restriction_type][2] }}
+        </span>
+                    </h4>
+                    <table class="table table-hover table-condensed table-striped datasetRestrictions">
+                        <thead>
+                        <tr>
+                            <th>Note</th>
+                            <th>GA4GH label</th>
+                            <th>GA4GH code</th>
+                            <th>GA4GH code note</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for restriction in use_restrictions_by_type[restriction_type] %}
+                            <tr>
+                                <td>{{ restriction['use_restriction_note'] }}</td>
+                                <td>{{ restriction['use_class_label'] }}</td>
+                                <td>{{ restriction['use_class'] }}</td>
+                                <td>{{ restriction['use_class_note'] | default("-", true) }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endfor %}
                 {{ macros.end_panel() }}
             {% endif %}
         </div>
