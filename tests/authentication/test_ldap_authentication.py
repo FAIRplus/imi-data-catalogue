@@ -19,24 +19,23 @@
 from datacatalog.exceptions import AuthenticationException
 from tests.base_test import BaseTest
 from datacatalog import app
-from datacatalog.authentication.ldap_authentication import LDAPUserPasswordAuthentication
+from datacatalog.authentication.ldap_authentication import (
+    LDAPUserPasswordAuthentication,
+)
 
-__author__ = 'Nirmeen Sallam'
+__author__ = "Nirmeen Sallam"
 
 
 class TestLDAPUserPasswordAuthentication(BaseTest):
 
-    ldapauth = LDAPUserPasswordAuthentication(app.config.get('LDAP_HOST'))
-    app.config["AUTHENTICATION_METHOD"] = 'LDAP'
-    username = app.config.get('LDAP_USERNAME')
-    password = app.config.get('LDAP_PASSWORD')
+    ldapauth = LDAPUserPasswordAuthentication(app.config.get("LDAP_HOST"))
+    app.config["AUTHENTICATION_METHOD"] = "LDAP"
+    username = app.config.get("LDAP_USERNAME")
+    password = app.config.get("LDAP_PASSWORD")
 
     conn = ldapauth.get_ldap_connection()
     member = "uid={},cn=users,cn=accounts,dc=uni,dc=lu".format(username)
-    conn.simple_bind_s(
-        member,
-        password
-    )
+    conn.simple_bind_s(member, password)
 
     def test_get_user_details(self):
         response = self.ldapauth.get_user_details(self.conn, self.username)
@@ -44,33 +43,45 @@ class TestLDAPUserPasswordAuthentication(BaseTest):
 
     def test_get_user_details_invalid_user(self):
         with self.assertRaises(AuthenticationException) as cm:
-            self.ldapauth.get_user_details(self.conn, self.username+'test')
-        self.assertEqual('Invalid user', str(cm.exception))
+            self.ldapauth.get_user_details(self.conn, self.username + "test")
+        self.assertEqual("Invalid user", str(cm.exception))
 
     def test_authenticate_user(self):
-        success, user_details = self.ldapauth.authenticate_user(self.username, self.password)
+        success, user_details = self.ldapauth.authenticate_user(
+            self.username, self.password
+        )
         self.assertTrue(success)
         self.assertIsNotNone(user_details)
 
     def test_authenticate_user_invalid_credentials(self):
         with self.assertRaises(AuthenticationException) as cm:
-            self.ldapauth.authenticate_user(self.username+"test", self.password)
-        self.assertEqual('Invalid Credentials', str(cm.exception))
+            self.ldapauth.authenticate_user(self.username + "test", self.password)
+        self.assertEqual("Invalid Credentials", str(cm.exception))
 
     def test_get_attributes_by_dn(self):
-        attributes = self.ldapauth.get_attributes_by_dn(self.member, self.conn, self.username, ['displayName', 'mail'])
+        attributes = self.ldapauth.get_attributes_by_dn(
+            self.member, self.conn, self.username, ["displayName", "mail"]
+        )
         self.assertTrue(len(attributes) == 2)
-        attributes = self.ldapauth.get_attributes_by_dn(self.member, self.conn, self.username+'test', ['displayName', 'mail'])
+        attributes = self.ldapauth.get_attributes_by_dn(
+            self.member, self.conn, self.username + "test", ["displayName", "mail"]
+        )
         self.assertIsNone(attributes)
 
     def test_get_email_by_dn(self):
         email = self.ldapauth.get_email_by_dn(self.member, self.conn, self.username)
         self.assertTrue(email)
-        email = self.ldapauth.get_email_by_dn(self.member, self.conn, self.username+"test")
+        email = self.ldapauth.get_email_by_dn(
+            self.member, self.conn, self.username + "test"
+        )
         self.assertFalse(email)
 
     def test_get_displayname_by_dn(self):
-        display_name = self.ldapauth.get_displayname_by_dn(self.member, self.conn, self.username)
+        display_name = self.ldapauth.get_displayname_by_dn(
+            self.member, self.conn, self.username
+        )
         self.assertTrue(display_name)
-        display_name = self.ldapauth.get_email_by_dn(self.member, self.conn, self.username + "test")
+        display_name = self.ldapauth.get_email_by_dn(
+            self.member, self.conn, self.username + "test"
+        )
         self.assertFalse(display_name)

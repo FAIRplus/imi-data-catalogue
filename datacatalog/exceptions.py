@@ -21,13 +21,22 @@
    Module to configure DataCatalog exceptions
 
 """
-__author__ = 'Valentin Grouès'
+__author__ = "Valentin Grouès"
 
 
 class DataCatalogException(Exception):
     """
     Base class for DataCatalog exceptions
     """
+
+    pass
+
+
+class DownloadsHandlerLinksException(DataCatalogException):
+    """
+    Error retrieving downloads links
+    """
+
     pass
 
 
@@ -45,6 +54,7 @@ class SolrIndexerException(DataCatalogException):
     """
     All exceptions linked to a problem with Solr
     """
+
     pass
 
 
@@ -52,6 +62,7 @@ class SolrQueryException(SolrIndexerException):
     """
     Exception for Solr queries errors
     """
+
     pass
 
 
@@ -59,6 +70,7 @@ class PostRequestException(DataCatalogException):
     """
     Exception for error happening during post request hook
     """
+
     pass
 
 
@@ -66,4 +78,13 @@ class CouldNotCloseApplicationException(DataCatalogException):
     """
     When an access request application could not be closed
     """
+
+    pass
+
+
+class CouldNotSubmitApplicationException(DataCatalogException):
+    """
+    When an access request application could not be submitted
+    """
+
     pass

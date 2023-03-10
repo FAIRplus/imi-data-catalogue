@@ -23,20 +23,25 @@
 """
 import base64
 import json
+import logging
 from typing import Generator
 
 from .entities_connector import ImportEntitiesConnector
-from .limesurveyrc2api import LimeSurveyRemoteControl2API, CompletionStatus, ResponsesType
-from .. import app
+from .limesurveyrc2api import (
+    LimeSurveyRemoteControl2API,
+    CompletionStatus,
+    ResponsesType,
+)
 from ..models.dataset import Dataset
 
-logger = app.logger
+logger = logging.getLogger(__name__)
 
 
 class LimesurveyConnector(ImportEntitiesConnector):
     """
     EntitiesConnector subclass to import entities from a Limesurvey instance
     """
+
     DIRECT_MAPPING = {
         # 'AgeRange[SQ001]': Dataset.age_range_lower_limit,
         # 'AgeRange[SQ002]': Dataset.age_range_upper_limit,
@@ -87,7 +92,9 @@ class LimesurveyConnector(ImportEntitiesConnector):
     }
     TO_SKIP = ["id"]
 
-    def __init__(self, limesurvey_url: str, username: str, password: str, survey_id: str) -> None:
+    def __init__(
+        self, limesurvey_url: str, username: str, password: str, survey_id: str
+    ) -> None:
         """
         Initialize a LimesurveyConnector instance with the limesurvey connection details and survey id
         @param limesurvey_url: the hostname and port of the Limesurvey installation
@@ -104,17 +111,24 @@ class LimesurveyConnector(ImportEntitiesConnector):
         """
         Yields Dataset instances created by querying Limesurvey API
         """
-        session = self.limesurvey.sessions.get_session_key(
-            self.username, self.password)
-        session_key = session.get('result')
+        session = self.limesurvey.sessions.get_session_key(self.username, self.password)
+        session_key = session.get("result")
         responses = self.limesurvey.responses.list_responses(
-            session_key, self.survey_id, 'json', CompletionStatus.complete, responses_type=ResponsesType.long)
-        base64_encoded_response = responses['result']
-        decoded_response = base64.b64decode(base64_encoded_response).decode('utf-8')
+            session_key,
+            self.survey_id,
+            "json",
+            CompletionStatus.complete,
+            responses_type=ResponsesType.long,
+        )
+        base64_encoded_response = responses["result"]
+        decoded_response = base64.b64decode(base64_encoded_response).decode("utf-8")
         json_response = json.loads(decoded_response)
-        responses_list = json_response.get('responses')
-        responses_list_dict = {response_id: response for entry_dict in responses_list for response_id, response in
-                               entry_dict.items()}
+        responses_list = json_response.get("responses")
+        responses_list_dict = {
+            response_id: response
+            for entry_dict in responses_list
+            for response_id, response in entry_dict.items()
+        }
         for response in responses_list_dict.values():
             yield self.create_dataset(response)
 
@@ -124,7 +138,7 @@ class LimesurveyConnector(ImportEntitiesConnector):
         @param response: dict containing metadata from limesurvey
         @return: a Dataset instance
         """
-        dataset_id = response.get('id', None)
+        dataset_id = response.get("id", None)
         if dataset_id is not None:
             dataset_id = "limesurvey_{}".format(dataset_id)
         dataset = Dataset(entity_id=dataset_id)

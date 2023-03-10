@@ -37,8 +37,13 @@ class LoginForm(RedirectForm):
     - password
     - remember me checkbox
     """
-    username = StringField('Username', [DataRequired(), Length(min=4, max=25)],
-                           render_kw={"placeholder": 'username'})
-    password = PasswordField('Password', [DataRequired()],
-                             render_kw={"placeholder": "password"})
-    remember = BooleanField('Remember me')
+
+    username = StringField(
+        "Username",
+        [DataRequired(), Length(min=4, max=25)],
+        render_kw={"placeholder": "username"},
+    )
+    password = PasswordField(
+        "Password", [DataRequired()], render_kw={"placeholder": "password"}
+    )
+    remember = BooleanField("Remember me")

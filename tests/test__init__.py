@@ -17,7 +17,7 @@ import logging
 
 from flask_login import current_user
 
-from base_test import BaseTest
+from tests.base_test import BaseTest
 from datacatalog import get_access_handler, app
 from datacatalog.acces_handler.email_handler import EmailAccessHandler
 from datacatalog.acces_handler.rems_handler import RemsAccessHandler
@@ -26,15 +26,23 @@ logger = logging.getLogger(__name__)
 
 
 class TestInit(BaseTest):
-
     def test_default_get_access_handler(self):
-        app.config['ACCESS_HANDLERS'] = {'dataset': 'Email'}
+        app.config["ACCESS_HANDLERS"] = {"dataset": "Email"}
         handler = get_access_handler(current_user, "dataset")
-        self.assertEqual(handler.template, 'request_access.html')
+        self.assertEqual(handler.template, "request_access.html")
         self.assertIsInstance(handler, EmailAccessHandler)
 
     def test_rems_get_access_handler(self):
-        app.config['ACCESS_HANDLERS'] = {'dataset': 'Rems'}
+
+        self.solr_orm = app.config["_solr_orm"]
+        self.solr_orm.delete_fields()
+        self.solr_orm.commit()
+        self.solr_orm.create_fields()
+
+        app.config["ACCESS_HANDLERS"] = {"dataset": "Rems"}
         handler = get_access_handler(current_user, "dataset")
-        self.assertEqual(handler.template, 'request_access_rems.html')
+        self.assertEqual(handler.template, "request_access_rems.html")
         self.assertIsInstance(handler, RemsAccessHandler)
+
+        self.solr_orm.delete_fields()
+        self.solr_orm.commit()

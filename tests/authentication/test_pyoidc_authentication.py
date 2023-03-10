@@ -17,13 +17,16 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import unittest
+
+from flask_login import current_user
+
 from tests.base_test import BaseTest
 
 from datacatalog.authentication.pyoidc_authentication import PyOIDCAuthentication
 from datacatalog import app
 import urllib
 
-__author__ = 'Nirmeen Sallam'
+__author__ = "Nirmeen Sallam"
 
 
 class TestPyOIDCAuthentication(BaseTest):
@@ -32,21 +35,24 @@ class TestPyOIDCAuthentication(BaseTest):
     error_msg = ""
 
     try:
-        pyauth = PyOIDCAuthentication(app.config.get('BASE_URL'), app.config.get('PYOIDC_CLIENT_ID'),
-                                      app.config.get('PYOIDC_CLIENT_SECRET'),
-                                      app.config.get('PYOIDC_IDP_URL'))
+        pyauth = PyOIDCAuthentication(
+            app.config.get("BASE_URL"),
+            app.config.get("PYOIDC_CLIENT_ID"),
+            app.config.get("PYOIDC_CLIENT_SECRET"),
+            app.config.get("PYOIDC_IDP_URL"),
+        )
     except Exception as e:
         skip_tests_flag = True
         error_msg = e
 
     @unittest.skipIf(skip_tests_flag, error_msg)
     def test_authenticate_user_redirect(self):
-        respone = self.pyauth.authenticate_user()
-        self.assertEqual(respone.status_code, 303)
-        self.assertTrue(respone.location.startswith(app.config.get('PYOIDC_IDP_URL')))
+        response = self.pyauth.authenticate_user()
+        self.assertEqual(response.status_code, 303)
+        self.assertTrue(response.location.startswith(app.config.get("PYOIDC_IDP_URL")))
 
     @unittest.skipIf(skip_tests_flag, error_msg)
     def test_get_logout_url_redirect(self):
-        logout_url = urllib.parse.unquote(self.pyauth.get_logout_url())
-        self.assertTrue(logout_url.startswith(app.config.get('PYOIDC_IDP_URL')))
-        self.assertIn("redirect_uri=" + app.config.get('BASE_URL'), logout_url)
+        logout_url = urllib.parse.unquote(self.pyauth.get_logout_url(current_user))
+        self.assertTrue(logout_url.startswith(app.config.get("PYOIDC_IDP_URL")))
+        self.assertIn("redirect_uri=" + app.config.get("BASE_URL"), logout_url)

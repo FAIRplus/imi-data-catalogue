@@ -16,13 +16,11 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import os
 
 from datacatalog.connector.geostudies_connector import GEOStudiesConnector
 from tests.base_test import BaseTest, get_resource_path
-from datacatalog.connector.dats_connector import DATSConnector
 
-__author__ = 'Valentin Grouès'
+__author__ = "Valentin Grouès"
 
 from datacatalog.models.dataset import Dataset
 from datacatalog.models.project import Project
@@ -31,7 +29,9 @@ from datacatalog.models.study import Study
 
 class TestGeoConnector(BaseTest):
     def test_build_studies_json(self):
-        geo_connector = GEOStudiesConnector(get_resource_path('geo_studies_test'), Study)
+        geo_connector = GEOStudiesConnector(
+            get_resource_path("geo_studies_test"), Study
+        )
         studies = geo_connector.build_all_entities()
         count = 0
         for study in studies:
@@ -40,7 +40,9 @@ class TestGeoConnector(BaseTest):
         self.assertEqual(2, count)
 
     def test_build_project_json(self):
-        geo_connector = GEOStudiesConnector(get_resource_path('geo_studies_test'), Project)
+        geo_connector = GEOStudiesConnector(
+            get_resource_path("geo_studies_test"), Project
+        )
         projects = geo_connector.build_all_entities()
         count = 0
         for project in projects:
@@ -49,7 +51,9 @@ class TestGeoConnector(BaseTest):
         self.assertEqual(2, count)
 
     def test_build_datasets_json(self):
-        geo_connector = GEOStudiesConnector(get_resource_path('geo_studies_test'), Dataset)
+        geo_connector = GEOStudiesConnector(
+            get_resource_path("geo_studies_test"), Dataset
+        )
         datasets = geo_connector.build_all_entities()
         count = 0
         for dataset in datasets:
@@ -58,11 +62,12 @@ class TestGeoConnector(BaseTest):
         self.assertEqual(2, count)
 
     def test_build_datasets_tsv(self):
-        geo_connector = GEOStudiesConnector(get_resource_path('geo_studies_test'), Dataset)
+        geo_connector = GEOStudiesConnector(
+            get_resource_path("geo_studies_test"), Dataset
+        )
         datasets = geo_connector.build_all_entities()
         count = 0
         for dataset in datasets:
             self.assertIsInstance(dataset, Dataset)
             count += 1
         self.assertEqual(2, count)
-

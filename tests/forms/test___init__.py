@@ -21,17 +21,16 @@ import datacatalog.forms as dcForms
 from flask import request
 
 
-__author__ = 'Nirmeen Sallam'
+__author__ = "Nirmeen Sallam"
 
 
 class Test(BaseTest):
-
     def test_is_safe_url(self):
         host_url = request.host_url[:-1]
-        is_safe_url = dcForms.is_safe_url(host_url+"/datasets")
+        is_safe_url = dcForms.is_safe_url(host_url + "/datasets")
         self.assertTrue(is_safe_url)
 
-        is_safe_url = dcForms.is_safe_url(host_url+"test/")
+        is_safe_url = dcForms.is_safe_url(host_url + "test/")
         self.assertFalse(is_safe_url)
 
     def test_get_redirect_target(self):
@@ -39,4 +38,4 @@ class Test(BaseTest):
 
     def test_redirect_form(self):
         redirectforms = dcForms.RedirectForm()
-        self.assertEqual(redirectforms.redirect().location,"/")
+        self.assertEqual(redirectforms.redirect().location, "/")

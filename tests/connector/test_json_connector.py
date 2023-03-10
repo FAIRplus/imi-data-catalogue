@@ -21,7 +21,7 @@ import os
 from tests.base_test import BaseTest
 from datacatalog.connector.json_connector import JSONConnector
 
-__author__ = 'Valentin Grouès'
+__author__ = "Valentin Grouès"
 
 from datacatalog.models.dataset import Dataset
 
@@ -29,6 +29,10 @@ from datacatalog.models.dataset import Dataset
 class TestJSONConnector(BaseTest):
     def test_build_all_datasets(self):
         json_connector = JSONConnector(
-            os.path.join(os.path.dirname(os.path.realpath(__file__)), '../data', 'records.json'), Dataset)
+            os.path.join(
+                os.path.dirname(os.path.realpath(__file__)), "../data", "records.json"
+            ),
+            Dataset,
+        )
         datasets = list(json_connector.build_all_entities())
         self.assertEqual(78, len(datasets))

@@ -1,0 +1,218 @@
+{
+    "@context": [
+        "https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+        "http://w3id.org/dats/context/obo/dataset_obo_context.jsonld"
+    ],
+    "@type": "Project",
+    "acronym": "GSE6614",
+    "description": "Nicotine, acting through the neuronal nicotinic acetylcholine receptors (nAChR), can induce seizures in mice. We aimed to study brain transcriptional response to seizure and to identify genes whose expression is altered after nicotine-induced seizures. Whole brains of untreated mice were compared to brains one hour after seizure activity, using Affymetrix U74Av2 microaarays. Experimental groups included wild-type mice and both nicotine-induced seizures sensitive and resistant nAChR mutant mice. Each genotype group received different nicotine doses to generate seizures. This approach allowed the identification of significantly changed genes whose expression was dependent on seizure activity, nicotine administration or both, but not on the type of nAChR subunit mutation or the amount of nicotine injected. Significant expression changes were detected in 62 genes (p < 0.05, FDR correction). Among them, GO functional annotation analysis determined that the most significantly over-represented categories were of genes encoding MAP kinase phosphatases, regulators of transcription and nucleosome assembly proteins. In-silico bioinformatic analysis of the promoter regions of the 62 changed genes detected the significant enrichments of 16 transcription regulatory elements (TREs), creating a network of transcriptional regulatory responses to seizures. The TREs for ATF and SRF were most significantly enriched, supporting their association with seizure activity. Our data suggest that nicotine-induced seizure in mice is a useful model to study seizure activity and its global brain transcriptional response. The differentially expressed genes detected here can help understand the molecular mechanisms underlying seizures in animal models, and may also serve as candidate genes to study epilepsy in humans.",
+    "extraProperties": [
+        {
+            "category": "website",
+            "values": [
+                {
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                    "@type": "Annotation",
+                    "value": " https://www.ncbi.nlm.nih.gov/bioproject/PRJNA98881"
+                }
+            ]
+        }
+    ],
+    "identifier": {
+        "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+        "@type": "Identifier",
+        "identifier": "9262a3ca-71e8-11eb-bafe-3e22fbb3883f"
+    },
+    "keywords": [
+        {
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "@type": "Annotation",
+            "value": "treatment"
+        },
+        {
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "@type": "Annotation",
+            "value": "seizure activity"
+        },
+        {
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "@type": "Annotation",
+            "value": "genotypes"
+        },
+        {
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "@type": "Annotation",
+            "value": "expression profiling by array"
+        }
+    ],
+    "primaryPublications": [
+        {
+            "@context": "https://w3id.org/dats/context/sdo/publication_sdo_context.jsonld",
+            "@type": "Publication",
+            "identifier": {
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                "@type": "Identifier",
+                "identifier": "https://pubmed.ncbi.nlm.nih.gov/17456735"
+            }
+        }
+    ],
+    "projectAssets": [
+        {
+            "@context": "https://w3id.org/dats/context/sdo/study_sdo_context.jsonld",
+            "@type": "Study",
+            "acronym": "Expression changes in mouse brains following nicotine-induced seizures; the modulation of transcription factor networks",
+            "description": "Whole brain expression profiles were determined in two experimental groups of mice, sixteen mice that were not treated with nicotine and twelve mice one hour after experiencing nicotine-induced seizure. The untreated group included six wild-type mice, five alpha7+/T and five beta4-/- mice. The group of mice that underwent nicotine-induced seizures included three wild-types, five alpha7+/T and four beta4-/- mice. Different doses of nicotine were injected intraperitoneally (i.p.) to each genotype group of mice in order to achieve a similar seizure score in all three genotypes.",
+            "identifier": {
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                "@type": "Identifier",
+                "identifier": "9262a4d8-71e8-11eb-bafe-3e22fbb3883f"
+            },
+            "input": [
+                {
+                    "@context": "https://w3id.org/dats/context/sdo/material_sdo_context.jsonld",
+                    "@type": "Material",
+                    "bearerOfDisease": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld",
+                            "@type": "Disease",
+                            "name": "epilepsy"
+                        }
+                    ],
+                    "name": "input material",
+                    "taxonomy": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/taxonomic_info_sdo_context.jsonld",
+                            "@type": "TaxonomicInformation",
+                            "name": "Mus musculus"
+                        }
+                    ]
+                }
+            ],
+            "name": "study_primary_purpose",
+            "output": [
+                {
+                    "@context": "https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+                    "@type": "Dataset",
+                    "creators": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                            "@type": "Organization",
+                            "name": ""
+                        }
+                    ],
+                    "distributions": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/dataset_distribution_sdo_context.jsonld",
+                            "@type": "DatasetDistribution",
+                            "access": {
+                                "@context": "https://w3id.org/dats/context/sdo/access_sdo_context.jsonld",
+                                "@type": "Access",
+                                "accessURL": "ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE6nnn/GSE6614/suppl/GSE6614_RAW.tar",
+                                "landingPage": ""
+                            },
+                            "dates": [
+                                {
+                                    "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                                    "@type": "Date",
+                                    "date": "Tue, 26 Dec 2006 00:00:00 GMT",
+                                    "type": {
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "@type": "Annotation",
+                                        "value": "creation date"
+                                    }
+                                },
+                                {
+                                    "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                                    "@type": "Date",
+                                    "date": "Sun, 18 Feb 2018 00:00:00 GMT",
+                                    "type": {
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "@type": "Annotation",
+                                        "value": "last update date"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "extraProperties": [
+                        {
+                            "@context": "http://w3id.org/dats/context/obo/category_values_pair_obo_context.jsonld",
+                            "@type": "CategoryValuesPair",
+                            "category": "number of samples",
+                            "values": [
+                                {
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                    "@type": "Annotation",
+                                    "value": "28"
+                                }
+                            ]
+                        }
+                    ],
+                    "identifier": {
+                        "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                        "@type": "Identifier",
+                        "identifier": "9262a488-71e8-11eb-bafe-3e22fbb3883f"
+                    },
+                    "isAbout": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld",
+                            "@type": "Disease",
+                            "name": "epilepsy"
+                        }
+                    ],
+                    "title": "Expression changes in mouse brains following nicotine-induced seizures; the modulation of transcription factor networks",
+                    "types": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                            "@type": "Annotation",
+                            "value": "expression profiling by array"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "projectLeads": [
+        {
+            "@context": "https://w3id.org/dats/context/sdo/person_sdo_context.jsonld",
+            "@type": "Person",
+            "affiliations": [
+                {
+                    "@context": "https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                    "@type": "Organization",
+                    "location": {
+                        "@context": "https://w3id.org/dats/context/sdo/place_sdo_context.jsonld",
+                        "@type": "Place",
+                        "postalAddress": "xxxx,64239,Israel"
+                    },
+                    "name": "xxxx Medical Center"
+                }
+            ],
+            "email": "xxx@xxx.il",
+            "extraProperties": [
+                {
+                    "category": "phoneNumber",
+                    "values": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                            "@type": "Annotation",
+                            "value": "xxxxxxxxx"
+                        }
+                    ]
+                }
+            ],
+            "firstName": "",
+            "fullName": "",
+            "lastName": ""
+        }
+    ],
+    "projectWebsite": " https://www.ncbi.nlm.nih.gov/bioproject/PRJNA98881",
+    "title": "Expression changes in mouse brains following nicotine-induced seizures; the modulation of transcription factor networks",
+    "types": [
+        {
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "@type": "Annotation",
+            "value": "NCBI GEO"
+        }
+    ]
+}

@@ -19,7 +19,7 @@
 from tests.base_test import BaseTest
 from datacatalog.pagination import Pagination
 
-__author__ = 'Nirmeen Sallam'
+__author__ = "Nirmeen Sallam"
 
 
 class TestPagination(BaseTest):

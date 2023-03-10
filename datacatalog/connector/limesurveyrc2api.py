@@ -29,20 +29,20 @@ import requests
 
 
 class CompletionStatus(Enum):
-    all = 'all'
-    incomplete = 'incomplete'
-    complete = 'complete'
+    all = "all"
+    incomplete = "incomplete"
+    complete = "complete"
 
 
 class ResponsesType(Enum):
-    short = 'short'
-    long = 'long'
+    short = "short"
+    long = "long"
 
 
 class HeadersType(Enum):
-    code = 'code'
-    full = 'full'
-    abbreviated = 'abbreviated'
+    code = "code"
+    full = "full"
+    abbreviated = "abbreviated"
 
 
 class LimeSurveyRemoteControl2API(object):
@@ -87,7 +87,7 @@ class _Utils(object):
             response = requests.post(url, headers=headers, data=data)
             if len(response.content) > 0:
                 return_value = response.json()
-        except requests.ConnectionError as pe:
+        except requests.ConnectionError:
             # TODO: some handling here
             return_value = None
         return return_value
@@ -110,11 +110,7 @@ class _Utils(object):
         Return
         :return: JSON encoded string with method and parameters.
         """
-        data = OrderedDict([
-            ('method', method),
-            ('params', params),
-            ('id', 1)
-        ])
+        data = OrderedDict([("method", method), ("params", params), ("id", 1)])
         data_json = json.dumps(data)
         return data_json
 
@@ -133,11 +129,8 @@ class _Sessions(object):
         :param password: LimeSurvey password to authenticate with.
         :type password: String
         """
-        params = OrderedDict([
-            ("username", username),
-            ("password", password)
-        ])
-        data = self.api.utils.prepare_params('get_session_key', params)
+        params = OrderedDict([("username", username), ("password", password)])
+        data = self.api.utils.prepare_params("get_session_key", params)
         response = self.api.utils.request(data)
         return response
 
@@ -145,8 +138,8 @@ class _Sessions(object):
         """
         Close an open session.
         """
-        params = {'sSessionKey': session_key}
-        data = self.api.utils.prepare_params('release_session_key', params)
+        params = {"sSessionKey": session_key}
+        data = self.api.utils.prepare_params("release_session_key", params)
         response = self.api.utils.request(data)
         return response
 
@@ -165,11 +158,8 @@ class _Surveys(object):
         :param username: LimeSurvey username to list accessible surveys for.
         :type username: String
         """
-        params = OrderedDict([
-            ('sSessionKey', session_key),
-            ('iSurveyID', username)
-        ])
-        data = self.api.utils.prepare_params('list_surveys', params)
+        params = OrderedDict([("sSessionKey", session_key), ("iSurveyID", username)])
+        data = self.api.utils.prepare_params("list_surveys", params)
         response = self.api.utils.request(data)
         return response
 
@@ -178,8 +168,9 @@ class _Tokens(object):
     def __init__(self, lime_survey_api):
         self.api = lime_survey_api
 
-    def add_participants(self, session_key, survey_id, participant_data,
-                         create_token_key=True):
+    def add_participants(
+        self, session_key, survey_id, participant_data, create_token_key=True
+    ):
         """
         Add participants to the specified survey.
 
@@ -191,13 +182,15 @@ class _Tokens(object):
         :param participant_data: List of participant detail dictionaries.
         :type participant_data: List[Dict]
         """
-        params = OrderedDict([
-            ('sSessionKey', session_key),
-            ('iSurveyID', survey_id),
-            ('aParticipantData', participant_data),
-            ('bCreateToken', create_token_key)
-        ])
-        data = self.api.utils.prepare_params('add_participants', params)
+        params = OrderedDict(
+            [
+                ("sSessionKey", session_key),
+                ("iSurveyID", survey_id),
+                ("aParticipantData", participant_data),
+                ("bCreateToken", create_token_key),
+            ]
+        )
+        data = self.api.utils.prepare_params("add_participants", params)
         response = self.api.utils.request(data)
         return response
 
@@ -213,12 +206,14 @@ class _Tokens(object):
         :param tokens: List of token IDs for participants to delete.
         :type tokens: List[Integer]
         """
-        params = OrderedDict([
-            ('sSessionKey', session_key),
-            ('iSurveyID', survey_id),
-            ('aTokenIDs', tokens)
-        ])
-        data = self.api.utils.prepare_params('delete_participants', params)
+        params = OrderedDict(
+            [
+                ("sSessionKey", session_key),
+                ("iSurveyID", survey_id),
+                ("aTokenIDs", tokens),
+            ]
+        )
+        data = self.api.utils.prepare_params("delete_participants", params)
         response = self.api.utils.request(data)
         return response
 
@@ -227,18 +222,28 @@ class _Responses(object):
     def __init__(self, lime_survey_api):
         self.api = lime_survey_api
 
-    def list_responses(self, session_key, survey_id, document_type, completion_status=CompletionStatus.all,
-                       language_code=None, headers_type=HeadersType.code, responses_type=ResponsesType.short):
-        params = OrderedDict([
-            ('sSessionKey', session_key),
-            ('iSurveyID', survey_id),
-            ('sDocumentType', document_type),
-            ('sLanguageCode', language_code),
-            ('sCompletionStatus', completion_status.value),
-            ('sHeadingType', headers_type.value),
-            ('sResponseType', responses_type.value)
-        ])
-        data = self.api.utils.prepare_params('export_responses', params)
+    def list_responses(
+        self,
+        session_key,
+        survey_id,
+        document_type,
+        completion_status=CompletionStatus.all,
+        language_code=None,
+        headers_type=HeadersType.code,
+        responses_type=ResponsesType.short,
+    ):
+        params = OrderedDict(
+            [
+                ("sSessionKey", session_key),
+                ("iSurveyID", survey_id),
+                ("sDocumentType", document_type),
+                ("sLanguageCode", language_code),
+                ("sCompletionStatus", completion_status.value),
+                ("sHeadingType", headers_type.value),
+                ("sResponseType", responses_type.value),
+            ]
+        )
+        data = self.api.utils.prepare_params("export_responses", params)
         response = self.api.utils.request(data)
         return response
 
@@ -247,8 +252,7 @@ class _Questions(object):
     def __init__(self, lime_survey_api):
         self.api = lime_survey_api
 
-    def list_questions(self, session_key, survey_id,
-                       group_id=None, language=None):
+    def list_questions(self, session_key, survey_id, group_id=None, language=None):
         """
         Return a list of questions from the specified survey.
 
@@ -263,12 +267,14 @@ class _Questions(object):
         :type language: String
         """
 
-        params = OrderedDict([
-            ('sSessionKey', session_key),
-            ('iSurveyID', survey_id),
-            ('iGroupID', group_id),
-            ('sLanguage', language)
-        ])
-        data = self.api.utils.prepare_params('list_questions', params)
+        params = OrderedDict(
+            [
+                ("sSessionKey", session_key),
+                ("iSurveyID", survey_id),
+                ("iGroupID", group_id),
+                ("sLanguage", language),
+            ]
+        )
+        data = self.api.utils.prepare_params("list_questions", params)
         response = self.api.utils.request(data)
         return response

@@ -14,7 +14,7 @@
 
             <div class="panel-body" style="position:relative">
                 <h3>
-                    <a href="{{ url_for('entity_details', entity_name=entity_name, entity_id=study.id) }}">{{ study.title| truncate(55, True) }}</a>
+                    <a href="{{ url_for('entity_details', entity_name=entity_name, entity_id=study.id) }}">{{ study.title| default("", True)|truncate(55, True) }}</a>
                 </h3>
                 {% if fair_evaluations_show and study.fair_evaluation %}
                     <a href="{{ url_for('entity_details', entity_name=entity_name, entity_id=study.id) }}#fairplus-evaluation-fields"

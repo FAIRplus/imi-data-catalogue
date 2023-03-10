@@ -22,17 +22,17 @@ from tests.base_test import BaseTest
 from datacatalog import app
 from datacatalog.connector.limesurvey_connector import LimesurveyConnector
 
-__author__ = 'Valentin Grouès'
+__author__ = "Valentin Grouès"
 
 
 class TestLimesurveyConnector(BaseTest):
-
-    @unittest.skip('limesurvey import not used anymore')
+    @unittest.skip("limesurvey import not used anymore")
     def test_build_all_datasets(self):
-        limesurvey_connector = LimesurveyConnector(app.config['LIMESURVEY_URL'],
-                                                   app.config['LIMESURVEY_USERNAME'],
-                                                   app.config['LIMESURVEY_PASSWORD'],
-                                                   app.config['LIMESURVEY_SURVEY_ID']
-                                                   )
+        limesurvey_connector = LimesurveyConnector(
+            app.config["LIMESURVEY_URL"],
+            app.config["LIMESURVEY_USERNAME"],
+            app.config["LIMESURVEY_PASSWORD"],
+            app.config["LIMESURVEY_SURVEY_ID"],
+        )
         datasets = list(limesurvey_connector.build_all_entities())
         self.assertTrue(datasets)

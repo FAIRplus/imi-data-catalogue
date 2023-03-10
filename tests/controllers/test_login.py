@@ -28,9 +28,13 @@ class TestLogin(BaseTest):
 
     def test_invalid_password_is_rejected(self):
         with self.client:
-            response = self.client.post(url_for("login"),
-                                        data={"username": app.config.get('LDAP_USERNAME'),
-                                              "password": app.config.get('LDAP_PASSWORD')})
+            response = self.client.post(
+                url_for("login"),
+                data={
+                    "username": app.config.get("LDAP_USERNAME"),
+                    "password": app.config.get("LDAP_PASSWORD"),
+                },
+            )
 
             self.assertTrue(response.status_code, 200)
-            self.assertTrue(current_user, app.config.get('LDAP_USERNAME'))
+            self.assertTrue(current_user, app.config.get("LDAP_USERNAME"))

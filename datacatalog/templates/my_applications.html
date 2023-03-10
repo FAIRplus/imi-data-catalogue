@@ -1,39 +1,32 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <h1>My applications</h1>
-    <p>This page lists your access applications</p>
-    <table class="myApplications table table-striped">
-        <thead>
-        <tr>
-            <th>{{ entity_name | title }}</th>
-            <th>Application State</th>
-            <th>Created on</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for application in applications %}
-            {% set state = application.state.value %}
-            {% set state_icon = {"submitted": "hourglass", "approved": "ok-circle", "rejected": "remove-circle", "closed": "remove-circle", "revoked": "remove-circle"}.get(state) %}
-            {% set state_color = {"submitted": "info", "approved": "success", "closed": "default", "revoked": "default", "rejected": "default"}.get(state) %}
-            <tr>
-                <td>
-                    <a href="{{ url_for('entity_details', entity_name=entity_name, entity_id=application.entity_id) }}">{{ application.entity_title }}</a>
-                </td>
-                <td>{% if state_icon %}
-                    <span title="{{ state }}" style="font-size:20px;"
-                          class="glyphicon glyphicon-{{ state_icon }} text-{{ state_color }}"/>{% else %}
-                    {{ state }}{% endif %}
-                </td>
-                <td>{{ application.creation_date | date }}</td>
-                <td>{% if state == "submitted" %}
-                    <a class="closeApplication"
-                       data-close-url="{{ url_for('close_application', entity_name=entity_name, application_id=application.id) }}"
-                       href=""><span title="cancel my application"
-                                     class="glyphicon glyphicon-remove text-danger"/></a>{% endif %}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="myApplications">
+        <h1>My data access requests</h1>
+        {% if entities_with_access %}
+            <h2>Accessible datasets</h2>
+            <div class="myAccesses">
+                {% for entity in entities_with_access %}
+                    <a href="{{ url_for('entity_details', entity_name=entity_name, entity_id=entity.id) }}">
+                        <span class="access">{{ entity.title }}</span>
+                        <span class="backicon glyphicon glyphicon-ok-circle text-success"></span>
+                    </a>
+                {% endfor %}
+            </div>
+            <h2>Pending and rejected data access requests</h2>
+        {% endif %}
+        {% if applications %}
+            <div id="applications-datatable"
+                 data-applications="{{ applications }}"
+                    {% if actions_allowed %}
+                 data-actions-allowed="true"
+                        {# TODO: This will not work when user_actions are made available #}
+                 data-close-url="{{ url_for('close_application', entity_name=entity_name, application_id=application.id) }}"
+                    {% endif %}
+            >
+            </div>
+        {% else %}
+            <p><strong>No data access requests found.</strong></p>
+        {% endif %}
+    </div>
 {% endblock %}

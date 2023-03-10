@@ -24,17 +24,22 @@
 
 """
 import datetime
+import logging
 import re
 from abc import ABCMeta, abstractmethod
 from typing import List
 
-from .. import app
 from ..solr.solr_orm_entity import SolrEntity
-from ..solr.solr_orm_fields import SolrDateTimeField, SolrFloatField, SolrIntField, SolrBooleanField
+from ..solr.solr_orm_fields import (
+    SolrDateTimeField,
+    SolrFloatField,
+    SolrIntField,
+    SolrBooleanField,
+)
 
-__author__ = 'Valentin Grouès'
+__author__ = "Valentin Grouès"
 
-logger = app.logger
+logger = logging.getLogger(__name__)
 
 
 class EntitiesConnector(metaclass=ABCMeta):
@@ -43,10 +48,10 @@ class EntitiesConnector(metaclass=ABCMeta):
 
 class ExportEntitiesConnector(EntitiesConnector, metaclass=ABCMeta):
     """
-   Abstract class specifying the methods that must be implemented by all ExportEntitiesConnector:
-       - export_entities
+    Abstract class specifying the methods that must be implemented by all ExportEntitiesConnector:
+        - export_entities
 
-   """
+    """
 
     @abstractmethod
     def export_entities(self, entities: List[SolrEntity]):
@@ -59,9 +64,10 @@ class ImportEntitiesConnector(EntitiesConnector, metaclass=ABCMeta):
         - build_all_entities
 
     """
+
     DIRECT_MAPPING = {}
     TO_SKIP = []
-    DELIMITER_MULTIVALUED = '[,;]'
+    DELIMITER_MULTIVALUED = "[,;]"
 
     @abstractmethod
     def build_all_entities(self) -> List[SolrEntity]:
@@ -97,7 +103,10 @@ class ImportEntitiesConnector(EntitiesConnector, metaclass=ABCMeta):
                     try:
                         attribute_value = int(value)
                     except TypeError:
-                        logger.error("value for %s is None, cannot convert to int", attribute_name)
+                        logger.error(
+                            "value for %s is None, cannot convert to int",
+                            attribute_name,
+                        )
             if isinstance(solr_field, SolrFloatField):
                 if solr_field.multivalued:
                     attribute_value = [float(val.strip()) for val in attribute_value]
@@ -105,19 +114,29 @@ class ImportEntitiesConnector(EntitiesConnector, metaclass=ABCMeta):
                     try:
                         attribute_value = float(value)
                     except TypeError:
-                        logger.error("value for %s is None, cannot convert to float", attribute_name)
+                        logger.error(
+                            "value for %s is None, cannot convert to float",
+                            attribute_name,
+                        )
             if isinstance(solr_field, SolrBooleanField):
                 if solr_field.multivalued:
-                    attribute_value = [(val.lower() in ['yes', 'y']) for val in attribute_value]
+                    attribute_value = [
+                        (val.lower() in ["yes", "y"]) for val in attribute_value
+                    ]
                 else:
-                    attribute_value = (value.lower() in ['yes', 'y'])
+                    attribute_value = value.lower() in ["yes", "y"]
             if isinstance(solr_field, SolrDateTimeField):
                 for format in ["%Y-%m-%d", "%m/%d/%Y"]:
                     try:
                         if solr_field.multivalued:
-                            attribute_value = [datetime.datetime.strptime(val, format) for val in attribute_value]
+                            attribute_value = [
+                                datetime.datetime.strptime(val, format)
+                                for val in attribute_value
+                            ]
                         else:
-                            attribute_value = datetime.datetime.strptime(attribute_value, format)
+                            attribute_value = datetime.datetime.strptime(
+                                attribute_value, format
+                            )
                         break
                     except ValueError:
                         continue

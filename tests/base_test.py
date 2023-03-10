@@ -15,14 +15,22 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import os
+import re
 
 from flask_testing import TestCase
 
 from datacatalog import app, configure_solr_orm
 
+clean_regex = re.compile("<.*?>")
+
+
+def get_clean_html_body(response):
+    clean_text = re.sub(clean_regex, " ", response.data.decode("utf-8"))
+    return re.sub(r"\s+", " ", clean_text)
+
 
 def get_resource_path(filename):
-    return os.path.join(os.path.dirname(os.path.realpath(__file__)), 'data', filename)
+    return os.path.join(os.path.dirname(os.path.realpath(__file__)), "data", filename)
 
 
 class BaseTest(TestCase):
@@ -32,8 +40,8 @@ class BaseTest(TestCase):
 
     @classmethod
     def configure_test_app(cls):
-        os.environ['DATACATALOG_ENV'] = 'test'
-        app.config.from_object('datacatalog.settings.TestConfig')
+        os.environ["DATACATALOG_ENV"] = "test"
+        app.config.from_object("datacatalog.settings.TestConfig")
         configure_solr_orm(app)
 
     def create_app(self):

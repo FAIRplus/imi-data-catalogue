@@ -29,9 +29,12 @@
 
 from abc import ABCMeta, abstractmethod
 
-__author__ = 'Valentin Grouès'
+__author__ = "Valentin Grouès"
 
 from enum import Enum
+from typing import Optional
+
+from datacatalog.models.user import User
 
 
 class LoginType(Enum):
@@ -39,38 +42,9 @@ class LoginType(Enum):
     FORM = 2
 
 
-class RemoteAuthentication(metaclass=ABCMeta):
-    """
-    Abstract class specifying methods to implement to authenticate users if not based on username and password
-    Typically for OIDC implementation
-    Is used for login process
-    """
-    LOGIN_TYPE = LoginType.REDIRECT
-
+class Authentication(metaclass=ABCMeta):
     @abstractmethod
-    def authenticate_user(self):
-        """
-        @return an exception if not successful or redirects to identity provider
-        """
-        pass
-
-    @abstractmethod
-    def get_logout_url(self) -> str:
-        """
-        Build the logout url and returns it
-        """
-        pass
-
-
-class UserPasswordAuthentication(metaclass=ABCMeta):
-    """
-    Abstract class specifying methods to implement to authenticate users
-    Is used for login process
-    """
-    LOGIN_TYPE = LoginType.FORM
-
-    @abstractmethod
-    def authenticate_user(self, username, password):
+    def authenticate_user(self, username=None, password=None):
         """
         Check if username and password matches and if user is authorized
         @param username: name of the user
@@ -79,4 +53,48 @@ class UserPasswordAuthentication(metaclass=ABCMeta):
         @type password: str
         @return an exception if not successful, a tuple containing True and the user details if successful
         """
+        pass
+
+    @abstractmethod
+    def refresh_user(self, user):
+        pass
+
+    @abstractmethod
+    def validate_user(self, user):
+        pass
+
+
+class RemoteAuthentication(Authentication, metaclass=ABCMeta):
+    """
+    Abstract class specifying methods to implement to authenticate users if not based on username and password
+    Typically for OIDC implementation
+    Is used for login process
+    """
+
+    LOGIN_TYPE = LoginType.REDIRECT
+
+    @abstractmethod
+    def get_logout_url(self, user: Optional[User] = None) -> str:
+        """
+        Build the logout url and returns it
+        """
+        pass
+
+    @abstractmethod
+    def check_and_refresh(self, user):
+        pass
+
+
+class UserPasswordAuthentication(metaclass=ABCMeta):
+    """
+    Abstract class specifying methods to implement to authenticate users
+    Is used for login process
+    """
+
+    LOGIN_TYPE = LoginType.FORM
+
+    def validate_user(self, user):
+        return False
+
+    def refresh_user(self, user):
         pass

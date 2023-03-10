@@ -22,13 +22,12 @@ from tests.base_test import BaseTest
 from datacatalog import app
 from datacatalog.connector.ckan_connector import CKANConnector
 
-__author__ = 'Valentin Grouès'
+__author__ = "Valentin Grouès"
 
 
 class TestCKANConnector(BaseTest):
-
-    @unittest.skip('ckan import not used anymore')
+    @unittest.skip("ckan import not used anymore")
     def test_build_all_datasets(self):
-        ckan_connector = CKANConnector(app.config['CKAN_URL'])
+        ckan_connector = CKANConnector(app.config["CKAN_URL"])
         datasets = list(ckan_connector.build_all_entities())
         self.assertEqual(74, len(datasets))

@@ -21,13 +21,17 @@
    Loads configuration and creates the Flask application
 
 """
+import logging
 import os
+import json
 from collections import defaultdict
 from datetime import datetime
-from typing import Optional
+from logging.config import dictConfig
+from typing import Optional, List
 
 import jinja2
 import ldap
+from datacatalog.solr.solr_orm_fields import SolrField
 from flask import Flask, request, redirect, url_for
 from flask_assets import Environment
 from flask_caching import Cache
@@ -38,46 +42,70 @@ from flask_wtf.csrf import CSRFProtect
 from webassets.loaders import PythonLoader as PythonAssetsLoader
 
 from . import assets, settings
+from .exceptions import DownloadsHandlerLinksException
+
+logger = logging.getLogger(__name__)
 
 # if not entities are defined in the settings (ENTITIES parameter), the following entities will be used
-DEFAULT_ENTITIES = {'dataset': 'datacatalog.models.dataset.Dataset', 'study': 'datacatalog.models.study.Study',
-                    'project': 'datacatalog.models.project.Project'}
+DEFAULT_ENTITIES = {
+    "dataset": "datacatalog.models.dataset.Dataset",
+    "study": "datacatalog.models.study.Study",
+    "project": "datacatalog.models.project.Project",
+}
 
 DEFAULT_USE_RESTRICTIONS_ICONS = {
-    "PERMISSION": ('thumb_up', 'text-default', "Permissions"),
-    "OBLIGATION": ('hardware', 'text-default', "Obligations"),
-    "CONSTRAINED_PERMISSION": ('info', 'text-default', "Constrained permissions"),
-    "PROHIBITION": ('block', 'text-default', "Prohibitions"),
+    "PERMISSION": ("thumb_up", "text-default", "Permissions"),
+    "OBLIGATION": ("hardware", "text-default", "Obligations"),
+    "CONSTRAINED_PERMISSION": ("info", "text-default", "Constrained permissions"),
+    "PROHIBITION": ("block", "text-default", "Prohibitions"),
 }
 
 ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
 
 
 def get_access_handler(user, entity_name):
-    custom_handler_map = app.config.get('CUSTOM_ACCESS_HANDLERS', {})
+    custom_handler_map = app.config.get("CUSTOM_ACCESS_HANDLERS", {})
     if entity_name in custom_handler_map:
         custom_handler_string_class = custom_handler_map[entity_name]
-        split = custom_handler_string_class.split('.')
+        split = custom_handler_string_class.split(".")
         custom_handler_string_module = ".".join(split[:-1])
         custom_handler_string_class = "".join(split[-1:])
-        handler_module = __import__(custom_handler_string_module, fromlist=[custom_handler_string_class])
+        handler_module = __import__(
+            custom_handler_string_module, fromlist=[custom_handler_string_class]
+        )
         handler_class = getattr(handler_module, custom_handler_string_class)
         return handler_class.get_instance(current_user)
-    access_handler_map = app.config.get('ACCESS_HANDLERS', {"dataset": "Email"})
+    access_handler_map = app.config.get("ACCESS_HANDLERS", {"dataset": "Email"})
     access_handler_string = access_handler_map.get(entity_name)
-    if access_handler_string == 'Rems':
-        from .acces_handler.rems_handler import RemsAccessHandler
+    if access_handler_string and "Rems" in access_handler_string:
+        if access_handler_string == "Rems":
+            from .acces_handler.rems_handler import RemsAccessHandler
+
+            rems_class = RemsAccessHandler
+        elif access_handler_string == "RemsOidc":
+            from .acces_handler.rems_oidc_handler import RemsOidcAccessHandler
+
+            rems_class = RemsOidcAccessHandler
+        else:
+            raise ValueError("Unknown access handler")
         if user.is_authenticated:
             user_rems_id = user.id
         else:
             user_rems_id = "data-catalogue-service"
-        all_ids = app.config['entities'][entity_name].query.all_ids()
-        return RemsAccessHandler(user, api_username=user_rems_id,
-                                 api_key=app.config.get('REMS_API_KEY'),
-                                 host=app.config.get('REMS_URL'), verify_ssl=app.config.get('REMS_VERIFY_SSL', True),
-                                 all_ids=all_ids)
-    if access_handler_string == 'Email':
+        all_ids = app.config["entities"][entity_name].query.all_ids()
+        return rems_class(
+            user,
+            api_username=user_rems_id,
+            api_key=app.config.get("REMS_API_KEY"),
+            host=app.config.get("REMS_URL"),
+            form_id=app.config.get("REMS_FORM_ID"),
+            workflow_id=app.config.get("REMS_WORKFLOW_ID"),
+            verify_ssl=app.config.get("REMS_VERIFY_SSL", True),
+            all_ids=all_ids,
+        )
+    if access_handler_string == "Email":
         from .acces_handler.email_handler import EmailAccessHandler
+
         return EmailAccessHandler(user)
     return None
 
@@ -87,19 +115,30 @@ def configure_authentication_system() -> None:
     Configure the authentication system
     Loads the authentication method as specified in the AUTHENTICATION_METHOD settings parameter
     """
-    authentication_method = app.config.get('AUTHENTICATION_METHOD', 'LDAP')
-    if authentication_method == 'LDAP':
-        from .authentication.ldap_authentication import LDAPUserPasswordAuthentication
-        authentication = LDAPUserPasswordAuthentication(app.config['LDAP_HOST'])
-    elif authentication_method == 'PYOIDC':
-        from .authentication.pyoidc_authentication import PyOIDCAuthentication
-        authentication = PyOIDCAuthentication(base_url=app.config['BASE_URL'],
-                                              client_id=app.config['PYOIDC_CLIENT_ID'],
-                                              client_secret=app.config['PYOIDC_CLIENT_SECRET'],
-                                              idp_url=app.config['PYOIDC_IDP_URL'])
-    else:
-        raise ValueError("Unsupported authentication method")
-    app.config['authentication'] = authentication
+    authentication_method = app.config.get("AUTHENTICATION_METHOD", "LDAP")
+    try:
+        if authentication_method == "LDAP":
+            from .authentication.ldap_authentication import (
+                LDAPUserPasswordAuthentication,
+            )
+
+            authentication = LDAPUserPasswordAuthentication(app.config["LDAP_HOST"])
+        elif authentication_method == "PYOIDC":
+            from .authentication.pyoidc_authentication import PyOIDCAuthentication
+
+            authentication = PyOIDCAuthentication(
+                base_url=app.config["BASE_URL"],
+                client_id=app.config["PYOIDC_CLIENT_ID"],
+                client_secret=app.config["PYOIDC_CLIENT_SECRET"],
+                idp_url=app.config["PYOIDC_IDP_URL"],
+            )
+        else:
+            raise ValueError("Unsupported authentication method")
+    except Exception as e:
+        authentication = None
+        logger.error(e)
+        app.config["SHOW_LOGIN"] = False
+    app.config["authentication"] = authentication
 
 
 def configure_solr_orm(new_app) -> None:
@@ -111,20 +150,50 @@ def configure_solr_orm(new_app) -> None:
     to access solr.
 
     """
-    entities_string = new_app.config.get('ENTITIES', DEFAULT_ENTITIES)
+    entities_string = new_app.config.get("ENTITIES", DEFAULT_ENTITIES)
     entities = {}
     for entity_name, entity_string in entities_string.items():
-        split = entity_string.split('.')
+        split = entity_string.split(".")
         entity_class_string_module = ".".join(split[:-1])
         entity_class_string_class = "".join(split[-1:])
-        new_app.logger.info(f'Loading entity class {entity_class_string_module} as {entity_name}')
-        entity_module = __import__(entity_class_string_module, fromlist=[entity_class_string_class])
+        logger.debug(
+            f"Loading entity class {entity_class_string_module} as {entity_name}"
+        )
+        entity_module = __import__(
+            entity_class_string_module, fromlist=[entity_class_string_class]
+        )
         entity_class = getattr(entity_module, entity_class_string_class)
         entities[entity_name] = entity_class
 
-    new_app.config['entities'] = entities
+    new_app.config["entities"] = entities
     from .solr.solr_orm import SolrORM
-    new_app.config['_solr_orm'] = SolrORM(app.config['SOLR_ENDPOINT'], app.config['SOLR_COLLECTION'])
+
+    new_app.config["_solr_orm"] = SolrORM(
+        app.config["SOLR_ENDPOINT"], app.config["SOLR_COLLECTION"]
+    )
+
+
+def get_downloads_handler():
+    if app.config.get("DOWNLOADS_HANDLER") == "LFT":
+        from lftclient import LFTClient
+        from .storage_handler.lft_handler import LFTStorageHandler
+
+        lft_config = app.config.get("LFT_CONFIG")
+        lft = LFTClient(
+            host=lft_config["HOST"],
+            port=lft_config["PORT"],
+            scheme=lft_config["SCHEME"],
+            verify_ssl=lft_config["VERIFY_SSL"],
+        )
+        logger.info("logging in to LFT")
+        try:
+            lft.login(lft_config["USERNAME"], lft_config["PASSWORD"])
+        except Exception as e:
+            raise DownloadsHandlerLinksException(e)
+        logger.info("logged in")
+        return LFTStorageHandler(
+            lft, lft_config["NAMESPACE"], lft_config["LINKS_BASE_URL"]
+        )
 
 
 def create_application() -> Flask:
@@ -134,41 +203,49 @@ def create_application() -> Flask:
     Will use DevConfig if environment variable is not set.
     @return Flask application
     """
-    env = os.environ.get('DATACATALOG_ENV', 'dev')  # will default to dev env if no var exported
-    config_object = getattr(settings, '%sConfig' % env.capitalize())
-    new_app = Flask(__name__,
-                    static_folder=getattr(config_object, 'STATIC_FOLDER', 'static'),
-                    static_url_path=getattr(config_object, 'STATIC_URL_PATH', None)
-                    )
+    env = os.environ.get(
+        "DATACATALOG_ENV", "dev"
+    )  # will default to dev env if no var exported
+    config_object = getattr(settings, "%sConfig" % env.capitalize())
+    logging_config = getattr(config_object, "LOGGING_CONFIG", None)
+    if logging_config:
+        dictConfig(logging_config)
+    new_app = Flask(
+        __name__,
+        static_folder=getattr(config_object, "STATIC_FOLDER", "static"),
+        static_url_path=getattr(config_object, "STATIC_URL_PATH", None),
+    )
     new_app.config.from_object(config_object)
-    plugin = new_app.config.get('PLUGIN')
+    plugin = new_app.config.get("PLUGIN")
     if plugin:
-        plugin_settings = __import__(f'{plugin}.settings', fromlist=['PluginConfig'])
-        plugin_settings_class = getattr(plugin_settings, 'PluginConfig')
+        plugin_settings = __import__(f"{plugin}.settings", fromlist=["PluginConfig"])
+        plugin_settings_class = getattr(plugin_settings, "PluginConfig")
         new_app.config.from_object(plugin_settings_class)
     # make sure main settings have priority over plugin settings
     new_app.config.from_object(config_object)
-    new_app.config['ENV'] = env
-    url_prefix = new_app.config.get('URL_PREFIX')
+    new_app.config["ENV"] = env
+    url_prefix = new_app.config.get("URL_PREFIX")
     if url_prefix:
-        new_app.config['REVERSE_PROXY_PATH'] = url_prefix
+        new_app.config["REVERSE_PROXY_PATH"] = url_prefix
         ReverseProxyPrefixFix(new_app)
-    static_folder_configured = new_app.config.get('STATIC_FOLDER')
+    static_folder_configured = new_app.config.get("STATIC_FOLDER")
 
     if static_folder_configured:
         new_app.static_folder = static_folder_configured
-    new_app.cache = Cache(new_app, config=new_app.config['CACHE_CONFIG'])
+    new_app.cache = Cache(new_app, config=new_app.config["CACHE_CONFIG"])
     new_app.cache.clear()
-    new_app.jinja_env.add_extension('jinja2.ext.i18n')
+    new_app.jinja_env.add_extension("jinja2.ext.i18n")
     default_template_path = os.path.join(new_app.root_path, new_app.template_folder)
-    extra_templates_path = new_app.config.get('TEMPLATES_EXTRA_FOLDER')
+    extra_templates_path = new_app.config.get("TEMPLATES_EXTRA_FOLDER")
     if extra_templates_path:
         templates_paths = [extra_templates_path, default_template_path]
     else:
         templates_paths = [default_template_path]
-    my_loader = jinja2.ChoiceLoader([
-        jinja2.FileSystemLoader(templates_paths),
-    ])
+    my_loader = jinja2.ChoiceLoader(
+        [
+            jinja2.FileSystemLoader(templates_paths),
+        ]
+    )
     new_app.jinja_loader = my_loader
     return new_app
 
@@ -186,6 +263,7 @@ mail.init_app(app)
 # configure Flask-Login for authentication, user sessions
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.login_message_category = "error"
 configure_authentication_system()
 
 # configure static files loader
@@ -198,10 +276,15 @@ for name, bundle in assets_loader.load_bundles().items():
 @app.before_request
 def always_login():
     login_valid = current_user.is_authenticated
-    require_login = app.config.get('REQUIRE_LOGIN_ALL', False)
-    if require_login and request.endpoint and 'static' not in request.endpoint and not login_valid and not getattr(
-            app.view_functions[request.endpoint], 'is_public', False):
-        return redirect(url_for('login', next=request.full_path))
+    require_login = app.config.get("REQUIRE_LOGIN_ALL", False)
+    if (
+        require_login
+        and request.endpoint
+        and "static" not in request.endpoint
+        and not login_valid
+        and not getattr(app.view_functions[request.endpoint], "is_public", False)
+    ):
+        return redirect(url_for("login", next=request.full_path))
 
 
 def public_route(decorated_function):
@@ -209,20 +292,37 @@ def public_route(decorated_function):
     return decorated_function
 
 
-@app.template_filter('use_restrictions')
+@app.template_filter("use_restrictions")
 def _jinja2_filter_use_restrictions(form):
-    mapping_icons = app.config.get('USE_RESTRICTIONS_ICONS', DEFAULT_USE_RESTRICTIONS_ICONS)
+    mapping_icons = app.config.get(
+        "USE_RESTRICTIONS_ICONS", DEFAULT_USE_RESTRICTIONS_ICONS
+    )
     result = defaultdict(list)
     icons = {}
     for field in form:
-        if field.render_kw and 'use_restriction_rule' in field.render_kw:
-            result[field.render_kw['use_restriction_rule']].append(field)
+        if field.render_kw and "use_restriction_rule" in field.render_kw:
+            result[field.render_kw["use_restriction_rule"]].append(field)
     for restriction_type in result:
         icons[restriction_type] = mapping_icons.get(restriction_type)
     return result, icons
 
 
-@app.template_filter('dt')
+@app.template_filter("render_keywords")
+def _jinja_2_filter_render_keywords(keywords: List["SolrField"]) -> str:
+    entries = [
+        ", ".join(entry) if isinstance(entry, list) else entry
+        for entry in keywords
+        if entry
+    ]
+    return json.dumps(
+        [
+            {"@type": "DefinedTerm", "@id": "", "name": f"{ keyword }"}
+            for keyword in entries
+        ]
+    )
+
+
+@app.template_filter("dt")
 def _jinja2_filter_datetime(date: datetime, fmt: Optional[str] = None) -> Optional[str]:
     """
     Jinja filter for datetime formatting, converts datetime to string
@@ -235,10 +335,10 @@ def _jinja2_filter_datetime(date: datetime, fmt: Optional[str] = None) -> Option
     if fmt:
         return date.strftime(fmt)
     else:
-        return date.strftime('%Y-%m-%d,  %H:%M')
+        return date.strftime("%Y-%m-%d,  %H:%M")
 
 
-@app.template_filter('date')
+@app.template_filter("date")
 def _jinja2_filter_date(date: datetime) -> Optional[str]:
     """
     Jinja filter for datetime formatting, converts datetime to string containing only the date, no time information.
@@ -246,17 +346,22 @@ def _jinja2_filter_date(date: datetime) -> Optional[str]:
     @param date: datetime instance to format
     @return: string containing the formatted date
     """
-    return _jinja2_filter_datetime(date, '%Y-%m-%d')
+    return _jinja2_filter_datetime(date, "%Y-%m-%d")
 
 
-@app.template_filter('yesno')
-def _jinja2_filter_date(bool_flag: bool) -> str:
+@app.template_filter("yesno")
+def _jinja2_filter_yesno(bool_flag: str) -> str:
     """
     Jinja filter to convert a boolean to yes or no string
     @param bool_flag: boolean to convert to string
     @return: yes or no
     """
-    return {True: "yes", False: "no"}.get(bool_flag, 'no')
+    return {"true": "yes", "false": "no"}.get(bool_flag, "no")
+
+
+@app.template_filter("boolean")
+def _jinja2_filter_boolean(value: str) -> bool:
+    return value.lower() in ["true", "false"]
 
 
 @app.template_filter()
@@ -267,14 +372,17 @@ def email(email_address: str) -> str:
     @param email_address: email address to obfuscate
     @return: obfuscated email address
     """
-    email_address = email_address.replace('@', ' (AT) ')
-    last_dot = email_address.rfind('.')
-    email_address = email_address[:last_dot] + ' (DOT) ' + email_address[last_dot + 1:]
+    email_address = email_address.replace("@", " (AT) ")
+    last_dot = email_address.rfind(".")
+    last_dot_plus_un = last_dot + 1
+    email_address = (
+        email_address[:last_dot] + " (DOT) " + email_address[last_dot_plus_un:]
+    )
     return email_address
 
 
-@app.template_filter('pluralize')
-def pluralize(number: int, singular: str = '', plural: str = 's') -> str:
+@app.template_filter("pluralize")
+def pluralize(number: int, singular: str = "", plural: str = "s") -> str:
     """
     Jinja filter to help with dynamic pluralization of words.
     Return singular if number = 1, plural otherwise.
@@ -299,27 +407,32 @@ def inject_access_handler():
     """
     Used to decide if we show the my applications link in navbar
     """
-    handler = get_access_handler(current_user, app.config.get('DEFAULT_ENTITY', 'dataset'))
+    handler = get_access_handler(
+        current_user, app.config.get("DEFAULT_ENTITY", "dataset")
+    )
     show = handler and handler.supports_listing_accesses()
     return dict(show_my_application=show)
 
 
 # Import all controllers so that routes can be resolved
-from . import controllers
+from . import controllers  # noqa: E402
 
-__all__ = [controllers, assets, app]
+# Import to register filter
+from .storage_handler import all_handlers  # noqa: E402
+
+__all__ = [controllers, assets, app, all_handlers]
 
 # import extra controllers from plugin if CONTROLLERS_EXTRA is set in settings
-controllers_extra_strings = app.config.get('CONTROLLERS_EXTRA', [])
+controllers_extra_strings = app.config.get("CONTROLLERS_EXTRA", [])
 for controllers_extra_string in controllers_extra_strings:
-    app.logger.info(f'Importing extra controllers from  {controllers_extra_string}')
+    logger.info(f"Importing extra controllers from  {controllers_extra_string}")
     __import__(controllers_extra_string)
 
 # import excel exporter if EXCEL_EXPORTER is set in settings
-excel_exporter_strings = app.config.get('EXCEL_EXPORTER')
+excel_exporter_strings = app.config.get("EXCEL_EXPORTER")
 if excel_exporter_strings:
-    exporter_module = __import__(excel_exporter_strings, fromlist=['ExcelExporter'])
-    app.excel_exporter = getattr(exporter_module, 'ExcelExporter')
+    exporter_module = __import__(excel_exporter_strings, fromlist=["ExcelExporter"])
+    app.excel_exporter = getattr(exporter_module, "ExcelExporter")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run()

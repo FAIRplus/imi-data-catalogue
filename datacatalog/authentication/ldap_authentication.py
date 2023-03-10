@@ -22,6 +22,7 @@
     Contains an implementation of class UserPasswordAuthentication for LDAP authentication
 
 """
+import logging
 from typing import Tuple, List, Optional
 
 from ldap.ldapobject import LDAPObject
@@ -30,9 +31,9 @@ from . import UserPasswordAuthentication
 from .. import app, ldap
 from ..exceptions import AuthenticationException
 
-__author__ = 'Kavita Rege'
+__author__ = "Kavita Rege"
 
-logger = app.logger
+logger = logging.getLogger(__name__)
 
 
 class LDAPUserPasswordAuthentication(UserPasswordAuthentication):
@@ -46,7 +47,9 @@ class LDAPUserPasswordAuthentication(UserPasswordAuthentication):
         @param ldap_address: address and port of the LDAP server
         """
         self.ldap_address = ldap_address
-        logger.info("LDAPUserPasswordAuthentication initialized with address %s", ldap_address)
+        logger.info(
+            "LDAPUserPasswordAuthentication initialized with address %s", ldap_address
+        )
 
     def get_user_details(self, conn: LDAPObject, username: str) -> List[str]:
         """
@@ -55,14 +58,17 @@ class LDAPUserPasswordAuthentication(UserPasswordAuthentication):
         @return: raises an exception if unsuccessful,
         returns list containing email and display_name if successful
         """
+        logger.debug("getting user details for username %s", username)
         try:
             member_list = []
             member = "uid={},cn=users,cn=accounts,dc=uni,dc=lu".format(username)
-            attributes = self.get_attributes_by_dn(member, conn, username, ['displayName', 'mail'])
+            attributes = self.get_attributes_by_dn(
+                member, conn, username, ["displayName", "mail"]
+            )
             if attributes is None:
                 raise AuthenticationException("Invalid user")
-            member_list.append(attributes.get('mail'))
-            member_list.append(attributes.get('displayName'))
+            member_list.append(attributes.get("mail"))
+            member_list.append(attributes.get("displayName"))
             return member_list
         except ldap.SERVER_DOWN:
             raise AuthenticationException("LDAP server could not be reached")
@@ -75,27 +81,40 @@ class LDAPUserPasswordAuthentication(UserPasswordAuthentication):
         @return: raises an exception if unsuccessful,
         returns True and a list containing email and displayname if successful
         """
+        logger.info("authenticating user %s", username)
         try:
             conn = self.get_ldap_connection()
             member = "uid={},cn=users,cn=accounts,dc=uni,dc=lu".format(username)
-            conn.simple_bind_s(
-                member,
-                password
-            )
+            conn.simple_bind_s(member, password)
 
-            search_filter = '(|(&(objectClass=groupOfNames)(cn=*{}*)(member={})))'. \
-                format(app.config.get('LDAP_USER_GROUPS_FIELD'), member)
-            results = conn.search_s(app.config.get('LDAP_BASE_DN'), ldap.SCOPE_SUBTREE, search_filter)
+            group_filter = app.config.get("LDAP_USER_GROUPS_FIELD")
+            if group_filter:
+                search_filter = (
+                    "(|(&(objectClass=groupOfNames)(cn={})(member={})))".format(
+                        group_filter, member
+                    )
+                )
+            else:
+                search_filter = "(member={})".format(member)
+            results = conn.search_s(
+                app.config.get("LDAP_BASE_DN"), ldap.SCOPE_SUBTREE, search_filter
+            )
             try:
-                members = results[0][1]['member']
-                if member.encode('ASCII') in members:
-                    userDetails = self.get_user_details(conn, username)
-                return True, userDetails
+                members = results[0][1]["member"]
+                if member.encode("UTF8") in members:
+                    user_details = self.get_user_details(conn, username)
+                    return True, user_details
+                else:
+                    logger.info("user not in group")
+                    raise AuthenticationException("User not authorized")
             except IndexError:
+                logger.info("user not authorized")
                 raise AuthenticationException("User not authorized")
         except ldap.INVALID_CREDENTIALS:
+            logger.info("invalid credentials")
             raise AuthenticationException("Invalid Credentials")
         except ldap.SERVER_DOWN:
+            logger.error("cannot reach ldap server")
             raise AuthenticationException("LDAP server could not be reached")
 
     def get_ldap_connection(self) -> LDAPObject:
@@ -109,7 +128,9 @@ class LDAPUserPasswordAuthentication(UserPasswordAuthentication):
         conn.set_option(ldap.OPT_X_TLS_NEWCTX, 0)
         return conn
 
-    def get_attributes_by_dn(self, dn: str, ad_conn: LDAPObject, uid: str, attributes: List[str]) -> Optional[dict]:
+    def get_attributes_by_dn(
+        self, dn: str, ad_conn: LDAPObject, uid: str, attributes: List[str]
+    ) -> Optional[dict]:
         """
         Retrieve the specified attributes for a dedicated user
         @param dn: AD distinguished name
@@ -118,8 +139,12 @@ class LDAPUserPasswordAuthentication(UserPasswordAuthentication):
         @param attributes: list of attributes to retrieve
         @return: the list of attributes values
         """
-        result = ad_conn.search_s(dn, ldap.SCOPE_SUBTREE, \
-                                  '(&(objectClass=person)(uid={}))'.format(uid), attrlist=attributes)
+        result = ad_conn.search_s(
+            dn,
+            ldap.SCOPE_SUBTREE,
+            "(&(objectClass=person)(uid={}))".format(uid),
+            attrlist=attributes,
+        )
         results = {}
         if not result:
             # return None if user not found
@@ -127,7 +152,7 @@ class LDAPUserPasswordAuthentication(UserPasswordAuthentication):
         for dn, attributes_ad in result:
             for attribute_ad, attribute_ad_value in attributes_ad.items():
                 if attribute_ad in attributes and attribute_ad_value:
-                    results[attribute_ad] = attribute_ad_value[0].lower().decode('ASCII')
+                    results[attribute_ad] = attribute_ad_value[0].lower().decode("UTF8")
 
         return results
 
@@ -140,15 +165,16 @@ class LDAPUserPasswordAuthentication(UserPasswordAuthentication):
         @param uid: user id
         @return: the email address of user uid in dn or an empty string
         """
-        email = b''
-        result = ad_conn.search_s(dn, ldap.SCOPE_BASE, \
-                                  '(&(objectClass=person)(uid={}))'.format(uid))
+        email = b""
+        result = ad_conn.search_s(
+            dn, ldap.SCOPE_BASE, "(&(objectClass=person)(uid={}))".format(uid)
+        )
         if result:
             for dn, attrb in result:
-                if 'mail' in attrb and attrb['mail']:
-                    email = attrb['mail'][0].lower()
+                if "mail" in attrb and attrb["mail"]:
+                    email = attrb["mail"][0].lower()
                     break
-        return email.decode('ASCII')
+        return email.decode("UTF8")
 
     @staticmethod
     def get_displayname_by_dn(dn: str, ad_conn: LDAPObject, uid: str) -> str:
@@ -159,11 +185,13 @@ class LDAPUserPasswordAuthentication(UserPasswordAuthentication):
         @param uid: user id
         @return: the display name of user uid in dn or an empty string
         """
-        displayname = ''
-        result = ad_conn.search_s(dn, ldap.SCOPE_SUBTREE, '(&(objectClass=person)(uid={}))'.format(uid))
+        displayname = ""
+        result = ad_conn.search_s(
+            dn, ldap.SCOPE_SUBTREE, "(&(objectClass=person)(uid={}))".format(uid)
+        )
         if result:
             for dn, attrb in result:
-                if 'displayName' in attrb and attrb['displayName']:
-                    displayname = attrb['displayName'][0]
+                if "displayName" in attrb and attrb["displayName"]:
+                    displayname = attrb["displayName"][0]
                     break
-        return displayname.decode('ASCII')
+        return displayname.decode("UTF8")

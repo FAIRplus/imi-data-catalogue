@@ -28,25 +28,27 @@ from urllib.parse import urlparse, urljoin
 from flask import redirect, request, Response, url_for
 from flask_wtf import FlaskForm
 from markupsafe import Markup
-from wtforms import HiddenField, Field
+from wtforms import HiddenField, Field, SelectMultipleField, widgets
 
-__author__ = 'Valentin Grouès'
+__author__ = "Valentin Grouès"
 
-class EmptyWidget():
+
+class EmptyWidget:
     def __init__(self, input_type=None):
         if input_type is not None:
             self.input_type = input_type
 
     def __call__(self, field, **kwargs):
-        kwargs.setdefault('id', field.id)
-        kwargs.setdefault('type', self.input_type)
-        return Markup(f'')
+        kwargs.setdefault("id", field.id)
+        kwargs.setdefault("type", self.input_type)
+        return Markup("")
 
 
 class SeparatorText(Field):
     """
     Text only, not an input
     """
+
     widget = EmptyWidget()
 
     def __init__(self, label=None, validators=None, **kwargs):
@@ -64,8 +66,7 @@ def is_safe_url(target_url: str) -> bool:
     """
     ref_url = urlparse(request.host_url)
     test_url = urlparse(urljoin(request.host_url, target_url))
-    return test_url.scheme in ('http', 'https') and \
-           ref_url.netloc == test_url.netloc
+    return test_url.scheme in ("http", "https") and ref_url.netloc == test_url.netloc
 
 
 def get_redirect_target() -> str:
@@ -74,7 +75,7 @@ def get_redirect_target() -> str:
     Will look first in the get parameters and then in the referrer.
     @return: returns the redirect url
     """
-    for target in request.args.get('next'), request.referrer:
+    for target in request.args.get("next"), request.referrer:
         if not target:
             continue
         if is_safe_url(target):
@@ -85,12 +86,13 @@ class RedirectForm(FlaskForm):
     """
     Class meant to be used as parent class for forms that need to redirect the users after submission
     """
+
     next = HiddenField()
 
     def __init__(self, *args, **kwargs):
         FlaskForm.__init__(self, *args, **kwargs)
         if not self.next.data:
-            self.next.data = get_redirect_target() or url_for('home')
+            self.next.data = get_redirect_target() or url_for("home")
 
     def redirect(self) -> Response:
         """
@@ -101,4 +103,16 @@ class RedirectForm(FlaskForm):
         if is_safe_url(self.next.data):
             return redirect(self.next.data)
         target = get_redirect_target()
-        return redirect(target or '/')
+        return redirect(target or "/")
+
+
+class MultiCheckboxField(SelectMultipleField):
+    """
+    A multiple-select, except displays a list of checkboxes.
+
+    Iterating the field will produce subfields, allowing custom rendering of
+    the enclosed checkbox fields.
+    """
+
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()

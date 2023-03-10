@@ -18,17 +18,18 @@
 
 from tests.base_test import BaseTest
 
+from datacatalog import app
+from datacatalog.models.dataset import Dataset
 from datacatalog.solr.facets import Range, Facet, FacetRange
 
-__author__ = 'Nirmeen Sallam'
+__author__ = "Nirmeen Sallam"
 
 
 class Test(BaseTest):
-
     def test_range(self):
         range = Range(0, 50, 20)
         range_iter_intervals = range.iter_intervals()
-        self.assertEqual(next(range_iter_intervals),(0,20))
+        self.assertEqual(next(range_iter_intervals), (0, 20))
         next(range_iter_intervals)
         self.assertEqual(next(range_iter_intervals), (40, 60))
 
@@ -56,3 +57,31 @@ class Test(BaseTest):
         range = Range(20, 50, 10)
         facetrange = FacetRange("project_description", "project_description", range)
         self.assertEqual(facetrange.field_name, "project_description")
+
+    def test_special_characters(self):
+        orm = app.config["_solr_orm"]
+        orm.delete(query="*:*")
+        orm.delete_fields()
+        orm.create_fields()
+        orm.commit()
+
+        new_entity = Dataset(title="New 'dataset'")
+        new_entity.save(commit=True)
+
+        facets = {"title": Facet("title", "Title")}
+        facets["title"].set_values(["New 'dataset'"])
+
+        searcher = new_entity.query
+        try:
+            results = searcher.search(query="*:*", facets=facets.values(), fuzzy=True)
+            self.assertEqual(len(results), 1)
+
+            new_entity.title = 'New "dataset"'
+            new_entity.save(commit=True)
+            facets["title"].set_values(['New "dataset"'])
+            results = searcher.search(query="*:*", facets=facets.values(), fuzzy=True)
+            self.assertEqual(len(results), 1)
+        finally:
+            orm.delete(query="*:*")
+            orm.delete_fields()
+            orm.commit()

@@ -1,0 +1,218 @@
+{
+    "@context": [
+        "https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+        "http://w3id.org/dats/context/obo/dataset_obo_context.jsonld"
+    ],
+    "@type": "Project",
+    "acronym": "GSE6054",
+    "description": "Background: Elevated plasma cholesterol promotes the formation of atherosclerotic lesions in which monocyte-derived lipid-laden macrophages are frequently found. To analyze, if circulating monocytes already show increased lipid content and differences in lipoprotein metabolism, we compared monocytes from patients with Familial Hypercholesterolemia (FH) with those from healthy individuals.Methods: Cholesterol and oxidized cholesterol metabolite serum levels of FH and of healthy, gender/age matched control subjects were measured by combined gas chromatography ? mass spectroscopy. Monocytes from patients with FH and from healthy subjects were isolated by antibody-assisted density centrifugation. Gene expression profiles of isolated monocytes were measured using Affymetrix HG-U 133 Plus 2.0 microarrays. We compared monocyte gene expression profiles from FH patients with healthy controls using a Welch T-test with correction for multiple testing (p < 0.05; Benjamini Hochberg correction, False Discovery Rate = 0.05). The differential expression of FH associated genes was validated at the mRNA level by qRT-PCR and/or at the protein level by Western Blot or flow cytometry. Functional validation of monocyte scavenger receptor activities were done by binding assays and dose/time dependent uptake analysis using native and oxidized LDL.Results: Using microarray analysis we found in FH patients a significant up-regulation of 1,617 genes and a down-regulation of 701 genes compared to monocytes from healthy individuals. These include genes of proteins that are involved in the uptake, biosynthesis, disposition, and cellular efflux of cholesterol. In addition, plasma from FH patients contains elevated amounts of sterols and oxysterols. An increased uptake of oxidized as well as of native LDL by FH monocytes combined with a down-regulation of NPC1 and ABCA1 explains the lipid accumulation observed in these cells.Conclusion: Our data demonstrate that circulating FH monocytes show differences in cell physiology that may contribute to the early onset of atherosclerosis in this disease.",
+    "extraProperties": [
+        {
+            "category": "website",
+            "values": [
+                {
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                    "@type": "Annotation",
+                    "value": " https://www.ncbi.nlm.nih.gov/bioproject/PRJNA97731"
+                }
+            ]
+        }
+    ],
+    "identifier": {
+        "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+        "@type": "Identifier",
+        "identifier": "925797c8-71e8-11eb-bafe-3e22fbb3883f"
+    },
+    "keywords": [
+        {
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "@type": "Annotation",
+            "value": "Micro-array analysis"
+        },
+        {
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "@type": "Annotation",
+            "value": "cell type comparison,"
+        },
+        {
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "@type": "Annotation",
+            "value": "macrophages"
+        },
+        {
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "@type": "Annotation",
+            "value": "expression profiling by array"
+        }
+    ],
+    "primaryPublications": [
+        {
+            "@context": "https://w3id.org/dats/context/sdo/publication_sdo_context.jsonld",
+            "@type": "Publication",
+            "identifier": {
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                "@type": "Identifier",
+                "identifier": "https://pubmed.ncbi.nlm.nih.gov/19040724"
+            }
+        }
+    ],
+    "projectAssets": [
+        {
+            "@context": "https://w3id.org/dats/context/sdo/study_sdo_context.jsonld",
+            "@type": "Study",
+            "acronym": "Monocytes of patients with familial hypercholesterolemia show alterations in cholesterol metabolism",
+            "description": "23 monocytes samples: 4 homozygous FH, 6 heterozygous FH, 13 control participants",
+            "identifier": {
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                "@type": "Identifier",
+                "identifier": "92579926-71e8-11eb-bafe-3e22fbb3883f"
+            },
+            "input": [
+                {
+                    "@context": "https://w3id.org/dats/context/sdo/material_sdo_context.jsonld",
+                    "@type": "Material",
+                    "bearerOfDisease": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld",
+                            "@type": "Disease",
+                            "name": "familial hypercholesterolemia"
+                        }
+                    ],
+                    "name": "input material",
+                    "taxonomy": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/taxonomic_info_sdo_context.jsonld",
+                            "@type": "TaxonomicInformation",
+                            "name": "Homo sapiens"
+                        }
+                    ]
+                }
+            ],
+            "name": "study_primary_purpose",
+            "output": [
+                {
+                    "@context": "https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+                    "@type": "Dataset",
+                    "creators": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                            "@type": "Organization",
+                            "name": ""
+                        }
+                    ],
+                    "distributions": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/dataset_distribution_sdo_context.jsonld",
+                            "@type": "DatasetDistribution",
+                            "access": {
+                                "@context": "https://w3id.org/dats/context/sdo/access_sdo_context.jsonld",
+                                "@type": "Access",
+                                "accessURL": "ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE6nnn/GSE6054/suppl/GSE6054_RAW.tar",
+                                "landingPage": ""
+                            },
+                            "dates": [
+                                {
+                                    "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                                    "@type": "Date",
+                                    "date": "Tue, 17 Oct 2006 00:00:00 GMT",
+                                    "type": {
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "@type": "Annotation",
+                                        "value": "creation date"
+                                    }
+                                },
+                                {
+                                    "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                                    "@type": "Date",
+                                    "date": "Mon, 25 Mar 2019 00:00:00 GMT",
+                                    "type": {
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "@type": "Annotation",
+                                        "value": "last update date"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "extraProperties": [
+                        {
+                            "@context": "http://w3id.org/dats/context/obo/category_values_pair_obo_context.jsonld",
+                            "@type": "CategoryValuesPair",
+                            "category": "number of samples",
+                            "values": [
+                                {
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                    "@type": "Annotation",
+                                    "value": "23"
+                                }
+                            ]
+                        }
+                    ],
+                    "identifier": {
+                        "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                        "@type": "Identifier",
+                        "identifier": "925798d6-71e8-11eb-bafe-3e22fbb3883f"
+                    },
+                    "isAbout": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld",
+                            "@type": "Disease",
+                            "name": "familial hypercholesterolemia"
+                        }
+                    ],
+                    "title": "Monocytes of patients with familial hypercholesterolemia show alterations in cholesterol metabolism",
+                    "types": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                            "@type": "Annotation",
+                            "value": "expression profiling by array"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "projectLeads": [
+        {
+            "@context": "https://w3id.org/dats/context/sdo/person_sdo_context.jsonld",
+            "@type": "Person",
+            "affiliations": [
+                {
+                    "@context": "https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                    "@type": "Organization",
+                    "location": {
+                        "@context": "https://w3id.org/dats/context/sdo/place_sdo_context.jsonld",
+                        "@type": "Place",
+                        "postalAddress": "xxx,Germany"
+                    },
+                    "name": "University Hospital Jena"
+                }
+            ],
+            "email": "xxxxx@mti.uni-jena.de, xxxx@googlemail.com",
+            "extraProperties": [
+                {
+                    "category": "phoneNumber",
+                    "values": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                            "@type": "Annotation",
+                            "value": "+49-xxxx-xxxxxx"
+                        }
+                    ]
+                }
+            ],
+            "firstName": "",
+            "fullName": "",
+            "lastName": ""
+        }
+    ],
+    "projectWebsite": " https://www.ncbi.nlm.nih.gov/bioproject/PRJNA97731",
+    "title": "Monocytes of patients with familial hypercholesterolemia show alterations in cholesterol metabolism",
+    "types": [
+        {
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "@type": "Annotation",
+            "value": "NCBI GEO"
+        }
+    ]
+}

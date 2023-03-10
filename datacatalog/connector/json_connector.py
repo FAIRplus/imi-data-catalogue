@@ -25,16 +25,16 @@
 
 """
 import json
+import logging
 from math import isnan
 from typing import Type, Generator
 
 from .entities_connector import ImportEntitiesConnector
-from .. import app
 from ..solr.solr_orm_entity import SolrEntity
 
-__author__ = 'Valentin Grouès'
+__author__ = "Valentin Grouès"
 
-logger = app.logger
+logger = logging.getLogger(__name__)
 
 
 class JSONConnector(ImportEntitiesConnector):
@@ -49,6 +49,11 @@ class JSONConnector(ImportEntitiesConnector):
         @param json_file_path: the path of json file containing the serialized entities
         @param entity_class: the class to instantiate
         """
+        logger.info(
+            "Initializing JSON connector for %s and json %s",
+            entity_class.__name__,
+            json_file_path,
+        )
         self.entity_class = entity_class
         self.json_file_path = json_file_path
 
@@ -56,9 +61,9 @@ class JSONConnector(ImportEntitiesConnector):
         """
         Yields instances of self.entity_class parsed from the json file self.json_file_path
         """
-        with open(self.json_file_path, encoding='utf8') as json_file:
+        with open(self.json_file_path, encoding="utf8") as json_file:
             data = json.load(json_file)
-            for entity in data['docs']:
+            for entity in data["docs"]:
                 new_entity = self.entity_class()
                 for key in entity:
                     value = entity[key]

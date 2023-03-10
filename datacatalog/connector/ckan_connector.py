@@ -24,19 +24,19 @@
 
 """
 import datetime
+import logging
 from typing import Generator
 
 from ckanapi import RemoteCKAN
 
 from .entities_connector import ImportEntitiesConnector
-from .. import app
 from ..models.dataset import Dataset
 
-CKAN_DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.%f'
+CKAN_DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
 
-__author__ = 'Valentin Grouès'
+__author__ = "Valentin Grouès"
 
-logger = app.logger
+logger = logging.getLogger(__name__)
 
 
 class CKANConnector(ImportEntitiesConnector):
@@ -44,6 +44,7 @@ class CKANConnector(ImportEntitiesConnector):
     The CKAN connector class implements the EntitiesConnector methods to build Dataset using the REST API of a CKAN
     instance
     """
+
     # MAPPING between CKAN and Dataset fields
     DIRECT_MAPPING = {
         # "Affiliation": Dataset.affiliation,
@@ -122,24 +123,32 @@ class CKANConnector(ImportEntitiesConnector):
         @param package: a dict containing the CKAN field of a package
         @return: a Dataset instance initialized with the data from the CKAN package
         """
-        project_name = package.get('title', None)
-        dataset = Dataset(None, package.get('id', None))
+        project_name = package.get("title", None)
+        dataset = Dataset(None, package.get("id", None))
         dataset.project_name = project_name
-        extras_with_values = {extra['key'].strip(): extra['value'] for extra in package.get('extras') if extra['value']}
+        extras_with_values = {
+            extra["key"].strip(): extra["value"]
+            for extra in package.get("extras")
+            if extra["value"]
+        }
         self.map_fields(dataset, extras_with_values)
         if dataset.title is None:
             dataset.title = project_name
-        dataset.name = package.get('name', None)
-        dataset.notes = package.get('notes', None)
-        dataset.tags = [tag['display_name'] for tag in package.get('tags', [])]
-        dataset.groups = [group['display_name'] for group in package.get('groups', [])]
-        dataset.url = package.get('url', None)
-        created_string = package.get('metadata_created', None)
+        dataset.name = package.get("name", None)
+        dataset.notes = package.get("notes", None)
+        dataset.tags = [tag["display_name"] for tag in package.get("tags", [])]
+        dataset.groups = [group["display_name"] for group in package.get("groups", [])]
+        dataset.url = package.get("url", None)
+        created_string = package.get("metadata_created", None)
         if created_string is not None:
-            created_datetime = datetime.datetime.strptime(created_string, CKAN_DATE_FORMAT)
+            created_datetime = datetime.datetime.strptime(
+                created_string, CKAN_DATE_FORMAT
+            )
         dataset.created = created_datetime
-        modified_string = package.get('metadata_modified', None)
+        modified_string = package.get("metadata_modified", None)
         if modified_string is not None:
-            modified_datetime = datetime.datetime.strptime(modified_string, CKAN_DATE_FORMAT)
+            modified_datetime = datetime.datetime.strptime(
+                modified_string, CKAN_DATE_FORMAT
+            )
         dataset.modified = modified_datetime
         return dataset

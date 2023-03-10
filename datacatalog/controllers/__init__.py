@@ -19,7 +19,8 @@
 from . import api_entities
 from . import web_controllers
 from . import login_controllers
+from . import sitemap_generator
 
-__author__ = 'Valentin Grouès'
+__author__ = "Valentin Grouès"
 
-__all__ = [api_entities, web_controllers, login_controllers]
+__all__ = [api_entities, web_controllers, login_controllers, sitemap_generator]

@@ -20,11 +20,10 @@
 from tests.base_test import BaseTest
 from datacatalog.models.user import User
 
-__author__ = 'Nirmeen Sallam'
+__author__ = "Nirmeen Sallam"
 
 
 class TestUser(BaseTest):
-
     def test_get_id(self):
         u = User("test_user", "", "")
         self.assertEqual("test_user", User.get_id(u))

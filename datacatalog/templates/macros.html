@@ -2,24 +2,38 @@
 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
+            {% set printed_messages = dict() %}
             {% for category, message in messages %}
-                {% if category == 'error' or category is none %}
-                    <div class="alert alert-dismissible alert-danger" role="alert">
-                {% else %}
-                    <div class="alert alert-{{ category }}" role="alert">
+                {% if message not in printed_messages %}
+                    {% if category == 'error' or category is none %}
+                        <div class="alert alert-dismissible alert-danger" role="alert">
+                    {% else %}
+                        <div class="alert alert-{{ category }}" role="alert">
+                    {% endif %}
+                {% set x = printed_messages.__setitem__(message, "value") %}
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{{ message }}</strong>
+                </div>
                 {% endif %}
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>{{ message }}</strong>
-            </div>
             {% endfor %}
         {% endif %}
     {% endwith %}
 {% endmacro %}
 
 
-{% macro split_labels(list, type="primary") %}
+{% macro split_labels(list, type="primary", facet_url=None) %}
     {% for value in list %}
-        <span class="label label-{{ type }}">{{ value | urlize }}</span>
+        {% if ":" in value and "://" not in value %}
+            {{ split_value(value) }}
+        {% elif "://" in value %}
+            <span class="label label-{{ type }}">{{ value | urlize }}</span>
+        {% else %}
+            {% if facet_url %}
+                <span class="label label-{{ type }}"><a href="{{ facet_url }}{{ value | urlencode }}">{{ value }}</a></span>
+            {% else %}
+                <span class="keyword-unclickable label">{{ value }}</span>
+            {% endif %}
+        {% endif %}
     {% endfor %}
 {% endmacro %}
 
@@ -27,7 +41,13 @@
     <span>{{ list | join(", ")| urlize }}</span>
 {% endmacro %}
 
-
+{% macro split_value(value, label_type="primary", span_type="static") %}
+    {% set key, val = value.split(':', 1) %}
+    <div class="keyword-div">
+        <label class="label keyword-unclickable">{{ key }}</label>
+        <span class="label-{{ span_type }} keyword-span">{{ val }}</span>
+    </div>
+{% endmacro %}
 
 
 {% macro show_pagination(pagination, query, sort_order, selected_sort, facets=[], search_controller="search", entity_name='dataset') %}
@@ -88,16 +108,24 @@
 
 
 
-
-{% macro show_field(value, label, link=None, long=False, list=False, reference_list=False) %}
+{% macro show_field(value, label, link=None, long=False, list=False, reference_list=False, facet_url=None) %}
     <dt>{{ label }}</dt>
     <dd>
         {% if value is not none %}
-            {% if not long %}{% if link %}
-                <a href="{{ link }}">{{ value }}</a>
-                {% else %}{% if list %}{{ split_labels(value) }}{% elif reference_list %}
-                    {{ split_values(value) }}{% else %}{{ value | urlize }}
-                {% endif %}{% endif %}
+            {% if not long %}
+                {% if link %}
+                    <a href="{{ link }}">{{ value }}</a>
+                {% else %}
+                    {% if list %}
+                        {{ split_labels(value, facet_url=facet_url) }}
+                    {% elif reference_list %}
+                        {{ split_values(value) }}
+                    {% elif facet_url %}
+                        <a href="{{ facet_url }}{{ value | lower if value is boolean() else value | urlencode }}">{{ value }}</a>
+                    {% else %}
+                        {{ value | urlize }}
+                    {% endif %}
+                {% endif %}
             {% else %}
                 <blockquote>{{ value | urlize }}</blockquote>
             {% endif %}
@@ -107,17 +135,17 @@
     </dd>
 {% endmacro %}
 
-{% macro show_field_text(value, label, list=False) %}
-    {{ show_field(value, label, False, list=list) }}
+{% macro show_field_text(value, label, list=False, facet_url=None) %}
+    {{ show_field(value, label, False, list=list, facet_url=facet_url) }}
 {% endmacro %}
 
 {% macro show_field_percentage(value, label, list=False) %}
     {{ show_field(value | string + '%', label, False, list=list) }}
 {% endmacro %}
 
-{% macro show_field_list(value, label, reference_list=False) %}
+{% macro show_field_list(value, label, reference_list=False, facet_url=None) %}
     {% if  value %}
-        {{ show_field(value, label, list=True, reference_list=reference_list) }}
+        {{ show_field(value, label, list=True, reference_list=reference_list, facet_url=facet_url) }}
     {% endif %}
 {% endmacro %}
 
@@ -163,7 +191,11 @@
 {% endmacro %}
 
 {% macro show_field_link(value, label, link) %}
-    {{ show_field(value, label, link) }}
+    {% if value %}
+        {{ show_field(value, label, link) }}
+    {% else %}
+        {{ show_field('-', label) }}
+    {% endif %}
 {% endmacro %}
 
 
@@ -220,6 +252,19 @@
                     {{ field(class_="btn btn-default btn-raised btn-primary") }}
                 </div>
             {% endif %}
+        {% elif field.type == 'MultiCheckboxField' %}
+            <div class="form-group {% if field.flags.required %}required{% endif %}">
+                <label for="{{ field.id }}" class="form-control-label">{{ field.label.text }}</label>
+                {% for choice in field.choices %}
+                    <div class="flex-checkbox checkbox">
+                        <label><input id="{{ field.name ~ '-' ~ loop0 }}" name="{{ field.name }}"
+                                      type="checkbox" value="{{ choice[0] }}"/></label>
+                        <label for="{{ field.name }}" class="control-label">
+                            {{ choice[1] }}
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
         {% elif field.type == 'BooleanField' %}
             <div class="row form-group {% if field.render_kw['compact'] %}form-group-compact{% endif %} {% if field.flags.required %}required{% endif %}">
                 {{ render_checkbox(field) }}
@@ -288,9 +333,45 @@
 
 {% endmacro %}
 
+
 {% macro end_panel() %}
     </dl>
     </div>
     </div>
     </div>
+{% endmacro %}
+
+
+{% macro show_contact(contacts) %}
+    <div id="contacts-datatable"
+         data-contacts='{{ contacts | tojson }}'>
+    </div>
+{% endmacro %}
+
+
+{% macro start_table() %}
+    <table class="dc-table">
+    <tbody>
+{% endmacro %}
+
+{% macro table_row(values, header=False, links=None, merge=False, bold=False) %}
+    <tr {% if header %} class="header-table" {% elif bold %} class="bold-row" {% endif %} >
+    {% for col in values %}
+        <td {% if loop.first %} class="td-table label-table"
+        {% else %} class="td-table" {% endif %} {% if merge and loop.last %} colspan="2" {% endif %}>
+        {% if links[loop.index0] %}
+            <a href="{{ links[loop.index0] }}">{{ col }}</a>
+        {% elif col is none %}
+            -
+        {% else %}  
+            {{ col }}
+        {% endif %}
+        </td>
+    {% endfor %}
+    </tr>
+{% endmacro %}
+
+{% macro end_table() %}
+    </tbody>
+    </table>
 {% endmacro %}

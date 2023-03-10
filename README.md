@@ -18,6 +18,7 @@ Local installation of development environment and procedure for docker version a
     * [Maintenance](#maintenance-of-docker-compose)
     * [Modifying the datasets](#modifying-the-datasets)
 * [Single Docker deployment](#single-docker-deployment)
+* [Development](#development)
 
 ## Local installation
 
@@ -61,7 +62,8 @@ sudo apt-get install libsasl2-dev libldap2-dev libssl-dev
 
     ```bash
     cd datacatalog/static/vendor
-    npm install
+    npm ci
+    npm run build
     ```
 1. Create a solr core
 
@@ -88,12 +90,31 @@ sudo apt-get install libsasl2-dev libldap2-dev libssl-dev
      ./manage.py import_entities Dats project
      ./manage.py import_entities Dats dataset
      ```
+1. [Optional] Automatically generate sitemap while indexing the datasets:
+
+       ```
+       ./manage.py import_entities Dats study --sitemap
+       ./manage.py import_entities Dats project --sitemap
+       ./manage.py import_entities Dats dataset --sitemap
+       ```
+1. Generate Sitemap:
+
+     ```
+     ./manage.py generate_sitemaps
+     ```
+1. [Optional] Extend Index for studies, projects and datasets:
+
+      ```
+      ./manage.py extend_entity_index project
+      ./manage.py extend_entity_index study
+      ./manage.py extend_entity_index dataset
+      ```
 
 1. Run the development server:
 
-    ```
-    ./manage.py runserver
-    ```
+     ```
+     ./manage.py runserver
+     ```
 
 The application should now be available under http://localhost:5000
 
@@ -220,3 +241,12 @@ runnning). Then, simply use:
 (local) $ docker build . -t "data-catalog"
 (local) $ docker run --name data-catalog --entrypoint "gunicorn" -p 5000:5000 -t data-catalog -t 600 -w 2 datacatalog:app --bind 0.0.0.0:5000
 ```
+
+## Development
+
+Install needed dependencies with:
+
+`pip install -r requirements-dev.txt`
+
+Configure pre-commit hook for black and flake8:  
+see https://dev.to/m1yag1/how-to-setup-your-project-with-pre-commit-black-and-flake8-183k

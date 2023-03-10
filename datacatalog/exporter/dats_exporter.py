@@ -24,19 +24,38 @@
 
 
 """
+import json
+import logging
 from typing import Dict
+
+import werkzeug.exceptions
+from flask import safe_join
 
 from .. import app
 from ..models.dataset import Dataset
 from ..models.project import Project
 from ..models.study import Study
 
-__author__ = 'Nirmeen Sallam'
+__author__ = "Nirmeen Sallam, Abetare Shabani"
 
-logger = app.logger
+from ..solr.solr_orm_entity import SolrEntity
+
+logger = logging.getLogger(__name__)
 
 w3id_base_url = "https://w3id.org/dats/context/sdo/"
 w3id_annotation = w3id_base_url + "annotation_sdo_context.jsonld"
+
+value_block = {
+    "values": [],
+    "@type": "CategoryValuesPair",
+    "category": "",
+}
+
+annot_block = {
+    "value": "",
+    "@type": "Annotation",
+    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+}
 
 
 class DATSExporter:
@@ -55,169 +74,190 @@ class DATSExporter:
         """
         Returns Dats json file of the solr entity
         """
-
         metadata = {}
-
-        if isinstance(entity, Project):
-            return self.build_dats_project(metadata, entity)
-        elif isinstance(entity, Dataset):
-            return self.build_dats_dataset(metadata, entity)
-        elif isinstance(entity, Study):
-            return self.build_dats_study(metadata, entity)
+        if entity.connector_name and entity.connector_name.lower() == "datsconnector":
+            return DATSExporter.read_dats_file(metadata, entity)
         else:
-            logger.error("Entity type not recognised")
+            if isinstance(entity, Dataset) or isinstance(entity, Study):
+                parent_entity = DATSExporter.get_entity_parent(entity)
+                if isinstance(parent_entity, Project):
+                    return self.build_dats_project(metadata, parent_entity)
+            elif isinstance(entity, Project):
+                return self.build_dats_project(metadata, entity)
+            else:
+                logger.warning("Entity type not recognised")
+
+    @staticmethod
+    def get_entity_filename(entity: SolrEntity) -> str:
+        return entity.filename
+
+    @staticmethod
+    def read_dats_file(metadata: dict, entity: SolrEntity) -> dict:
+        """
+        Returns the data directly from a specific file
+        @param: metadata
+        @param: entity
+        """
+        try:
+            entity_path = app.config["JSON_FILE_PATH"][
+                f"{entity.__class__.__name__.lower()}"
+            ]
+            parent_entity = DATSExporter.get_entity_parent(entity)
+            if parent_entity:
+                project_name = DATSExporter.get_entity_filename(parent_entity)
+            else:
+                project_name = DATSExporter.get_entity_filename(entity)
+            filepath = safe_join(entity_path, project_name)
+            with open(filepath, "r") as f:
+                metadata = json.load(f)
+            return metadata
+        except FileNotFoundError as e:
+            logger.error(e)
 
     @staticmethod
     def build_dats_project(metadata, project):
-
+        logger.debug("exporting project %s as DATS", project.id)
         metadata["@type"] = "Project"
-        metadata["@context"] = [w3id_base_url + "dataset_sdo_context.jsonld",
-                                "http://w3id.org/dats/context/obo/dataset_obo_context.jsonld"]
+        metadata["@context"] = [
+            w3id_base_url + "dataset_sdo_context.jsonld",
+            "http://w3id.org/dats/context/obo/dataset_obo_context.jsonld",
+        ]
         if project.id:
-            metadata['identifier'] = {
+            metadata["identifier"] = {
                 "identifier": project.id,
                 "@type": "Identifier",
-                "@context": w3id_base_url + "identifier_info_sdo_context.jsonld"
+                "@context": w3id_base_url + "identifier_info_sdo_context.jsonld",
             }
         else:
-            logger.error("Project entity has no identifier")
+            logger.warning("Project entity has no identifier: %s", project.title)
 
         if project.title:
-            metadata['title'] = project.title
+            metadata["title"] = project.title
         if project.description:
-            metadata['description'] = project.description
+            metadata["description"] = project.description
 
-        metadata['types'] = []
+        metadata["types"] = []
         if project.types:
             for project_type in project.types:
                 temp = {
                     "@type": "Annotation",
                     "@context": w3id_annotation,
-                    "value": project_type
+                    "value": project_type,
                 }
-                metadata['types'].append(temp)
+                metadata["types"].append(temp)
 
         if project.funded_by:
-            metadata['fundedBy'] = []
+            metadata["fundedBy"] = []
             funded_by_names = project.funded_by.split(", ")
             for name in funded_by_names:
-                temp = {"name": name,
-                        "@type": "Grant",
-                        "@context": w3id_base_url + "grant_sdo_context.jsonld"
-                        }
-                metadata['fundedBy'].append(temp)
+                temp = {
+                    "name": name,
+                    "@type": "Grant",
+                    "@context": w3id_base_url + "grant_sdo_context.jsonld",
+                }
+                metadata["fundedBy"].append(temp)
 
         if project.keywords:
-            metadata['keywords'] = []
+            metadata["keywords"] = []
             for keyword in project.keywords:
                 temp = {
                     "@type": "Annotation",
                     "@context": w3id_annotation,
-                    "value": keyword
+                    "value": keyword,
                 }
-                metadata['keywords'].append(temp)
-
-        if project.contact_title or project.first_name or project.last_name or project.email or \
-                project.affiliation or project.business_address or project.role or project.business_fax_number or \
-                project.business_phone_number:
-            metadata['projectLeads'] = [{
+                metadata["keywords"].append(temp)
+        metadata["projectLeads"] = []
+        for count, contact in enumerate(project.contacts or []):
+            temp = {
                 "@type": "Person",
-                "@context": w3id_base_url + "person_sdo_context.jsonld"
-            }]
-            if project.contact_title:
-                metadata['projectLeads'][0]['title'] = project.contact_title
-            if project.first_name:
-                metadata['projectLeads'][0]['firstName'] = project.first_name
+                "@context": w3id_base_url + "person_sdo_context.jsonld",
+            }
+            metadata["projectLeads"].append(temp)
+            if contact.first_name:
+                metadata["projectLeads"][count]["firstName"] = contact.first_name
             else:
-                metadata['projectLeads'][0]['firstName'] = ''
-            if project.last_name:
-                metadata['projectLeads'][0]['lastName'] = project.last_name
+                metadata["projectLeads"][count]["firstName"] = ""
+
+            if contact.last_name:
+                metadata["projectLeads"][count]["lastName"] = contact.last_name
             else:
-                metadata['projectLeads'][0]['lastName'] = ''
+                metadata["projectLeads"][count]["lastName"] = ""
 
-            if project.email:
-                metadata['projectLeads'][0]['email'] = project.email
+            if contact.full_name:
+                metadata["projectLeads"][count]["fullName"] = contact.full_name
+            else:
+                metadata["projectLeads"][count]["fullName"] = "-"
 
-            if project.affiliation:
-                metadata['projectLeads'][0]['affiliations'] = [{
-                    "@type": "Organization",
-                    "@context": w3id_base_url + "organization_sdo_context.jsonld",
-                    "name": project.affiliation
-                }]
+            if contact.email:
+                metadata["projectLeads"][count]["email"] = contact.email
+            else:
+                metadata["projectLeads"][count]["email"] = "-"
 
-                if project.business_address:
-                    metadata['projectLeads'][0]['affiliations'][0]['location'] = {
-                        "postalAddress": project.business_address,
-                        "@type": "Place",
-                        "@context": w3id_base_url + "place_sdo_context.jsonld"
+            if contact.affiliation:
+                metadata["projectLeads"][count]["affiliations"] = [
+                    {
+                        "@type": "Organization",
+                        "@context": w3id_base_url + "organization_sdo_context.jsonld",
+                        "name": contact.affiliation,
                     }
+                ]
+            else:
+                metadata["projectLeads"][count]["affiliations"] = [
+                    {
+                        "@type": "Organization",
+                        "@context": w3id_base_url + "organization_sdo_context.jsonld",
+                        "name": "-",
+                    }
+                ]
+            if contact.business_address:
+                metadata["projectLeads"][count]["affiliations"][0]["location"] = {
+                    "postalAddress": contact.business_address,
+                    "@type": "Place",
+                    "@context": w3id_base_url + "place_sdo_context.jsonld",
+                }
+            else:
+                metadata["projectLeads"][count]["affiliations"][0]["location"] = {
+                    "postalAddress": "-",
+                    "@type": "Place",
+                    "@context": w3id_base_url + "place_sdo_context.jsonld",
+                }
 
-            if project.role:
-                metadata['projectLeads'][0]['roles'] = []
-                if isinstance(project.role, str):
-                    roles = project.role.split(", ")
-                else:
-                    roles = project.role
-                for role in roles:
+            if contact.roles:
+                metadata["projectLeads"][count]["roles"] = []
+                for role in contact.roles:
                     temp = {
                         "@type": "Annotation",
                         "@context": w3id_annotation,
-                        "value": role
+                        "value": role,
                     }
-                    metadata['projectLeads'][0]['roles'].append(temp)
-
-            if project.business_phone_number or project.business_fax_number:
-                metadata['projectLeads'][0]['extraProperties'] = []
-                if project.business_phone_number:
-                    temp = {
-                        "values": [
-                            {
-                                "value": project.business_phone_number,
-                                "@type": "Annotation",
-                                "@context": w3id_annotation
-                            }
-                        ],
-                        "category": "phoneNumber"
-                    }
-                    metadata['projectLeads'][0]['extraProperties'].append(temp)
-
-                elif project.business_fax_number:
-                    temp = {
-                        "values": [
-                            {
-                                "value": project.business_fax_number,
-                                "@type": "Annotation",
-                                "@context": w3id_annotation
-                            }
-                        ],
-                        "category": "faxNumber"
-                    }
-                    metadata['projectLeads'][0]['extraProperties'].append(temp)
+                    metadata["projectLeads"][count]["roles"].append(temp)
+            else:
+                metadata["projectLeads"][count]["roles"] = []
 
         if project.start_date:
-            metadata['startDate'] = {
+            metadata["startDate"] = {
                 "@type": "Date",
                 "@context": w3id_base_url + "date_info_sdo_context.jsonld",
                 "date": project.start_date,
                 "type": {
                     "value": "start date",
-                    "valueIRI": "http://semanticscience.org/resource/SIO_000031"
-                }
+                    "valueIRI": "http://semanticscience.org/resource/SIO_000031",
+                },
             }
 
         if project.end_date:
-            metadata['endDate'] = {
+            metadata["endDate"] = {
                 "@type": "Date",
                 "@context": w3id_base_url + "date_info_sdo_context.jsonld",
                 "date": project.end_date,
                 "type": {
                     "value": "end date",
-                    "valueIRI": "http://semanticscience.org/resource/SIO_000036"
-                }
+                    "valueIRI": "http://semanticscience.org/resource/SIO_000036",
+                },
             }
 
         if project.reference_publications:
-            metadata['primaryPublications'] = []
+            metadata["primaryPublications"] = []
             for publication in project.reference_publications:
                 temp = {
                     "@type": "Publication",
@@ -225,25 +265,26 @@ class DATSExporter:
                     "identifier": {
                         "identifier": publication,
                         "@type": "Identifier",
-                        "@context": w3id_base_url + "identifier_info_sdo_context.jsonld"
-                    }
+                        "@context": w3id_base_url
+                        + "identifier_info_sdo_context.jsonld",
+                    },
                 }
-                metadata['primaryPublications'].append(temp)
+                metadata["primaryPublications"].append(temp)
 
         if project.website or project.project_name:
-            metadata['extraProperties'] = []
+            metadata["extraProperties"] = []
             if project.website:
                 temp = {
                     "values": [
                         {
                             "value": project.website,
                             "@type": "Annotation",
-                            "@context": w3id_annotation
+                            "@context": w3id_annotation,
                         }
                     ],
-                    "category": "website"
+                    "category": "website",
                 }
-                metadata['extraProperties'].append(temp)
+                metadata["extraProperties"].append(temp)
 
             elif project.project_name:
                 temp = {
@@ -251,251 +292,346 @@ class DATSExporter:
                         {
                             "value": project.project_name,
                             "@type": "Annotation",
-                            "@context": w3id_annotation
+                            "@context": w3id_annotation,
                         }
                     ],
                     "@type": "CategoryValuesPair",
-                    "category": "projectAcronym"
+                    "category": "projectAcronym",
                 }
-                metadata['extraProperties'].append(temp)
-
+                metadata["extraProperties"].append(temp)
+        metadata["projectAssets"] = []
         if project.studies or project.datasets:
-            metadata['projectAssets'] = []
             if project.studies:
                 for study in project.studies:
-                    temp = {
-                        "@type": "Study",
-                        "@context": w3id_base_url + "study_sdo_context.jsonld",
-                        "identifier": {
-                            "identifier": study,
-                            "@type": "Identifier",
-                            "@context": w3id_base_url + "identifier_info_sdo_context.jsonld"
-                        }
+                    entity = Study.query.get_or_404(study)
+                    metadata["projectAssets"].append(
+                        DATSExporter.build_dats_study({}, entity)
+                    )
 
-                    }
-                    metadata['projectAssets'].append(temp)
             if project.datasets:
-                metadata['projectAssets'][0]['output'] = []
                 for dataset in project.datasets:
-                    temp = {
-                        "@type": "Dataset",
-                        "@context": w3id_base_url + "dataset_sdo_context.jsonld",
-                        "identifier": {
-                            "identifier": dataset,
-                            "@type": "Identifier",
-                            "@context": w3id_base_url + "identifier_info_sdo_context.jsonld"
-                        }
-
-                    }
-                    metadata['projectAssets'][0]['output'].append(temp)
-
+                    entity = Dataset.query.get_or_404(dataset)
+                    metadata["projectAssets"].append(
+                        DATSExporter.build_dats_dataset({}, entity)
+                    )
+        if project.project_name:
+            metadata["acronym"] = project.project_name
+        if project.website:
+            metadata["projectWebsite"] = project.website
         return metadata
 
     @staticmethod
     def build_dats_dataset(metadata, dataset):
-        metadata["projectAssets"] = [{}]
-        metadata["projectAssets"][0]["@type"] = "Dataset"
-        metadata["projectAssets"][0]["@context"] = w3id_base_url + "dataset_sdo_context.jsonld"
-        if dataset.title:
-            metadata["projectAssets"][0]['title'] = dataset.title
-
-        if dataset.id:
-            metadata["projectAssets"][0]['identifier'] = {
-                "identifier": dataset.id,
+        logger.debug("exporting dataset %s as DATS, %s", dataset.id, dataset.title)
+        template = {
+            "@type": "Dataset",
+            "@context": w3id_base_url + "dataset_sdo_context.jsonld",
+            "title": "dataset_title",
+            "identifier": {
+                "identifier": "dataset.id",
                 "@type": "Identifier",
-                "@context": w3id_base_url + "identifier_info_sdo_context.jsonld"
-            }
-        else:
-            logger.error("Dataset entity has no identifier")
-
-        metadata["projectAssets"][0]['types'] = []
-        if dataset.data_types:
-            for dataset_type in dataset.data_types:
-                temp = {
-                    "method": {
-                        "@type": "Annotation",
-                        "@context": w3id_annotation,
-                        "value": dataset_type
-                    },
-                    "@type": "DataType",
-                    "@context": w3id_base_url + "data_type_sdo_context.jsonld"
+                "@context": w3id_base_url + "identifier_info_sdo_context.jsonld",
+            },
+            "creators": [
+                {
+                    "@type": "Organization",
+                    "@context": "https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                    "name": "",
                 }
-                metadata["projectAssets"][0]['types'].append(temp)
-        if dataset.platform:
-            for platform in dataset.platform:
-                temp = {
-                    "method": {
-                        "@type": "Annotation",
-                        "@context": w3id_annotation,
-                        "value": platform
-                    },
-                    "@type": "DataType",
-                    "@context": w3id_base_url + "data_type_sdo_context.jsonld"
-                }
-                metadata["projectAssets"][0]['types'].append(temp)
-
-        if dataset.treatment_name or dataset.disease:
-            metadata["projectAssets"][0]['isAbout'] = []
-
-        if dataset.treatment_name:
-            treatments = dataset.treatment_name.split(",")
-            for treatment_name in treatments:
-                temp = {
-                    "@type": "MolecularEntity",
-                    "@context": w3id_base_url + "molecular_entity_sdo_context.jsonld",
-                    "name": treatment_name,
-                    "identifier": {
-
-                    }
-                }
-                metadata["projectAssets"][0]['isAbout'].append(temp)
-
-        if dataset.disease:
-            temp = {
-                "name": dataset.disease,
-                "@type": "Disease",
-                "@context": w3id_base_url + "disease_sdo_context.jsonld"
-            }
-            metadata["projectAssets"][0]['isAbout'].append(temp)
-
-        if dataset.samples_number or dataset.fair_indicators or dataset.fair_indicators_href \
-                or dataset.fair_score_mandatory_indicators or dataset.fair_score_overall \
-                or dataset.fair_score_recommended_indicators or dataset.fair_assessment_details \
-                or dataset.fair_assessment_details_link or dataset.fair_evaluation:
-            metadata["projectAssets"][0]["extraProperties"] = []
+            ],
+        }
         if dataset.samples_number:
+            template["dimensions"] = []
             temp = {
-                "category": "number of samples",
+                "name": {
+                    "value": "sample size",
+                    "valueIRI": "NCIT:C53190",
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                },
                 "values": [
                     {
                         "value": dataset.samples_number,
                         "@type": "Annotation",
-                        "@context": w3id_annotation
+                        "@context": w3id_annotation,
                     }
                 ],
-                "@type": "CategoryValuesPair",
-                "@context": "http://w3id.org/dats/context/obo/category_values_pair_obo_context.jsonld"
+                "@type": "Dimension",
+                "@context": "http://w3id.org/dats/context/obo/category_values_pair_obo_context.jsonld",
             }
-            metadata["projectAssets"][0]["extraProperties"].append(temp)
+            template["dimensions"].append(temp)
 
-        if dataset.fair_assessment_details:
+        if dataset.title:
+            template["title"] = dataset.title
+
+        if dataset.id:
+            template["identifier"] = {
+                "identifier": dataset.id,
+                "@type": "Identifier",
+                "@context": w3id_base_url + "identifier_info_sdo_context.jsonld",
+            }
+        else:
+            logger.warning("Dataset entity has no identifier: %s", dataset.title)
+
+        template["types"] = []
+        if dataset.data_types:
+            for dataset_type in dataset.data_types:
+                temp = {
+                    "@type": "Annotation",
+                    "@context": w3id_annotation,
+                    "value": dataset_type,
+                }
+                template["types"].append(temp)
+        else:
+            temp = {
+                "@type": "Annotation",
+                "@context": w3id_annotation,
+                "value": "",
+            }
+            template["types"].append(temp)
+
+        if dataset.treatment_name or dataset.disease:
+            template["isAbout"] = []
+
+        if dataset.treatment_name:
+            for treatment_name in dataset.treatment_name:
+                temp = {
+                    "@type": "MolecularEntity",
+                    "@context": w3id_base_url + "molecular_entity_sdo_context.jsonld",
+                    "name": treatment_name,
+                    "identifier": {},
+                }
+                template["isAbout"].append(temp)
+        if dataset.disease:
+            for disease in dataset.disease:
+                temp = {
+                    "name": disease,
+                    "@type": "Disease",
+                    "@context": w3id_base_url + "disease_sdo_context.jsonld",
+                }
+                template["isAbout"].append(temp)
+        if dataset.fair_evaluation:
+            template["extraProperties"] = []
+        if dataset.fair_assessment_link_pre:
             temp = {
                 "values": [
                     {
-                        "value": dataset.fair_assessment_details,
+                        "value": dataset.fair_assessment_link_pre,
                         "@type": "Annotation",
-                        "@context": w3id_annotation
+                        "@context": w3id_annotation,
                     }
                 ],
                 "@type": "CategoryValuesPair",
-                "category": "fairAssessmentDetails"
+                "category": "fairAssessmentLinkPre",
             }
-            metadata["projectAssets"][0]["extraProperties"].append(temp)
-        if dataset.fair_assessment_details_link:
+            template["extraProperties"].append(temp)
+        if dataset.fair_score_representation_pre:
             temp = {
                 "values": [
                     {
-                        "value": dataset.fair_assessment_details_link,
+                        "value": dataset.fair_score_representation_pre,
                         "@type": "Annotation",
-                        "@context": w3id_annotation
+                        "@context": w3id_annotation,
                     }
                 ],
                 "@type": "CategoryValuesPair",
-                "category": "fairAssessmentLink"
+                "category": "fairScoreRepresentationPre",
             }
-            metadata["projectAssets"][0]["extraProperties"].append(temp)
-        if dataset.fair_indicators:
+            template["extraProperties"].append(temp)
+        if dataset.fair_score_content_pre:
             temp = {
                 "values": [
                     {
-                        "value": dataset.fair_indicators,
+                        "value": dataset.fair_score_content_pre,
                         "@type": "Annotation",
-                        "@context": w3id_annotation
+                        "@context": w3id_annotation,
                     }
                 ],
                 "@type": "CategoryValuesPair",
-                "category": "fairIndicators"
+                "category": "fairScoreContentPre",
             }
-            metadata["projectAssets"][0]["extraProperties"].append(temp)
-        if dataset.fair_indicators_href:
+            template["extraProperties"].append(temp)
+        if dataset.fair_score_hosting_pre:
             temp = {
                 "values": [
                     {
-                        "value": dataset.fair_indicators_href,
+                        "value": dataset.fair_score_hosting_pre,
                         "@type": "Annotation",
-                        "@context": w3id_annotation
+                        "@context": w3id_annotation,
                     }
                 ],
                 "@type": "CategoryValuesPair",
-                "category": "fairIndicatorsHref"
+                "category": "fairScoreHostingPre",
             }
-            metadata["projectAssets"][0]["extraProperties"].append(temp)
-        if dataset.fair_score_mandatory_indicators:
+            template["extraProperties"].append(temp)
+        if dataset.fair_score_overall_pre:
             temp = {
                 "values": [
                     {
-                        "value": dataset.fair_score_mandatory_indicators,
+                        "value": dataset.fair_score_overall_pre,
                         "@type": "Annotation",
-                        "@context": w3id_annotation
+                        "@context": w3id_annotation,
                     }
                 ],
                 "@type": "CategoryValuesPair",
-                "category": "fairScoreMandatory"
+                "category": "fairScoreOverallPre",
             }
-            metadata["projectAssets"][0]["extraProperties"].append(temp)
-        if dataset.fair_score_recommended_indicators:
+            template["extraProperties"].append(temp)
+        if dataset.fair_indicators_href_pre:
             temp = {
                 "values": [
                     {
-                        "value": dataset.fair_score_recommended_indicators,
+                        "value": dataset.fair_indicators_href_pre,
                         "@type": "Annotation",
-                        "@context": w3id_annotation
+                        "@context": w3id_annotation,
                     }
                 ],
                 "@type": "CategoryValuesPair",
-                "category": "fairScoreRecommended"
+                "category": "fairIndicatorsHrefPre",
             }
-            metadata["projectAssets"][0]["extraProperties"].append(temp)
-        if dataset.fair_score_overall:
+            template["extraProperties"].append(temp)
+        if dataset.fair_indicators_pre:
             temp = {
                 "values": [
                     {
-                        "value": dataset.fair_score_overall,
+                        "value": dataset.fair_indicators_pre,
                         "@type": "Annotation",
-                        "@context": w3id_annotation
+                        "@context": w3id_annotation,
                     }
                 ],
                 "@type": "CategoryValuesPair",
-                "category": "fairScoreOverall"
+                "category": "fairIndicatorsPre",
             }
-            metadata["projectAssets"][0]["extraProperties"].append(temp)
+            template["extraProperties"].append(temp)
+        if dataset.fair_assessment_link_post:
+            temp = {
+                "values": [
+                    {
+                        "value": dataset.fair_assessment_link_post,
+                        "@type": "Annotation",
+                        "@context": w3id_annotation,
+                    }
+                ],
+                "@type": "CategoryValuesPair",
+                "category": "fairAssessmentLinkPost",
+            }
+            template["extraProperties"].append(temp)
+        if dataset.fair_score_representation_post:
+            temp = {
+                "values": [
+                    {
+                        "value": dataset.fair_score_representation_post,
+                        "@type": "Annotation",
+                        "@context": w3id_annotation,
+                    }
+                ],
+                "@type": "CategoryValuesPair",
+                "category": "fairScoreRepresentationPost",
+            }
+            template["extraProperties"].append(temp)
+        if dataset.fair_score_content_post:
+            temp = {
+                "values": [
+                    {
+                        "value": dataset.fair_score_content_post,
+                        "@type": "Annotation",
+                        "@context": w3id_annotation,
+                    }
+                ],
+                "@type": "CategoryValuesPair",
+                "category": "fairScoreContentPost",
+            }
+            template["extraProperties"].append(temp)
+        if dataset.fair_score_hosting_post:
+            temp = {
+                "values": [
+                    {
+                        "value": dataset.fair_score_hosting_post,
+                        "@type": "Annotation",
+                        "@context": w3id_annotation,
+                    }
+                ],
+                "@type": "CategoryValuesPair",
+                "category": "fairScoreHostingPost",
+            }
+            template["extraProperties"].append(temp)
+        if dataset.fair_score_overall_post:
+            temp = {
+                "values": [
+                    {
+                        "value": dataset.fair_score_overall_post,
+                        "@type": "Annotation",
+                        "@context": w3id_annotation,
+                    }
+                ],
+                "@type": "CategoryValuesPair",
+                "category": "fairScoreOverallPost",
+            }
+            template["extraProperties"].append(temp)
+        if dataset.fair_indicators_href_post:
+            temp = {
+                "values": [
+                    {
+                        "value": dataset.fair_indicators_href_post,
+                        "@type": "Annotation",
+                        "@context": w3id_annotation,
+                    }
+                ],
+                "@type": "CategoryValuesPair",
+                "category": "fairIndicatorsHrefPost",
+            }
+            template["extraProperties"].append(temp)
+        if dataset.fair_indicators_post:
+            temp = {
+                "values": [
+                    {
+                        "value": dataset.fair_indicators_post,
+                        "@type": "Annotation",
+                        "@context": w3id_annotation,
+                    }
+                ],
+                "@type": "CategoryValuesPair",
+                "category": "fairIndicatorsPost",
+            }
+            template["extraProperties"].append(temp)
         if dataset.fair_evaluation:
             temp = {
                 "values": [
                     {
                         "value": dataset.fair_evaluation,
                         "@type": "Annotation",
-                        "@context": w3id_annotation
+                        "@context": w3id_annotation,
                     }
                 ],
                 "@type": "CategoryValuesPair",
-                "category": "fairEvaluation"
+                "category": "fairEvaluation",
             }
-            metadata["projectAssets"][0]["extraProperties"].append(temp)
+            template["extraProperties"].append(temp)
 
-        metadata["projectAssets"][0]["distributions"] = [{"@type": "DatasetDistribution",
-                                                          "@context": "https://w3id.org/dats/context/sdo"
-                                                                      "/dataset_distribution_sdo_context.jsonld"}]
-
+        template["distributions"] = [
+            {
+                "@type": "DatasetDistribution",
+                "@context": "https://w3id.org/dats/context/sdo"
+                "/dataset_distribution_sdo_context.jsonld",
+                "access": {
+                    "accessURL": "",
+                    "landingPage": "",
+                    "@type": "Access",
+                    "@context": w3id_base_url + "access_sdo_context.jsonld",
+                },
+            }
+        ]
         if dataset.dataset_link_href or dataset.dataset_link_label:
-            metadata["projectAssets"][0]["distributions"][0]["access"] = {
-                "accessURL": dataset.dataset_link_href if dataset.dataset_link_href else "",
-                "landingPage": dataset.dataset_link_label if dataset.dataset_link_label else "",
-                "@type": "Access",
-                "@context": w3id_base_url + "access_sdo_context.jsonld"
-            }
+            template["distributions"][0]["access"]["accessURL"] = (
+                dataset.dataset_link_href or ""
+            )
+
+            template["distributions"][0]["access"]["landingPage"] = (
+                dataset.dataset_link_label or ""
+            )
+
         if dataset.dataset_created or dataset.dataset_modified:
-            metadata["projectAssets"][0]["distributions"][0]["dates"] = []
+            template["distributions"][0]["dates"] = []
             if dataset.dataset_created:
                 temp = {
                     "date": dataset.dataset_created,
@@ -504,10 +640,10 @@ class DATSExporter:
                     "type": {
                         "@type": "Annotation",
                         "@context": w3id_annotation,
-                        "value": "creation date"
-                    }
+                        "value": "creation date",
+                    },
                 }
-                metadata["projectAssets"][0]["distributions"][0]["dates"].append(temp)
+                template["distributions"][0]["dates"].append(temp)
             if dataset.dataset_modified:
                 temp = {
                     "date": dataset.dataset_modified,
@@ -516,234 +652,261 @@ class DATSExporter:
                     "type": {
                         "@type": "Annotation",
                         "@context": w3id_annotation,
-                        "value": "last update date"
-                    }
+                        "value": "last update date",
+                    },
                 }
-                metadata["projectAssets"][0]["distributions"][0]["dates"].append(temp)
+                template["distributions"][0]["dates"].append(temp)
 
         if dataset.data_standards:
-            metadata["projectAssets"][0]["distributions"][0]["conformsTo"] = [
+            template["distributions"][0]["conformsTo"] = [
                 {
                     "name": dataset.data_standards,
                     "type": {
                         "@type": "Annotation",
                         "@context": w3id_annotation,
-                        "value": "clinical data standard"
+                        "value": "clinical data standard",
                     },
                     "@type": "DataStandard",
-                    "@context": w3id_base_url + "data_standard_sdo_context.jsonld"
+                    "@context": w3id_base_url + "data_standard_sdo_context.jsonld",
                 }
             ]
         if dataset.version:
-            metadata["projectAssets"][0]["distributions"][0]["version"] = dataset.version
+            template["distributions"][0]["version"] = dataset.version
 
-        return metadata
+        metadata["projectAssets"] = template
+
+        return template
 
     @staticmethod
     def build_dats_study(metadata, study):
-        metadata["projectAssets"] = [{}]
-        metadata["projectAssets"][0]["@type"] = "Study"
-        metadata["projectAssets"][0]["@context"] = w3id_base_url + "study_sdo_context.jsonld"
+        logger.debug("exporting study %s as DATS, %s", study.id, study.title)
+        template = {
+            "@type": "Study",
+            "@context": w3id_base_url + "study_sdo_context.jsonld",
+            "identifier": {
+                "identifier": "study",
+                "@type": "Identifier",
+                "@context": w3id_base_url + "identifier_info_sdo_context.jsonld",
+            },
+        }
 
         if study.id:
-            metadata["projectAssets"][0]['identifier'] = {
-                "identifier": study.id,
-                "@type": "Identifier",
-                "@context": w3id_base_url + "identifier_info_sdo_context.jsonld"
-            }
+            template["identifier"]["identifier"] = study.id
         else:
-            logger.error("Study entity has no identifier")
+            logger.warning("Study entity has no identifier: %s", study.title)
 
         if study.title:
-            metadata["projectAssets"][0]['name'] = study.title
+            template["acronym"] = study.title
+
+        if study.primary_purpose:
+            template["name"] = study.primary_purpose
+        else:
+            template["name"] = "-"
 
         if study.description:
-            metadata["projectAssets"][0]['description'] = study.description
+            template["description"] = study.description
 
         if study.types:
-            metadata["projectAssets"][0]['types'] = []
+            template["types"] = []
             for study_type in study.types:
                 temp = {
                     "@type": "Annotation",
                     "@context": w3id_annotation,
-                    "value": study_type
+                    "value": study_type,
                 }
-                metadata["projectAssets"][0]['types'].append(temp)
+                template["types"].append(temp)
 
         if study.size or study.cohorts_description:
-            metadata["projectAssets"][0]['studyGroups'] = [{
-                "@type": "StudyGroup",
-                "@context": w3id_base_url + "studygroup_sdo_context.jsonld"
-            }]
+            template["studyGroups"] = [
+                {
+                    "@type": "StudyGroup",
+                    "@context": w3id_base_url + "studygroup_sdo_context.jsonld",
+                }
+            ]
             if study.size:
-                metadata["projectAssets"][0]['studyGroups'][0]['size'] = study.size
+                template["studyGroups"][0]["size"] = study.size
             if study.cohorts_description:
-                metadata["projectAssets"][0]['studyGroups'][0]['name'] = study.cohorts_description
+                template["studyGroups"][0]["name"] = study.cohorts_description
 
-            if study.age_range or study.bmi_range:
-                metadata["projectAssets"][0]['studyGroups'][0]['extraProperties'] = []
-                if study.bmi_range is not None:
-                    lower, upper = study.bmi_range.split('-')
-                    if lower:
-                        lower_range = {
-                            "values": [
-                                {
-                                    "value": lower,
-                                    "@type": "Annotation",
-                                    "@context": w3id_annotation
-                                }
-                            ],
-                            "@type": "CategoryValuesPair",
-                            "category": "BMI range lower limit"
-                        }
-                        metadata["projectAssets"][0]['studyGroups'][0]['extraProperties'].append(lower_range)
-                    if upper:
-                        upper_range = {
-                            "values": [
-                                {
-                                    "value": upper,
-                                    "@type": "Annotation",
-                                    "@context": w3id_annotation
-                                }
-                            ],
-                            "@type": "CategoryValuesPair",
-                            "category": "BMI range upper limit"
-                        }
-                        metadata["projectAssets"][0]['studyGroups'][0]['extraProperties'].append(upper_range)
-                if study.age_range:
-                    lower, upper_unit = study.age_range.split('-')
-                    upper, unit = upper_unit.split(" ")
-                    if lower:
-                        lower_range = {
-                            "values": [
-                                {
-                                    "value": lower,
-                                    "@type": "Annotation",
-                                    "@context": w3id_annotation
-                                }
-                            ],
-                            "@type": "CategoryValuesPair",
-                            "category": "Age range lower limit"
-                        }
-                        metadata["projectAssets"][0]['studyGroups'][0]['extraProperties'].append(lower_range)
-                    if upper:
-                        upper_range = {
-                            "values": [
-                                {
-                                    "value": upper,
-                                    "@type": "Annotation",
-                                    "@context": w3id_annotation
-                                }
-                            ],
-                            "@type": "CategoryValuesPair",
-                            "category": "Age range upper limit"
-                        }
-                        metadata["projectAssets"][0]['studyGroups'][0]['extraProperties'].append(upper_range)
-                    if unit:
-                        unit = {
-                            "values": [
-                                {
-                                    "value": unit,
-                                    "@type": "Annotation",
-                                    "@context": w3id_annotation
-                                }
-                            ],
-                            "@type": "CategoryValuesPair",
-                            "category": "Age unit"
-                        }
-                        metadata["projectAssets"][0]['studyGroups'][0]['extraProperties'].append(unit)
+            if study.cohort_characteristics:
+                template["studyGroups"][0]["characteristics"] = []
+
+                for charac in study.cohort_characteristics:
+                    dimension = charac.split(":")[0].strip()
+                    value = charac.split(":")[1].strip()
+
+                    nums = []
+                    unit = ""
+                    min = ""
+                    max = ""
+                    if "-" in value:
+                        min = value.split("-")[0].strip()
+                        max_u = value.split("-")[1].strip()
+
+                        if " " in max_u:
+                            max = max_u.split(" ")[0].strip()
+                            unit = max_u.split(" ")[1].strip()
+
+                    elif "," in value:
+                        cats = []
+                        vals = value.split(",")
+                        for val in vals:
+                            num = val.split(" ")[0].strip()
+                            category = val.split(" ")[1].strip()
+                            nums.append(num)
+                            cats.append(category)
+
+                    temp = {
+                        "name": {
+                            "value": "",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                        },
+                        "values": [],
+                        "@type": "Dimension",
+                        "@context": "https://w3id.org/dats/context/sdo/dimension_sdo_context.jsonld",
+                    }
+
+                    temp["name"]["value"] = dimension
+                    if unit != "":
+                        temp["unit"] = annot_block.copy()
+                        temp["unit"]["value"] = unit
+                    if min != "" and max != "":
+                        min_block = value_block.copy()
+                        min_val = annot_block.copy()
+                        min_val["value"] = min
+                        min_block["values"].append(min_val)
+                        min_block["category"] = "minimal value"
+
+                        max_block = value_block.copy()
+                        max_val = annot_block.copy()
+                        max_val["value"] = max
+                        max_block["values"].append(max_val)
+                        max_block["category"] = "maximal value"
+
+                        temp["values"].append(min_block)
+                        temp["values"].append(max_block)
+
+                    if len(nums) > 0:
+                        for n in nums:
+                            block = value_block.copy()
+                            value = annot_block.copy()
+                            value["value"] = n
+                            block["values"].append(value)
+                            block["category"] = cats[nums.index(n)]
+                            temp["values"].append(block)
+                    template["studyGroups"][0]["characteristics"].append(temp)
+
+            if study.informed_consent is not None and study.informed_consent is True:
+                template["studyGroups"][0]["consentInformation"] = [
+                    {
+                        "name": {
+                            "value": "Informed Consent",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                        },
+                        "identifier": {
+                            "@type": "Identifier",
+                            "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                            "identifier": "NCIT:C16735",
+                            "identifierSource": "NCIt",
+                        },
+                        "@type": "ConsentInfo",
+                        "@context": "https://w3id.org/dats/context/sdo/consent_info_obo_context.jsonld",
+                    }
+                ]
 
         if study.organisms or study.disease or study.samples_type:
-            metadata["projectAssets"][0]['input'] = [{
-                "@type": "Material",
-                "@context": w3id_base_url + "material_sdo_context.jsonld",
-                "name": "input material"
-            }]
+            template["input"] = [
+                {
+                    "@type": "Material",
+                    "@context": w3id_base_url + "material_sdo_context.jsonld",
+                    "name": "input material",
+                }
+            ]
 
             if study.organisms:
-                metadata["projectAssets"][0]['input'][0]['taxonomy'] = []
+                template["input"][0]["taxonomy"] = []
                 for organism in study.organisms:
                     temp = {
                         "@type": "TaxonomicInformation",
                         "@context": w3id_base_url + "taxonomic_info_sdo_context.jsonld",
-                        "name": organism
+                        "name": organism,
                     }
-
-                    metadata["projectAssets"][0]['input'][0]['taxonomy'].append(temp)
+                    template["input"][0]["taxonomy"].append(temp)
 
             if study.disease:
-                metadata["projectAssets"][0]['input'][0]['bearerOfDisease'] = []
+                template["input"][0]["bearerOfDisease"] = []
                 for disease in study.disease:
                     temp = {
                         "name": disease,
                         "@type": "Disease",
-                        "@context": w3id_base_url + "disease_sdo_context.jsonld"
+                        "@context": w3id_base_url + "disease_sdo_context.jsonld",
                     }
-                    metadata["projectAssets"][0]['input'][0]['bearerOfDisease'].append(temp)
+                    template["input"][0]["bearerOfDisease"].append(temp)
 
             if study.samples_type:
-                metadata["projectAssets"][0]['input'][0]['derivesFrom'] = []
+                template["input"][0]["derivesFrom"] = []
                 for samples_type in study.samples_type:
                     temp = {
                         "name": samples_type,
                         "@type": "AnatomicalPart",
-                        "@context": w3id_base_url + "anatomical_part_sdo_context.jsonld"
+                        "@context": w3id_base_url
+                        + "anatomical_part_sdo_context.jsonld",
                     }
-                    metadata["projectAssets"][0]['input'][0]['derivesFrom'].append(temp)
+                    template["input"][0]["derivesFrom"].append(temp)
 
         if study.datasets:
-            metadata['projectAssets'][0]['output'] = []
+            template["output"] = []
             for dataset in study.datasets:
-                temp = {
-                    "@type": "Dataset",
-                    "@context": w3id_base_url + "dataset_sdo_context.jsonld",
-                    "identifier": {
-                        "identifier": dataset,
-                        "@type": "Identifier",
-                        "@context": w3id_base_url + "identifier_info_sdo_context.jsonld"
-                    }
-
-                }
-                metadata['projectAssets'][0]['output'].append(temp)
-        if study.informed_consent is not None or study.primary_purpose or study.multi_center_study is not None:
-            metadata['projectAssets'][0]['extraProperties'] = []
-        if study.informed_consent is not None:
-            temp = {
-                "values": [
-                    {
-                        "value": str(study.informed_consent),
-                        "@type": "Annotation",
-                        "@context": w3id_annotation
-                    }
-                ],
-                "@type": "CategoryValuesPair",
-                "category": "informedConsent"
-            }
-            metadata['projectAssets'][0]['extraProperties'].append(temp)
-        if study.primary_purpose:
-            temp = {
-                "values": [
-                    {
-                        "value": study.primary_purpose,
-                        "@type": "Annotation",
-                        "@context": w3id_annotation
-                    }
-                ],
-                "@type": "CategoryValuesPair",
-                "category": "primaryPurpose"
-            }
-            metadata['projectAssets'][0]['extraProperties'].append(temp)
+                entity = Dataset.query.get_or_404(dataset)
+                template["output"].append(
+                    DATSExporter.build_dats_dataset(metadata, entity)
+                )
         if study.multi_center_study is not None:
+            template["characteristics"] = []
+
             temp = {
+                "name": {
+                    "value": "Multi-institution Indicator",
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                },
+                "identifier": {
+                    "@type": "Identifier",
+                    "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                    "identifier": "NCIT:C93599",
+                    "identifierSource": "NCIt",
+                },
                 "values": [
                     {
                         "value": str(study.multi_center_study),
                         "@type": "Annotation",
-                        "@context": w3id_annotation
+                        "@context": w3id_annotation,
                     }
                 ],
-                "@type": "CategoryValuesPair",
-                "category": "multiCenter"
+                "@type": "Dimension",
+                "@context": "https://w3id.org/dats/context/sdo/dimension_sdo_context.jsonld",
             }
-            metadata['projectAssets'][0]['extraProperties'].append(temp)
-        return metadata
+            template["characteristics"].append(temp)
+            metadata["projectAssets"] = template
+        return template
+
+    @staticmethod
+    def get_entity_parent(entity: SolrEntity) -> SolrEntity:
+        try:
+            entity_name = f"{entity.__class__.__name__}".lower()
+            if entity_name == "dataset":
+                if entity.study_entity:
+                    child_entity = entity.study_entity
+                    parent_entity = child_entity.project_entity
+                else:
+                    parent_entity = entity.project_entity
+                return parent_entity
+            elif entity_name == "study":
+                return entity.project_entity
+            else:
+                logger.info("Reached parent in the hierarchy")
+                return None
+        except werkzeug.exceptions.NotFound as e:
+            logger.error(e)

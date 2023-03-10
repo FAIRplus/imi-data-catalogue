@@ -1,0 +1,8 @@
+{% for agent in black_list %}User-agent: {{ agent }}
+{% for url in black_list[agent] %}
+Disallow: /{{url}}*{% endfor %}
+{% for url in black_list[agent] %}
+Noindex: /{{url}}*{% endfor %}
+{% endfor %}
+{% if sitemap %}Sitemap: {{sitemap}}
+{% endif %}

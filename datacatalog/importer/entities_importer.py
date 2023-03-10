@@ -23,14 +23,15 @@
 
 
 """
+import logging
 from typing import List
 
 from .. import app
 from ..connector.entities_connector import ImportEntitiesConnector
 
-__author__ = 'Valentin Grouès'
+__author__ = "Valentin Grouès"
 
-logger = app.logger
+logger = logging.getLogger(__name__)
 
 
 class EntitiesImporter(object):
@@ -45,7 +46,7 @@ class EntitiesImporter(object):
         """
         self.connectors = connectors
         for connector in connectors:
-            assert (isinstance(connector, ImportEntitiesConnector))
+            assert isinstance(connector, ImportEntitiesConnector)
 
     def import_all(self) -> None:
         """
@@ -59,9 +60,14 @@ class EntitiesImporter(object):
             entities = connector.build_all_entities()
             for entity in entities:
                 entity.set_computed_values()
+                entity.connector_name = connector.__class__.__name__
                 entity.save()
                 count += 1
                 count_connector += 1
-            logger.info("%s entities imported for connector %s", count_connector, connector.__class__.__name__)
-        app.config['_solr_orm'].commit()
+            logger.info(
+                "%s entities imported for connector %s",
+                count_connector,
+                connector.__class__.__name__,
+            )
+        app.config["_solr_orm"].commit()
         logger.info("%s entities have been imported", count)

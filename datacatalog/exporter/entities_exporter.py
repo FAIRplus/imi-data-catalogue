@@ -34,7 +34,6 @@ logger = logging.getLogger(__name__)
 
 
 class EntitiesExporter(metaclass=ABCMeta):
-
     def __init__(self, connectors: List[ExportEntitiesConnector]) -> None:
         """
         Initialize the entities export with a list of connectors
@@ -42,7 +41,7 @@ class EntitiesExporter(metaclass=ABCMeta):
         """
         self.connectors = connectors
         for connector in connectors:
-            assert (isinstance(connector, ExportEntitiesConnector))
+            assert isinstance(connector, ExportEntitiesConnector)
 
     def export_all(self, entities) -> None:
         """
@@ -52,5 +51,6 @@ class EntitiesExporter(metaclass=ABCMeta):
         logger.info("Exporting all entities")
         count = 0
         for connector in self.connectors:
-            connector.export_entities(entities)
-        logger.info("%s entities have been exported", len(entities))
+            logger.info("Using connector %s", connector.__class__.__name__)
+            count += connector.export_entities(entities)
+        logger.info("%s entities have been exported", count)

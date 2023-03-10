@@ -1,20 +1,43 @@
 {
-  "name": "datacatalog",
-  "version": "1.0.0",
-  "description": "datacatalog",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Valentin Grouès",
-  "license": "ISC",
-  "dependencies": {
-    "bootstrap": "3.4.1",
-    "bootstrap-material-design": "0.5.10",
-    "handlebars": "^4.7.7",
-    "jquery": "3.6.0",
-    "jquery-ui-dist": "1.12.1",
-    "typeahead.js": "^0.11.1",
-    "x-editable": "1.x.x"
-  }
+    "name": "datacatalog",
+    "version": "1.0.0",
+    "description": "datacatalog",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "watch": "webpack --mode development --watch",
+        "build": "webpack --mode production"
+    },
+    "author": "Valentin Grouès",
+    "license": "ISC",
+    "dependencies": {
+        "bootstrap": "3.4.1",
+        "bootstrap-material-design": "0.5.10",
+        "handlebars": "^4.7.7",
+        "jquery": "3.6.0",
+        "jquery-ui-dist": "1.12.1",
+        "prop-types": "^15.8.1",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-table": "^7.7.0",
+        "typeahead.js": "^0.11.1",
+        "x-editable": "1.x.x"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.15.5",
+        "@babel/plugin-proposal-class-properties": "^7.14.5",
+        "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+        "@babel/preset-env": "^7.15.6",
+        "@babel/preset-react": "^7.14.5",
+        "babel-cli": "^6.26.0",
+        "babel-loader": "^8.2.2",
+        "babel-preset-react-app": "^10.0.0",
+        "css-loader": "^6.2.0",
+        "eslint": "^8.15.0",
+        "eslint-plugin-react": "^7.29.4",
+        "html-webpack-plugin": "^5.3.2",
+        "style-loader": "^3.2.1",
+        "webpack": "^5.51.1",
+        "webpack-cli": "^4.6.0"
+    }
 }

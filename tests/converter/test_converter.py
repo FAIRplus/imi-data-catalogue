@@ -21,17 +21,21 @@ from unittest.case import TestCase
 
 from datacatalog.converter.entities_splitter import split_entities
 
-__author__ = 'Valentin Grouès'
+__author__ = "Valentin Grouès"
 
 
 class TestConverter(TestCase):
-
     def test_split_entities(self):
-        base_folder = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../data')
-        records_file_path = os.path.join(base_folder, 'records.json')
-        datasets_file_path = os.path.join(base_folder, 'datasets_new.json')
-        studies_file_path = os.path.join(base_folder, 'studies_new.json')
-        projects_file_path = os.path.join(base_folder, 'projects_new.json')
-        with open(records_file_path) as records_file, open(datasets_file_path, 'w') as datasets_file, open(
-                studies_file_path, 'w') as studies_file, open(projects_file_path, 'w') as projects_file:
+        base_folder = os.path.join(
+            os.path.dirname(os.path.realpath(__file__)), "../data"
+        )
+        records_file_path = os.path.join(base_folder, "records.json")
+        datasets_file_path = os.path.join(base_folder, "datasets_new.json")
+        studies_file_path = os.path.join(base_folder, "studies_new.json")
+        projects_file_path = os.path.join(base_folder, "projects_new.json")
+        with open(records_file_path) as records_file, open(
+            datasets_file_path, "w"
+        ) as datasets_file, open(studies_file_path, "w") as studies_file, open(
+            projects_file_path, "w"
+        ) as projects_file:
             split_entities(records_file, datasets_file, studies_file, projects_file)

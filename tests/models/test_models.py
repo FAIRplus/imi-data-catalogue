@@ -16,25 +16,25 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from base_test import BaseTest
+from tests.base_test import BaseTest
 from datacatalog import app
 from datacatalog.models.dataset import Dataset
 from datacatalog.models.project import Project
 from datacatalog.models.study import Study
 
-__author__ = 'Valentin Grouès'
+__author__ = "Valentin Grouès"
 
 
 class TestModels(BaseTest):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.solr_orm = app.config['_solr_orm']
+        cls.solr_orm = app.config["_solr_orm"]
         cls.solr_orm.delete_fields()
         cls.solr_orm.create_fields()
 
     def test_create_dataset(self):
-        self.solr_orm.delete(query='*:*')
+        self.solr_orm.delete(query="*:*")
         title = "Great dataset!"
         dataset = Dataset(title)
         dataset.save()
@@ -48,31 +48,56 @@ class TestModels(BaseTest):
         self.assertEqual(created.second, retrieved_dataset.created.second)
 
     def test_dataset_set_values(self):
-        self.solr_orm.delete(query='*:*')
+        self.solr_orm.delete(query="*:*")
         title = "Great dataset!"
         dataset = Dataset(title)
-        dataset.use_restrictions = [{'use_class': 'PS', 'use_class_label': "test",
-                                     'use_restriction_note': 'Use is restricted to projects: MDEG2',
-                                     'use_restriction_rule': 'CONSTRAINED_PERMISSION'},
-                                    {'use_class': 'PUB', 'use_class_label': "test2",
-                                     'use_restriction_note': 'Acknowledgement required.',
-                                     'use_restriction_rule': 'CONSTRAINED_PERMISSION'}]
+        use_restriction_1 = {
+            "use_class": "PS",
+            "use_class_label": "test",
+            "use_class_note": "Use is restricted to projects: MDEG2",
+            "use_restriction_note": "test2",
+            "use_restriction_rule": "CONSTRAINED_PERMISSION",
+        }
+        use_restriction_2 = {
+            "use_class": "PUB",
+            "use_class_label": "test2",
+            "use_class_note": "test5",
+            "use_restriction_note": "Acknowledgement required.",
+            "use_restriction_rule": "CONSTRAINED_PERMISSION",
+        }
+        dataset.use_restrictions = [use_restriction_1, use_restriction_2]
         dataset.set_computed_values()
         dataset.save()
         self.solr_orm.commit()
+
         self.assertEqual(set(dataset.use_restrictions_class_label), {"test2", "test"})
         results, icons = dataset.use_restrictions_by_type
-        self.assertEqual(results, {'CONSTRAINED_PERMISSION': [{'use_class': 'PS',
-                                                               'use_class_label': 'test',
-                                                               'use_restriction_note': 'Use is restricted to '
-                                                                                       'projects: MDEG2',
-                                                               'use_restriction_rule': 'CONSTRAINED_PERMISSION'},
-                                                              {'use_class': 'PUB',
-                                                               'use_class_label': 'test2',
-                                                               'use_restriction_note': 'Acknowledgement '
-                                                                                       'required.',
-                                                               'use_restriction_rule': 'CONSTRAINED_PERMISSION'}]})
-        self.assertEqual(icons, {'CONSTRAINED_PERMISSION': ('info', 'text-default', 'Constrained permissions')})
+        expected_result = [use_restriction_1, use_restriction_2]
+        for attribute in [
+            "use_class",
+            "use_class_label",
+            "use_class_note",
+            "use_restriction_note",
+            "use_restriction_rule",
+        ]:
+            self.assertEqual(
+                results["CONSTRAINED_PERMISSION"][0][attribute],
+                expected_result[0][attribute],
+            )
+            self.assertEqual(
+                results["CONSTRAINED_PERMISSION"][1][attribute],
+                expected_result[1][attribute],
+            )
+        self.assertEqual(
+            icons,
+            {
+                "CONSTRAINED_PERMISSION": (
+                    "info",
+                    "text-default",
+                    "Constrained permissions",
+                )
+            },
+        )
 
     def test_linked_entities(self):
         study1_title = "study1"
@@ -97,5 +122,5 @@ class TestModels(BaseTest):
         self.assertEqual(study2_title, studies_entities[1].title)
 
     def tearDown(self):
-        app.config['_solr_orm'].delete(query='*:*')
-        app.config['_solr_orm'].commit()
+        app.config["_solr_orm"].delete(query="*:*")
+        app.config["_solr_orm"].commit()

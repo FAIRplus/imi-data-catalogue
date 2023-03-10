@@ -1,0 +1,20 @@
+.filterDisplayOptions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.paginationElement {
+    display: flex;
+}
+
+.columnSortButton {
+    padding: 5px;
+    font-size: 10px;
+}
+
+

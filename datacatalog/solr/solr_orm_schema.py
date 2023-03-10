@@ -38,10 +38,37 @@ class SolrSchemaAdmin:
 
     def __init__(self, url):
         self.url = url
-        self.solr_query_fields = app.config.get('SOLR_QUERY_TEXT_FIELD', ['title'])
+        self.solr_query_fields = app.config.get(
+            "SOLR_QUERY_TEXT_FIELD",
+            {"dataset": ["title"], "project": ["title"], "study": ["title"]},
+        )
+        if app.config.get("SOLR_QUERY_SEARCH_EXTENDED"):
+            if "datasets_metadata" not in self.solr_query_fields.get("project"):
+                self.solr_query_fields.get("project").extend(
+                    ["datasets_metadata", "studies_metadata"]
+                )
+            if not app.config.get(
+                "SOLR_QUERY_SEARCH_EXTENDED_2_WAY_INDEX"
+            ) and "datasets_metadata" not in self.solr_query_fields.get("study"):
+                self.solr_query_fields.get("study").append("datasets_metadata")
+            if app.config.get(
+                "SOLR_QUERY_SEARCH_EXTENDED_2_WAY_INDEX"
+            ) and "projects_metadata" not in self.solr_query_fields.get("study"):
+                self.solr_query_fields.get("study").extend(
+                    ["datasets_metadata", "projects_metadata"]
+                )
+                self.solr_query_fields.get("dataset").extend(
+                    ["studies_metadata", "projects_metadata"]
+                )
 
-    def create_field(self, field_name: str, field_type: str, index: bool = True, store: bool = False,
-                     multivalued: bool = False) -> None:
+    def create_field(
+        self,
+        field_name: str,
+        field_type: str,
+        index: bool = True,
+        store: bool = False,
+        multivalued: bool = False,
+    ) -> None:
         """
         Create a solr field
         @param field_name: name of the field to create
@@ -51,14 +78,26 @@ class SolrSchemaAdmin:
         @param multivalued: should the field be marked as multivalued
         """
         logger.debug("creating field %s", field_name)
-        json_create = {"add-field": {"name": field_name, "type": field_type, "stored": store,
-                                     "indexed": index, "multiValued": multivalued}}
-        ret = requests.post(self.url,
-                            json=json_create)
+        json_create = {
+            "add-field": {
+                "name": field_name,
+                "type": field_type,
+                "stored": store,
+                "indexed": index,
+                "multiValued": multivalued,
+            }
+        }
+        ret = requests.post(self.url, json=json_create)
         ret.raise_for_status()
 
-    def update_field(self, field_name: str, field_type: str, index: bool = True, store: bool = False,
-                     multivalued: bool = False) -> None:
+    def update_field(
+        self,
+        field_name: str,
+        field_type: str,
+        index: bool = True,
+        store: bool = False,
+        multivalued: bool = False,
+    ) -> None:
         """
         Update a solr field
         @param field_name: name of the field to update
@@ -68,9 +107,18 @@ class SolrSchemaAdmin:
         @param multivalued: should the field be marked as multivalued
         """
         logger.debug("updating field %s", field_name)
-        ret = requests.post(self.url,
-                            json={"replace-field": {"name": field_name, "type": field_type, "stored": store,
-                                                    "indexed": index, "multiValued": multivalued}})
+        ret = requests.post(
+            self.url,
+            json={
+                "replace-field": {
+                    "name": field_name,
+                    "type": field_type,
+                    "stored": store,
+                    "indexed": index,
+                    "multiValued": multivalued,
+                }
+            },
+        )
         ret.raise_for_status()
 
     def delete_field(self, field_name: str) -> None:

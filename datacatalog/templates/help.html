@@ -7,8 +7,8 @@
 
     <div class="wrapper wrapper-text"><h1 id="helpHeader">Frequently Asked Questions</h1>
         <p>Here are some of the most frequently asked questions about the IMI Data Catalog and how to use it. If you
-            have a question that isn't answered here, please don't hesitate to <a
-                    href="mailto:data-catalog@elixir-luxembourg.org">contact us.</a></p>
+            have a question that isn't answered here, please don't hesitate to <strong><a
+                    href="mailto:data-catalog@elixir-luxembourg.org">contact us.</a></strong></p>
         <h2>What is the IMI Data Catalog?</h2>
         <p>For more information on the IMI Data Catalog, see our <strong><a href="{{ url_for('about') }}">About page</a></strong>.
         </p>
@@ -47,18 +47,19 @@
             development as we work on providing an integrated experience across the entire Catalog.</p>
 
         <h2>How can I request access to a dataset?</h2>
-        <p>On each Dataset page, you will find a "Request access" button, which allows you to submit a data access
-            request to the system. Please note that data access requests are currently processed manually. We are not
-            able to provide or facilitate dataset access for projects with Dataset placeholder (empty) pages at this
-            stage. We are working on improving the data access request process through automation and by adding more
-            dataset-level content.</p>
+        <p>On some Dataset pages, you will find a "Request access" button, which allows you to submit a data access
+            request to the system. These datasets are hosted by <a href="https://elixir-luxembourg.org/services/catalog/data-hosting/">ELIXIR Luxembourg's data hosting service</a> so we are able to process these access requests according to the data reuse conditions specified by the data owner.
+            We are not able to provide or facilitate dataset access for projects not hosted at ELIXIR Luxembourg, except where the data is already available through a public data repository, in which case a direct link to the data is provided.</p>
 
+        <h2>What are the reuse conditions for the information displayed in the IMI Data Catalog?</h2>
+        <p>All project-, study- and dataset-related information published in the IMI Data Catalog is freely available for reuse under the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 license</a>. The Data Catalog code base is licensed under the <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">GNU Affero General Public License
+</a> (AGPL).</p>
 
         <h2>What does the "FAIRplus Evaluated" badge signify?</h2>
         <p>The <strong><a href="https://fairplus-project.eu/">FAIRplus project</a></strong> works on developing tools
             and guidelines for making life science data FAIR, using a range of IMI projects as data sources to showcase
             and test its output. The "FAIRplus Evaluated" badge highlights projects which have been processed by the
-            FAIRplus project, undergoing at least one "FAIRification cycle", including an evaluation of FAIRness before
+            FAIRplus project, undergoing at least one <a href="https://faircookbook.elixir-europe.org/content/recipes/introduction/fairification-process.html">"FAIRification cycle"</a>, including an evaluation of <a href="https://fairplus.github.io/Data-Maturity/">FAIR maturity</a> before
             and after the FAIRification work. A link to the FAIRplus evaluation is available on relevant Dataset pages.
         </p>
 

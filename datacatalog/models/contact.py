@@ -17,51 +17,74 @@
     datacatalog.models.contact
     -------------------
 
-   Module containing the Contact entity
+   Module containing the Contact class used for storing entity contact details information
 
-@deprecated - fields moved to Project entity
 
 """
 import logging
 
-from datacatalog.solr.solr_orm import SolrAutomaticQuery
-from datacatalog.solr.solr_orm_entity import SolrEntity
-from datacatalog.solr.solr_orm_fields import SolrField, SolrForeignKeyField
-
 logger = logging.getLogger(__name__)
 
 
-class ContactQuery(SolrAutomaticQuery):
-    # The sort options that will be offered on the search page
-    SORT_OPTIONS = ["display_name", "id"]
-    # labels of the sort options that will be offered on the search page
-    SORT_LABELS = ["name", "id"]
-    # default sort option
-    DEFAULT_SORT = 'display_name'
-    # default sort order
-    DEFAULT_SORT_ORDER = 'asc'
-
-
-class Contact(SolrEntity):
+class Contact:
     """
-    Study entity, subclass of SolrEntity
+    Contact class to hold information about project contacts.
     """
-    # specifies the list of compatibles connectors
-    COMPATIBLE_CONNECTORS = ['Json']
-    query_class = ContactQuery
-    affiliation = SolrForeignKeyField("affiliation", entity_name='organization', multivalued=True)
-    display_name = SolrField("display_name")
-    email = SolrField("contact_email", indexed=False)
-    first_name = SolrField("contact_first_name")
-    last_name = SolrField("contact_last_name")
-    role = SolrField("role", multivalued=True)
 
+    def __init__(
+        self,
+        first_name: str,
+        last_name: str,
+        email: str,
+        affiliation: str,
+        business_address: str,
+        full_name: str,
+        roles: list,
+    ) -> None:
+        """
+        Initialize a Contact instance setting firstname, email, lastname, fullname,
+        affiliation, business_address and roles
+        @param first_name: firstname of the contact
+        @param last_name: lastName of the contact
+        @param email: email of the contact
+        @param affiliation: the affiliation of the contact in project
+        @param business_address: the postal address of the contact
+        @param full_name: the first_name + lastname of the contact
+        @param roles: list of roles of contact in project
+        """
+        self.id = full_name
+        self.full_name = full_name
+        self.email = email
+        self.first_name = first_name
+        self.last_name = last_name
+        self.affiliation = affiliation
+        self.business_address = business_address
+        if roles is None:
+            self.roles = []
+        else:
+            self.roles = roles
 
-def __init__(self, display_name: str = None, entity_id: str = None) -> None:
-    """
-      Initialize a new Contact instance with display_name and entity_id
-      @param name: display_name of the Contact
-      @param entity_id:  id of the Contact
-      """
-    super().__init__(entity_id)
-    self.display_name = display_name
+    def to_json(self):
+        result = {
+            "email": self.email,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "full_name": self.full_name,
+            "affiliation": self.affiliation,
+            "business_address": self.business_address,
+            "roles": self.roles,
+        }
+        return result
+
+    @staticmethod
+    def from_json(data):
+        contact = Contact(
+            first_name=data["first_name"],
+            last_name=data["last_name"],
+            email=data["email"],
+            affiliation=data["affiliation"],
+            business_address=data["business_address"],
+            full_name=data["full_name"],
+            roles=data["roles"],
+        )
+        return contact

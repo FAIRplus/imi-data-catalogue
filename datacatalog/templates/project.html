@@ -1,6 +1,49 @@
 {% extends 'layout.html' %}
 {% set entity_name = "project" %}
 {% import 'macros.html' as macros %}
+
+
+{% block jsonld %}
+    {{ super() }}
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@id": "{{ request.url }}",
+      "@type": "Project",
+      "http://purl.org/dc/terms/conformsTo": {
+            "@id": "https://schema.org/Project",
+            "@type": "CreativeWork"
+        },
+      "name": "{{ project.title }}",
+      "description": "{{ project.description }}",
+      "alternateName": "{{ project.acronym }}",
+      "identifier": {
+          "@type": "PropertyValue",
+          "@id": "{{ project.id }}"
+        },
+      "sameAs": "{{ project.website }}",
+      "keywords": [
+        {% for keyword in project.keywords -%}{"@type":  "DefinedTerm", "@id": "", "name": "{{ keyword }}"}{{ ", " if not loop.last }}
+        {%- endfor %}],
+      "url": "{{ request.url }}",
+      "foundingDate": "{{ project.start_date }}",
+      {%- if project.funded_by %}
+        {%- set g_index = project.funded_by.find('(Grant') - 1 %}
+        "funding": {
+            "@type": "Grant",
+            "identifier": "{{ project.funded_by.split()[-1][:-1] }}",
+            "funder": {
+                "@type": "Organization",
+                "name": "{{ project.funded_by[:g_index] }}"
+            }
+        }
+      {% else %}
+        "funding": {}
+      {%- endif %}
+    }
+    </script>
+{% endblock %}
+
 {% block title %}Project - {{ project.title }}{% endblock %}
 
 
@@ -29,35 +72,32 @@
         <p class="notes">{{ project.description | default("", True) }}</p>
         <p>
             {% if project.keywords %}
-                keywords: {{ macros.split_labels(project.keywords) }}
+                keywords: {{ macros.split_labels(project.keywords, facet_url=facets_url.keywords) }}
             {% endif %}
         </p>
+
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
             {#    GENERAL INFORMATION   #}
 
             {{ macros.start_panel("General Project Information", "general_information", True) }}
             {{ macros.show_field_link(project.website, "Project website", project.website) }}
-            {{ macros.show_field_text(project.start_date | date, "Start date") }}
-            {{ macros.show_field_text(project.end_date | date, "End date") }}
-            {{ macros.show_field_list(project.types, "Types") }}
-            {{ macros.show_field_list(project.reference_publications, "Project publications") }}
+            {{ macros.show_field_text(project.start_date | date, "Start date", facet_url=facets_url.start_date) }}
+            {{ macros.show_field_text(project.end_date | date, "End date", facet_url=facets_url.end_date) }}
+            {{ macros.show_field_text(project.funded_by, "Funding", facet_url=facets_url.funded_by) }}
+            {{ macros.show_field_list(project.types, "Types", facet_url=facets_url.types) }}
+            {{ macros.show_field_list(project.reference_publications, "Project publications", facet_url=facets_url.reference_publications) }}
 
             {{ macros.end_panel() }}
 
             {#    CONTACTS    #}
+            {% if contacts %}
+                {{ macros.start_panel("Contacts", "contacts") }}
+                {{ macros.show_contact(contacts) }}
+                {{ macros.end_panel() }}
+            {% endif %}
 
-            {{ macros.start_panel("Contacts", "contacts") }}
-            {{ macros.show_field_text(project.display_name , "Main contact") }}
-            {{ macros.show_field_text(project.email , "Email") }}
-            {{ macros.show_field_text(project.affiliation , "Affiliation") }}
-            {{ macros.show_field_text(project.business_address , "Business Address") }}
-            {{ macros.show_field_text(project.business_phone_number , "Business Phone Number") }}
-
-            {{ macros.end_panel() }}
-
-
-            {% if  project.studies_entities or project.dataset_entities %}
+            {% if  project.studies_entities or project.datasets_entities %}
                 {{ macros.start_panel("Studies and datasets", "studies_datasets") }}
                 <table class="table table-striped">
                     <thead>
@@ -74,14 +114,36 @@
                             </td>
                             <td>
                                 {% for  dataset in study.datasets_entities %}
-                                    <span class="label label-primary"><a class="text-info"
-                                                                         href="{{ url_for('entity_details', entity_name='dataset', entity_id=dataset.id) }}">{{ dataset.title }}</a></span>
+                                    <span class="label label-primary"><a
+                                            href="{{ url_for('entity_details', entity_name='dataset', entity_id=dataset.id) }}">{{ dataset.title }}</a></span>
                                 {% endfor %}
                             </td>
                         </tr>
                     {% endfor %}
+                    {% if project.datasets_entities %}
+                        <tr>
+                            <td>-</td>
+                            <td>
+                                {% for dataset in project.datasets_entities %}
+                                    <span class="label label-primary">
+                                <a
+                                        href="{{ url_for('entity_details', entity_name='dataset', entity_id=dataset.id) }}">{{ dataset.title }}</a>
+                            </span>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endif %}
+
+
                     </tbody>
                 </table>
+                {{ macros.end_panel() }}
+            {% endif %}
+
+            {#    ATTACHED FILES    #}
+            {% if attachments_exist %}
+                {{ macros.start_panel("Attached files") }}
+                <div id="attachments-datatable" data-url="{{ attachment_url }}"></div>
                 {{ macros.end_panel() }}
             {% endif %}
         </div>

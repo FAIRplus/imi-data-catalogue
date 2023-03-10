@@ -23,14 +23,13 @@
    It is used to handle pagination in jinja templates.
 
 """
+import logging
 from math import ceil
 from typing import Optional, Generator
 
-from datacatalog import app
+__author__ = "Valentin Grouès"
 
-__author__ = 'Valentin Grouès'
-
-logger = app.logger
+logger = logging.getLogger(__name__)
 
 
 class Pagination:
@@ -77,8 +76,13 @@ class Pagination:
         """
         return self.page < self.pages
 
-    def iter_pages(self, left_edge: int = 2, left_current: int = 2,
-                   right_current: int = 5, right_edge: int = 2) -> Generator[Optional[int], None, None]:
+    def iter_pages(
+        self,
+        left_edge: int = 2,
+        left_current: int = 2,
+        right_current: int = 5,
+        right_edge: int = 2,
+    ) -> Generator[Optional[int], None, None]:
         """
         Generator used to build navigation links to jump between pages
         If current pages is 6 out of a total number of pages of 20, we will get with the default values:
@@ -90,9 +94,11 @@ class Pagination:
         """
         last = 0
         for num in range(1, self.pages + 1):
-            if num <= left_edge or \
-                    (self.page - left_current - 1 < num < self.page + right_current) or \
-                    num > self.pages - right_edge:
+            if (
+                num <= left_edge
+                or (self.page - left_current - 1 < num < self.page + right_current)
+                or num > self.pages - right_edge
+            ):
                 if last + 1 != num:
                     yield None
                 yield num

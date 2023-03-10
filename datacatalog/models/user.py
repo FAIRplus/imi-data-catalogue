@@ -23,6 +23,7 @@
 """
 import logging
 
+from flask import session
 from flask_login import UserMixin
 
 logger = logging.getLogger(__name__)
@@ -34,7 +35,15 @@ class User(UserMixin):
     Extends the Flask-Login UserMixing
     """
 
-    def __init__(self, username: str, email: str, displayname: str, active: bool = True) -> None:
+    def __init__(
+        self,
+        username: str,
+        email: str,
+        displayname: str,
+        active: bool = True,
+        accesses=None,
+        extra=None,
+    ) -> None:
         """
         Initialize a User instance setting username, email, display name and activate status
         @param username: name of the user
@@ -47,6 +56,12 @@ class User(UserMixin):
         self.email = email
         self.displayname = displayname
         self.active = active
+        if accesses is None:
+            accesses = []
+        self.accesses = accesses
+        if extra is None:
+            extra = {}
+        self.extra = extra
 
     def __repr__(self) -> str:
         return self.displayname
@@ -57,3 +72,24 @@ class User(UserMixin):
         @return: user id
         """
         return self.id
+
+    def save(self):
+        session["_user_id"] = self.id
+        session["user_details"] = {
+            "email": self.email,
+            "display_name": self.displayname,
+            "accesses": self.accesses,
+            "extra": self.extra,
+        }
+
+    @staticmethod
+    def destroy():
+        session.pop("_user_id")
+        session.pop("user_details")
+
+    def update(self, updated_user):
+        self.email = updated_user.email
+        self.displayname = updated_user.displayname
+        self.accesses = updated_user.accesses
+        self.extra = updated_user.extra
+        self.save()

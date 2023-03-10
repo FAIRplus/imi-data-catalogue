@@ -18,48 +18,65 @@
 import json
 import os
 
-from tests.base_test import BaseTest
 from datacatalog.connector.dats_connector import DATSConnector
+from tests.base_test import BaseTest, get_resource_path
 
-__author__ = 'Danielle Welter'
+__author__ = "Danielle Welter"
 
 from datacatalog.models.dataset import Dataset
 from datacatalog.models.project import Project
 from datacatalog.models.study import Study
 
 
-class TestJSONConnector(BaseTest):
+class TestDatsConnector(BaseTest):
     def test_build_all_datasets(self):
         project_count = 0
         dataset_count = 0
         study_count = 0
-        for file in os.listdir(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../data/imi_projects')):
+        base_folder = get_resource_path("imi_projects_test")
+        for file in os.listdir(base_folder):
             if file.endswith(".json"):
                 project_count += 1
-                with open(os.path.join(os.path.dirname(os.path.realpath(__file__)),
-                                       '../../data/imi_projects' + "/" + file)) as json_file:
+                with open(
+                    os.path.join(
+                        base_folder,
+                        file,
+                    )
+                ) as json_file:
                     data = json.load(json_file)
-                    if 'projectAssets' in data:
-                        for asset in data['projectAssets']:
-                            if asset['@type'] == 'Dataset':
+                    if "projectAssets" in data:
+                        for asset in data["projectAssets"]:
+                            if asset["@type"] == "Dataset":
                                 dataset_count += 1
-                            elif asset['@type'] == 'Study':
+                            elif asset["@type"] == "Study":
                                 study_count += 1
-                                if 'output' in asset:
-                                    for dataset in asset['output']:
+                                if "output" in asset:
+                                    for _ in asset["output"]:
                                         dataset_count += 1
 
         dats_datasets_connector = DATSConnector(
-            os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../data/imi_projects'), Dataset)
+            base_folder,
+            Dataset,
+        )
         datasets = list(dats_datasets_connector.build_all_entities())
-        self.assertEqual(dataset_count, len(datasets))
 
+        self.assertEqual(dataset_count, len(datasets))
+        for dataset in datasets:
+            if dataset.id == "6bd9243b-0368-4cc9-bc92-d00ba1d40b75":
+                self.assertTrue(dataset.hosted)
+            else:
+                self.assertFalse(dataset.hosted)
+            self.assertFalse(dataset.e2e)
         dats_projects_connector = DATSConnector(
-            os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../data/imi_projects'), Project)
+            base_folder,
+            Project,
+        )
         projects = list(dats_projects_connector.build_all_entities())
         self.assertEqual(project_count, len(projects))
 
         dats_studies_connector = DATSConnector(
-            os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../data/imi_projects'), Study)
+            base_folder,
+            Study,
+        )
         studies = list(dats_studies_connector.build_all_entities())
         self.assertEqual(study_count, len(studies))

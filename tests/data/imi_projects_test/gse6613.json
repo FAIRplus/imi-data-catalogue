@@ -1,0 +1,204 @@
+{
+    "@context": [
+        "https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+        "http://w3id.org/dats/context/obo/dataset_obo_context.jsonld"
+    ],
+    "@type": "Project",
+    "acronym": "GSE6613",
+    "description": "Parkinson\u2019s disease (PD) progresses relentlessly and affects five million people worldwide. Laboratory tests for PD are critically needed for developing treatments designed to slow or prevent progression of the disease. We performed a transcriptome-wide scan in 105 individuals to interrogate the molecular processes perturbed in cellular blood of patients with early-stage PD. The molecular marker here identified is strongly associated with risk of PD in 66 samples of the training set (third tertile cross-validated odds ratio of 5.7 {P for trend 0.005}). It is further validated in 39 independent test samples (third tertile odds ratio of 5.1 {P for trend 0.04}). The genes differentially expressed in patients with PD, or Alzheimer\u2019s or progressive supranuclear palsy offer unique insights into disease-linked processes detectable in peripheral blood. Combining gene expression scans in blood and linked clinical data will facilitate the rapid characterization of candidate biomarkers as demonstrated here with respect to PD.",
+    "extraProperties": [
+        {
+            "category": "website",
+            "values": [
+                {
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                    "@type": "Annotation",
+                    "value": " https://www.ncbi.nlm.nih.gov/bioproject/PRJNA98879"
+                }
+            ]
+        }
+    ],
+    "identifier": {
+        "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+        "@type": "Identifier",
+        "identifier": "92572acc-71e8-11eb-bafe-3e22fbb3883f"
+    },
+    "keywords": [
+        {
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "@type": "Annotation",
+            "value": "disease state analysis"
+        },
+        {
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "@type": "Annotation",
+            "value": "expression profiling by array"
+        }
+    ],
+    "primaryPublications": [
+        {
+            "@context": "https://w3id.org/dats/context/sdo/publication_sdo_context.jsonld",
+            "@type": "Publication",
+            "identifier": {
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                "@type": "Identifier",
+                "identifier": "https://pubmed.ncbi.nlm.nih.gov/17215369"
+            }
+        },
+        {
+            "@context": "https://w3id.org/dats/context/sdo/publication_sdo_context.jsonld",
+            "@type": "Publication",
+            "identifier": {
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                "@type": "Identifier",
+                "identifier": "https://pubmed.ncbi.nlm.nih.gov/18669654"
+            }
+        }
+    ],
+    "projectAssets": [
+        {
+            "@context": "https://w3id.org/dats/context/sdo/study_sdo_context.jsonld",
+            "@type": "Study",
+            "acronym": "Parkinson's disease vs. controls, whole blood",
+            "description": "Whole blood expression data from 50 patients with Parkinson's disease,  33 with neurodegenerative diseases other than PD, and 23 healthy controls.",
+            "identifier": {
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                "@type": "Identifier",
+                "identifier": "92572c34-71e8-11eb-bafe-3e22fbb3883f"
+            },
+            "input": [
+                {
+                    "@context": "https://w3id.org/dats/context/sdo/material_sdo_context.jsonld",
+                    "@type": "Material",
+                    "bearerOfDisease": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld",
+                            "@type": "Disease",
+                            "name": "Parkinsons disease"
+                        }
+                    ],
+                    "name": "input material",
+                    "taxonomy": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/taxonomic_info_sdo_context.jsonld",
+                            "@type": "TaxonomicInformation",
+                            "name": "Homo sapiens"
+                        }
+                    ]
+                }
+            ],
+            "name": "study_primary_purpose",
+            "output": [
+                {
+                    "@context": "https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+                    "@type": "Dataset",
+                    "creators": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                            "@type": "Organization",
+                            "name": ""
+                        }
+                    ],
+                    "distributions": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/dataset_distribution_sdo_context.jsonld",
+                            "@type": "DatasetDistribution",
+                            "access": {
+                                "@context": "https://w3id.org/dats/context/sdo/access_sdo_context.jsonld",
+                                "@type": "Access",
+                                "accessURL": "ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE6nnn/GSE6613/suppl/GSE6613_RAW.tar",
+                                "landingPage": ""
+                            },
+                            "dates": [
+                                {
+                                    "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                                    "@type": "Date",
+                                    "date": "Tue, 26 Dec 2006 00:00:00 GMT",
+                                    "type": {
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "@type": "Annotation",
+                                        "value": "creation date"
+                                    }
+                                },
+                                {
+                                    "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                                    "@type": "Date",
+                                    "date": "Fri, 07 Jun 2019 00:00:00 GMT",
+                                    "type": {
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "@type": "Annotation",
+                                        "value": "last update date"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "extraProperties": [
+                        {
+                            "@context": "http://w3id.org/dats/context/obo/category_values_pair_obo_context.jsonld",
+                            "@type": "CategoryValuesPair",
+                            "category": "number of samples",
+                            "values": [
+                                {
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                    "@type": "Annotation",
+                                    "value": "105"
+                                }
+                            ]
+                        }
+                    ],
+                    "identifier": {
+                        "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                        "@type": "Identifier",
+                        "identifier": "92572be4-71e8-11eb-bafe-3e22fbb3883f"
+                    },
+                    "isAbout": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld",
+                            "@type": "Disease",
+                            "name": "Parkinsons disease"
+                        }
+                    ],
+                    "title": "Parkinson's disease vs. controls, whole blood",
+                    "types": [
+                        {
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                            "@type": "Annotation",
+                            "value": "expression profiling by array"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "projectLeads": [
+        {
+            "@context": "https://w3id.org/dats/context/sdo/person_sdo_context.jsonld",
+            "@type": "Person",
+            "affiliations": [
+                {
+                    "@context": "https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                    "@type": "Organization",
+                    "location": {
+                        "@context": "https://w3id.org/dats/context/sdo/place_sdo_context.jsonld",
+                        "@type": "Place",
+                        "postalAddress": "xxxx,2800,Denmark"
+                    },
+                    "name": "Technical University of Denmark"
+                }
+            ],
+            "firstName": "",
+            "fullName": "",
+            "lastName": ""
+        }
+    ],
+    "projectWebsite": " https://www.ncbi.nlm.nih.gov/bioproject/PRJNA98879",
+    "title": "Parkinson's disease vs. controls, whole blood",
+    "types": [
+        {
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "@type": "Annotation",
+            "value": "NCBI GEO"
+        }
+    ]
+}

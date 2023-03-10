@@ -1,0 +1,385 @@
+{
+    "title": "PRECISESADS",
+    "description": "Molecular reclassification to find clinically useful biomarkers for systemic autoimmune diseases",
+    "@type": "Project",
+    "@context": [
+        "http://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+        "http://w3id.org/dats/context/obo/dataset_obo_context.jsonld"
+    ],
+    "types": [
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "IMI projects"
+        }
+    ],
+    "identifier": {
+        "identifier": "dc9970e8-147a-11eb-b51f-8c8590c45a21",
+        "@type": "Identifier",
+        "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+    },
+    "startDate": {
+        "@type": "Date",
+        "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+        "date": "2014-02-01",
+        "type": {
+            "value": "start date",
+            "valueIRI": "SIO:000031"
+        }
+    },
+    "endDate": {
+        "@type": "Date",
+        "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+        "date": "2019-01-31",
+        "type": {
+            "value": "end date",
+            "valueIRI": "SIO:000036"
+        }
+    },
+    "projectLeads": [
+        {
+            "@type": "Person",
+            "@context": "https://w3id.org/dats/context/sdo/person_sdo_context.jsonld",
+            "firstName": "Huckleberry",
+            "lastName": "Finn",
+            "email": "huckleberry.finn@test.com",
+            "roles": [
+                {
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                    "value": "Primary Study Contact",
+                    "valueIRI": "NCIT:C127533"
+                }
+            ],
+            "affiliations": [
+                {
+                    "@type": "Organization",
+                    "@context": "https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                    "name": "UCB"
+                }
+            ],
+            "fullName": "Huckleberry Finn"
+        }
+    ],
+    "keywords": [
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "IMI projects"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Translational Medicine"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Autoimmune diseases"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Diagnostics"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Conducting clinical trials"
+        }
+    ],
+    "fundedBy": [
+        {
+            "name": "IMI1 - Call 8",
+            "identifier": {
+                "identifier": "115565",
+                "@type": "Identifier",
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+            },
+            "@type": "Grant",
+            "@context": "https://w3id.org/dats/context/sdo/grant_sdo_context.jsonld"
+        }
+    ],
+    "projectAssets": [
+        {
+            "name": "Molecular Reclassification to Find Clinically Useful Biomarkers for Systemic Autoimmune Diseases Mechanisms for the Improvement of Drug Development and Therapy",
+            "identifier": {
+                "identifier": "dc995c7a-147a-11eb-b51f-8c8590c45a21",
+                "@type": "Identifier",
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+            },
+            "@type": "Study",
+            "@context": "https://w3id.org/dats/context/sdo/study_sdo_context.jsonld",
+            "description": "The goal of this project is to use the power of OMICs, and bioinformatics to identify new classifications for diseases known to share common pathophysiological mechanisms. Such knowledge has not been applied to individual patients, depriving them of potential benefits in terms of the use of new therapeutic agents that are being developed for one disease but cannot be applied in another, due to current clinical classifications. We will investigate individuals with systemic lupus erythematosus (SLE), systemic sclerosis (SSc), Sj\u00f6gren\u2019s syndrome (Sjs), rheumatoid arthritis (RA), primary antiphospholipid syndrome (PAPS) and mixed connective tissue disease (MCTD), jointly as systemic autoimmune diseases (SADs). We believe that there will be overlapping clusters of individuals across diseases that will share molecular features. To determine these clusters we will, study 2000 cases of SADs, and 600 healthy controls to identify molecular clusters and their cellular and clinical correlates. In addition, we will study kidney and skin biopsies to define the development of molecular markers with severe kidney disease or with skin fibrosis. In this way we will define systemic and tissue taxonomies. We will study whole blood, as well as isolated peripheral blood mononuclear cells and subpopulations, and biopsies, assessing gene expression and epigenetic marks with a combination of array and next generation sequencing (NGS) strategies. These studies will define cellular counts and proportions and changes in gene expression elated to specific cellular populations. We will also use NGS strategies to define the presence of risk alleles (HLA and non-HLA) in all individuals. The data will be complemented with the study of the presence of autoantibodies in serum (analyzed in a reference lab), and we will use metabolomics mass spectrometry and NMR approaches to analyze plasma and urine metabolites. We will also study exosomes in plasma and urine and identify their molecular profiles. Samples will be collected following strict protocols and appropriate patient selection. The bioinformatics and biostatistics approaches will be aimed at the analysis of clusters with unsupervised clustering algorithms and tools and cross-validation. We will also perform analyses to determine risk and predictive models analyzing the genetic and molecular data at different levels, leading to a highly productive study with two arms, one for basic research and one with clinical applications. Among the clinical applications we will have a new classification for groups of patients sharing molecular mechanisms of disease, biomarkers for disease progression and organ damage prediction, and we will develop assays that can be easily applied in the clinic. The resultant clinically applicable clusters will be then validated in a longitudinal, inception trial where newly recruited patients will be analyzed at baseline and at two different time points, to define their clustering status or their evolution towards specific clusters.",
+            "types": [
+                {
+                    "value": "observational",
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                }
+            ],
+            "studyGroups": [
+                {
+                    "size": 2866,
+                    "@type": "StudyGroup",
+                    "@context": "https://w3id.org/dats/context/sdo/studygroup_sdo_context.jsonld",
+                    "name": "Single cohort of adult participants",
+                    "consentInformation": [
+                        {
+                            "name": {
+                                "value": "informed consent",
+                                "valueIRI": "NCIT:C16735",
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                            },
+                            "@type": "ConsentInfo",
+                            "@context": "https://w3id.org/dats/context/sdo/consent_info_obo_context.jsonld"
+                        }
+                    ],
+                    "characteristics": [
+                        {
+                            "name": {
+                                "value": "age",
+                                "valueIRI": "NCIT:C25150",
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                            },
+                            "values": [
+                                {
+                                    "values": [
+                                        {
+                                            "value": "18",
+                                            "@type": "Annotation",
+                                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                        }
+                                    ],
+                                    "@type": "CategoryValuesPair",
+                                    "category": "minimal value",
+                                    "categoryIRI": "SIO:001113"
+                                }
+                            ],
+                            "@type": "Dimension",
+                            "@context": "https://w3id.org/dats/context/sdo/dimension_sdo_context.jsonld",
+                            "unit": {
+                                "value": "year",
+                                "valueIRI": "UO:0000036",
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "input": [
+                {
+                    "@type": "Material",
+                    "@context": "https://w3id.org/dats/context/sdo/material_sdo_context.jsonld",
+                    "name": "input material",
+                    "types": [
+                        {
+                            "value": "tissue sample",
+                            "valueIRI": "NCIT:C19697",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                    ],
+                    "taxonomy": [
+                        {
+                            "@type": "TaxonomicInformation",
+                            "@context": "https://w3id.org/dats/context/sdo/taxonomic_info_sdo_context.jsonld",
+                            "name": "Homo sapiens",
+                            "identifier": {
+                                "@type": "Identifier",
+                                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                                "identifier": "NCBITaxon:9606",
+                                "identifierSource": "NCBI Taxon ID"
+                            }
+                        }
+                    ],
+                    "derivesFrom": [
+                        {
+                            "name": "Blood",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "Serum",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "Plasma",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "Urine",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        }
+                    ],
+                    "bearerOfDisease": [
+                        {
+                            "name": "systemic autoimmune diseases",
+                            "@type": "Disease",
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                        }
+                    ]
+                }
+            ],
+            "output": [
+                {
+                    "title": "PRECISESADS",
+                    "identifier": {
+                        "identifier": "d6ab9395-1ae3-453b-aa0e-c1de613905d8",
+                        "@type": "Identifier",
+                        "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+                    },
+                    "@type": "Dataset",
+                    "@context": "https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+                    "types": [
+                        {
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                            "value": "genomics variant array"
+                        },
+                        {
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                            "value": "transcriptome array"
+                        },
+                        {
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                            "value": "methylation array"
+                        },
+                        {
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                            "value": "RNASeq"
+                        },
+                        {
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                            "value": "metabolomics"
+                        },
+                        {
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                            "value": "proteomics"
+                        }
+                    ],
+                    "isAbout": [
+                        {
+                            "name": "systemic autoimmune diseases",
+                            "@type": "Disease",
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                        }
+                    ],
+                    "dataUseConditions": [
+                        {
+                            "@type": "DataUseCondition",
+                            "identifier": {
+                                "identifier": "DUO:0000007",
+                                "@type": "Identifier",
+                                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+                            },
+                            "abbreviation": "DS-[XX](CC)",
+                            "name": "Disease-specific Research and Clinical Care.",
+                            "description": "Use is limited to research in the field of systemic auto immune\r\ndiseases (SADS)",
+                            "restriction_type": "CONSTRAINED_PERMISSION"
+                        },
+                        {
+                            "@type": "DataUseCondition",
+                            "identifier": {
+                                "identifier": "DUO:0000019",
+                                "@type": "Identifier",
+                                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+                            },
+                            "abbreviation": "PUB",
+                            "name": "Publication Required",
+                            "description": "Acknowledgement is required: This\r\nwork has received support from the EU EFPIA\r\nInnovative Medicines Initiative, Joint Undertaking\r\nPRECISESADS grant no 115565. Where reasonable\r\nconsider if partners of PRECISESADS may be co-authors.",
+                            "restriction_type": "OBLIGATION"
+                        },
+                        {
+                            "@type": "DataUseCondition",
+                            "identifier": {
+                                "identifier": "DUO:0000045",
+                                "@type": "Identifier",
+                                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+                            },
+                            "name": "Not-for-profit Use Only",
+                            "abbreviation": "NPU",
+                            "description": "Use is limited to non-commercial scientific research\r\nproject and publication purposes. Such non-commercial\r\nuse by a commercial entity is permitted.",
+                            "restriction_type": "CONSTRAINED_PERMISSION"
+                        }
+                    ],
+                    "distributions": [
+                        {
+                            "@type": "DatasetDistribution",
+                            "@context": "https://w3id.org/dats/context/sdo/dataset_distribution_sdo_context.jsonld",
+                            "dates": [
+                                {
+                                    "date": "2017-01-19T14:32:13.884Z",
+                                    "@type": "Date",
+                                    "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                                    "type": {
+                                        "@type": "Annotation",
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "value": "creation date",
+                                        "valueIRI": ""
+                                    }
+                                },
+                                {
+                                    "date": "2017-09-05T11:53:57.436Z",
+                                    "@type": "Date",
+                                    "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                                    "type": {
+                                        "@type": "Annotation",
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "value": "last update date",
+                                        "valueIRI": ""
+                                    }
+                                }
+                            ],
+                            "access": {
+                                "landingPage": "",
+                                "@type": "Access",
+                                "@context": "https://w3id.org/dats/context/sdo/access_sdo_context.jsonld"
+                            }
+                        }
+                    ],
+                    "creators": [
+                        {
+                            "@type": "Organization",
+                            "@context": "https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                            "name": ""
+                        }
+                    ]
+                }
+            ],
+            "acronym": "PRECISESADS",
+            "characteristics": [
+                {
+                    "name": {
+                        "value": "Multi-institution Indicator",
+                        "valueIRI": "NCIT:C93599",
+                        "@type": "Annotation",
+                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                    },
+                    "values": [
+                        {
+                            "value": "true",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                    ],
+                    "@type": "Dimension",
+                    "@context": "https://w3id.org/dats/context/sdo/dimension_sdo_context.jsonld"
+                }
+            ]
+        }
+    ],
+    "acronym": "IMI PRECISESADS",
+    "projectWebsite": "https://www.imi.europa.eu/projects-results/project-factsheets/precisesads"
+}

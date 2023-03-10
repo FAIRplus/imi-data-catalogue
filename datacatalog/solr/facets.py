@@ -76,7 +76,9 @@ class Facet(object):
     see https://lucene.apache.org/solr/guide/8_4/faceting.html
     """
 
-    def __init__(self, field_name: str, label: str = None, default_values: List = None) -> None:
+    def __init__(
+        self, field_name: str, label: str = None, default_values: List = None
+    ) -> None:
         """
         Initialize a Facet instance setting the field name, the label and default values
         @param field_name: the solr field name that we want to build facet for

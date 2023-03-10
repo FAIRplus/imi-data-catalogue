@@ -34,14 +34,15 @@ class DatasetQuery(SolrQuery):
     """
     SolrQuery child class for the Dataset entity
     """
+
     # The sort options that will be offered on the search page
     SORT_OPTIONS = ["dataset_created", "title"]
     # labels of the sort options that will be offered on the search page
     SORT_LABELS = ["dataset_created", "title"]
     # allows giving more weight to some fields than others for default search
-    BOOST = app.config.get('SOLR_BOOST', 'dataset_title^5 dataset_text_^1')
+    BOOST = app.config.get("SOLR_BOOST", "dataset_title^5 dataset_text_^1")
     # default sort option
-    DEFAULT_SORT = app.config.get('SOLR_DEFAULT_SORT', 'dataset_created')
+    DEFAULT_SORT = app.config.get("SOLR_DEFAULT_SORT", "dataset_created")
 
 
 class EntityWithSlugs:

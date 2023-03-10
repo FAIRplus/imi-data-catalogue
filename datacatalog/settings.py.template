@@ -52,10 +52,37 @@ class Config(object):
             ("types", "Study types"),
             ("organisms", "Organisms"),
             ("disease", "Disease"),
-            ("samples_types", "Samples types"),
+            ("samples_type", "Samples types"),
         ]
 
     }
+
+    # ENABLE/DISABLE EXTENDED SEARCH
+    SOLR_QUERY_SEARCH_EXTENDED = True
+    # ENABLE/DISABLE EXTENDED SEARCH 2 WAY INDEXING
+    SOLR_QUERY_SEARCH_EXTENDED_2_WAY_INDEX = True
+    # FIELDS WHICH ARE USED FOR EXTENDED SEARCH
+    SOLR_QUERY_TEXT_FIELD_EXTENDED = {
+        'dataset': [
+            "title",
+            "disease",
+            "data_types",
+            "data_standards",
+        ],
+        'project': [
+            'keywords',
+            'title',
+            'types'
+        ],
+        'study': [
+            'title',
+            'organisms',
+            'disease',
+            'samples_type',
+            'types'
+        ]
+    }
+
     # NUMBER OF SEARCH RESULTS DISPLAYED PER PAGE
     RESULTS_PER_PAGE = 8
     # SOLR URL
@@ -88,10 +115,23 @@ class Config(object):
     SOLR_QUERY_TEXT_FIELD = {
         'dataset': [
             "title",
-            "keywords",
-            "treatment_name"
-            "treatment_category"
+            "disease",
+            "data_types",
+            "data_standards"
         ],
+        'project': [
+            'keywords',
+            'title',
+            'types'
+        ],
+        'study': [
+            'title',
+            'organisms',
+            'disease',
+            'samples_type',
+            'types'
+        ]
+
     }
     # the entities that appears in the menu / navbar
     ENTITIES_MENU = ['project', 'dataset', 'study']
@@ -119,7 +159,9 @@ class Config(object):
     # DISPLAY THE 'LOGIN' LINK IN NAVBAR
     SHOW_LOGIN = False
     # ACCESS HANDLER (used for access requests)
-    # Rems or Email
+    # Rems, RemsOidc or Email
+    # RemsOidc handler will use rems to create access requests and pull requests statuses but actual accesses will be
+    # pulled from user roles coming from OIDC provider
     ACCESS_HANDLERS = {
         "dataset": "Email"
     }
@@ -127,6 +169,11 @@ class Config(object):
     REMS_API_KEY = ""
     REMS_URL = ""
     REMS_API_USER = ""
+    REMS_FORM_ID = 1
+    REMS_WORKFLOW_ID = 1
+    REMS_ORGANIZATION_ID = ""
+    REMS_LICENSES = [1]
+    REMS_VERIFY_SSL = True
     # Export entity as dats
     ALLOW_ENTITY_EXPORT = False
     # Parameters for DAISY connector
@@ -134,6 +181,61 @@ class Config(object):
         'dataset': "https://xxxxx",
         'project': "https://xxxxx",
     }
+    # Logger configuration
+    LOGGING_CONFIG = {
+        'version': 1,
+        'disable_existing_loggers': True,
+        'formatters': {
+            'standard': {
+                'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+            },
+        },
+        'handlers': {
+            'default': {
+                'level': 'DEBUG',
+                'formatter': 'standard',
+                'class': 'logging.StreamHandler',
+                'stream': 'ext://sys.stdout',
+            },
+            'file': {
+                'level': 'DEBUG',
+                'formatter': 'standard',
+                'class': 'logging.FileHandler',
+                'filename': 'datacatalog.log'
+            }
+        },
+        'loggers': {
+            'root': {
+                'handlers': ['default', 'file'],
+                'level': 'WARNING',
+                'propagate': True
+            },
+            'datacatalog': {
+                'level': 'DEBUG',
+            },
+            'werkzeug': {
+                'level': 'INFO'
+            }
+        }
+    }
+
+    # For entities attached files
+    PUBLIC_FILE_STORAGE_ROOT = ""
+
+
+    # Autocomplete
+    TOTAL_SUGGESTED_TERMS = 2
+    TOTAL_SUGGESTED_ENTITY_TITLES = 4
+
+    # Dats
+    DATS_SCHEMAS_FOLDER = ""
+    DATS_CONTEXTS_FOLDER = ""
+    # URL SCHEME, use to force a specific URL scheme when building full URLs (e.g. sitemap URL)
+    # SCHEME = 'https'
+
+    # NO STORAGES
+    CONTACT_ACCESS_RECIPIENT = ""  # who to contact if no storages are defined
+    CONTACT_ACCESS_BODY = ""  # the body of the email to send if no storages are defined
 
 
 class DockerConfig(Config):
@@ -167,3 +269,7 @@ class TestConfig(Config):
     SOLR_ENDPOINT = 'http://localhost:8983/solr'
     SOLR_COLLECTION = 'datacatalog_test'
     TEST_GEO_STUDY_LIST_PATH = "tests/geo_studies_test/test.txt"
+
+    JSON_FILE_PATH = {'dataset': 'tests/data/imi_projects_test',
+                      'project': 'tests/data/imi_projects_test',
+                      'study': 'tests/data/imi_projects_test'}

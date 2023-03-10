@@ -1,6 +1,8 @@
 {% extends 'layout.html' %}
 {% set query = request.args.query %}
 {% set entity_plural_name =  config.get('entities').get(entity_name).plural_name() %}
+{% set total_suggested_terms = config.get('TOTAL_SUGGESTED_TERMS') %}
+{% set total_suggested_entity_titles = config.get('TOTAL_SUGGESTED_ENTITY_TITLES') %}
 {% macro render_facets(query, sort_by, order, facet, facets) %}
     {% set facet_field = results.facets['facet_fields'][facet.field_name] %}
     <div class="row facet">
@@ -12,7 +14,8 @@
                 {% set facet_selected = facet_value in facet.values %}
                 {% if facet_selected %}
                     <li class="facet-option facet-option-selected">
-                        <a href="{{ macros.build_link(query, sort_by, order, facets, none, (facet.field_name, facet_value), no_default, search_controller=search_controller, entity_name=entity_name) }}">{{ facet_value }}
+                        <a href="{{ macros.build_link(query, sort_by, order, facets, none, (facet.field_name, facet_value), no_default, search_controller=search_controller, entity_name=entity_name) }}">
+                            {{ facet_value | yesno | title if facet_value | boolean else facet_value }}
                             ({{ facet_value_count }})
                             <p class="facet-remove pull-right">
                                 <i class="material-icons text-primary">cancel</i>
@@ -22,8 +25,10 @@
                     </li>
                 {% else %}
                     <li class="facet-option">
-                        <a href="{{ macros.build_link(query, sort_by, order, facets, (facet.field_name, facet_value), none, no_default, search_controller=search_controller, entity_name=entity_name) }}">{{ facet_value }}
-                            ({{ facet_value_count }})</a>
+                        <a href="{{ macros.build_link(query, sort_by, order, facets, (facet.field_name, facet_value), none, no_default, search_controller=search_controller, entity_name=entity_name) }}">
+                            {{ facet_value | yesno | title if facet_value | boolean else facet_value }}
+                            ({{ facet_value_count }})
+                        </a>
                     </li>
                 {% endif %}
             {% endfor %}
@@ -94,17 +99,15 @@
                 role="form" class="col-md-12 form-horizontal">
             <div class="form-group">
                 <div class="row">
+                    <div id="autocomplete_input" data-query="{{ query }}"
+                         data-api-entities-link="{{ url_for("api_entities", entity_name=entity_name) }}"
+                         data-api-search-autocomplete-entities-link="{{ url_for("api_search_autocomplete_entities",entity_name=entity_name, query="") }}"
+                         data-entity-link="{{ url_for("entity_details", entity_name=entity_name,entity_id="") }}"
+                         data-entity-name="{{entity_name}}"
+                         data-total-entity-titles="{{total_suggested_entity_titles}}"
+                         data-total-terms="{{total_suggested_terms}}" style="margin-right:30px;"
+                         class="col-md-5 col-sm-11 col-xs-11 input-group pull-left">
 
-                    <div style="margin-right:30px;" class="col-md-5 col-sm-11 col-xs-11 input-group pull-left">
-                        <input title="query" placeholder="enter your query here" type="search" name="query"
-                               id="query" class="form-control"
-                               value="{{ query }}"/>
-                        <span class="input-group-addon"><button type="submit"
-                                                                class="btn btn-primary btn-raised"
-                                                                id="search-button"><i
-                                class="material-icons">search</i>
-                        </button>
-                        </span>
                     </div>
 
 

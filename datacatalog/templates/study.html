@@ -1,8 +1,49 @@
 {% extends 'layout.html' %}
 {% set entity_name = "study" %}
+{% set study_author = study.get_author() %}
+{% set study_published_date = study.get_published_date() %}
 {% import 'macros.html' as macros %}
 {% block title %}Study - {{ study.title }}{% endblock %}
-
+{% block jsonld %}
+    {{ super() }}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@id": "{{ request.url }}",
+        "@type": "Study",
+        "http://purl.org/dc/terms/conformsTo": {
+            "@id": "https://bioschemas.org/profiles/Study/0.2-DRAFT",
+            "@type": "CreativeWork"
+        },
+        "identifier": {
+            "@id": "{{ study.id }}",
+            "@type": "PropertyValue"
+        },
+        "name": " {{ study.primary_purpose }}",
+        {% if study_author %}
+        "author": {
+            "@type": "{{ study_author['type'] }}",
+            "name": "{{ study_author['name'] }}"
+        },
+        {% endif %}
+        {% if study_published_date %}
+        "datePublished": "{{ study_published_date | date }}",
+        {% endif %}
+        {% if study.description %}
+        "description": "{{ study.description }}",
+        {% endif %}
+        {% if study.types %}
+        "studyDomain": "{{ study.types[0]}}",
+        {% endif %}
+        "keywords": {{ study.get_keywords() | render_keywords | safe }},
+        "isPartOf": "{{ url_for('entity_details', entity_name='project', entity_id=study.project_entity.id, _external=True) }}",
+        "relatedStudy": [
+            {% for related in study.get_related_studies_urls() %}{"@type": "Study", "@id": "{{ related }}"}{{ ", " if not loop.last }}{% endfor %}
+        ],
+        "url": "{{ request.url }}"
+    }
+    </script>
+{% endblock %}
 
 {% block content %}
     <div class="well box studyDetails">
@@ -60,21 +101,22 @@
             {#    PLANNING SITE    #}
 
             {{ macros.start_panel("Study description", "description") }}
-            {{ macros.show_field_text(study.primary_purpose, "Primary Purpose") }}
-            {{ macros.show_field_list(study.types, "Study Types") }}
+            {{ macros.show_field_text(study.primary_purpose, "Primary Purpose", facet_url=facets_url.primary_purpose) }}
+            {{ macros.show_field_list(study.types, "Study Types", facet_url=facets_url.types) }}
             {{ macros.show_field_text_long(study.cohorts_description, "Description of Cohorts") }}
-            {{ macros.show_field_text(study.informed_consent, "Informed Consent Given?") }}
-            {{ macros.show_field_text(study.multi_center_study, "Multi-center Study?") }}
+            {{ macros.show_field_text(study.informed_consent, "Informed Consent Given?", facet_url=facets_url.informed_consent) }}
+            {{ macros.show_field_text(study.multi_center_study, "Multi-center Study?", facet_url=facets_url.multi_center_study) }}
+            {{ macros.show_field_list(study.study_characteristics, "Study characteristics", facet_url=facets_url.study_characteristics) }}
             {{ macros.end_panel() }}
 
             {#    STUDY SUBJECTS #}
 
             {{ macros.start_panel("Subjects", "study-subjects") }}
-            {{ macros.show_field_list(study.organisms, "Organisms") }}
-            {{ macros.show_field_text(study.size, "Number of subjects") }}
-            {{ macros.show_field_list(study.disease, "Diseases") }}
-            {{ macros.show_field_text(study.samples_source, "Sample Sources", list=True) }}
-            {{ macros.show_field_text(study.samples_type, "Type of Samples Collected", list=True) }}
+            {{ macros.show_field_list(study.organisms, "Organisms", facet_url=facets_url.organisms) }}
+            {{ macros.show_field_text(study.size, "Number of subjects", facet_url=facets_url.size) }}
+            {{ macros.show_field_list(study.disease, "Diseases", facet_url=facets_url.disease) }}
+            {{ macros.show_field_text(study.samples_source, "Sample Sources", list=True, facet_url=facets_url.sample_source) }}
+            {{ macros.show_field_text(study.samples_type, "Type of Samples Collected", list=True, facet_url=facets_url.samples_type) }}
 
 
             {{ macros.end_panel() }}
@@ -82,9 +124,19 @@
             {#    DEMOGRAPHIC AND PARTICIPANT INFORMATION   #}
 
             {{ macros.start_panel("Demographic and Participant Information", "demographic") }}
-            {{ macros.show_field_text(study.age_range, "Age Range of Study Participants") }}
-            {{ macros.show_field_text(study.bmi_range, "BMI Range of Study Participants") }}
+{#            {{ macros.show_field_text(study.age_range, "Age Range of Study Participants") }}#}
+{#            {{ macros.show_field_text(study.bmi_range, "BMI Range of Study Participants") }}#}
+            {{ macros.show_field_list(study.cohort_characteristics, "Cohort characteristics", facet_url=facets_url.cohort_characteristics) }}
+
             {{ macros.end_panel() }}
+
+            {#    ATTACHED FILES    #}
+            {% if attachment_exist %}
+                {{ macros.start_panel("Attached files") }}
+                <div id="attachments-datatable" data-url="{{ attachment_url }}"></div>
+                {{ macros.end_panel() }}
+            {% endif %}
+
 
         </div>
     </div>

@@ -33,7 +33,8 @@ COPY ./datacatalog/static /code/datacatalog/static
 
 # Compile the assets
 RUN cd /code/datacatalog/static/vendor && \
-    npm install && \
+    npm ci && \
+    npm run build && \
     cd /code
 
 # Add the source code (therefore if any backend-related file changes, the build will pick up cache from previous step)

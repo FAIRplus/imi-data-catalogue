@@ -1,0 +1,1033 @@
+{
+    "title": "ABIRISK",
+    "description": "Anti-Biopharmaceutical Immunization: Prediction and Analysis of Clinical Relevance to Minimize the Risk",
+    "@type": "Project",
+    "@context": [
+        "http://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+        "http://w3id.org/dats/context/obo/dataset_obo_context.jsonld"
+    ],
+    "types": [
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "IMI projects"
+        }
+    ],
+    "identifier": {
+        "identifier": "dc9b062e-147a-11eb-b51f-8c8590c45a21",
+        "@type": "Identifier",
+        "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+    },
+    "startDate": {
+        "@type": "Date",
+        "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+        "date": "2012-03-01",
+        "type": {
+            "value": "start date",
+            "valueIRI": "SIO:000031"
+        }
+    },
+    "endDate": {
+        "@type": "Date",
+        "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+        "date": "2018-02-28",
+        "type": {
+            "value": "end date",
+            "valueIRI": "SIO:000036"
+        }
+    },
+    "projectLeads": [
+        {
+            "@type": "Person",
+            "@context": "https://w3id.org/dats/context/sdo/person_sdo_context.jsonld",
+            "firstName": "Marc",
+            "lastName": "Twain",
+            "email": "marc@twain.com",
+            "phoneNumber": "234234235",
+            "roles": [
+                {
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                    "value": "Primary Study Contact",
+                    "valueIRI": "NCIT:C127533"
+                }
+            ],
+            "affiliations": [
+                {
+                    "@type": "Organization",
+                    "@context": "https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                    "name": "SciCross AB"
+                }
+            ],
+            "fullName": "Marc Twain"
+        }
+    ],
+    "keywords": [
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "IMI projects"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Translational Medicine"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Biologicals"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Tools for predicting/monitoring efficacy"
+        },
+        {
+            "@type": "Annotation",
+            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+            "value": "Manufacturing technologies"
+        }
+    ],
+    "primaryPublications": [
+        {
+            "@type": "Publication",
+            "@context": "https://w3id.org/dats/context/sdo/publication_sdo_context.jsonld",
+            "identifier": {
+                "identifier": "http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0162752",
+                "@type": "Identifier",
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+            },
+            "alternateIdentifiers": [
+                {
+                    "identifier": "PMID:27806057",
+                    "identifierSource": "Pubmed",
+                    "@type": "AlternateIdentifier",
+                    "@context": "https://w3id.org/dats/context/sdo/alternate_identifier_info_sdo_context.jsonld"
+                }
+            ]
+        },
+        {
+            "@type": "Publication",
+            "@context": "https://w3id.org/dats/context/sdo/publication_sdo_context.jsonld",
+            "identifier": {
+                "identifier": "https://pubmed.ncbi.nlm.nih.gov/25959571",
+                "@type": "Identifier",
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+            }
+        },
+        {
+            "@type": "Publication",
+            "@context": "https://w3id.org/dats/context/sdo/publication_sdo_context.jsonld",
+            "identifier": {
+                "identifier": "https://pubmed.ncbi.nlm.nih.gov/33125391",
+                "@type": "Identifier",
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+            }
+        },
+        {
+            "@type": "Publication",
+            "@context": "https://w3id.org/dats/context/sdo/publication_sdo_context.jsonld",
+            "identifier": {
+                "identifier": "https://pubmed.ncbi.nlm.nih.gov/30447419",
+                "@type": "Identifier",
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+            }
+        },
+        {
+            "@type": "Publication",
+            "@context": "https://w3id.org/dats/context/sdo/publication_sdo_context.jsonld",
+            "identifier": {
+                "identifier": "https://pubmed.ncbi.nlm.nih.gov/31194850",
+                "@type": "Identifier",
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+            }
+        },
+        {
+            "@type": "Publication",
+            "@context": "https://w3id.org/dats/context/sdo/publication_sdo_context.jsonld",
+            "identifier": {
+                "identifier": "https://pubmed.ncbi.nlm.nih.gov/30420245",
+                "@type": "Identifier",
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+            }
+        },
+        {
+            "@type": "Publication",
+            "@context": "https://w3id.org/dats/context/sdo/publication_sdo_context.jsonld",
+            "identifier": {
+                "identifier": "https://pubmed.ncbi.nlm.nih.gov/29875313",
+                "@type": "Identifier",
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+            }
+        }
+    ],
+    "fundedBy": [
+        {
+            "name": "IMI1 - Call 3",
+            "identifier": {
+                "identifier": "115303",
+                "@type": "Identifier",
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+            },
+            "@type": "Grant",
+            "@context": "https://w3id.org/dats/context/sdo/grant_sdo_context.jsonld"
+        }
+    ],
+    "projectAssets": [
+        {
+            "title": "Genotyping of ABIRISK cohorts",
+            "identifier": {
+                "identifier": "6bd9243b-0368-4cc9-bc92-d00ba1d40b75",
+                "@type": "Identifier",
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+            },
+            "@type": "Dataset",
+            "@context": "https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+            "types": [
+                {
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                    "value": "Infinium HTS Automated Protocol (Illumina, San Diego, CA, USA)"
+                },
+                {
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                    "value": "genotyping"
+                }
+            ],
+            "isAbout": [
+                {
+                    "name": "multiple sclerosis",
+                    "@type": "Disease",
+                    "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                },
+                {
+                    "name": "rheumatoid arthritis",
+                    "@type": "Disease",
+                    "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                },
+                {
+                    "name": "Crohn's disease",
+                    "@type": "Disease",
+                    "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                },
+                {
+                    "name": "ulcerative colitis",
+                    "@type": "Disease",
+                    "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                },
+                {
+                    "name": "high-quality blood DNA samples",
+                    "@type": "AnatomicalPart",
+                    "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                },
+                {
+                    "category": "Experiment category",
+                    "values": [
+                        {
+                            "value": "personal health data",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        },
+                        {
+                            "value": "assay data",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                    ],
+                    "@type": "CategoryValuesPair",
+                    "@context": "http://w3id.org/dats/context/obo/category_values_pair_obo_context.jsonld"
+                },
+                {
+                    "category": "Experiment name",
+                    "values": [
+                        {
+                            "value": "Illumina BeadArray",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                    ],
+                    "@type": "CategoryValuesPair",
+                    "@context": "http://w3id.org/dats/context/obo/category_values_pair_obo_context.jsonld"
+                }
+            ],
+            "distributions": [
+                {
+                    "@type": "DatasetDistribution",
+                    "@context": "https://w3id.org/dats/context/sdo/dataset_distribution_sdo_context.jsonld",
+                    "dates": [
+                        {
+                            "date": "2016-04-01T00:00:00Z",
+                            "@type": "Date",
+                            "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                            "type": {
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                "value": "creation date",
+                                "valueIRI": ""
+                            }
+                        },
+                        {
+                            "date": "2018-02-01T00:00:00Z",
+                            "@type": "Date",
+                            "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                            "type": {
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                "value": "last update date",
+                                "valueIRI": ""
+                            }
+                        }
+                    ],
+                    "version": "1",
+                    "access": {
+                        "landingPage": "",
+                        "@type": "Access",
+                        "@context": "https://w3id.org/dats/context/sdo/access_sdo_context.jsonld",
+                        "types": [
+                            {
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                "value": "hosted"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "creators": [
+                {
+                    "@type": "Organization",
+                    "@context": "https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                    "name": ""
+                }
+            ],
+            "dimensions": [
+                {
+                    "name": {
+                        "value": "sample size",
+                        "valueIRI": "NCIT:C53190",
+                        "@type": "Annotation",
+                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                    },
+                    "values": [
+                        {
+                            "value": "457",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                    ],
+                    "@type": "Dimension",
+                    "@context": "https://w3id.org/dats/context/sdo/dimension_sdo_context.jsonld"
+                }
+            ]
+        },
+        {
+            "name": "Anti-Biopharmaceutical Immunization: Prediction and analysis of clinical relevance to minimize the risk of immunization in multiple sclerosis patients on interferon-beta treatment",
+            "identifier": {
+                "identifier": "91f1a748-c48e-11ec-9b1d-acde48001122",
+                "@type": "Identifier",
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+            },
+            "alternateIdentifiers": [
+                {
+                    "identifier": "EudraCT Number 2012-005450-30",
+                    "identifierSource": "EudraCT",
+                    "@type": "AlternateIdentifier",
+                    "@context": "https://w3id.org/dats/context/sdo/alternate_identifier_info_sdo_context.jsonld"
+                }
+            ],
+            "@type": "Study",
+            "@context": "https://w3id.org/dats/context/sdo/study_sdo_context.jsonld",
+            "description": "Patients with MS or Clinically Isolated Syndrome (CIS) diagnosis according to McDonald criteria and who were prescribed IFN-beta-1a intramuscularly (IM), IFN-beta-1a subcutaneously (SC), or IFN-beta-1b SC (original product or biosimilar) were recruited from January 30, 2014 to January 22, 2016. Patients who were not naive to IFN-beta were excluded.",
+            "types": [
+                {
+                    "value": "observational",
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                }
+            ],
+            "studyGroups": [
+                {
+                    "@type": "StudyGroup",
+                    "@context": "https://w3id.org/dats/context/sdo/studygroup_sdo_context.jsonld",
+                    "name": "147 patients (103 female, 44 male) diagnosed with MS.",
+                    "size": 147,
+                    "consentInformation": [
+                        {
+                            "name": {
+                                "value": "informed consent",
+                                "valueIRI": "NCIT:C16735",
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                            },
+                            "@type": "ConsentInfo",
+                            "@context": "https://w3id.org/dats/context/sdo/consent_info_obo_context.jsonld"
+                        }
+                    ]
+                }
+            ],
+            "input": [
+                {
+                    "@type": "Material",
+                    "@context": "https://w3id.org/dats/context/sdo/material_sdo_context.jsonld",
+                    "name": "input material",
+                    "types": [
+                        {
+                            "value": "tissue sample",
+                            "valueIRI": "NCIT:C19697",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                    ],
+                    "taxonomy": [
+                        {
+                            "@type": "TaxonomicInformation",
+                            "@context": "https://w3id.org/dats/context/sdo/taxonomic_info_sdo_context.jsonld",
+                            "name": "Homo sapiens",
+                            "identifier": {
+                                "@type": "Identifier",
+                                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                                "identifier": "NCBITaxon:9606",
+                                "identifierSource": "NCBI Taxon ID"
+                            }
+                        }
+                    ],
+                    "bearerOfDisease": [
+                        {
+                            "name": "multiple sclerosis",
+                            "@type": "Disease",
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                        }
+                    ],
+                    "derivesFrom": [
+                        {
+                            "name": "plasma",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "DNA",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "RNA",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "PBMCs",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        }
+                    ]
+                }
+            ],
+            "output": [
+                {
+                    "title": "ABIRISK MS clinical and ADA data",
+                    "identifier": {
+                        "identifier": "b4c2e17e-c48e-11ec-9b1d-acde48001122",
+                        "@type": "Identifier",
+                        "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+                    },
+                    "@type": "Dataset",
+                    "@context": "https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+                    "types": [
+                        {
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                            "value": "Drug-specific ADA assays"
+                        },
+                        {
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                            "value": "clinical data"
+                        }
+                    ],
+                    "isAbout": [
+                        {
+                            "name": "multiple sclerosis",
+                            "@type": "Disease",
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "plasma",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "category": "Experiment category",
+                            "values": [
+                                {
+                                    "value": "personal health data",
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                },
+                                {
+                                    "value": "assay data",
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                }
+                            ],
+                            "@type": "CategoryValuesPair",
+                            "@context": "http://w3id.org/dats/context/obo/category_values_pair_obo_context.jsonld"
+                        }
+                    ],
+                    "distributions": [
+                        {
+                            "@type": "DatasetDistribution",
+                            "@context": "https://w3id.org/dats/context/sdo/dataset_distribution_sdo_context.jsonld",
+                            "dates": [
+                                {
+                                    "date": "2016-04-01T00:00:00Z",
+                                    "@type": "Date",
+                                    "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                                    "type": {
+                                        "@type": "Annotation",
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "value": "creation date",
+                                        "valueIRI": ""
+                                    }
+                                },
+                                {
+                                    "date": "2018-02-01T00:00:00Z",
+                                    "@type": "Date",
+                                    "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                                    "type": {
+                                        "@type": "Annotation",
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "value": "last update date",
+                                        "valueIRI": ""
+                                    }
+                                }
+                            ],
+                            "version": "v1.0",
+                            "conformsTo": [
+                                {
+                                    "name": "CDISC",
+                                    "type": {
+                                        "@type": "Annotation",
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "value": "clinical data standard"
+                                    },
+                                    "@type": "DataStandard",
+                                    "@context": "https://w3id.org/dats/context/sdo/data_standard_sdo_context.jsonld"
+                                }
+                            ],
+                            "access": {
+                                "landingPage": "",
+                                "@type": "Access",
+                                "@context": "https://w3id.org/dats/context/sdo/access_sdo_context.jsonld"
+                            }
+                        }
+                    ],
+                    "creators": [
+                        {
+                            "@type": "Organization",
+                            "@context": "https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                            "name": ""
+                        }
+                    ]
+                }
+            ],
+            "acronym": "ABI-MS",
+            "characteristics": [
+                {
+                    "name": {
+                        "value": "Multi-institution Indicator",
+                        "valueIRI": "NCIT:C93599",
+                        "@type": "Annotation",
+                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                    },
+                    "values": [
+                        {
+                            "value": "true",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                    ],
+                    "@type": "Dimension",
+                    "@context": "https://w3id.org/dats/context/sdo/dimension_sdo_context.jsonld"
+                }
+            ]
+        },
+        {
+            "name": "Anti-Biopharmaceutical Immunization: Prediction and Analysis of Clinical Relevance to Minimize the Risk of Immunization in Rheumatoid Arthritis Patients or Juvenile Idiopathic Arthritis Patients (ABI-RA)",
+            "identifier": {
+                "identifier": "b4c2e822-c48e-11ec-9b1d-acde48001122",
+                "@type": "Identifier",
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+            },
+            "alternateIdentifiers": [
+                {
+                    "identifier": "NCT02116504",
+                    "identifierSource": "ClinicalTrials.gov",
+                    "@type": "AlternateIdentifier",
+                    "@context": "https://w3id.org/dats/context/sdo/alternate_identifier_info_sdo_context.jsonld"
+                }
+            ],
+            "@type": "Study",
+            "@context": "https://w3id.org/dats/context/sdo/study_sdo_context.jsonld",
+            "description": "Patients with RA diagnosis according to 2010 ACR/EULAR criteria and who were prescribed for the first time a BP among the TNF inhibitors adalimumab, infliximab (original product or biosimilar), etanercept, the anti-CD20 antibody rituximab, or the anti-IL6R antibody tocilizumab (administered SC or intravenously) as first-line or second-line therapy were recruited from March 3, 2014 to June 21, 2016. Patients who were not naive for the biotherapy they were given in the study were excluded.",
+            "types": [
+                {
+                    "value": "observational",
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                }
+            ],
+            "studyGroups": [
+                {
+                    "@type": "StudyGroup",
+                    "@context": "https://w3id.org/dats/context/sdo/studygroup_sdo_context.jsonld",
+                    "name": "229 patients (176 female, 53 male) diagnosed with RA.",
+                    "size": 229,
+                    "consentInformation": [
+                        {
+                            "name": {
+                                "value": "informed consent",
+                                "valueIRI": "NCIT:C16735",
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                            },
+                            "@type": "ConsentInfo",
+                            "@context": "https://w3id.org/dats/context/sdo/consent_info_obo_context.jsonld"
+                        }
+                    ]
+                }
+            ],
+            "input": [
+                {
+                    "@type": "Material",
+                    "@context": "https://w3id.org/dats/context/sdo/material_sdo_context.jsonld",
+                    "name": "tissue sample",
+                    "types": [
+                        {
+                            "value": "tissue sample",
+                            "valueIRI": "NCIT:C19697",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                    ],
+                    "taxonomy": [
+                        {
+                            "@type": "TaxonomicInformation",
+                            "@context": "https://w3id.org/dats/context/sdo/taxonomic_info_sdo_context.jsonld",
+                            "name": "Homo sapiens",
+                            "identifier": {
+                                "@type": "Identifier",
+                                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                                "identifier": "NCBITaxon:9606",
+                                "identifierSource": "NCBI Taxon ID"
+                            }
+                        }
+                    ],
+                    "bearerOfDisease": [
+                        {
+                            "name": "rheumatoid arthritis",
+                            "@type": "Disease",
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "juvenile idiopathic arthritis",
+                            "@type": "Disease",
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                        }
+                    ],
+                    "derivesFrom": [
+                        {
+                            "name": "plasma",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "DNA",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "RNA",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "PBMCs",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        }
+                    ]
+                }
+            ],
+            "output": [
+                {
+                    "title": "ABIRISK RA clinical and ADA data",
+                    "identifier": {
+                        "identifier": "b4c2e962-c48e-11ec-9b1d-acde48001122",
+                        "@type": "Identifier",
+                        "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+                    },
+                    "@type": "Dataset",
+                    "@context": "https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+                    "types": [
+                        {
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                            "value": "Drug-specific ADA assays"
+                        },
+                        {
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                            "value": "clinical data"
+                        }
+                    ],
+                    "isAbout": [
+                        {
+                            "name": "rheumatoid arthritis",
+                            "@type": "Disease",
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "juvenile idiopathic arthritis",
+                            "@type": "Disease",
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "plasma",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "category": "Experiment category",
+                            "values": [
+                                {
+                                    "value": "personal health data",
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                },
+                                {
+                                    "value": "assay data",
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                }
+                            ],
+                            "@type": "CategoryValuesPair",
+                            "@context": "http://w3id.org/dats/context/obo/category_values_pair_obo_context.jsonld"
+                        }
+                    ],
+                    "distributions": [
+                        {
+                            "@type": "DatasetDistribution",
+                            "@context": "https://w3id.org/dats/context/sdo/dataset_distribution_sdo_context.jsonld",
+                            "dates": [
+                                {
+                                    "date": "2016-04-01T00:00:00Z",
+                                    "@type": "Date",
+                                    "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                                    "type": {
+                                        "@type": "Annotation",
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "value": "creation date",
+                                        "valueIRI": ""
+                                    }
+                                },
+                                {
+                                    "date": "2018-02-01T00:00:00Z",
+                                    "@type": "Date",
+                                    "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                                    "type": {
+                                        "@type": "Annotation",
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "value": "last update date",
+                                        "valueIRI": ""
+                                    }
+                                }
+                            ],
+                            "version": "v1.0",
+                            "conformsTo": [
+                                {
+                                    "name": "CDISC",
+                                    "type": {
+                                        "@type": "Annotation",
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "value": "clinical data standard"
+                                    },
+                                    "@type": "DataStandard",
+                                    "@context": "https://w3id.org/dats/context/sdo/data_standard_sdo_context.jsonld"
+                                }
+                            ],
+                            "access": {
+                                "landingPage": "",
+                                "@type": "Access",
+                                "@context": "https://w3id.org/dats/context/sdo/access_sdo_context.jsonld"
+                            }
+                        }
+                    ],
+                    "creators": [
+                        {
+                            "@type": "Organization",
+                            "@context": "https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                            "name": ""
+                        }
+                    ]
+                }
+            ],
+            "acronym": "ABI-RA",
+            "characteristics": [
+                {
+                    "name": {
+                        "value": "Multi-institution Indicator",
+                        "valueIRI": "NCIT:C93599",
+                        "@type": "Annotation",
+                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                    },
+                    "values": [
+                        {
+                            "value": "true",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                    ],
+                    "@type": "Dimension",
+                    "@context": "https://w3id.org/dats/context/sdo/dimension_sdo_context.jsonld"
+                }
+            ]
+        },
+        {
+            "name": "Anti-Biopharmaceutical Immunization : Prediction and analysis of clinical relevance to minimize the risk in Inflammatory bowel disease (IBD)",
+            "identifier": {
+                "identifier": "b4c2ea0c-c48e-11ec-9b1d-acde48001122",
+                "@type": "Identifier",
+                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+            },
+            "@type": "Study",
+            "@context": "https://w3id.org/dats/context/sdo/study_sdo_context.jsonld",
+            "description": "Patients with Crohn’s disease or ulcerative colitis diagnosis according to ECCO guidelines and who were prescribed adalimumab or infliximab (original product or biosimilar) were recruited from September 11, 2013 to February 15, 2016. Patients who were not naive to TNF inhibitor therapy or who were treated with corticoids more than 30 mg/day over the last 15 days were excluded.",
+            "types": [
+                {
+                    "value": "observational",
+                    "@type": "Annotation",
+                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                }
+            ],
+            "studyGroups": [
+                {
+                    "@type": "StudyGroup",
+                    "@context": "https://w3id.org/dats/context/sdo/studygroup_sdo_context.jsonld",
+                    "name": "184 patients (89 female, 95 male) diagnosed with IBD.",
+                    "size": 184,
+                    "consentInformation": [
+                        {
+                            "name": {
+                                "value": "informed consent",
+                                "valueIRI": "NCIT:C16735",
+                                "@type": "Annotation",
+                                "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                            },
+                            "@type": "ConsentInfo",
+                            "@context": "https://w3id.org/dats/context/sdo/consent_info_obo_context.jsonld"
+                        }
+                    ]
+                }
+            ],
+            "input": [
+                {
+                    "@type": "Material",
+                    "@context": "https://w3id.org/dats/context/sdo/material_sdo_context.jsonld",
+                    "name": "tissue sample",
+                    "types": [
+                        {
+                            "value": "tissue sample",
+                            "valueIRI": "NCIT:C19697",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                    ],
+                    "taxonomy": [
+                        {
+                            "@type": "TaxonomicInformation",
+                            "@context": "https://w3id.org/dats/context/sdo/taxonomic_info_sdo_context.jsonld",
+                            "name": "Homo sapiens",
+                            "identifier": {
+                                "@type": "Identifier",
+                                "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld",
+                                "identifier": "NCBITaxon:9606",
+                                "identifierSource": "NCBI Taxon ID"
+                            }
+                        }
+                    ],
+                    "bearerOfDisease": [
+                        {
+                            "name": "Crohn's disease",
+                            "@type": "Disease",
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "ulcerative colitis",
+                            "@type": "Disease",
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                        }
+                    ],
+                    "derivesFrom": [
+                        {
+                            "name": "plasma",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "DNA",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "RNA",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "PBMCs",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        }
+                    ]
+                }
+            ],
+            "output": [
+                {
+                    "title": "ABIRISK IBD clinical and ADA data",
+                    "identifier": {
+                        "identifier": "b4c2ea8e-c48e-11ec-9b1d-acde48001122",
+                        "@type": "Identifier",
+                        "@context": "https://w3id.org/dats/context/sdo/identifier_info_sdo_context.jsonld"
+                    },
+                    "@type": "Dataset",
+                    "@context": "https://w3id.org/dats/context/sdo/dataset_sdo_context.jsonld",
+                    "types": [
+                        {
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                            "value": "Drug-specific ADA assays"
+                        },
+                        {
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                            "value": "clinical data"
+                        }
+                    ],
+                    "isAbout": [
+                        {
+                            "name": "Crohn's disease",
+                            "@type": "Disease",
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "ulcerative colitis",
+                            "@type": "Disease",
+                            "@context": "https://w3id.org/dats/context/sdo/disease_sdo_context.jsonld"
+                        },
+                        {
+                            "name": "plasma",
+                            "@type": "AnatomicalPart",
+                            "@context": "https://w3id.org/dats/context/sdo/anatomical_part_sdo_context.jsonld"
+                        },
+                        {
+                            "category": "Experiment category",
+                            "values": [
+                                {
+                                    "value": "personal health data",
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                },
+                                {
+                                    "value": "assay data",
+                                    "@type": "Annotation",
+                                    "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                                }
+                            ],
+                            "@type": "CategoryValuesPair",
+                            "@context": "http://w3id.org/dats/context/obo/category_values_pair_obo_context.jsonld"
+                        }
+                    ],
+                    "distributions": [
+                        {
+                            "@type": "DatasetDistribution",
+                            "@context": "https://w3id.org/dats/context/sdo/dataset_distribution_sdo_context.jsonld",
+                            "dates": [
+                                {
+                                    "date": "2016-04-01T00:00:00Z",
+                                    "@type": "Date",
+                                    "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                                    "type": {
+                                        "@type": "Annotation",
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "value": "creation date",
+                                        "valueIRI": ""
+                                    }
+                                },
+                                {
+                                    "date": "2018-02-01T00:00:00Z",
+                                    "@type": "Date",
+                                    "@context": "https://w3id.org/dats/context/sdo/date_info_sdo_context.jsonld",
+                                    "type": {
+                                        "@type": "Annotation",
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "value": "last update date",
+                                        "valueIRI": ""
+                                    }
+                                }
+                            ],
+                            "version": "v1.0",
+                            "conformsTo": [
+                                {
+                                    "name": "CDISC",
+                                    "type": {
+                                        "@type": "Annotation",
+                                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld",
+                                        "value": "clinical data standard"
+                                    },
+                                    "@type": "DataStandard",
+                                    "@context": "https://w3id.org/dats/context/sdo/data_standard_sdo_context.jsonld"
+                                }
+                            ],
+                            "access": {
+                                "landingPage": "",
+                                "@type": "Access",
+                                "@context": "https://w3id.org/dats/context/sdo/access_sdo_context.jsonld"
+                            }
+                        }
+                    ],
+                    "creators": [
+                        {
+                            "@type": "Organization",
+                            "@context": "https://w3id.org/dats/context/sdo/organization_sdo_context.jsonld",
+                            "name": ""
+                        }
+                    ]
+                }
+            ],
+            "acronym": "ABI-IBD",
+            "characteristics": [
+                {
+                    "name": {
+                        "value": "Multi-institution Indicator",
+                        "valueIRI": "NCIT:C93599",
+                        "@type": "Annotation",
+                        "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                    },
+                    "values": [
+                        {
+                            "value": "true",
+                            "@type": "Annotation",
+                            "@context": "https://w3id.org/dats/context/sdo/annotation_sdo_context.jsonld"
+                        }
+                    ],
+                    "@type": "Dimension",
+                    "@context": "https://w3id.org/dats/context/sdo/dimension_sdo_context.jsonld"
+                }
+            ]
+        }
+    ],
+    "acronym": "IMI ABIRISK",
+    "projectWebsite": "http://www.abirisk.eu"
+}

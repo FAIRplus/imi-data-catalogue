@@ -23,11 +23,13 @@ logger = logging.getLogger(__name__)
 
 
 class AccessHandler(metaclass=ABCMeta):
+    ALLOW_USER_ACTIONS = False
+    HIDE_APPROVED = False
 
     def __init__(self, user: User):
         self.user = user
         self.datasets = self.get_datasets()
-        self.template = 'request_access.html'
+        self.template = "request_access.html"
 
     @abstractmethod
     def get_datasets(self):
@@ -50,7 +52,7 @@ class AccessHandler(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def requires_logged_in_user(self):
+    def requires_logged_in_user(self, entity):
         pass
 
     def grant(self, dataset):
@@ -58,19 +60,31 @@ class AccessHandler(metaclass=ABCMeta):
 
 
 class ApplicationState(Enum):
-    approved = 'approved'
-    draft = 'draft'
-    closed = 'closed'
-    submitted = 'submitted'
-    revoked = 'revoked'
-    rejected = 'rejected'
+    approved = "approved"
+    draft = "draft"
+    closed = "closed"
+    submitted = "submitted"
+    revoked = "revoked"
+    rejected = "rejected"
 
 
 class Application:
-    def __init__(self, application_id, state: ApplicationState, entity_id, entity_title, creation_date, applicant_id):
+    def __init__(
+        self,
+        application_id,
+        state: ApplicationState,
+        entity_id,
+        entity_title,
+        creation_date,
+        applicant_id,
+        external_id=None,
+    ):
         self.creation_date = creation_date
         self.entity_id = entity_id
         self.entity_title = entity_title
         self.state = state
         self.id = application_id
         self.applicant_id = applicant_id
+        if external_id is None:
+            external_id = application_id
+        self.external_id = external_id

@@ -23,4 +23,4 @@
 
 
 """
-__author__ = 'Valentin Grouès'
+__author__ = "Valentin Grouès"

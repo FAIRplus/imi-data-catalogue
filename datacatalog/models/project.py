@@ -27,9 +27,16 @@
 import logging
 
 from . import EntityWithSlugs
+from .contact import Contact
 from ..solr.solr_orm import SolrAutomaticQuery
 from ..solr.solr_orm_entity import SolrEntity
-from ..solr.solr_orm_fields import SolrField, SolrTextField, SolrForeignKeyField, SolrDateTimeField, SolrBooleanField
+from ..solr.solr_orm_fields import (
+    SolrField,
+    SolrTextField,
+    SolrForeignKeyField,
+    SolrDateTimeField,
+    SolrJsonField,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -38,41 +45,58 @@ class Project(SolrEntity, EntityWithSlugs):
     """
     Project entity, subclass of SolrEntity
     """
+
     # specifies the list of compatibles connectors
-    COMPATIBLE_CONNECTORS = ['Json', 'Dats', 'Geo', 'Daisy']
+    COMPATIBLE_CONNECTORS = ["Json", "Dats", "Geo", "Daisy"]
     query_class = SolrAutomaticQuery
-    affiliation = SolrField("affiliation")
-    business_address = SolrField("business_address", indexed=False)
     business_fax_number = SolrField("business_fax_number", indexed=False)
-    business_phone_number = SolrField("business_phone_number", indexed=False)
-    datasets = SolrForeignKeyField("datasets", entity_name="dataset", multivalued=True, reversed_by='project',
-                                   reversed_multiple=False)
+    datasets = SolrForeignKeyField(
+        "datasets",
+        entity_name="dataset",
+        multivalued=True,
+        reversed_by="project",
+        reversed_multiple=False,
+    )
+    datasets_metadata = SolrField("datasets_metadata", multivalued=True)
     description = SolrTextField("description")
     display_name = SolrField("display_name")
-    email = SolrField("contact_email", indexed=False)
     end_date = SolrDateTimeField("end_date")
     contact_title = SolrField("contact_title", indexed=False)
-    first_name = SolrField("contact_first_name")
     funded_by = SolrField("funded_by")
     keywords = SolrField("keywords", multivalued=True)
-    last_name = SolrField("contact_last_name")
     project_name = SolrField("project_name")
-    reference_publications = SolrField("reference_publications", indexed=False, multivalued=True)
-    role = SolrField("role", multivalued=True)
+    reference_publications = SolrField(
+        "reference_publications", indexed=False, multivalued=True
+    )
+    contacts = SolrJsonField("contacts", multivalued=True, indexed=False, model=Contact)
     start_date = SolrDateTimeField("start_date")
-    studies = SolrForeignKeyField("studies", entity_name="study", multivalued=True, reversed_by='project',
-                                  reversed_multiple=False)
+    studies = SolrForeignKeyField(
+        "studies",
+        entity_name="study",
+        multivalued=True,
+        reversed_by="project",
+        reversed_multiple=False,
+    )
+    studies_metadata = SolrField("studies_metadata", multivalued=True)
     title = SolrField("title")
     types = SolrField("types", multivalued=True)
     website = SolrField("website", indexed=False)
+    filename = SolrField("filename", multivalued=False)
 
     fair_evaluation = SolrField("fair_evaluation")
 
     def __init__(self, title: str = None, entity_id: str = None) -> None:
         """
-       Initialize a new Project instance with title and entity_id
-       @param title: title of the Project
-       @param entity_id:  id of the Project
-       """
+        Initialize a new Project instance with title and entity_id
+        @param title: title of the Project
+        @param entity_id:  id of the Project
+        """
         super().__init__(entity_id)
         self.title = title
+
+    def to_api_dict(self):
+        default = super().to_api_dict()
+        if default["contacts"]:
+            for count, contact in enumerate(default["contacts"]):
+                default["contacts"][count] = contact.to_json()
+        return default
