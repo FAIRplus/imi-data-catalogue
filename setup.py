@@ -35,7 +35,7 @@ requirements = [
     "requests==2.26.0",
     "GEOparse==2.0.3",
     "Flask-Caching==1.10.1",
-    "python-ldap==3.3.1",
+    "python-ldap==3.4.0",
     "wtforms==2.3.3",
     "Flask-Login==0.5.0",
     "Flask-WTF==0.15.1",
