@@ -26,7 +26,7 @@ requirements = [
     "Flask-Assets==2.0",
     "Flask-Script==2.0.6",
     "Jinja2==2.11.3",
-    "werkzeug==0.16.1",
+    "werkzeug==2.2.3",
     "closure==20191111",
     "markupsafe==2.0.1",
     "cssmin==0.2.0",
