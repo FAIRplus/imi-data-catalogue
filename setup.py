@@ -22,7 +22,7 @@ except ImportError:
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 requirements = [
-    "Flask==1.1.4",
+    "Flask==2.3.2",
     "Flask-Assets==2.0",
     "Flask-Script==2.0.6",
     "Jinja2==2.11.3",
