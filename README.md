@@ -1,5 +1,9 @@
 # FAIRplus imi-data-catalogue
 
+> [!WARNING]  
+> This repository is archived and not actively maintained. The development of the tool was moved [under ELIXIR Luxembourg](https://github.com/elixir-luxembourg/data-catalog).
+> 
+
 **Name:** FAIRplus catalogue for IMI projects and associated Datasets
 
 **Goal:** Create a database of IMI funded **projects** and their associated **datasets**
